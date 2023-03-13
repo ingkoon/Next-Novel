@@ -10,8 +10,12 @@ import requests
 from rest_framework import status
 from json import JSONDecodeError
 
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from users.models import User
 from nextnovel.settings import STATE, KAKAO_CLIENT_ID
+from users.serializers import UserProfileSerializer
 
 state = STATE
 BASE_URL = 'http://localhost:8000/'
@@ -98,3 +102,12 @@ class KakaoLogin(SocialLoginView):
     adapter_class = kakao_view.KakaoOAuth2Adapter
     callback_url = KAKAO_CALLBACK_URI
     client_class = OAuth2Client
+
+
+class UserProfileAPI(APIView):
+    serializer_class = UserProfileSerializer
+
+    def get(self, request, **kwargs):
+        user = request.user
+        serializer = UserProfileSerializer(data=user)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
