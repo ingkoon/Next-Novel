@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import AppBar from './Default/AppBar.js'
+import AppBar from '../src/components/AppBar'
 
 function App() {
   return (

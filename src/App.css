@@ -39,10 +39,10 @@
 
 @font-face {
   font-family: "gothic";
-  src: url(./font/Dovemayo_gothic.ttf);
+  src: url(../public/fonts/Dovemayo_gothic.ttf);
 }
 
 @font-face {
   font-family: "wild";
-  src: url(./font/Dovemayo_wild.ttf);
+  src: url(../public/fonts/Dovemayo_wild.ttf);
 }

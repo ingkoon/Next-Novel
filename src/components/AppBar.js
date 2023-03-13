@@ -1,5 +1,4 @@
 import './AppBar.css'
-import logo from '../img/logo.png'
 import DehazeIcon from '@mui/icons-material/Dehaze';
 
 function AppBar(){
@@ -11,7 +10,7 @@ function AppBar(){
         </span>
       </div>
       <div className='logo'>
-        <img src={logo}></img>
+        <img src={process.env.PUBLIC_URL + '/img/logo.png'}></img>
       </div>
       <div className='menudiv'>
         <DehazeIcon className='menu'/>
