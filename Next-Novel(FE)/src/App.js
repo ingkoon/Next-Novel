@@ -1,11 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import AppBar from '../src/components/AppBar'
+import Card from '../src/components/Card'
 
 function App() {
   return (
     <div className="App">
       <AppBar></AppBar>
+      <Card></Card>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
