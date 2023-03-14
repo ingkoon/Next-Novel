@@ -11,3 +11,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ['profile_pic', 'nickname', 'created_at']
+
+
+class UserCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ['profile_pic', 'nickname']

@@ -10,9 +10,11 @@ import requests
 from rest_framework import status
 from json import JSONDecodeError
 
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from novels.models import Novel
 from users.models import User
 from nextnovel.settings import STATE, KAKAO_CLIENT_ID
 from users.serializers import UserProfileSerializer
@@ -111,3 +113,7 @@ class UserProfileAPI(APIView):
         user = request.user
         serializer = UserProfileSerializer(data=user)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class UserNovelAPI(RetrieveAPIView):
+    queryset = Novel.objects.all()

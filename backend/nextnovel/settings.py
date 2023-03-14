@@ -16,7 +16,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ SECRET_KEY = 'django-insecure-d$4t+(d=s#q(a&!1_)i&!lg=cz$emwu22r#oftg6rw-wu79xt0
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -58,7 +56,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.kakao',
 
+    'django_seed',
     'drf_spectacular',
+    'django_extensions',
+    # 'debug_toolbar',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -90,7 +91,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'nextnovel.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -100,7 +100,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -120,7 +119,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -131,7 +129,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -233,5 +230,3 @@ REST_AUTH = {
 KAKAO_CLIENT_ID = os.environ.get("SOCIAL_AUTH_KAKAO_CLIENT_ID", "f8ed452e0c40816d467de425d5b06427")
 KAKAO_SECRET = os.environ.get("SOCIAL_AUTH_KAKAO_SECRET", "874804")
 STATE = os.environ.get("STATE", "vasdvdsfav")
-
-

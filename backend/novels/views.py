@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework.generics import CreateAPIView
 
-# Create your views here.
+from novels.models import NovelComment, Novel
+from novels.serializers import NovelCommentCreateSerializer
+
+
+class CreateNovelCommentAPI(CreateAPIView):
+    queryset = Novel.objects.all()
+    serializer_class = NovelCommentCreateSerializer()
