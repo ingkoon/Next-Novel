@@ -1,0 +1,10 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* .list2 {
+  display: flex;
+  justify-content: center;
+} */

@@ -14,7 +14,7 @@ function Card(){
 
   return (
     <div className="card">
-      <div className={isHovering ? 'intro' : 'none'} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+      <div className={isHovering ? 'none' : 'intro'} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
         <div className='introment'>
           <div className='ment'>
             이거슨 한 줄 소개글 입니다. 최대 50자까지 쓸수 있죠
@@ -23,7 +23,7 @@ function Card(){
         <img src={process.env.PUBLIC_URL+'/img/quote.png'} className='quote1' ></img>
         <img src={process.env.PUBLIC_URL+'/img/quote2.png'} className='quote2' ></img>
       </div>
-      <div className={isHovering ? 'none' : 'intro'} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+      <div className={isHovering ? 'intro' : 'none'} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
         <div className='introment'>
           <div className='intro2'>
             <img src={process.env.PUBLIC_URL+'/icon/glasses.svg'} style={{margin:'auto 5px'}}></img>
