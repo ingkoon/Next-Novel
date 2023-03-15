@@ -10,7 +10,7 @@ import requests
 from rest_framework import status
 from json import JSONDecodeError
 
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -106,7 +106,7 @@ class KakaoLogin(SocialLoginView):
     client_class = OAuth2Client
 
 
-class UserProfileAPI(APIView):
+class UserProfileAPI(RetrieveUpdateAPIView):
     serializer_class = UserProfileSerializer
 
     def get(self, request, **kwargs):
