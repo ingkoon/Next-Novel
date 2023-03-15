@@ -6,7 +6,7 @@ export default function Novels() {
 
   return (
     <>
-      <TitleBar/>      
+      <TitleBar/>
       <Booklist/>
     </>
   );
