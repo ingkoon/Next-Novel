@@ -6,7 +6,9 @@ export function AuthContextProvider({ children }) {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    setUser(true); //일단 로그인 강제 완료 시켰음
+    //처음에만 사용자의 세션 정보가 남아있다면 state에 로그인 정보 저장
+    // onUserStateChange((user) => setUser(user)); //api호출
+    setUser(true);
   }, []);
 
   return (
