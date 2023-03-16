@@ -1,0 +1,92 @@
+.card {
+  background-color: white;
+  border-radius: 15px;
+  width: 450px;
+  height: 350px;
+  position: relative;
+  margin: 10px;
+  /* border: 1px solid black; */
+}
+
+.card > img {
+  width: 30%;
+  height: 50%;
+  object-fit: cover;
+  border: 1px solid black;
+  position: absolute;
+  bottom: 10%;
+  left: 10%;
+}
+
+.intro {
+  color: white;
+  font-family: wild;
+  font-size: 24px;
+  height: 65%;
+  border-bottom: 3px solid black;
+  background-image: url('/public/img/just me.png');
+  background-size: cover;
+  position: relative;
+}
+
+.introment {
+  height: 100%;
+  background-color: #ABABAB90;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 15px 15px 0 0;
+}
+
+.ment {
+  margin: 0 15% 20%;
+}
+
+.info{
+  flex: 1;
+  font-family: 'gothic';
+  margin-left: 40%;
+  float: left;
+  padding-top : 20px;
+  padding-left: 20px;
+}
+
+.title {
+  font-size: 24px;
+}
+
+.writer {
+  font-size: 16px;
+  float: left;
+}
+
+.quote1{
+  position: absolute;
+  top: 2%;
+  left : 2%;
+}
+
+.quote2 {
+  position: absolute;
+  bottom : 2%;
+  right: 2%;
+}
+
+.none {
+  display: none;
+}
+
+.intro2 {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.trash {
+  position: absolute;
+  bottom : 10px;
+  right: 10px;
+}

@@ -1,9 +1,12 @@
 import React from "react";
+import TitleBar from "../components/TitleBar";
+import Booklist from "../components/Booklist";
 
 export default function Novels() {
   return (
     <>
-      <h1>Novels</h1>
+      <TitleBar />
+      <Booklist />
     </>
   );
 }
