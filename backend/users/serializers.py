@@ -10,10 +10,17 @@ class RegisterSerializer(DjRestAuthRegisterSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ['profile_pic', 'nickname', 'created_at']
+        fields = ['profile_image', 'nickname', 'created_at']
+        read_only_fields = ['created_at']
 
 
 class UserCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ['profile_pic', 'nickname']
+        fields = ['profile_pic', 'nickname', ]
+
+
+class UserNicknameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ['nickname', ]

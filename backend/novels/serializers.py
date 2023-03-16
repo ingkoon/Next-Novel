@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from novels.models import NovelStats, Novel, NovelComment
-from users.serializers import UserCommentSerializer
+from users.serializers import UserCommentSerializer, UserNicknameSerializer
 
 
 class UserNovelSerializer(serializers.ModelSerializer):
@@ -11,7 +11,7 @@ class UserNovelSerializer(serializers.ModelSerializer):
 class NovelStatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = NovelStats
-        exclude = ["novel"]
+        exclude = ["id", "novel"]
 
 
 class NovelDetailSerializer(serializers.ModelSerializer):
@@ -22,10 +22,11 @@ class NovelDetailSerializer(serializers.ModelSerializer):
 
 class NovelListSerializer(serializers.ModelSerializer):
     novel_stats = NovelStatsSerializer(source="novelstats")
+    author = serializers.CharField(source="author.nickname", read_only=True)
 
     class Meta:
         model = Novel
-        fields = ["title", "author", "novel_stats"]
+        fields = ["id", "title", "author", "novel_stats"]
 
 
 class NovelCommentCreateSerializer(serializers.ModelSerializer):
