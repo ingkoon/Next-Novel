@@ -1,17 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Canvas.css";
-import CanvasMini from "./CanvasMini";
 
-export default function Canvas() {
+export default function CanvasMini({ mouseX, mouseY, painting }) {
   // useRef
   const canvasRef = useRef(null);
   // getCtx
   const [getCtx, setGetCtx] = useState(null);
-  // painting state
-  const [painting, setPainting] = useState(false);
-
-  const [mouseX, setmouseX] = useState();
-  const [mouseY, setmouseY] = useState();
 
   useEffect(() => {
     // canvas useRef
@@ -26,9 +20,6 @@ export default function Canvas() {
   }, []);
 
   const drawFn = (e) => {
-    // mouse position
-    setmouseX(e.nativeEvent.offsetX);
-    setmouseY(e.nativeEvent.offsetY);
     // console.log(mouseX, mouseY);
     // drawing
     if (!painting) {
@@ -42,15 +33,8 @@ export default function Canvas() {
 
   return (
     <div className="view">
-      <canvas
-        className="canvas"
-        ref={canvasRef}
-        onMouseDown={() => setPainting(true)}
-        onMouseUp={() => setPainting(false)}
-        onMouseMove={(e) => drawFn(e)}
-        onMouseLeave={() => setPainting(false)}
-      ></canvas>
-      <CanvasMini mouseX={mouseX} mouseY={mouseY} painting={painting} />
+      {mouseX} {mouseY} {painting.toString()}
+      <canvas className="canvas" ref={canvasRef}></canvas>
     </div>
   );
 }
