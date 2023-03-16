@@ -6,6 +6,7 @@
   font-family : 'gothic';
   display: flex;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .title {

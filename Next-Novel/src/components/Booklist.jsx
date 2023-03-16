@@ -9,10 +9,13 @@ export default function Booklist(){
   }
 
   return (
-    <div className='list'>
-      {arr.map((Component, index) => (
-        <Component key={index}/>
-      ))}
+    <div>
+      <hr className='line'></hr>
+      <div className='list'>
+        {arr.map((Component, index) => (
+          <Component key={index}/>
+        ))}
+      </div>
     </div>
   )
 }
