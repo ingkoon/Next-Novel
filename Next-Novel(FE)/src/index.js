@@ -5,7 +5,7 @@ import "./index.css";
 import App from "./App";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
-import ProtectedRoute from "./pages/ProtectedRoute";
+// import ProtectedRoute from "./pages/ProtectedRoute";
 import Novels from "./pages/Novels";
 import NovelIntro from "./pages/NovelIntro";
 import NovelRead from "./pages/NovelRead";
@@ -39,17 +39,17 @@ const router = createBrowserRouter([
       {
         path: "/mypage",
         element: (
-          <ProtectedRoute>
-            <MyPage />
-          </ProtectedRoute>
+          // <ProtectedRoute>
+          <MyPage />
+          // </ProtectedRoute>
         ),
       },
       {
         path: "/laboratory",
         element: (
-          <ProtectedRoute>
-            <NovelWrite />
-          </ProtectedRoute>
+          // <ProtectedRoute>
+          <NovelWrite />
+          // </ProtectedRoute>
         ),
       },
     ],
