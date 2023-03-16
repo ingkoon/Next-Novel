@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function SelectOption({ setStep, setStep2, count, setCount }) {
+export default function SelectOption({ setStep, count, setCount }) {
   return (
     <div>
       <button onClick={() => setStep(5)}>완료하기</button>
@@ -8,7 +8,6 @@ export default function SelectOption({ setStep, setStep2, count, setCount }) {
         <button
           onClick={() => {
             setStep(4);
-            setStep2(0);
             setCount(count + 1);
           }}
         >

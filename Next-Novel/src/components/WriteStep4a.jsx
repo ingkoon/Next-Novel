@@ -1,11 +1,11 @@
 import React from "react";
 import Canvas from "./Canvas";
 
-export default function WriteStep4a({ setStep2 }) {
+export default function WriteStep4a({ setStep }) {
   return (
     <div>
       <Canvas />
-      <button onClick={() => setStep2(1)}>제출</button>
+      <button onClick={() => setStep(4.5)}>제출</button>
     </div>
   );
 }

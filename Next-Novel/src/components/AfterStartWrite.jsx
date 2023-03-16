@@ -4,12 +4,12 @@ import CurrentStepTitle from "./CurrentStepTitle";
 import WriteStep1 from "./WriteStep1";
 import WriteStep2 from "./WriteStep2";
 import WriteStep3 from "./WriteStep3";
-import WriteStep4 from "./WriteStep4";
+import WriteStep4a from "./WriteStep4a";
+import WriteStep4b from "./WriteStep4b";
 import WriteStep5 from "./WriteStep5";
 
 export default function AfterStartWrite({ step, setStep }) {
   const [count, setCount] = useState(0);
-  const [step2, setStep2] = useState(0);
 
   return (
     <div>
@@ -18,22 +18,11 @@ export default function AfterStartWrite({ step, setStep }) {
       {step === 1 && <WriteStep1 setStep={setStep} />}
       {step === 2 && <WriteStep2 setStep={setStep} />}
       {step === 3 && (
-        <WriteStep3
-          setStep={setStep}
-          step2={step2}
-          setStep2={setStep2}
-          count={count}
-          setCount={setCount}
-        />
+        <WriteStep3 setStep={setStep} count={count} setCount={setCount} />
       )}
-      {step === 4 && (
-        <WriteStep4
-          setStep={setStep}
-          step2={step2}
-          setStep2={setStep2}
-          count={count}
-          setCount={setCount}
-        />
+      {step === 4 && <WriteStep4a setStep={setStep} />}
+      {step === 4.5 && (
+        <WriteStep4b setStep={setStep} count={count} setCount={setCount} />
       )}
       {step === 5 && <WriteStep5 />}
     </div>

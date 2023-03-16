@@ -1,15 +1,10 @@
 import React from "react";
 import SelectOption from "./SelectOption";
 
-export default function WriteStep4b({ setStep, setStep2, count, setCount }) {
+export default function WriteStep4b({ setStep, count, setCount }) {
   return (
     <div>
-      <SelectOption
-        setStep={setStep}
-        setStep2={setStep2}
-        count={count}
-        setCount={setCount}
-      />
+      <SelectOption setStep={setStep} count={count} setCount={setCount} />
     </div>
   );
 }
