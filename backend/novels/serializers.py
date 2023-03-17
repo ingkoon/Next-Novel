@@ -36,3 +36,23 @@ class NovelCommentCreateSerializer(serializers.ModelSerializer):
         model = NovelComment
         fields = ['id', 'author', 'created_at', 'content']
         read_only_fields = ['author']
+
+
+class NovelCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NovelComment
+        fields = ['id', '']
+
+
+class NovelPreviewSerializer(serializers.ModelSerializer):
+    author = serializers.CharField(source="author.nickname", read_only=True)
+    novel_stats = NovelStatsSerializer(source="novelstats")
+
+    class Meta:
+        model = Novel
+        fields = ['id', 'author', 'created_at', 'novel_stats', 'title', 'cover_img']
+
+
+class NovelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Novel
