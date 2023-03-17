@@ -1,0 +1,59 @@
+.Appbar {
+  height: 64px;
+  width: 100%;
+  background-color: #f66f00;
+  font-size: 28px;
+  color: white;
+  font-family: "gothic";
+  display: flex;
+  align-items: center;
+}
+
+.logo a {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.menu {
+  margin-right: 20px;
+  float: right;
+}
+
+.name {
+  margin-left: 20px;
+  width:33%;
+}
+
+.logo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menudiv {
+  width:33%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.menudiv a{
+  display: flex;
+  align-items: center;
+}
+
+.menudiv > img {
+  cursor: pointer;
+}
+
+.banner_book {
+  width: 26px;
+  height: 26px;
+}
+
+.banner_search, .banner_pen, .banner_mypage {
+  width: 24px;
+  height: 24px;
+}
+
