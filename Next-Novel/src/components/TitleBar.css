@@ -6,6 +6,7 @@
   font-family : 'gothic';
   display: flex;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .title {
@@ -32,7 +33,9 @@
 }
 
 .titlebar > img {
+  width: 500px;
+  height: 500px;
   position: relative;
-  bottom: -40%;
+  bottom: 30%;
   right: 2%;
 }

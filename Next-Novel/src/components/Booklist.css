@@ -3,7 +3,12 @@
   flex-wrap: wrap;
   max-width: 1410px;
   margin: 0 auto;
-  /* justify-content: center; */
+}
+
+.line {
+  width: 1410px;
+  height: 5px;
+  background-color: black;
 }
 
 @media (max-width : 1439px) {
@@ -13,6 +18,12 @@
     max-width: 940px;
     margin: 0 auto;
   }
+
+  .line {
+    width: 940px;
+    height: 5px;
+    background-color: black;
+  }
 }
 @media (max-width : 960px) {
   .list {
@@ -20,5 +31,11 @@
     flex-wrap: wrap;
     max-width: 470px;
     margin: 0 auto;
+  }
+
+  .line {
+    width: 470px;
+    height: 5px;
+    background-color: black;
   }
 }

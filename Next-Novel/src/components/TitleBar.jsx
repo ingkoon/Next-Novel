@@ -12,7 +12,7 @@ function TitleBar(){
         </div>
         <div style={{marginLeft:'10%'}}>
           <div>li-brary</div>
-          <div>to-sho-ken</div>
+          <div>to-sho-kan</div>
         </div>
       </div>
       <img src={process.env.PUBLIC_URL+'/icon/banner/banner_library.svg'}></img>
