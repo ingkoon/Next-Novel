@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Canvas.css";
-import CanvasMini from "./CanvasMini";
 
-export default function Canvas() {
+export default function Canvas({ imageSrcs, setImageSrcs, selected }) {
   // useRef
   const canvasRef = useRef(null);
   // getCtx
@@ -13,19 +12,24 @@ export default function Canvas() {
   const [mouseX, setmouseX] = useState();
   const [mouseY, setmouseY] = useState();
 
-  const [imageData, setImageData] = useState();
-
   useEffect(() => {
     // canvas useRef
     const canvas = canvasRef.current;
-    // canvas.width = 800;
-    // canvas.height = 500;
+    canvas.width = 800;
+    canvas.height = 500;
     const ctx = canvas.getContext("2d");
     ctx.lineJoin = "round";
     ctx.lineWidth = 2.5;
     ctx.strokeStyle = "#000000";
+
+    const img = new Image();
+    img.src = imageSrcs[selected];
+    img.onload = () => ctx.drawImage(img, 0, 0);
+
     setGetCtx(ctx);
-  }, []);
+    // warning이 뜨는데 일단 block처리함
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
 
   const drawFn = (e) => {
     // mouse position
@@ -42,8 +46,11 @@ export default function Canvas() {
     }
     const canvas = canvasRef.current;
     const dataURL = canvas.toDataURL();
-    setImageData(dataURL);
-    console.log(imageData);
+    setImageSrcs(
+      imageSrcs.map((imageSrc, index) =>
+        index === selected ? dataURL : imageSrc
+      )
+    );
   };
 
   return (
@@ -56,7 +63,6 @@ export default function Canvas() {
         onMouseMove={(e) => drawFn(e)}
         onMouseLeave={() => setPainting(false)}
       ></canvas>
-      <CanvasMini props={imageData} />
     </div>
   );
 }

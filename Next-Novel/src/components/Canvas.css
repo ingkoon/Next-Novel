@@ -1,9 +1,3 @@
 .canvas {
-  border: 3px solid red;
-}
-.canvas-test {
-  border: 3px solid yellow;
-}
-.canvas-mini {
   border: 3px solid black;
 }
