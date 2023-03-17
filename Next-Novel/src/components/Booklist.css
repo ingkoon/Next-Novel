@@ -9,6 +9,7 @@
   width: 1410px;
   height: 5px;
   background-color: black;
+  margin-bottom: 20px;
 }
 
 @media (max-width : 1439px) {

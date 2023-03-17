@@ -1,10 +1,11 @@
 import React from "react";
+import TitleBar from '../components/TitleBar'
 
 
 export default function MyPage() {
   return (
     <>
-      <h1>MyPage</h1>
+      <TitleBar name='계정' intro='아, 오셨군요.' subintro1='acc-ount' subintro2='aka-unto' img='idcard'/>
     </>
   );
 }
