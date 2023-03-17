@@ -3,6 +3,7 @@ from allauth.socialaccount.providers.kakao import views as kakao_view
 from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
+from django.db.models import QuerySet
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import requests
@@ -10,9 +11,13 @@ import requests
 from rest_framework import status
 from json import JSONDecodeError
 
+from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 
+from novels.models import Novel
+from novels.serializers import NovelListSerializer
 from users.models import User
 from nextnovel.settings import STATE, KAKAO_CLIENT_ID
 from users.serializers import UserProfileSerializer
@@ -104,10 +109,60 @@ class KakaoLogin(SocialLoginView):
     client_class = OAuth2Client
 
 
-class UserProfileAPI(APIView):
+class UserProfileAPI(RetrieveUpdateAPIView):
     serializer_class = UserProfileSerializer
 
-    def get(self, request, **kwargs):
-        user = request.user
-        serializer = UserProfileSerializer(data=user)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+    def get_object(self):
+        return self.request.user
+
+
+class UserNovelAPI(ListAPIView):
+    queryset = Novel.objects.all()
+    serializer_class = NovelListSerializer
+
+    def get_queryset(self):
+        assert self.queryset is not None, (
+                "'%s' should either include a `queryset` attribute, "
+                "or override the `get_queryset()` method."
+                % self.__class__.__name__
+        )
+
+        queryset = self.queryset
+        if isinstance(queryset, QuerySet):
+            # Ensure queryset is re-evaluated on each request.
+            queryset = queryset.all()
+        queryset = queryset.filter(author=self.request.user).select_related('author', 'novelstats')
+        return queryset
+
+
+class UserLikedNovelAPI(ListAPIView):
+    queryset = Novel.objects.all()
+    serializer_class = NovelListSerializer
+
+    def get_queryset(self):
+        assert self.queryset is not None, (
+                "'%s' should either include a `queryset` attribute, "
+                "or override the `get_queryset()` method."
+                % self.__class__.__name__
+        )
+
+        queryset = self.queryset
+        if isinstance(queryset, QuerySet):
+            # Ensure queryset is re-evaluated on each request.
+            queryset = queryset.all()
+        queryset = queryset.filter(novellike__user=self.request.user).select_related('author', 'novelstats')
+        return queryset
+
+
+# To be deleted
+class UserTestAuthAPI(APIView):
+    def post(self, request):
+        user_id = request.data.get('user_id')
+        user = User.objects.get(pk=user_id)
+        refresh = RefreshToken.for_user(user)
+
+        data = {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
+        return Response(data=data)

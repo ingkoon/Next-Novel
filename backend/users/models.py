@@ -38,9 +38,9 @@ class UserManager(BaseUserManager):
 # AbstractBaseUser를 상속해서 유저 커스텀
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=30, unique=True, null=False, blank=False)
-    nickname = models.CharField(max_length=200,null=True,blank=True)
-    profile_pic = models.CharField(max_length=200,null=True,blank=True)
-    font = models.CharField(max_length=100,null=True,blank=True)
+    nickname = models.CharField(max_length=200, null=True, blank=True)
+    profile_image = models.ImageField(upload_to='profile_images/', default='default.jpg', blank=True)
+    font = models.CharField(max_length=100, null=True, blank=True)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
