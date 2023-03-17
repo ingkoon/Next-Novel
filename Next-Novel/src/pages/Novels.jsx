@@ -6,7 +6,6 @@ import GoTop from "../components/GoToTop";
 import NewBookList from "../components/NewBookList"
 
 export default function Novels() {
-
   return (
     <>
       <TitleBar/>
