@@ -1,7 +1,7 @@
 .newbooklist {
   position: relative;
   display: flex;
-  margin: 100px auto;
+  margin: 50px auto;
   justify-content: center;
 }
 
