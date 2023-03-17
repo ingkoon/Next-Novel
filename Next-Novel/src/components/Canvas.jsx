@@ -13,11 +13,13 @@ export default function Canvas() {
   const [mouseX, setmouseX] = useState();
   const [mouseY, setmouseY] = useState();
 
+  const [imageData, setImageData] = useState();
+
   useEffect(() => {
     // canvas useRef
     const canvas = canvasRef.current;
-    canvas.width = 800;
-    canvas.height = 500;
+    // canvas.width = 800;
+    // canvas.height = 500;
     const ctx = canvas.getContext("2d");
     ctx.lineJoin = "round";
     ctx.lineWidth = 2.5;
@@ -38,6 +40,10 @@ export default function Canvas() {
       getCtx.lineTo(mouseX, mouseY);
       getCtx.stroke();
     }
+    const canvas = canvasRef.current;
+    const dataURL = canvas.toDataURL();
+    setImageData(dataURL);
+    console.log(imageData);
   };
 
   return (
@@ -50,7 +56,7 @@ export default function Canvas() {
         onMouseMove={(e) => drawFn(e)}
         onMouseLeave={() => setPainting(false)}
       ></canvas>
-      <CanvasMini mouseX={mouseX} mouseY={mouseY} painting={painting} />
+      <CanvasMini props={imageData} />
     </div>
   );
 }
