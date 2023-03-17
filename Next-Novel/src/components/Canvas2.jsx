@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Canvas.css";
 
-export default function Canvas({ imageSrcs, setImageSrcs, selected }) {
+export default function Canvas2({ imageSrcs, setImageSrcs }) {
   // useRef
   const canvasRef = useRef(null);
   // getCtx
@@ -22,14 +22,8 @@ export default function Canvas({ imageSrcs, setImageSrcs, selected }) {
     ctx.lineWidth = 2.5;
     ctx.strokeStyle = "#000000";
 
-    const img = new Image();
-    img.src = imageSrcs[selected];
-    img.onload = () => ctx.drawImage(img, 0, 0);
-
     setGetCtx(ctx);
-    // warning이 뜨는데 일단 block처리함
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected]);
+  }, []);
 
   const drawFn = (e) => {
     // mouse position
@@ -46,11 +40,7 @@ export default function Canvas({ imageSrcs, setImageSrcs, selected }) {
     }
     const canvas = canvasRef.current;
     const dataURL = canvas.toDataURL();
-    setImageSrcs(
-      imageSrcs.map((imageSrc, index) =>
-        index === selected ? dataURL : imageSrc
-      )
-    );
+    setImageSrcs(dataURL);
   };
 
   return (

@@ -10,12 +10,15 @@ import WriteStep5 from "./WriteStep5";
 
 export default function AfterStartWrite({ step, setStep }) {
   const [count, setCount] = useState(0);
+  const [genre, setGenre] = useState(1);
 
   return (
     <div>
       <CurrentStepTitle step={step} />
       <CurrentStepIcon step={step} />
-      {step === 1 && <WriteStep1 setStep={setStep} />}
+      {step === 1 && (
+        <WriteStep1 setStep={setStep} genre={genre} setGenre={setGenre} />
+      )}
       {step === 2 && <WriteStep2 setStep={setStep} />}
       {step === 3 && (
         <WriteStep3 setStep={setStep} count={count} setCount={setCount} />
