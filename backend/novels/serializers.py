@@ -56,3 +56,4 @@ class NovelPreviewSerializer(serializers.ModelSerializer):
 class NovelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Novel
+        fields = "__all__"

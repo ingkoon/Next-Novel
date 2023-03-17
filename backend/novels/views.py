@@ -1,8 +1,8 @@
 from django.db.models import QuerySet
-from rest_framework.generics import CreateAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, RetrieveDestroyAPIView
 
 from novels.models import NovelComment, Novel
-from novels.serializers import NovelCommentCreateSerializer, NovelPreviewSerializer
+from novels.serializers import NovelCommentCreateSerializer, NovelPreviewSerializer, NovelDetailSerializer
 
 
 class CreateNovelCommentAPI(CreateAPIView):
@@ -31,3 +31,9 @@ class NovelPreviewAPI(RetrieveAPIView):
         queryset = queryset.select_related('author', 'novelstats')
 
         return queryset
+
+
+class NovelDetailAPI(RetrieveDestroyAPIView):
+    queryset = Novel.objects.all()
+    serializer_class = NovelDetailSerializer
+    lookup_url_kwarg = 'novel_id'
