@@ -1,18 +1,18 @@
-import './NewBookList.module.css'
+import style from './NewBookList.module.css'
 import NewCard from "../components/NewCard";
 
 export default function NewBookList() {
   return (
-    <div className='newbooklist'>
-      <img src={process.env.PUBLIC_URL+'/img/circles_left.svg'} className='circle_left' ></img>
-      <div className='newbook_before'>
+    <div className={style.newbooklist}>
+      <img src={process.env.PUBLIC_URL+'/img/circles_left.svg'} className={style.circle_left} ></img>
+      <div className={style.newbook_before}>
         &lt;
       </div>
       <NewCard/>
-      <div className='newbook_next'>
+      <div className={style.newbook_next}>
         &gt;
       </div>
-      <img src={process.env.PUBLIC_URL+'/img/circles_right.svg'} className='circle_right' ></img>
+      <img src={process.env.PUBLIC_URL+'/img/circles_right.svg'} className={style.circle_right} ></img>
     </div>
   )
 }

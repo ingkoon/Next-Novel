@@ -1,13 +1,13 @@
-import './TitleBar.module.css'
+import style from './TitleBar.module.css'
 
 function TitleBar({name, intro, subintro1, subintro2, img}){
   return (
-    <div className='titlebar'>
+    <div className={style.titlebar}>
       <div style={{margin:'10px'}}>
-        <div className='title'>
-          <div className='maintitle'>
+        <div className={style.title}>
+          <div className={style.maintitle}>
             「{name}」
-            <span className='subtitle'>{intro}</span>
+            <span className={style.subtitle}>{intro}</span>
           </div>
         </div>
         <div style={{marginLeft:'10%'}}>
