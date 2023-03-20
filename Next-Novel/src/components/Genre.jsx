@@ -1,4 +1,4 @@
-import './Genre.css'
+import style from './Genre.module.css'
 
 export default function Genre(){
   
@@ -8,13 +8,13 @@ export default function Genre(){
     for(let i=0; i < btnlist.length ; i++) {
       btnlist[i].setAttribute('class',' ')
     }
-    e.target.setAttribute('class','clicked')
+    e.target.setAttribute('class',style.clicked)
   }
 
   return (
-    <div className='genre'>
+    <div className={style.genre}>
       <div>| 장르 : </div>
-      <button className='clicked' onClick={click}>전체</button>
+      <button className={style.clicked} onClick={click}>전체</button>
       <button onClick={click} >추리</button>
       <button onClick={click} >판타지</button>
       <button onClick={click}> SF</button>

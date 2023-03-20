@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Canvas.css";
+import style from "./Canvas.module.css";
 
 export default function Canvas2({ imageSrcs, setImageSrcs }) {
   // useRef
@@ -44,9 +44,9 @@ export default function Canvas2({ imageSrcs, setImageSrcs }) {
   };
 
   return (
-    <div className="view">
+    <div className={style.view}>
       <canvas
-        className="canvas"
+        className={style.canvas}
         ref={canvasRef}
         onMouseDown={() => setPainting(true)}
         onMouseUp={() => setPainting(false)}

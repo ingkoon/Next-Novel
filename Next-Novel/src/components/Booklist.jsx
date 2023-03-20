@@ -1,4 +1,4 @@
-import './Booklist.css'
+import style from './Booklist.module.css'
 import Card from '../components/Card'
 
 export default function Booklist(){
@@ -10,8 +10,8 @@ export default function Booklist(){
 
   return (
     <div>
-      <hr className='line'></hr>
-      <div className='list'>
+      <hr className={style.line}></hr>
+      <div className={style.list}>
         {arr.map((Component, index) => (
           <Component key={index}/>
         ))}

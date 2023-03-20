@@ -1,4 +1,4 @@
-import './GoToTop.css'
+import style from './GoToTop.module.css'
 
 export default function GoToTop(){
 
@@ -7,7 +7,7 @@ export default function GoToTop(){
   }
 
   return (
-    <div className="gotop" onClick={goTop}>
+    <div className={style.gotop} onClick={goTop}>
       <hr/>
       ↑맨위로
     </div>

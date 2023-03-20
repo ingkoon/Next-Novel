@@ -1,10 +1,10 @@
 import React from "react";
 import TitleBar from "./TitleBar";
-import "./BeforeStartWrite.css";
+import style from "./BeforeStartWrite.module.css";
 
 export default function BeforeStartWrite({ step, setStep }) {
   return (
-    <div className="before-start-write">
+    <div>
       <TitleBar
         name="작업실"
         intro="디테일이 생명입니다."
@@ -12,13 +12,13 @@ export default function BeforeStartWrite({ step, setStep }) {
         subintro2="stajio"
         img="pen"
       />
-      <div className="before-start-write-content">
+      <div className={style.before_start_write_content}>
         <img
           src={process.env.PUBLIC_URL + "/img/circles_left.svg"}
-          className="circle_left"
+          className={style.circle_left}
           alt="circle_left"
         ></img>
-        <div className="before-start-write-box">
+        <div className={style.before_start_write_box}>
           <span></span>
           <span></span>
           <span></span>
@@ -27,7 +27,12 @@ export default function BeforeStartWrite({ step, setStep }) {
           <span></span>
           <span></span>
           <span></span>
-          <div className="before-start-write-box-content">
+          <div className={style.before_start_write_box_content}>
+            <img
+              src={process.env.PUBLIC_URL + "/img/NN_LOGO.svg"}
+              className={style.NN_LOGO}
+              alt="NN_LOGO"
+            ></img>
             <span>
               내가 그리고
               <br />
@@ -40,7 +45,7 @@ export default function BeforeStartWrite({ step, setStep }) {
         </div>
         <img
           src={process.env.PUBLIC_URL + "/img/circles_right.svg"}
-          className="circle_right"
+          className={style.circle_right}
           alt="circle_right"
         ></img>
       </div>

@@ -1,4 +1,4 @@
-import './Card.scoped.css'
+import style from './Card.module.css'
 import React, { useState } from 'react';
 
 function Card(){
@@ -13,19 +13,19 @@ function Card(){
   }
 
   return (
-    <div className="card">
-      <div className={isHovering ? 'none' : 'intro'} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-        <div className='introment'>
-          <div className='ment'>
+    <div className={style.card}>
+      <div className={isHovering ? style.none : style.intro} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+        <div className={style.introment}>
+          <div className={style.ment}>
             이거슨 한 줄 소개글 입니다. 최대 50자까지 쓸수 있죠
           </div>
         </div>
-        <img src={process.env.PUBLIC_URL+'/img/quote.png'} className='quote1' ></img>
-        <img src={process.env.PUBLIC_URL+'/img/quote2.png'} className='quote2' ></img>
+        <img src={process.env.PUBLIC_URL+'/img/quote.png'} className={style.quote1} ></img>
+        <img src={process.env.PUBLIC_URL+'/img/quote2.png'} className={style.quote2} ></img>
       </div>
-      <div className={isHovering ? 'intro' : 'none'} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-        <div className='introment'>
-          <div className='intro2'>
+      <div className={isHovering ? style.intro : style.none } onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+        <div className={style.introment}>
+          <div className={style.intro2}>
             <img src={process.env.PUBLIC_URL+'/icon/glasses.svg'} style={{margin:'auto 5px'}}></img>
             <span style={{margin:'0 5px'}}>110</span>
             <img src={process.env.PUBLIC_URL+'/icon/heart.svg'} style={{margin:'auto 5px'}}></img>
@@ -33,12 +33,12 @@ function Card(){
             <img src={process.env.PUBLIC_URL+'/icon/comment.svg'} style={{margin:'auto 5px'}}></img>
             <span style={{margin:'0 5px'}}>11</span>
           </div>
-          <img src={process.env.PUBLIC_URL+'/icon/trash.svg'} className='trash'></img>
+          <img src={process.env.PUBLIC_URL+'/icon/trash.svg'} className={style.trash}></img>
         </div>
       </div>
-      <div className='info'>
-        <div className='title'>책 제목</div>
-        <div className='writer'>저자</div>
+      <div className={style.info}>
+        <div className={style.title}>책 제목</div>
+        <div className={style.writer}>저자</div>
       </div>
       <img src={process.env.PUBLIC_URL +'/img/just me.png'}></img>
     </div>
