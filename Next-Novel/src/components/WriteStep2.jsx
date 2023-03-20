@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Canvas1 from "./Canvas1";
 import Preview from "./Preview";
-import "./WriteStep2.module.css";
+import style from "./WriteStep2.module.css";
 
 export default function WriteStep2({ setStep }) {
   const [imageSrcs, setImageSrcs] = useState(
@@ -10,7 +10,7 @@ export default function WriteStep2({ setStep }) {
   const [selected, setSelected] = useState(0);
 
   return (
-    <div className="write-step2-container">
+    <div className={style.write_step3_container}>
       <div>
         <Preview imageSrcs={imageSrcs} setSelected={setSelected} />
         <Canvas1

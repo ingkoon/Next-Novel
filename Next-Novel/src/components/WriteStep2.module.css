@@ -1,4 +1,4 @@
-.write-step2-container > div {
+.write_step2_container > div {
   display: flex;
   flex-direction: row;
 }

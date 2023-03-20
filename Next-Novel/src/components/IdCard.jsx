@@ -1,16 +1,16 @@
-import './IdCard.module.css'
+import style from './IdCard.module.css'
 
 export default function IdCard(){
   return (
     <div>
-      <div className='cardtop'>
-        <div className='cardtopcircle'></div>
-        <div className='cardtopclip'></div>
-        <div className='cardtopbase'></div>
+      <div className={style.cardtop}>
+        <div className={style.cardtopcircle}></div>
+        <div className={style.cardtopclip}></div>
+        <div className={style.cardtopbase}></div>
       </div>
-      <div className='cardmiddle'>
-        <div className='cardmiddlebase'>
-          <div className='line'></div>
+      <div className={style.cardmiddle}>
+        <div className={style.cardmiddlebase}>
+          {/* <div className='line'></div> */}
         </div>
       </div>
     </div>
