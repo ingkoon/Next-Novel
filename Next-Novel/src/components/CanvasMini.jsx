@@ -1,5 +1,5 @@
 import React from "react";
-import "./Canvas.css";
+import "./Canvas.module.css";
 
 export default function CanvasMini({ props }) {
   return (

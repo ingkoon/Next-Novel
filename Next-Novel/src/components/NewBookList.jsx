@@ -1,4 +1,4 @@
-import './NewBookList.scoped.css'
+import './NewBookList.module.css'
 import NewCard from "../components/NewCard";
 
 export default function NewBookList() {

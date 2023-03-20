@@ -1,5 +1,5 @@
 import React from "react";
-import GenreCard from "./GenreCard";
+import GenreCard from "./GenreCard.module.css";
 
 export default function WriteStep1({ setStep, genre, setGenre }) {
   const genreInfos = [

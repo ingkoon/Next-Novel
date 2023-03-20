@@ -1,4 +1,4 @@
-import './GoToTop.css'
+import './GoToTop.module.css'
 
 export default function GoToTop(){
 

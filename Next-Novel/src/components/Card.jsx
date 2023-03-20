@@ -1,4 +1,4 @@
-import './Card.scoped.css'
+import './Card.module.css'
 import React, { useState } from 'react';
 
 function Card(){

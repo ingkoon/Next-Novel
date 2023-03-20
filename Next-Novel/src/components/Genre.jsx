@@ -1,4 +1,4 @@
-import './Genre.css'
+import './Genre.module.css'
 
 export default function Genre(){
   

@@ -1,6 +1,6 @@
 import React from "react";
 import PreviewCanvas from "./PreviewCanvas";
-import "./Preview.css";
+import "./Preview.module.css";
 
 export default function Preview({ imageSrcs, setSelected }) {
   return (

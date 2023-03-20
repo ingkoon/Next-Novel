@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Canvas1 from "./Canvas1";
 import Preview from "./Preview";
-import "./WriteStep2.css";
+import "./WriteStep2.module.css";
 
 export default function WriteStep2({ setStep }) {
   const [imageSrcs, setImageSrcs] = useState(

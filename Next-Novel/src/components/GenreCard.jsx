@@ -1,5 +1,5 @@
 import React from "react";
-import "./GenreCard.css";
+import "./GenreCard.module.css";
 
 export default function GenreCard({ genreInfo, genre, setGenre }) {
   const { name, desc, value } = genreInfo;

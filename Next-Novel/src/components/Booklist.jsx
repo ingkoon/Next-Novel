@@ -1,4 +1,4 @@
-import './Booklist.css'
+import './Booklist.module.css'
 import Card from '../components/Card'
 
 export default function Booklist(){
