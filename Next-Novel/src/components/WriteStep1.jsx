@@ -19,8 +19,13 @@ export default function WriteStep1({ setStep, genre, setGenre }) {
   ];
   return (
     <div>
-      {genreInfos.map((genreInfo) => (
-        <GenreCard genreInfo={genreInfo} genre={genre} setGenre={setGenre} />
+      {genreInfos.map((genreInfo, index) => (
+        <GenreCard
+          key={index}
+          genreInfo={genreInfo}
+          genre={genre}
+          setGenre={setGenre}
+        />
       ))}
       <button onClick={() => setStep(2)}>다음</button>
     </div>

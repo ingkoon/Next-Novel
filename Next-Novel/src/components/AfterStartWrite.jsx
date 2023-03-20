@@ -27,7 +27,7 @@ export default function AfterStartWrite({ step, setStep }) {
       {step === 4.5 && (
         <WriteStep4b setStep={setStep} count={count} setCount={setCount} />
       )}
-      {step === 5 && <WriteStep5 />}
+      {step === 5 && <WriteStep5 genre={genre} />}
     </div>
   );
 }
