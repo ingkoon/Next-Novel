@@ -1,4 +1,6 @@
-.before-start-write {
+/* .before-start-write {
+} */
+.before-start-write-content {
   position: relative;
   display: flex;
   justify-content: center;
@@ -8,25 +10,98 @@
   position: absolute;
   z-index: -1;
   left: 100px;
-  top: 0;
+  top: 70px;
+  height: 400px;
 }
 
 .circle_right {
   position: absolute;
   z-index: -1;
   right: 100px;
-  top: 0;
+  top: 70px;
+  height: 400px;
 }
 
 .before-start-write-box {
+  position: relative;
+  top: 70px;
   background-color: #f66f00;
-  border: 5px solid black;
+  border: 4px solid black;
   color: white;
   width: 650px;
   height: 360px;
 }
 
-/* button {
-  color: white;
-  background-color: black;
-} */
+.before-start-write-box > span:nth-of-type(1)::before {
+  content: "";
+  width: 24px;
+  border-top: 4px solid black;
+  position: absolute;
+  top: -4px;
+  left: -28px;
+}
+.before-start-write-box > span:nth-of-type(2)::before {
+  content: "";
+  width: 24px;
+  border-top: 4px solid black;
+  position: absolute;
+  top: -4px;
+  left: 654px;
+}
+.before-start-write-box > span:nth-of-type(3)::before {
+  content: "";
+  width: 24px;
+  border-top: 4px solid black;
+  position: absolute;
+  top: 360px;
+  left: -28px;
+}
+.before-start-write-box > span:nth-of-type(4)::before {
+  content: "";
+  width: 24px;
+  border-top: 4px solid black;
+  position: absolute;
+  top: 360px;
+  left: 654px;
+}
+.before-start-write-box > span:nth-of-type(5)::before {
+  content: "";
+  height: 24px;
+  border-left: 4px solid black;
+  position: absolute;
+  top: -28px;
+  left: -4px;
+}
+.before-start-write-box > span:nth-of-type(6)::before {
+  content: "";
+  height: 24px;
+  border-left: 4px solid black;
+  position: absolute;
+  top: -28px;
+  left: 650px;
+}
+.before-start-write-box > span:nth-of-type(7)::before {
+  content: "";
+  height: 24px;
+  border-left: 4px solid black;
+  position: absolute;
+  top: 364px;
+  left: -4px;
+}
+.before-start-write-box > span:nth-of-type(8)::before {
+  content: "";
+  height: 24px;
+  border-left: 4px solid black;
+  position: absolute;
+  top: 364px;
+  left: 650px;
+}
+.before-start-write-box-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.before-start-write-box-content > span {
+  font-size: 36px;
+  text-align: center;
+}
