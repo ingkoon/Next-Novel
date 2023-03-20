@@ -1,5 +1,5 @@
 import React from "react";
-import "./PreviewCanvas.css";
+import "./PreviewCanvas.module.css";
 
 export default function PreviewCanvas({ imageSrc, setSelected, index }) {
   return (

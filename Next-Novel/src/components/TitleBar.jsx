@@ -1,4 +1,4 @@
-import './TitleBar.css'
+import './TitleBar.module.css'
 
 function TitleBar({name, intro, subintro1, subintro2, img}){
   return (

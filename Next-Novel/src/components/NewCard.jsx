@@ -1,4 +1,4 @@
-import './NewCard.scoped.css'
+import './NewCard.module.css'
 
 export default function NewCard(){
   return (

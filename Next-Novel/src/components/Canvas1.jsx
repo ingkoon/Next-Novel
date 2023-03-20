@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Canvas.css";
+import "./Canvas.module.css";
 
 export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   // useRef
