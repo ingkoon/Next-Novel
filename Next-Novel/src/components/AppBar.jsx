@@ -15,7 +15,7 @@ export default function AppBar() {
       </div>
       <div className="menudiv">
         <Link to="/library">
-          <img src={process.env.PUBLIC_URL + "/icon/banner/banner_library.svg"} className='banner_book'></img>
+          <img src={process.env.PUBLIC_URL + "/icon/banner/library.svg"} className='banner_book'></img>
         </Link>
         <Link to="/library/search">
           <img src={process.env.PUBLIC_URL + "/icon/banner/search.svg"} className='banner_search'></img>
