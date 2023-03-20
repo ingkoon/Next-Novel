@@ -45,6 +45,7 @@ export default function WriteStep5({ genre }) {
         <span>{genreName[genre]}</span>
         <button>끝</button>
       </form>
+      <button>내용 미리보기 아이콘</button>
     </div>
   );
 }

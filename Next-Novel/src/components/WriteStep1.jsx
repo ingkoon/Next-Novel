@@ -1,7 +1,8 @@
 import React from "react";
 import GenreCard from "./GenreCard";
+import Guide from "./Guide";
 
-export default function WriteStep1({ setStep, genre, setGenre }) {
+export default function WriteStep1({ setStep, genre, setGenre, step }) {
   const genreInfos = [
     {
       name: "로맨스",
@@ -28,6 +29,7 @@ export default function WriteStep1({ setStep, genre, setGenre }) {
         />
       ))}
       <button onClick={() => setStep(2)}>다음</button>
+      <Guide step={step} />
     </div>
   );
 }

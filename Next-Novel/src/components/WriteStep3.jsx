@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import Guide from "./Guide";
 import PaintingInProgress from "./PaintingInProgress";
 import SelectOption from "./SelectOption";
 import StoryInProgress from "./StoryInProgress";
 
-export default function WriteStep3({ setStep, count, setCount }) {
+export default function WriteStep3({ setStep, count, setCount, step }) {
   const [whatInProgress, setWhatInProgress] = useState("story");
   return (
     <div>
@@ -17,6 +18,7 @@ export default function WriteStep3({ setStep, count, setCount }) {
       {whatInProgress === "painting" && (
         <button onClick={() => setWhatInProgress("story")}>글 보기</button>
       )}
+      <Guide step={step} count={count} />
     </div>
   );
 }

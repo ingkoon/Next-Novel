@@ -17,15 +17,32 @@ export default function AfterStartWrite({ step, setStep }) {
       <CurrentStepTitle step={step} />
       <CurrentStepIcon step={step} />
       {step === 1 && (
-        <WriteStep1 setStep={setStep} genre={genre} setGenre={setGenre} />
+        <WriteStep1
+          setStep={setStep}
+          genre={genre}
+          setGenre={setGenre}
+          step={step}
+        />
       )}
-      {step === 2 && <WriteStep2 setStep={setStep} />}
+      {step === 2 && <WriteStep2 setStep={setStep} step={step} />}
       {step === 3 && (
-        <WriteStep3 setStep={setStep} count={count} setCount={setCount} />
+        <WriteStep3
+          setStep={setStep}
+          count={count}
+          setCount={setCount}
+          step={step}
+        />
       )}
-      {step === 4 && <WriteStep4a setStep={setStep} />}
+      {step === 4 && (
+        <WriteStep4a setStep={setStep} count={count} step={step} />
+      )}
       {step === 4.5 && (
-        <WriteStep4b setStep={setStep} count={count} setCount={setCount} />
+        <WriteStep4b
+          setStep={setStep}
+          count={count}
+          setCount={setCount}
+          step={step}
+        />
       )}
       {step === 5 && <WriteStep5 genre={genre} />}
     </div>
