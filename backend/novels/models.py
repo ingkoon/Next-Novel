@@ -9,8 +9,15 @@ class Novel(models.Model):
         PENDING = 2
         WAIT_FOR_WRITE = 3
 
+    class Genre(models.IntegerChoices):
+        ROMANCE = 1, "romance"
+        FANTASY = 2, "fantasy"
+        MYSTERY = 3, "mystery"
+        SF = 4, "sf"
+        FREE = 5, "free"
+
     title = models.CharField(max_length=100)
-    cover_img = models.CharField(max_length=100)
+    cover_img = models.ImageField()
     introduction = models.TextField()
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -18,13 +25,14 @@ class Novel(models.Model):
     )
     status = models.IntegerField(choices=Status.choices)
     step = models.IntegerField(
-        default=1,
+        # default=1,
         validators=[
             MaxValueValidator(6),
             MinValueValidator(1)
         ]
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    genre = models.IntegerField(choices=Genre.choices)
 
 
 class NovelContent(models.Model):
@@ -75,6 +83,6 @@ class NovelLike(models.Model):
 
 class NovelStats(models.Model):
     novel = models.OneToOneField(Novel, on_delete=models.CASCADE)
-    hit_count = models.PositiveIntegerField()
-    comment_count = models.PositiveIntegerField()
-    like_count = models.PositiveIntegerField()
+    hit_count = models.PositiveIntegerField(default=0)
+    comment_count = models.PositiveIntegerField(default=0)
+    like_count = models.PositiveIntegerField(default=0)
