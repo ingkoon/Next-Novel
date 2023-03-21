@@ -3,18 +3,26 @@ from django.db import models
 from django.conf import settings
 
 
+class Genre(models.IntegerChoices):
+    ROMANCE = 1, "romance"
+    FANTASY = 2, "fantasy"
+    MYSTERY = 3, "mystery"
+    SF = 4, "sf"
+    FREE = 5, "free"
+
+    @classmethod
+    def get_value_from_label(cls, label):
+        for choice_value, choice_label in cls.choices:
+            if choice_label == label:
+                return choice_value
+        return None
+
+
 class Novel(models.Model):
     class Status(models.IntegerChoices):
         FINISHED = 1
         PENDING = 2
         WAIT_FOR_WRITE = 3
-
-    class Genre(models.IntegerChoices):
-        ROMANCE = 1, "romance"
-        FANTASY = 2, "fantasy"
-        MYSTERY = 3, "mystery"
-        SF = 4, "sf"
-        FREE = 5, "free"
 
     title = models.CharField(max_length=100)
     cover_img = models.ImageField()

@@ -66,9 +66,3 @@ class NovelLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = NovelLike
         fields = ["id", ]
-
-
-class NovelListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Novel
-        fields = "__all__"

@@ -1,9 +1,11 @@
 from django.db.models import QuerySet
+from rest_framework.filters import SearchFilter
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, RetrieveDestroyAPIView, ListCreateAPIView, \
     ListAPIView
+from rest_framework.pagination import CursorPagination
 
 from nextnovel.throttles import LikeRateThrottle
-from novels.models import NovelComment, Novel, NovelLike
+from novels.models import NovelComment, Novel, NovelLike, Genre
 from novels.serializers import NovelPreviewSerializer, NovelDetailSerializer, \
     NovelCommentSerializer, NovelLikeSerializer, NovelListSerializer
 
@@ -85,14 +87,24 @@ class NovelLikeAPI(CreateAPIView):
 
 
 # Fix me
+
+class NovelListPagination(CursorPagination):
+    ordering = "-id"
+    page_size = 12
+    cursor_query_param = "cursor"
+
+
 class NovelListAPI(ListAPIView):
     serializer_class = NovelListSerializer
+    pagination_class = NovelListPagination
+    filter_backends = [SearchFilter]
+    search_fields = ['title', 'author__nickname']
 
     def get_queryset(self):
-        queryset = Novel.objects.all()
+        queryset = Novel.objects.select_related('author', 'novelstats').all()
         genre = self.request.query_params.get('genre', None)
         if genre is not None:
-            genre_choice = Novel.Genre.from_name(genre)
-            if genre_choice is not None:
-                queryset = queryset.filter(genre=genre_choice.value)
+            genre_value = Genre.get_value_from_label(genre)
+            if genre_value is not None:
+                queryset = queryset.filter(genre=genre_value)
         return queryset
