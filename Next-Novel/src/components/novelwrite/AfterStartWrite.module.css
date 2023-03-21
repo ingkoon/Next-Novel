@@ -1,3 +1,24 @@
 .current_step {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px 150px 60px 150px;
+}
+.component {
+  position: relative;
+}
+.circle_left {
+  position: absolute;
+  z-index: -1;
+  left: 100px;
+  /* top: 70px; */
+  height: 200px;
+}
+
+.circle_right {
+  position: absolute;
+  z-index: -1;
+  right: 100px;
+  /* top: 70px; */
+  height: 200px;
 }

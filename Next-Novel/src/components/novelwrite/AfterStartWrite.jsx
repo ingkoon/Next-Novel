@@ -19,35 +19,47 @@ export default function AfterStartWrite({ step, setStep }) {
         <CurrentStepTitle step={step} />
         <CurrentStepIcon step={step} />
       </div>
-      {step === 1 && (
-        <WriteStep1
-          setStep={setStep}
-          genre={genre}
-          setGenre={setGenre}
-          step={step}
-        />
-      )}
-      {step === 2 && <WriteStep2 setStep={setStep} step={step} />}
-      {step === 3 && (
-        <WriteStep3
-          setStep={setStep}
-          count={count}
-          setCount={setCount}
-          step={step}
-        />
-      )}
-      {step === 4 && (
-        <WriteStep4a setStep={setStep} count={count} step={step} />
-      )}
-      {step === 4.5 && (
-        <WriteStep4b
-          setStep={setStep}
-          count={count}
-          setCount={setCount}
-          step={step}
-        />
-      )}
-      {step === 5 && <WriteStep5 genre={genre} />}
+      <div className="component">
+        <img
+          src={process.env.PUBLIC_URL + "/img/circles_left.svg"}
+          className={style.circle_left}
+          alt="circle_left"
+        ></img>
+        <img
+          src={process.env.PUBLIC_URL + "/img/circles_right.svg"}
+          className={style.circle_right}
+          alt="circle_right"
+        ></img>
+        {step === 1 && (
+          <WriteStep1
+            setStep={setStep}
+            genre={genre}
+            setGenre={setGenre}
+            step={step}
+          />
+        )}
+        {step === 2 && <WriteStep2 setStep={setStep} step={step} />}
+        {step === 3 && (
+          <WriteStep3
+            setStep={setStep}
+            count={count}
+            setCount={setCount}
+            step={step}
+          />
+        )}
+        {step === 4 && (
+          <WriteStep4a setStep={setStep} count={count} step={step} />
+        )}
+        {step === 4.5 && (
+          <WriteStep4b
+            setStep={setStep}
+            count={count}
+            setCount={setCount}
+            step={step}
+          />
+        )}
+        {step === 5 && <WriteStep5 genre={genre} />}
+      </div>
     </div>
   );
 }

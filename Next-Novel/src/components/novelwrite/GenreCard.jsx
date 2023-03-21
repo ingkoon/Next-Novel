@@ -5,11 +5,19 @@ export default function GenreCard({ genreInfo, genre, setGenre }) {
   const { name, desc, value } = genreInfo;
   return (
     <div
-      onClick={() => setGenre(value)}
       className={genre === value ? style.selected : ""}
+      onClick={() => setGenre(value)}
     >
-      <h1>{name}</h1>
-      <h1>{desc}</h1>
+      <div className={style.image}>
+        <img src="" alt="" />
+      </div>
+      <div className={style.name}>
+        <span>{name}</span>
+        <img src="" alt="" />
+      </div>
+      <div className={style.desc}>
+        <span>{desc}</span>
+      </div>
     </div>
   );
 }
