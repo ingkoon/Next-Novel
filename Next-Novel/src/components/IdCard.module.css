@@ -1,3 +1,7 @@
+.idcard {
+  
+}
+
 .cardtop {
   position: relative;
 }
@@ -39,12 +43,72 @@
   width: 550px;
   height: 550px;
   background-color: #f3f3f3;
-  /* padding: 36px 27px 19px; */
+  padding-top : 40px;
 }
 
 .cardmiddlebase {
   background-color: #D9D9D9;
   width: 90%;
-  height: 90%;
+  height: 95%;
   margin: 0 auto;
+  border-radius: 20px;
+}
+
+.info_top {
+  height: 60%;
+  text-align: center;
+  background-color: black;
+  color: white;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.info_img {
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+}
+
+.info_img img {
+  width: 50%;
+  object-fit: cover;
+}
+
+.info_nn {
+  font-size : 16px;
+  padding : 10px 0;
+}
+
+.info_bottom {
+  height: 40%;
+  padding : 10px;
+}
+
+.info_title {
+  font-size: 64px;
+}
+
+.info_sub {
+
+}
+
+.info_name {
+  font-size : 36px;
+}
+
+.info_date {
+  font-size : 20px;
+}
+
+.info_bottom2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info_nation img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border : 2px solid black;
 }

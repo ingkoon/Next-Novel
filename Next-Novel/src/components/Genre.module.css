@@ -10,7 +10,7 @@
   color : white;
 }
 
-button {
+.genre button {
   font-family: 'gothic';
   border: 3px solid black;
   width: 100px;
