@@ -22,7 +22,7 @@ async def novel_start(images: List[UploadFile] = Form(...),
         image_bytes = await image.read()
         img = Image.open(io.BytesIO(image_bytes))
         en_string.append(inference_caption(img))
-    question = "Act as a StoryTeller. Write an endless novel story in the genre of {} in 5 sentences based on {}.And write a sentence that summarizes this story in 3 sentences".format(genre,en_string[0])
+    question = "Act as a StoryTeller. Write an endless novel story in the genre of {},{},{},{],{},{} in 5 sentences based on {}.And write a sentence that summarizes this story in 3 sentences".format(genre,en_string[0],en_string[1],en_string[2],en_string[3],en_string[4],en_string[5])
     en_answer,new_history = chatbot(question,[])
     ko_answer = translator.translate(en_answer, dest="ko").text
 
@@ -34,7 +34,6 @@ async def novel_question(dialog_history:str=Form(...)):
     question =  "Ask me 3 questions. i wish the answers to those questions could be depicted in pictures"
     en_answer, new_history = chatbot(question, dialog_history)
     ko_answer = translator.translate(en_answer, dest="ko").text
-
 
     return {"english_answer" : ko_answer,"dialog_history" : new_history}
 
@@ -76,15 +75,8 @@ async def novel_end(dialog_history:str=Form(...)):
 async def image(file: UploadFile = File(...)):
     image_bytes = await file.read()
     image = Image.open(io.BytesIO(image_bytes))
-    image.save("tmp1.jpg")
-    return creat_image(open("tmp1.jpg","rb"))[1]
-
-@app.post('/')
-async def hello1(image: UploadFile = Form(...),
-                         history:str=Form(...)):
-    parsed_data = json.loads(history)
-    print(parsed_data)
-    return 1
+    image.save(file.filename)
+    return creat_image(open(file.filename,"rb"))[1]
 
 @app.get('/')
 def hello():
