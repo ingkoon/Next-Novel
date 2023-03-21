@@ -162,6 +162,12 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_THROTTLE_CLASSES': [
+        'nextnovel.throttles.LikeRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'like': '1/s',
+    }
 }
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
@@ -241,3 +247,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 ## SILK
 SILKY_PYTHON_PROFILER = True
+
+## CACHE
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}

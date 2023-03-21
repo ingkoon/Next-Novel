@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from novels.models import NovelStats, Novel, NovelComment
+from novels.models import NovelStats, Novel, NovelComment, NovelLike
 from users.serializers import UserCommentSerializer, UserNicknameSerializer
 
 
@@ -39,9 +39,12 @@ class NovelCommentCreateSerializer(serializers.ModelSerializer):
 
 
 class NovelCommentSerializer(serializers.ModelSerializer):
+    author = UserCommentSerializer(read_only=True)
+
     class Meta:
         model = NovelComment
-        fields = ['id', '']
+        fields = ['id', 'author', 'created_at', 'content']
+        read_only_fields = ['author']
 
 
 class NovelPreviewSerializer(serializers.ModelSerializer):
@@ -56,3 +59,10 @@ class NovelPreviewSerializer(serializers.ModelSerializer):
 class NovelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Novel
+        fields = "__all__"
+
+
+class NovelLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NovelLike
+        fields = ["id", ]
