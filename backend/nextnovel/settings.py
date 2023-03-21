@@ -60,12 +60,15 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'django_extensions',
     'silk',
+    'corsheaders',
     # 'debug_toolbar',
 ]
 MIDDLEWARE = [
     'silk.middleware.SilkyMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -157,7 +160,9 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAdminUser', # 관리자만 접근
         'rest_framework.permissions.AllowAny',  # 누구나 접근
     ),
+
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ),
 
@@ -254,3 +259,16 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
+## social provider
+SOCIALACCOUNT_PROVIDERS = {
+    "kakao": {
+        "APP": {
+            "client_id": "f8ed452e0c40816d467de425d5b06427",
+            "secret": "874804",
+        },
+    },
+}
+
+## CORS
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
