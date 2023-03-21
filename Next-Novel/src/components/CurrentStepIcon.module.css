@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 420px;
+  height: 90px;
+}
+.component {
+  position: relative;
+}
+.component > span {
+  font-family: "LINESeedKR-Bd";
+  font-size: 20px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}

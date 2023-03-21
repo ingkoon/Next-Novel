@@ -7,6 +7,7 @@ import WriteStep3 from "./WriteStep3";
 import WriteStep4a from "./WriteStep4a";
 import WriteStep4b from "./WriteStep4b";
 import WriteStep5 from "./WriteStep5";
+import style from "./AfterStartWrite.module.css";
 
 export default function AfterStartWrite({ step, setStep }) {
   const [count, setCount] = useState(0);
@@ -14,8 +15,10 @@ export default function AfterStartWrite({ step, setStep }) {
 
   return (
     <div>
-      <CurrentStepTitle step={step} />
-      <CurrentStepIcon step={step} />
+      <div className={style.current_step}>
+        <CurrentStepTitle step={step} />
+        <CurrentStepIcon step={step} />
+      </div>
       {step === 1 && (
         <WriteStep1
           setStep={setStep}

@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  font-family: 'gothic';
+  font-family: "gothic";
 }
 
 .App-logo {
@@ -33,4 +33,9 @@
 @font-face {
   font-family: "wild";
   src: url(../public/fonts/Dovemayo_wild.ttf);
+}
+
+@font-face {
+  font-family: "LINESeedKR-Bd";
+  src: url(../public/fonts/LINESeedKR-Bd.ttf);
 }
