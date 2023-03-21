@@ -22,7 +22,7 @@ async def novel_start(images: List[UploadFile] = Form(...),
         image_bytes = await image.read()
         img = Image.open(io.BytesIO(image_bytes))
         en_string.append(inference_caption(img))
-    question = "Act as a StoryTeller. Write an endless novel story in the genre of {},{},{},{],{},{} in 5 sentences based on {}.And write a sentence that summarizes this story in 3 sentences".format(genre,en_string[0],en_string[1],en_string[2],en_string[3],en_string[4],en_string[5])
+    question = "Act as a StoryTeller. Write an endless novel story in the genre of {} in 5 sentences based on {},{},{},{],{},{}.And write a sentence that summarizes this story in 3 sentences".format(genre,en_string[0],en_string[1],en_string[2],en_string[3],en_string[4],en_string[5])
     en_answer,new_history = chatbot(question,[])
     ko_answer = translator.translate(en_answer, dest="ko").text
 
