@@ -4,7 +4,7 @@ export default function NewCard(){
   return (
     <div className={style.newcard}>
       <div className={style.img}>
-        <img src={process.env.PUBLIC_URL+'/img/tmp/tmpimg2.png'}></img>
+        <img src={process.env.PUBLIC_URL+'/img/tmp/tmpimg2.png'} alt='tmpimg2'></img>
       </div>
       <div className={style.strip}>
         <div className={style.newcard_line}></div>
@@ -20,8 +20,8 @@ export default function NewCard(){
           <div className={style.newcard_ment}>
             취미는 기타, 본업은 코딩 한 사내의 좌충우돌 개발자 생존기
           </div>
-          <img src={process.env.PUBLIC_URL+'/icon/quote1_black.svg'} className={style.newcard_quote1} ></img>
-          <img src={process.env.PUBLIC_URL+'/icon/quote2_black.svg'} className={style.newcard_quote2} ></img>
+          <img src={process.env.PUBLIC_URL+'/icon/quote1_black.svg'} className={style.newcard_quote1} alt='quote1_black'></img>
+          <img src={process.env.PUBLIC_URL+'/icon/quote2_black.svg'} className={style.newcard_quote2} alt='quote2_black'></img>
         </div>
 
         <div className={style.newcard_info}>
@@ -32,9 +32,9 @@ export default function NewCard(){
               출간일 : 2023.03.08
             </div>
             <div style={{display:'flex', marginRight:'10px'}}>
-              <img src={process.env.PUBLIC_URL+'/icon/heart_black.svg'} style={{margin:'auto 5px'}}></img>
+              <img src={process.env.PUBLIC_URL+'/icon/heart_black.svg'} style={{margin:'auto 5px'}} alt='heart_black'></img>
               <div className={style.newcard_heart}>23</div>
-              <img src={process.env.PUBLIC_URL+'/icon/comment_black.svg'} style={{margin:'auto 5px'}}></img>
+              <img src={process.env.PUBLIC_URL+'/icon/comment_black.svg'} style={{margin:'auto 5px'}} alt='comment_black'></img>
               <div className={style.newcard_comment}>11</div>
             </div>
           </div>

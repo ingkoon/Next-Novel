@@ -13,9 +13,9 @@ export default function IdCard(){
           <div className={style.info_top}>
             <div className={style.info_nn}>Next Novel Lab</div>
             <div className={style.info_img}>
-              <img src={process.env.PUBLIC_URL+'img/tmp/girl2.jpg'}/>
+              <img src={process.env.PUBLIC_URL+'img/tmp/girl2.jpg'} alt='girl2'/>
               <div>
-                <img src={process.env.PUBLIC_URL + 'icon/logo_color.svg'}/>
+                <img src={process.env.PUBLIC_URL + 'icon/logo_color.svg'} alt='logo_color' />
               </div>
             </div>
           </div>
@@ -28,7 +28,7 @@ export default function IdCard(){
                 <div className={style.info_date}>S/N 20230308.14.24.32</div>
               </div>
               <div className={style.info_nation}>
-                <img src={process.env.PUBLIC_URL+'img/tmp/girl2.jpg'}/>
+                <img src={process.env.PUBLIC_URL+'img/tmp/girl2.jpg'} alt='girl2'/>
               </div>
             </div>
           </div>

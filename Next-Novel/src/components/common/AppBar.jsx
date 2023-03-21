@@ -10,21 +10,21 @@ export default function AppBar() {
       </div>
       <div className={style.logo}>
         <Link to="/">
-          <img src={process.env.PUBLIC_URL + "/icon/logo.svg"}></img>
+          <img src={process.env.PUBLIC_URL + "/icon/logo.svg"} alt='logo'></img>
         </Link>
       </div>
       <div className={style.menudiv}>
         <Link to="/library">
-          <img src={process.env.PUBLIC_URL + "/icon/banner/library.svg"} className={style.banner_book}></img>
+          <img src={process.env.PUBLIC_URL + "/icon/banner/library.svg"} className={style.banner_book} alt='library'></img>
         </Link>
         <Link to="/library/search">
-          <img src={process.env.PUBLIC_URL + "/icon/banner/search.svg"} className={style.banner_search}></img>
+          <img src={process.env.PUBLIC_URL + "/icon/banner/search.svg"} className={style.banner_search} alt='search'></img>
         </Link>
         <Link to="/laboratory">
-          <img src={process.env.PUBLIC_URL + "/icon/banner/pen.svg"} className={style.banner_pen}></img>
+          <img src={process.env.PUBLIC_URL + "/icon/banner/pen.svg"} className={style.banner_pen} alt='pen'></img>
         </Link>
         <Link to="/mypage">
-          <img src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"} className={style.banner_mypage}></img>
+          <img src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"} className={style.banner_mypage} alt='idcard'></img>
         </Link>
       </div>
     </div>

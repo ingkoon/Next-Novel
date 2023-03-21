@@ -1,8 +1,8 @@
 import React from "react";
-import TitleBar from '../components/TitleBar'
-import Booklist from '../components/Booklist'
-import GoTop from "../components/GoToTop";
-import Search from "../components/Search"
+import TitleBar from '../components/common/TitleBar'
+import Booklist from '../components/library/Booklist'
+import GoTop from "../components/common/GoToTop";
+import Search from "../components/search/Search"
 
 export default function NovelSearch() {
   return (

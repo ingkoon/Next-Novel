@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AfterStartWrite from "../components/AfterStartWrite";
-import BeforeStartWrite from "../components/BeforeStartWrite";
+import AfterStartWrite from "../components/novelwrite/AfterStartWrite";
+import BeforeStartWrite from "../components/novelwrite/BeforeStartWrite";
 
 export default function NovelWrite() {
   const [step, setStep] = useState(0);
