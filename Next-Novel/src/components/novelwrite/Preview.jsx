@@ -4,7 +4,7 @@ import style from "./Preview.module.css";
 
 export default function Preview({ imageSrcs, setSelected }) {
   return (
-    <div className={style.preview_container}>
+    <div className={style.container}>
       {imageSrcs.map((imageSrc, index) => (
         <PreviewCanvas
           key={index}

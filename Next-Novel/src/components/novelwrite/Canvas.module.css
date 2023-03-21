@@ -1,3 +1,5 @@
-.canvas {
+.container {
+  width: 608px;
+  height: 380px;
   border: 3px solid black;
 }

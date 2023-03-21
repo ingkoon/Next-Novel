@@ -12,8 +12,8 @@ export default function WriteStep2({ setStep, step }) {
   const button = () => setStep(3);
 
   return (
-    <div className={style.write_step3_container}>
-      <div>
+    <div className={style.container}>
+      <div className={style.component}>
         <Preview imageSrcs={imageSrcs} setSelected={setSelected} />
         <Canvas1
           imageSrcs={imageSrcs}
