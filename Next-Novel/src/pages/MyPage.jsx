@@ -1,6 +1,6 @@
 import React from "react";
-import TitleBar from '../components/TitleBar'
-import IdCard from '../components/IdCard'
+import TitleBar from '../components/common/TitleBar'
+import IdCard from '../components/mypage/IdCard'
 
 
 export default function MyPage() {

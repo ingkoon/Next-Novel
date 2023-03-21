@@ -1,5 +1,5 @@
 import React from "react";
-import TitleBar from "./TitleBar";
+import TitleBar from "../common/TitleBar";
 import style from "./BeforeStartWrite.module.css";
 
 export default function BeforeStartWrite({ step, setStep }) {

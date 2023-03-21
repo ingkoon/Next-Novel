@@ -1,5 +1,5 @@
 import style from './Booklist.module.css'
-import Card from '../components/Card'
+import Card from '../common/Card'
 
 export default function Booklist(){
 

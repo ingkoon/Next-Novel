@@ -14,6 +14,9 @@ export default function Home() {
       <Link to="/library/search">
         <h2>검색페이지</h2>
       </Link>
+      <Link to="/library/intro">
+        <h2>책인트로</h2>
+      </Link>
       <Link to="/mypage">
         <h2>마이페이지</h2>
       </Link>
