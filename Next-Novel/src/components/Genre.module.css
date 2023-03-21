@@ -7,11 +7,11 @@
 
 .clicked {
   background-color: black;
-  color : white;
+  color: white;
 }
 
-.genre button {
-  font-family: 'gothic';
+.genre > button {
+  font-family: "gothic";
   border: 3px solid black;
   width: 100px;
   height: 50px;
@@ -19,15 +19,15 @@
   font-size: 24px;
   background-color: white;
   cursor: pointer;
-  margin : 0 1%;
+  margin: 0 1%;
 }
 
-@media (max-width : 1439px) {
+@media (max-width: 1439px) {
   .genre {
     width: 940px;
   }
 }
-@media (max-width : 960px) {
+@media (max-width: 960px) {
   .genre {
     width: 470px;
   }

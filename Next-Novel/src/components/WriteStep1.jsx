@@ -1,7 +1,9 @@
 import React from "react";
-import GenreCard from "./GenreCard.module.css";
 
-export default function WriteStep1({ setStep, genre, setGenre }) {
+import GenreCard from "./GenreCard";
+import Guide from "./Guide";
+
+export default function WriteStep1({ setStep, genre, setGenre, step }) {
   const genreInfos = [
     {
       name: "로맨스",
@@ -19,10 +21,16 @@ export default function WriteStep1({ setStep, genre, setGenre }) {
   ];
   return (
     <div>
-      {genreInfos.map((genreInfo) => (
-        <GenreCard genreInfo={genreInfo} genre={genre} setGenre={setGenre} />
+      {genreInfos.map((genreInfo, index) => (
+        <GenreCard
+          key={index}
+          genreInfo={genreInfo}
+          genre={genre}
+          setGenre={setGenre}
+        />
       ))}
       <button onClick={() => setStep(2)}>다음</button>
+      <Guide step={step} />
     </div>
   );
 }
