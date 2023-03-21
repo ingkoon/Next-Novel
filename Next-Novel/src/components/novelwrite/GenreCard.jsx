@@ -5,18 +5,33 @@ export default function GenreCard({ genreInfo, genre, setGenre }) {
   const { name, desc, value } = genreInfo;
   return (
     <div
-      className={genre === value ? style.selected : ""}
+      className={`${style.container} ${genre === value ? style.selected : ""}`}
       onClick={() => setGenre(value)}
     >
       <div className={style.image}>
-        <img src="" alt="" />
+        <img
+          src={process.env.PUBLIC_URL + `/img/genre_img${value}.jpg`}
+          alt="genre_img"
+        />
       </div>
       <div className={style.name}>
-        <span>{name}</span>
-        <img src="" alt="" />
+        <span>&lt; {name} /&gt;</span>
+        <img
+          src={
+            genre === value
+              ? process.env.PUBLIC_URL + `/img/genre_icon_yellow${value}.svg`
+              : process.env.PUBLIC_URL + `/img/genre_icon${value}.svg`
+          }
+          alt="genre_icon"
+        />
       </div>
       <div className={style.desc}>
-        <span>{desc}</span>
+        {desc.map((item, index) => (
+          <span key={index}>
+            {item}
+            <br />
+          </span>
+        ))}
       </div>
     </div>
   );

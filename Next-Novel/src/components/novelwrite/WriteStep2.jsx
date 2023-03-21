@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import Bottom from "./Bottom";
 import Canvas1 from "./Canvas1";
-import Guide from "./Guide";
 import Preview from "./Preview";
 import style from "./WriteStep2.module.css";
 
@@ -9,6 +9,7 @@ export default function WriteStep2({ setStep, step }) {
     Array.from({ length: 6 }, () => undefined)
   );
   const [selected, setSelected] = useState(0);
+  const button = () => setStep(3);
 
   return (
     <div className={style.write_step3_container}>
@@ -20,8 +21,7 @@ export default function WriteStep2({ setStep, step }) {
           selected={selected}
         />
       </div>
-      <button onClick={() => setStep(3)}>제출</button>
-      <Guide step={step} />
+      <Bottom step={step} name="제출" button={button} />
     </div>
   );
 }

@@ -1,0 +1,36 @@
+.bottom {
+  display: flex;
+  position: relative;
+  top: 40px;
+}
+.left,
+.middle,
+.right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid red; */
+}
+.middle {
+  position: relative;
+}
+.middle > img {
+  width: 80%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+}
+.button {
+  width: 126px;
+  height: 46px;
+  background-color: #090909;
+  color: white;
+  font-family: "LINESeedKR-Bd";
+  font-size: 18px;
+  box-shadow: 3px 3px 0px 0px rgba(242, 205, 60, 1);
+  padding-top: 5px;
+}
+.button:hover {
+  cursor: pointer;
+}

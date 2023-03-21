@@ -19,7 +19,7 @@ export default function AfterStartWrite({ step, setStep }) {
         <CurrentStepTitle step={step} />
         <CurrentStepIcon step={step} />
       </div>
-      <div className="component">
+      <div className={style.component}>
         <img
           src={process.env.PUBLIC_URL + "/img/circles_left.svg"}
           className={style.circle_left}

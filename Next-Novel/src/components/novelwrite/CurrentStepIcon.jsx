@@ -22,6 +22,7 @@ export default function CurrentStepIcon({ step }) {
           className={`${style.component} ${
             what === "black" ? style.black : style.white
           }`}
+          key={index}
         >
           <span>{index + 1}</span>
           <img src={what === "black" ? logoSrc : logoWhiteSrc} alt="logo" />

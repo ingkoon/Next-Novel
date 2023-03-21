@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+.container > span {
+  color: #f66f00;
+  font-family: "LINESeedKR-Bd";
+  margin-top: 3px;
+}
