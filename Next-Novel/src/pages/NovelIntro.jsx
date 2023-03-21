@@ -1,9 +1,14 @@
 import React from "react";
+import Thumbnail from "../components/novelintro/Thumbnail";
+import BookInfo from "../components/novelintro/BookInfo";
 
 export default function NovelIntro() {
   return (
     <>
-      <h1>NovelIntro : 책의 프리뷰를 보는 곳입니다(조회수, 좋아요, 감상평)zzzz</h1>
+    {
+    /* <img src={process.env.PUBLIC_URL+'/img/circles_left.svg'}  alt='circles_left'></img> */}
+      <Thumbnail />
+      <BookInfo />
     </>
   );
 }
