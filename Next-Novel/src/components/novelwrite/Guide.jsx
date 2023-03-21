@@ -1,4 +1,5 @@
 import React from "react";
+import style from "./Guide.module.css";
 
 export default function Guide({ step, count }) {
   const desc = [
@@ -12,5 +13,13 @@ export default function Guide({ step, count }) {
   ];
   const flooredStep = Math.floor(step);
 
-  return <div>{desc[flooredStep]}</div>;
+  return (
+    <div className={style.container}>
+      <img
+        src={process.env.PUBLIC_URL + `/icon/question_mark.svg`}
+        alt="question_mark"
+      />
+      <span>&nbsp;&nbsp;{desc[flooredStep]}</span>
+    </div>
+  );
 }

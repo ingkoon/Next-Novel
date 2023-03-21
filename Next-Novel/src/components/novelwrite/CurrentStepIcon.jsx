@@ -5,22 +5,27 @@ export default function CurrentStepIcon({ step }) {
   const flooredStep = Math.floor(step);
   const logoSrc = process.env.PUBLIC_URL + "/icon/logo.svg";
   const logoWhiteSrc = process.env.PUBLIC_URL + "/icon/logo_white.svg";
-  const srcs = [];
+  const blackOrWhite = [];
 
   for (let i = 1; i <= 5; i++) {
     if (flooredStep >= i) {
-      srcs.push(logoSrc);
+      blackOrWhite.push("black");
     } else {
-      srcs.push(logoWhiteSrc);
+      blackOrWhite.push("white");
     }
   }
 
   return (
     <div className={style.container}>
-      {srcs.map((src, index) => (
-        <div className={style.component}>
+      {blackOrWhite.map((what, index) => (
+        <div
+          className={`${style.component} ${
+            what === "black" ? style.black : style.white
+          }`}
+          key={index}
+        >
           <span>{index + 1}</span>
-          <img src={src} alt="logo" />
+          <img src={what === "black" ? logoSrc : logoWhiteSrc} alt="logo" />
         </div>
       ))}
     </div>

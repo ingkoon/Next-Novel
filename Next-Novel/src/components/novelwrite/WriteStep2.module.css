@@ -1,4 +1,6 @@
-.write_step2_container > div {
+.component {
   display: flex;
   flex-direction: row;
+  height: 400px;
+  align-items: center;
 }
