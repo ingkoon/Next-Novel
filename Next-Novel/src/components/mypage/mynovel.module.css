@@ -72,10 +72,49 @@
   font-size: 28px;
 }
 
-.triangle {
-  text-align: center;
+/* .booklist {
+  margin : 0 5%;
+  height: 370px;
+} */
+/* 
+.hidden {
+  display : none;
+  opacity: 0;
 }
 
+.appear {
+  animation : fade-in 1s;
+  animation-fill-mode: forwards;
+}
+
+.disappear {
+  animation: fade-out 1s;
+  animation-fill-mode:forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+
+  }
+  to {
+    opacity: 0;
+  }
+} */
+
 .booklist {
-  margin : 0 5%;
+  height : 0;
+  width : 100%;
+  overflow: hidden;
+  transition: height 0.35s ease;
+  padding : 0 5%
 }
