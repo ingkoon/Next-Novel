@@ -1,6 +1,9 @@
 .container {
   display: flex;
   align-items: center;
+  position: absolute;
+  /* border: 1px solid red; */
+  left: 150px;
 }
 .container > span {
   color: #f66f00;

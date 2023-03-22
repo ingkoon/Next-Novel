@@ -43,14 +43,15 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     } else {
       getCtx.lineTo(mouseX, mouseY);
       getCtx.stroke();
+
+      const canvas = canvasRef.current;
+      const dataURL = canvas.toDataURL();
+      setImageSrcs(
+        imageSrcs.map((imageSrc, index) =>
+          index === selected ? dataURL : imageSrc
+        )
+      );
     }
-    const canvas = canvasRef.current;
-    const dataURL = canvas.toDataURL();
-    setImageSrcs(
-      imageSrcs.map((imageSrc, index) =>
-        index === selected ? dataURL : imageSrc
-      )
-    );
   };
 
   return (

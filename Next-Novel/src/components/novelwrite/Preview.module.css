@@ -1,14 +1,21 @@
 .container {
-  display: flex;
-  flex-direction: column;
   background: linear-gradient(147.38deg, #f2cd3c 0%, #f66f00 100%);
   border: 3px solid black;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
-  padding: 20px;
-  width: 310px;
-  height: 300px;
+  padding: 10px 12px 10px 20px;
+  width: 350px;
+  height: 360px;
+}
+.scroll {
+  width: 100%;
+  height: 100%;
   overflow-y: scroll;
-  /* overflow-y: hidden; */
-  align-items: center;
+}
+.scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 8px;
 }
