@@ -14,7 +14,7 @@ import multiprocessing
 
 translator = googletrans.Translator()
 app = FastAPI()
-pool = multiprocessing.Pool(processes=6)
+pool = multiprocessing.Pool(processes=3)
 
 
 
@@ -93,5 +93,5 @@ async def image(file: UploadFile = File(...)):
     return creat_image(open(file.filename,"rb"))[1]
 
 @app.get('/')
-def hello():
+async def hello():
     return "hello"
