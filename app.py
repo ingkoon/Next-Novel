@@ -34,8 +34,9 @@ async def novel_question(dialog_history:str=Form(...)):
     question = "Ask me 3 questions I wish the answers to those questions could be depicted in pictures"
     en_answer, new_history = chatbot(question, dialog_history)
     ko_answer = translator.translate(en_answer, dest="ko").text
+    query = ko_answer.split("\n")
 
-    return {"korean_answer" : ko_answer,"dialog_history" : new_history}
+    return {"query1" : query[0],"query2" : query[1],"query3" : query[2],"dialog_history" : new_history}
 
 @app.post('/novel/sequence')
 async def novel_sequence(image: UploadFile = Form(...),
