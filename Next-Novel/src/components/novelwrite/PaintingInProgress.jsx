@@ -1,34 +1,34 @@
 import React from "react";
+import style from "./PaintingInProgress.module.css";
 
 export default function PaintingInProgress() {
   const data = {
-    text: "orange",
-    painting:
-      "https://images.unsplash.com/photo-1609424572698-04d9d2e04954?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+    text: "그림",
+    painting: process.env.PUBLIC_URL + `/img/painting.png`,
   };
   const tempDatas1 = Array.from({ length: 6 }, () => data);
   const tempDatas2 = Array.from({ length: 6 }, () => data);
 
   return (
-    <div>
-      <div>
-        {tempDatas1.map((tempData) => (
-          <div>
-            <img src={tempData.painting} alt="dd" />
-            {tempData.text}
-          </div>
-        ))}
-      </div>
-      <div>
-        {tempDatas2.map((tempData) => (
-          <div>
+    <div className={style.container}>
+      <div className={style.scroll}>
+        <div className={style.material}>
+          {tempDatas1.map((tempData) => (
             <div>
-              ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+              <img src={tempData.painting} alt="dd" />
+              <span>{tempData.text}</span>
             </div>
-            <img src={tempData.painting} alt="dd" />
-            {tempData.text}
-          </div>
-        ))}
+          ))}
+        </div>
+        <div className={style.answer}>
+          {tempDatas2.map((tempData) => (
+            <div>
+              <div></div>
+              <img src={tempData.painting} alt="dd" />
+              <span>{tempData.text}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

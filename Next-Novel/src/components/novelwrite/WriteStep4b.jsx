@@ -3,6 +3,7 @@ import Bottom from "./Bottom";
 import PaintingInProgress from "./PaintingInProgress";
 import SelectOption from "./SelectOption";
 import StoryInProgress from "./StoryInProgress";
+import style from "./WriteStep4b.module.css";
 
 export default function WriteStep4b({ setStep, count, setCount, step }) {
   const [whatInProgress, setWhatInProgress] = useState("story");
@@ -13,11 +14,13 @@ export default function WriteStep4b({ setStep, count, setCount, step }) {
       : setWhatInProgress("story");
 
   return (
-    <div>
-      {whatInProgress === "story" && <StoryInProgress />}
-      {whatInProgress === "painting" && <PaintingInProgress />}
+    <div className={style.container}>
+      <div className={style.component}>
+        {whatInProgress === "story" && <StoryInProgress />}
+        {whatInProgress === "painting" && <PaintingInProgress />}
 
-      <SelectOption setStep={setStep} count={count} setCount={setCount} />
+        <SelectOption setStep={setStep} count={count} setCount={setCount} />
+      </div>
       <Bottom
         step={step}
         name={whatInProgress === "story" ? "그림보기" : "글보기"}
