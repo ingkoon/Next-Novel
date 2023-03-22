@@ -1,4 +1,5 @@
 import React from "react";
+import style from "./PaintingInProgress.module.css";
 
 export default function PaintingInProgress() {
   const data = {
@@ -10,7 +11,7 @@ export default function PaintingInProgress() {
   const tempDatas2 = Array.from({ length: 6 }, () => data);
 
   return (
-    <div>
+    <div className={style.container}>
       <div>
         {tempDatas1.map((tempData) => (
           <div>

@@ -56,11 +56,11 @@
 }
 .dice {
   position: absolute;
-  bottom: 10px;
-  right: 20px;
+  bottom: 12px;
+  right: 24px;
 }
 .dice > img {
-  height: 40px;
+  height: 30px;
 }
 .dice > img:hover {
   cursor: pointer;
