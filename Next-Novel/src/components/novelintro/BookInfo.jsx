@@ -3,10 +3,15 @@ import style from './BookInfo.module.css'
 export default function BookInfo(){
     return (
       <div>
+        <div className={style.blur}>
+        </div>
+        <div className={style.undertext}>
+            <span>책제목입니다</span>
+        </div>
         <div className={style.info}>
             <div className={style.wrap}>
                 <div className={style.title}>
-                    「책제목입니다」
+                    <span>「책제목입니다」</span>
                 </div>
                 <div className={style.subtitle}>
                     <div className={style.line}></div>
@@ -21,15 +26,15 @@ export default function BookInfo(){
                 </div>
             </div>
             <div className={style.hlc}>
-                <div className={style.etc2}>
+                <div className={style.etc3}>
                     <img src={process.env.PUBLIC_URL+'/icon/glasses_black.svg'} className={style.icons} alt='glasses_black'></img>
                     <div className={style.nums}>180</div>
                 </div>
-                <div className={style.etc2}>
+                <div className={style.etc3}>
                     <img src={process.env.PUBLIC_URL+'/icon/heart_outline.svg'} className={style.icons} alt='heart_outline'></img>
                     <div className={style.nums}>39</div>
                 </div>
-                <div className={style.etc2}>
+                <div className={style.etc3}>
                     <img src={process.env.PUBLIC_URL+'/icon/comment_outline.svg'} className={style.icons} alt='comment_outline'></img>
                     <div className={style.nums}>3</div>
                 </div>
