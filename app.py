@@ -14,13 +14,15 @@ import multiprocessing
 
 translator = googletrans.Translator()
 app = FastAPI()
-pool = multiprocessing.Pool(processes=3)
+pool = multiprocessing.Pool(processes=6)
 
 
 
 @app.post('/novel/start')
 async def novel_start(images: List[UploadFile] = Form(...),
                        genre: str = Form(...)):
+
+    print(multiprocessing.cpu_count())
 
     start = time.time()
     image_bytes = []
