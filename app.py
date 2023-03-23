@@ -1,3 +1,6 @@
+import asyncio
+import time
+
 from PIL import Image
 import io
 from fastapi import FastAPI, UploadFile, File, Form
@@ -8,21 +11,32 @@ from caption import inference_caption
 import googletrans
 import json
 import time
+import multiprocessing
 
 translator = googletrans.Translator()
 app = FastAPI()
+pool = multiprocessing.Pool(processes=3)
 
 
 
 @app.post('/novel/start')
 async def novel_start(images: List[UploadFile] = Form(...),
                        genre: str = Form(...)):
+
+    print(multiprocessing.cpu_count())
+
     start = time.time()
-    en_string = []
+    image_bytes = []
     for image in images:
-        image_bytes = await image.read()
-        img = Image.open(io.BytesIO(image_bytes))
-        en_string.append(inference_caption(img))
+        image_bytes.append(await image.read())
+
+    # print(time.time()-start)
+
+    # en_string = pool.map(inference_caption, image_bytes)
+    en_string = []
+    for i in image_bytes:
+        en_string.append(inference_caption(i))
+    # print(en_string)
     question = "Act as a StoryTeller. Write an endless novel story in the genre of {} in 5 sentences based on {},{},{},{},{},{}.And write a sentence that summarizes this story in 3 sentences".format(genre,en_string[0],en_string[1],en_string[2],en_string[3],en_string[4],en_string[5])
     en_answer,new_history = chatbot(question,[])
     ko_answer = translator.translate(en_answer, dest="ko").text
