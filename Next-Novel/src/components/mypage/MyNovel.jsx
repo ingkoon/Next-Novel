@@ -72,7 +72,7 @@ export default function MyNovel() {
     <div>
       <hr className={style2.line} />
 
-      <div className={style.titlebar}>
+      <div className={style.titlebar} onClick={handleButtonClick}>
         <div className={style.mynoveltitle}>
           <span className={style.step}>1</span>
           <img
@@ -89,7 +89,6 @@ export default function MyNovel() {
           <img
             src={process.env.PUBLIC_URL + "/icon/triangle.svg"}
             alt=''
-            onClick={handleButtonClick}
             id = 'tri1'
           />
         </div>
@@ -103,7 +102,7 @@ export default function MyNovel() {
 
       <hr className={style2.line} />
 
-      <div className={style.titlebar}>
+      <div className={style.titlebar} onClick={handleButtonClick2} >
         <div className={style.mynoveltitle}>
           <span className={style.step}>2</span>
           <img
@@ -117,7 +116,7 @@ export default function MyNovel() {
 
         <button>2</button>
         <div className={style.triangle} >
-          <img src={process.env.PUBLIC_URL + "/icon/triangle.svg"} alt='' onClick={handleButtonClick2} id='tri2' />
+          <img src={process.env.PUBLIC_URL + "/icon/triangle.svg"} alt='' id='tri2' />
         </div>
       </div>
 
