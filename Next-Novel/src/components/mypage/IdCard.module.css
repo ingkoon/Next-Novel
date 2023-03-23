@@ -1,9 +1,95 @@
+.mypage {
+  display: flex;
+  font-family : 'LINESeedKR-Bd';
+  width : 710px;
+}
+
+.pic {
+  transform-origin: 100% 0;
+  transform : rotate(-90deg);
+  height: 180px;
+  width: 180px;
+  text-align: right;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.linehor {
+  width: 180px;
+  height: 3px;
+  background-color: black;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  width : 220px;
+  margin-top : 25%;
+  float: right;
+  padding-right: 15px;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: black;
+}
+
+.circlegroup {
+  height: 100%;
+  margin-left: 20px;
+  display: grid;
+  grid-template-rows: 55% 15% 10% 10% 10%;
+}
+.circlegroup2 {
+  height: 100%;
+  margin-left: 18px;
+  display: grid;
+  grid-template-rows: 106px 70.5px 70.5px 70.5px;
+  text-align: right;
+  padding-top : 183px;
+}
+
+.one {
+  margin : 20px 0 20px 197px;
+}
+
+.two {
+  margin : 20px 0 0 197px;
+}
+
+.right {
+   display: flex;
+}
+
+.diag {
+  width: 260px;
+  height: 3px;
+  background-color: black;
+  transform-origin: 0 100%;
+  transform : rotate(-45deg);
+}
+
+.horline {
+  width: 300px;
+  height: 3px;
+  background-color: black;
+}
+
 .idcard {
-  
+  width: 550px;
 }
 
 .cardtop {
   position: relative;
+}
+
+.line {
+  height: 3px;
+  width: 180px;
+  background-color: black;
 }
 
 .cardtopbase {
