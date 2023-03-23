@@ -5,6 +5,10 @@
   top: 30px;
   /* border: 1px solid blue; */
 }
+.guide {
+  position: absolute;
+  left: 150px;
+}
 .middle {
   position: relative;
   margin: 0 auto;
