@@ -6,7 +6,8 @@ import WriteStep2 from "./WriteStep2";
 import WriteStep3 from "./WriteStep3";
 import WriteStep4a from "./WriteStep4a";
 import WriteStep4b from "./WriteStep4b";
-import WriteStep5 from "./WriteStep5";
+import WriteStep5a from "./WriteStep5a";
+import WriteStep5b from "./WriteStep5b";
 import style from "./AfterStartWrite.module.css";
 
 export default function AfterStartWrite({ step, setStep }) {
@@ -20,7 +21,7 @@ export default function AfterStartWrite({ step, setStep }) {
         <CurrentStepIcon step={step} />
       </div>
       <div className={style.component}>
-        {step < 5 && (
+        {step <= 5 && (
           <>
             <img
               src={process.env.PUBLIC_URL + "/img/circles_left.svg"}
@@ -63,7 +64,8 @@ export default function AfterStartWrite({ step, setStep }) {
             step={step}
           />
         )}
-        {step === 5 && <WriteStep5 genre={genre} count={count} step={step} />}
+        {step === 5 && <WriteStep5a setStep={setStep} step={step} />}
+        {step === 5.5 && <WriteStep5b genre={genre} step={step} />}
       </div>
     </div>
   );

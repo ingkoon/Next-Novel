@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Guide from "./Guide";
-import style from "./WriteStep5.module.css";
+import style from "./WriteStep5b.module.css";
 
-export default function WriteStep5({ genre, step, count }) {
+export default function WriteStep5b({ genre, step }) {
   const genreName = ["", "로맨스", "판타지", "추리", "SF", "자유"];
   const [novel, setNovel] = useState({});
   const buttons = [
@@ -100,7 +100,7 @@ export default function WriteStep5({ genre, step, count }) {
           })}
         </div>
         <div className={style.guide}>
-          <Guide step={step} count={count} />
+          <Guide step={step} />
         </div>
         <div className={style.end}>
           <div>
