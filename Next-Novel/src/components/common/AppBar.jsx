@@ -5,11 +5,42 @@ import { Link } from "react-router-dom"
 import Modal from "react-modal"
 import Login from "../login/Login"
 
+import axios from 'axios';
+import { useLocation, useEffect } from 'react'
+
 export default function AppBar() {
   const [loginIsOpen, setLoginIsOpen] = useState(false)
   const closemodal = () => {
     setLoginIsOpen(false)
   }
+
+  // 로그인로직
+  // const location = useLocation();
+
+  // useEffect(()=> {
+  //   const urlSearchParams = new URLSearchParams(location.search);
+  //   if (urlSearchParams.has('code')) {
+  //     // If "code" exists, execute some logic
+  //     const code = urlSearchParams.get('code');
+  //     console.log('Code exists:', code);
+  //     axios({
+  //       method: 'get',
+  //       url: 'http://localhost:8000/api/user/kakao/callback/',
+  //       params: {
+  //         code: code,
+  //       },
+  //     }).then((res)=> {
+  //       console.log(res);
+  //     })
+  //     // ... add your logic here
+  //   } else {
+  //     // If "code" does not exist, execute some other logic
+  //     console.log('Code does not exist');
+
+  //     // ... add your logic here
+  //   }
+  // },[location])
+
 
   return (
     <div className={style.Appbar}>
