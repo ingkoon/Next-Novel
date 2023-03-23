@@ -7,6 +7,7 @@ from diffusion import creat_image
 from caption import inference_caption
 import googletrans
 import json
+import time
 
 translator = googletrans.Translator()
 app = FastAPI()
@@ -16,7 +17,7 @@ app = FastAPI()
 @app.post('/novel/start')
 async def novel_start(images: List[UploadFile] = Form(...),
                        genre: str = Form(...)):
-
+    start = time.time()
     en_string = []
     for image in images:
         image_bytes = await image.read()
@@ -25,6 +26,7 @@ async def novel_start(images: List[UploadFile] = Form(...),
     question = "Act as a StoryTeller. Write an endless novel story in the genre of {} in 5 sentences based on {},{},{},{},{},{}.And write a sentence that summarizes this story in 3 sentences".format(genre,en_string[0],en_string[1],en_string[2],en_string[3],en_string[4],en_string[5])
     en_answer,new_history = chatbot(question,[])
     ko_answer = translator.translate(en_answer, dest="ko").text
+    print(time.time()-start)
 
     return {"korean_answer" : ko_answer,"dialog_history" : new_history}
 
@@ -43,6 +45,7 @@ async def novel_sequence(image: UploadFile = Form(...),
                          previous_question:str=Form(...),
                          dialog_history:str=Form(...)):
 
+    start = time.time()
     dialog_history = json.loads(dialog_history)
 
     image_bytes = await image.read()
@@ -55,6 +58,7 @@ async def novel_sequence(image: UploadFile = Form(...),
 
     en_answer,new_history = chatbot(question,dialog_history)
     ko_answer = translator.translate(en_answer, dest="ko").text
+    print(time.time()-start)
 
     return {"korean_answer" : ko_answer,"dialog_history" : new_history}
 
@@ -80,5 +84,5 @@ async def image(file: UploadFile = File(...)):
     return creat_image(open(file.filename,"rb"))[1]
 
 @app.get('/')
-def hello():
+async def hello():
     return "hello"
