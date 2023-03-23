@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    command: gunicorn nextnovel.wsgi:application --bind 0.0.0.0:8000 --reload
+    ports:
+      - 8000:8000
+    env_file:
+      - env_files/.env
+    depends_on:
+      - db
+    ## for development only
+    volumes:
+      - .:/home/app/web
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+  db:
+    container_name: db_server
+    image: postgres:13.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - env_files/.env.db
+  redis:
+    image: redis:latest
+    container_name: redis_server
+    command: redis-server /usr/local/conf/redis.conf
+    volumes:
+      - ./redis/redis.conf:/usr/local/conf/redis.conf
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+      - /opt/dist:/usr/share/nginx/html
+    ports:
+      - 80:80
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

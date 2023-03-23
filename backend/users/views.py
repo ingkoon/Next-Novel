@@ -38,7 +38,7 @@ def kakao_login(request):
 def kakao_callback(request):
     client_id = KAKAO_CLIENT_ID
     code = request.GET.get("code")
-    redirect_uri = "http://localhost:3000/login"
+    redirect_uri = "http://localhost:3000"
     # code로 access token 요청
     token_request = requests.get(
         f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={redirect_uri}&code={code}")
@@ -57,8 +57,9 @@ def kakao_callback(request):
         headers={"Authorization": f"Bearer {access_token}"},
     )
     profile_json = profile_request.json()
-
+    print(profile_json)
     kakao_account = profile_json.get("kakao_account")
+
     email = kakao_account.get("email", None)  # 이메일!
 
     # 이메일 없으면 오류 => 카카오톡 최신 버전에서는 이메일 없이 가입 가능해서 추후 수정해야함
