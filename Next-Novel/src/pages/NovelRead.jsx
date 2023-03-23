@@ -1,9 +1,10 @@
 import React from "react";
+import Book from "../components/novelread/Book";
 
 export default function NovelRead() {
   return (
     <>
-      <h1>NovelRead</h1>
+      <Book />
     </>
   );
 }
