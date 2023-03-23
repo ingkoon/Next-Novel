@@ -1,0 +1,7 @@
+.ReactModal__Content {
+  width: 400px;
+  height: 500px;
+  margin : auto;
+  padding : 0 !important;
+  border-radius: 20px !important;
+}
