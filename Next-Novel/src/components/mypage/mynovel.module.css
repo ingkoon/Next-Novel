@@ -45,13 +45,13 @@
 .step {
   position: absolute;
   left: 45%;
-  top : 10px;
+  top: 10px;
   font-size: 20px;
-  color : white;
+  color: white;
 }
 
 .titlebar {
-  font-family: 'LINESeedKR-Bd';
+  font-family: "LINESeedKR-Bd";
   display: grid;
   grid-template-columns: 1fr 7fr 1fr 1fr;
   height: 50px;
@@ -62,9 +62,9 @@
 .titlebar button {
   width: 100px;
   height: 50px;
-  background-color: #F66F00;
-  color : white;
-  border : 0 ;
+  background-color: #f66f00;
+  color: white;
+  border: 0;
   font-size: 20px;
 }
 
@@ -112,9 +112,9 @@
 } */
 
 .booklist {
-  height : 0;
-  width : 100%;
+  height: 0;
+  width: 100%;
   overflow: hidden;
   transition: height 0.35s ease;
-  padding : 0 5%
+  padding: 0 5%;
 }

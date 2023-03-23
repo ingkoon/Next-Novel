@@ -2,6 +2,7 @@
   display: flex;
   font-family : 'LINESeedKR-Bd';
   width : 710px;
+  margin-bottom: 50px;
 }
 
 .pic {
@@ -45,7 +46,7 @@
 }
 .circlegroup2 {
   height: 100%;
-  margin-left: 18px;
+  margin-left: 17px;
   display: grid;
   grid-template-rows: 106px 70.5px 70.5px 70.5px;
   text-align: right;
