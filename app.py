@@ -100,6 +100,10 @@ async def image(file: UploadFile = File(...)):
     image.save(file.filename)
     return creat_image(open(file.filename,"rb"))[1]
 
-@app.get('/')
+@app.get('/cuda')
 async def hello():
     return torch.cuda.is_available()
+    
+@app.get('/')
+async def hello():
+    return "hello"
