@@ -8,7 +8,9 @@ from typing import List, Dict
 from gpt import run_openai_chatbot as chatbot
 import diffusion
 import caption
-from diffusion import creat_image
+# from diffusion import creat_image
+import diffusion_ControlNet
+from diffusion_ControlNet import creat_image
 from caption import inference_caption
 import torch
 import googletrans
@@ -92,7 +94,11 @@ async def image(file: UploadFile = File(...)):
     image_bytes = await file.read()
     image = Image.open(io.BytesIO(image_bytes))
     image.save(file.filename)
-    return creat_image(open(file.filename,"rb"))[1]
+    # print(image_bytes)
+    # print(image)
+    print(file.filename)
+    return creat_image(file.filename)
+    # return creat_image(open(file.filename,"rb"))[1]
 
 @app.get('/cuda')
 async def hello():
