@@ -20,7 +20,6 @@ export default function WriteStep2({ setStep, step }) {
           setImageSrcs={setImageSrcs}
           selected={selected}
         />
-        <div className={style.temp}></div>
       </div>
       <Bottom step={step} name="제출" button={button} />
     </div>

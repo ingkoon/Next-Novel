@@ -56,14 +56,16 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
 
   return (
     <div className={style.container}>
-      <canvas
-        className={style.canvas}
-        ref={canvasRef}
-        onMouseDown={() => setPainting(true)}
-        onMouseUp={() => setPainting(false)}
-        onMouseMove={(e) => drawFn(e)}
-        onMouseLeave={() => setPainting(false)}
-      ></canvas>
+      <div className={style.canvas}>
+        <canvas
+          ref={canvasRef}
+          onMouseDown={() => setPainting(true)}
+          onMouseUp={() => setPainting(false)}
+          onMouseMove={(e) => drawFn(e)}
+          onMouseLeave={() => setPainting(false)}
+        ></canvas>
+      </div>
+      <div className={style.tool}></div>
     </div>
   );
 }
