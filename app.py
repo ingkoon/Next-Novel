@@ -30,7 +30,7 @@ async def novel_start(images: List[UploadFile] = Form(...),
     for image in images:
         image_bytes.append(await image.read())
 
-    # print(time.time()-start)
+    print(time.time()-start)
 
     # en_string = pool.map(inference_caption, image_bytes)
     en_string = []
