@@ -12,6 +12,10 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   const [mouseX, setmouseX] = useState();
   const [mouseY, setmouseY] = useState();
 
+  const [colorState, setColorState] = useState("#000000");
+  const [openSetWidthState, setOpenSetWidthState] = useState(false);
+  const [openSetColorState, setOpenSetColorState] = useState(false);
+
   useEffect(() => {
     // canvas useRef
     const canvas = canvasRef.current;
@@ -20,7 +24,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     const ctx = canvas.getContext("2d");
     ctx.lineJoin = "round";
     ctx.lineWidth = 2.5;
-    ctx.strokeStyle = "#000000";
+    ctx.strokeStyle = colorState;
 
     const img = new Image();
     img.src = imageSrcs[selected];
@@ -53,6 +57,34 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
       );
     }
   };
+  const onPencil = () => {
+    getCtx.strokeStyle = colorState;
+  };
+  const onEraser = () => {
+    getCtx.strokeStyle = "white";
+  };
+  const openSetWidth = () => {
+    setOpenSetWidthState((prev) => !prev);
+  };
+  const setWidth = (event) => {
+    getCtx.lineWidth = event.target.value;
+  };
+  const openSetColor = () => {
+    setOpenSetColorState((prev) => !prev);
+  };
+  const setColor = (event) => {
+    getCtx.strokeStyle = event.target.value;
+    setColorState(event.target.value);
+  };
+  const goBack = () => {};
+  const initCanvas = () => {
+    getCtx.clearRect(0, 0, 608, 380);
+    setImageSrcs(
+      imageSrcs.map((imageSrc, index) =>
+        index === selected ? undefined : imageSrc
+      )
+    );
+  };
 
   return (
     <div className={style.container}>
@@ -65,7 +97,39 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
           onMouseLeave={() => setPainting(false)}
         ></canvas>
       </div>
-      <div className={style.tool}></div>
+      <div className={style.tools}>
+        <div className={style.tool1} onClick={onPencil}>
+          연필
+        </div>
+        <div className={style.tool2} onClick={onEraser}>
+          지우개
+        </div>
+        <div className={style.tool3} onClick={openSetWidth}>
+          굵기
+          {openSetWidthState && (
+            <div className={style.setWidth}>
+              <input
+                type="range"
+                min="1"
+                max="20"
+                defaultValue="5"
+                step="0.1"
+                onMouseUp={setWidth}
+              />
+            </div>
+          )}
+        </div>
+        <div className={style.tool4} onClick={openSetColor}>
+          색깔
+          {openSetColorState && <div className={style.setColor}>ㅇㅇ</div>}
+        </div>
+        <div className={style.tool5} onClick={goBack}>
+          뒤로가기
+        </div>
+        <div className={style.tool6} onClick={initCanvas}>
+          휴지통
+        </div>
+      </div>
     </div>
   );
 }
