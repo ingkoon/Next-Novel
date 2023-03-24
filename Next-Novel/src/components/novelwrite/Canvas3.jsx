@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import style from "./Canvas2.module.css";
+import style from "./Canvas3.module.css";
 
-export default function Canvas2({ setImageSrcs }) {
+export default function Canvas3({ setImageSrcs }) {
   // useRef
   const canvasRef = useRef(null);
   // getCtx
@@ -15,8 +15,8 @@ export default function Canvas2({ setImageSrcs }) {
   useEffect(() => {
     // canvas useRef
     const canvas = canvasRef.current;
-    canvas.width = 608;
-    canvas.height = 380;
+    canvas.width = 308;
+    canvas.height = 350;
     const ctx = canvas.getContext("2d");
     ctx.lineJoin = "round";
     ctx.lineWidth = 2.5;
