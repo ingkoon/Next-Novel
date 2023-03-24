@@ -14,34 +14,6 @@ export default function AppBar() {
     setLoginIsOpen(false)
   }
 
-  // 로그인로직
-  // const location = useLocation();
-
-  // useEffect(()=> {
-  //   const urlSearchParams = new URLSearchParams(location.search);
-  //   if (urlSearchParams.has('code')) {
-  //     // If "code" exists, execute some logic
-  //     const code = urlSearchParams.get('code');
-  //     console.log('Code exists:', code);
-  //     axios({
-  //       method: 'get',
-  //       url: 'http://localhost:8000/api/user/kakao/callback/',
-  //       params: {
-  //         code: code,
-  //       },
-  //     }).then((res)=> {
-  //       console.log(res);
-  //     })
-  //     // ... add your logic here
-  //   } else {
-  //     // If "code" does not exist, execute some other logic
-  //     console.log('Code does not exist');
-
-  //     // ... add your logic here
-  //   }
-  // },[location])
-
-
   return (
     <div className={style.Appbar}>
       <div className={style.name}>
@@ -75,16 +47,16 @@ export default function AppBar() {
             alt="pen"
           />
         </Link>
-        {/* <Link to="/mypage">
+        <Link to="/mypage">
           <img src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"} className={style.banner_mypage} alt='idcard'></img>
-        </Link> */}
-        <div onClick={() => setLoginIsOpen(true)}>
+        </Link>
+        {/* <div onClick={() => setLoginIsOpen(true)}>
           <img
             src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"}
             className={style.banner_mypage}
             alt="idcard"
           />
-        </div>
+        </div> */}
       </div>
 
       <Modal isOpen={loginIsOpen} onRequestClose={() => setLoginIsOpen(false)}>

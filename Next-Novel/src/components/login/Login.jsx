@@ -1,7 +1,11 @@
 import style from "./login.module.css"
+import { useAuthContext } from "../../context/AuthContext";
 
 
 export default function Login() {
+
+  const {user, login, logout } = useAuthContext();
+
   function kakaoLogin() {
     const { Kakao } = window
     Kakao.Auth.authorize({
@@ -9,7 +13,6 @@ export default function Login() {
     })
   }
 
-  
 
   return (
     <div
@@ -40,7 +43,7 @@ export default function Login() {
           </div>
 
           <img
-            onClick={kakaoLogin}
+            onClick={login}
             className={style.kakao}
             src={process.env.PUBLIC_URL + "/img/kakao_login.png"}
           />
