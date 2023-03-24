@@ -1,6 +1,9 @@
+import io
+
 import open_clip
 import torch
-import googletrans
+from PIL import Image
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 model, _, transform = open_clip.create_model_and_transforms(
@@ -8,10 +11,10 @@ model, _, transform = open_clip.create_model_and_transforms(
     pretrained="mscoco_finetuned_laion2B-s13B-b90k"
 )
 model.to(device)
-translator = googletrans.Translator()
 
 
-def inference_caption(image, decoding_method="Beam search", rep_penalty=1.2, top_p=1, min_seq_len=1, seq_len=20):
+def inference_caption(image_bytes, decoding_method="Beam search", rep_penalty=1.2, top_p=1, min_seq_len=1, seq_len=20):
+    image = Image.open(io.BytesIO(image_bytes))
     im = transform(image).unsqueeze(0).to(device)
     generation_type = "beam_search" if decoding_method == "Beam search" else "top_p"
     with torch.no_grad(), torch.cuda.amp.autocast():
