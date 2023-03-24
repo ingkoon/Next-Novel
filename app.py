@@ -66,9 +66,7 @@ async def novel_sequence(image: UploadFile = Form(...),
     dialog_history = json.loads(dialog_history)
 
     image_bytes = await image.read()
-    img = Image.open(io.BytesIO(image_bytes))
-    en_string = inference_caption(img)
-
+    en_string = inference_caption(image_bytes)
     question = "'{}' the answer to th question is '{}'. Act as a Storyteller.".format(previous_question,en_string)\
                +"Write a 5 sentences novel without an ending to the story. And write a sentence that summarizes this story in 3 sentences"
 
