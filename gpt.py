@@ -32,10 +32,9 @@ def run_openai_chatbot(question,history):
     })
 
     answer = send_question(openai,messages)
-    summarized_answer = answer[-1]
     messages.append({
         'role': 'assistant',
-        'content': summarized_answer
+        'content': answer
     })
 
     return answer[0],messages
