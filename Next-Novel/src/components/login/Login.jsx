@@ -43,7 +43,7 @@ export default function Login() {
           </div>
 
           <img
-            onClick={login}
+            onClick={kakaoLogin}
             className={style.kakao}
             src={process.env.PUBLIC_URL + "/img/kakao_login.png"}
           />
