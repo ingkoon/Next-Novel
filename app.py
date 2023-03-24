@@ -6,8 +6,11 @@ import io
 from fastapi import FastAPI, UploadFile, File, Form
 from typing import List, Dict
 from gpt import run_openai_chatbot as chatbot
+import diffusion
+import caption
 from diffusion import creat_image
 from caption import inference_caption
+import torch
 import googletrans
 import json
 import time
@@ -99,4 +102,4 @@ async def image(file: UploadFile = File(...)):
 
 @app.get('/')
 async def hello():
-    return "hello"
+    return torch.cuda.is_available()
