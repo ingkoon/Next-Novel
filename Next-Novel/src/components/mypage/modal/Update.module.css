@@ -1,0 +1,15 @@
+.update {
+  font-family: 'LINESeedKR-Bd';
+}
+
+.title {
+  font-size: 64px;
+}
+
+.category {
+  display: flex;
+}
+
+.value {
+  display: flex;
+}

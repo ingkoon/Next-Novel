@@ -59,7 +59,20 @@ export default function AppBar() {
         </div>
       </div>
 
-      <Modal isOpen={loginIsOpen} onRequestClose={() => setLoginIsOpen(false)}>
+      <Modal isOpen={loginIsOpen} onRequestClose={() => setLoginIsOpen(false)}
+        style = {{
+          overlay : {
+
+          },
+          content : {
+            width: '400px',
+            height: '500px',
+            margin: 'auto',
+            padding: '0',
+            borderRadius: '20px',
+            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.5)'
+          }
+        }}>
         <Login closemodal={closemodal} />
       </Modal>
     </div>
