@@ -26,21 +26,17 @@ pool = multiprocessing.Pool(processes=3)
 async def novel_start(images: List[UploadFile] = Form(...),
                        genre: str = Form(...)):
 
-    print(multiprocessing.cpu_count())
 
     start = time.time()
     image_bytes = []
     for image in images:
         image_bytes.append(await image.read())
 
-    print(time.time()-start)
 
-    # en_string = pool.map(inference_caption, image_bytes)
     en_string = []
     for i in image_bytes:
         en_string.append(inference_caption(i))
-    # print(en_string)
-    question = "Act as a StoryTeller. Write an endless novel story in the genre of {} in 5 sentences based on {},{},{},{},{},{}.And write a sentence that summarizes this story in 3 sentences".format(genre,en_string[0],en_string[1],en_string[2],en_string[3],en_string[4],en_string[5])
+    question = "Act as a StoryTeller. Write an endless novel story in the genre of {} in 5 sentences based on {},{},{},{},{},{}.".format(genre,en_string[0],en_string[1],en_string[2],en_string[3],en_string[4],en_string[5])
     en_answer,new_history = chatbot(question,[])
     ko_answer = translator.translate(en_answer, dest="ko").text
     print(time.time()-start)
@@ -68,7 +64,7 @@ async def novel_sequence(image: UploadFile = Form(...),
     image_bytes = await image.read()
     en_string = inference_caption(image_bytes)
     question = "'{}' the answer to th question is '{}'. Act as a Storyteller.".format(previous_question,en_string)\
-               +"Write a 5 sentences novel without an ending to the story. And write a sentence that summarizes this story in 3 sentences"
+               +"Write a 5 sentences novel without an ending to the story."
 
 
     en_answer,new_history = chatbot(question,dialog_history)

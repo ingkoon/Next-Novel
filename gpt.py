@@ -31,7 +31,7 @@ def run_openai_chatbot(question,history):
         'content': question
     })
 
-    answer = send_question(openai,messages).split("Summary")
+    answer = send_question(openai,messages)
     summarized_answer = answer[-1]
     messages.append({
         'role': 'assistant',
