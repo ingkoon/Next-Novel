@@ -15,6 +15,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   const [colorState, setColorState] = useState("#000000");
   const [openSetWidthState, setOpenSetWidthState] = useState(false);
   const [openSetColorState, setOpenSetColorState] = useState(false);
+  const [store, setStore] = useState([]);
 
   useEffect(() => {
     // canvas useRef
@@ -24,13 +25,18 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     const ctx = canvas.getContext("2d");
     ctx.lineJoin = "round";
     ctx.lineWidth = 2.5;
-    ctx.strokeStyle = colorState;
+    ctx.strokeStyle = "#000000";
+    setGetCtx(ctx);
+  }, []);
+
+  useEffect(() => {
+    if (getCtx) getCtx.clearRect(0, 0, 608, 380);
 
     const img = new Image();
     img.src = imageSrcs[selected];
-    img.onload = () => ctx.drawImage(img, 0, 0);
+    img.onload = () => getCtx.drawImage(img, 0, 0);
 
-    setGetCtx(ctx);
+    setStore([]);
     // warning이 뜨는데 일단 block처리함
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
@@ -55,6 +61,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
           index === selected ? dataURL : imageSrc
         )
       );
+      setStore(store.push(dataURL));
     }
   };
   const onPencil = () => {
@@ -76,7 +83,22 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     getCtx.strokeStyle = event.target.value;
     setColorState(event.target.value);
   };
-  const goBack = () => {};
+  const goBack = () => {
+    setStore(store.pop());
+    const dataURL = store[store.length - 1];
+
+    getCtx.clearRect(0, 0, 608, 380);
+
+    const img = new Image();
+    img.src = dataURL;
+    img.onload = () => getCtx.drawImage(img, 0, 0);
+
+    setImageSrcs(
+      imageSrcs.map((imageSrc, index) =>
+        index === selected ? dataURL : imageSrc
+      )
+    );
+  };
   const initCanvas = () => {
     getCtx.clearRect(0, 0, 608, 380);
     setImageSrcs(
