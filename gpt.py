@@ -37,7 +37,7 @@ def run_openai_chatbot(question,history):
         'content': answer
     })
 
-    return answer[0],messages
+    return answer,messages
 
 
 # run_openai_chatbot("plz wirte a new novel based on following words? surffing, apple, alien, earth",'')
