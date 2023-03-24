@@ -28,8 +28,12 @@ export default function Book(){
             <div className={style.book}>
                 <div className={style.pages}>
                     <div className={style.page}>
-                        <h1>CLICK TO OPEN</h1>
-                        <h2>표지</h2>
+                        <div className={style.cover}>
+                            <img
+                                src="https://i.pinimg.com/564x/f6/13/14/f61314f3ff9441fc1701b23457ec4685.jpg"
+                                alt="cover"
+                            ></img>
+                        </div>
                     </div>
                     <div className={style.page}>
                         <h1>소재 6개 그림</h1>
@@ -68,10 +72,10 @@ export default function Book(){
                         <h1>이어가기5</h1>
                     </div>
                     <div className={style.page}>
-                        <h1>제목/작가/출간일</h1>
+                        <h1>마무리</h1>
                     </div>
                     <div className={style.page}>
-                        <h1>마무리</h1>
+                        <h1>서명</h1>
                     </div>
                     <div className={style.page}>
                         <h1>끝.</h1>
