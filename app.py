@@ -105,5 +105,5 @@ async def hello():
     return torch.cuda.is_available()
     
 @app.get('/')
-async def hello():
+async def hello2():
     return "hello"
