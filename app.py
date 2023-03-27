@@ -53,6 +53,9 @@ async def novel_question(dialog_history:str=Form(...)):
     en_answer, new_history = chatbot(question, dialog_history)
     ko_answer = translator.translate(en_answer, dest="ko").text
     query = ko_answer.split("\n")
+    for i in range(3):
+        if query[i][0].isdigit() and query[i][1:3] == '. ':
+            query[i] = query[i][3:]
 
     return {"query1" : query[0],"query2" : query[1],"query3" : query[2],"dialog_history" : new_history}
 
