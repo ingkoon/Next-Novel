@@ -1,5 +1,5 @@
-import os
-os.system("pip install -qq opencv-contrib-python diffusers transformers git+https://github.com/huggingface/accelerate.git")
+# import os
+# os.system("pip install -qq opencv-contrib-python diffusers transformers git+https://github.com/huggingface/accelerate.git")
 
 from diffusers.utils import load_image
 
@@ -56,6 +56,7 @@ def creat_image(input_image):
     num_steps = 20
     seed = 0
 
+    print("prev image")
     out_image = pipe(
         prompt,
         num_inference_steps=num_steps,
@@ -63,4 +64,5 @@ def creat_image(input_image):
         image=canny_image
     ).images[0]
 
+    print("after image")
     return out_image
