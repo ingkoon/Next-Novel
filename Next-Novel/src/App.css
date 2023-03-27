@@ -39,3 +39,8 @@
   font-family: "LINESeedKR-Bd";
   src: url(../public/fonts/LINESeedKR-Bd.ttf);
 }
+
+@font-face {
+  font-family: 'handjet';
+  src : url(../public/fonts/Handjet.ttf);
+}
