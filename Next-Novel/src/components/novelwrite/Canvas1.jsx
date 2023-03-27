@@ -12,10 +12,21 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   const [mouseX, setmouseX] = useState();
   const [mouseY, setmouseY] = useState();
 
+  const [widthState, setWidthState] = useState(5);
   const [colorState, setColorState] = useState("#000000");
   const [openSetWidthState, setOpenSetWidthState] = useState(false);
   const [openSetColorState, setOpenSetColorState] = useState(false);
-  const [store, setStore] = useState([]);
+  const [store, setStore] = useState([]); //뒤로가기용
+  const [paintState, setPaintState] = useState(false);
+
+  const colors = [
+    "#e53730",
+    "#d81758",
+    "#8a23a4",
+    "#5a34ad",
+    "#3c49ab",
+    "#3e8cef",
+  ];
 
   useEffect(() => {
     // canvas useRef
@@ -37,9 +48,41 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     img.onload = () => getCtx.drawImage(img, 0, 0);
 
     setStore([]);
-    // warning이 뜨는데 일단 block처리함
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
+
+  useEffect(() => {
+    if (!painting && paintState) {
+      const canvas = canvasRef.current;
+      const dataURL = canvas.toDataURL();
+      setImageSrcs(
+        imageSrcs.map((imageSrc, index) =>
+          index === selected ? dataURL : imageSrc
+        )
+      );
+      setStore([...store, dataURL]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [painting]);
+
+  useEffect(() => {
+    if (imageSrcs[selected] !== store[store.length - 1]) {
+      const dataURL = store[store.length - 1];
+
+      getCtx.clearRect(0, 0, 608, 380);
+
+      const img = new Image();
+      img.src = dataURL;
+      img.onload = () => getCtx.drawImage(img, 0, 0);
+
+      setImageSrcs(
+        imageSrcs.map((imageSrc, index) =>
+          index === selected ? dataURL : imageSrc
+        )
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store]);
 
   const drawFn = (e) => {
     // mouse position
@@ -53,15 +96,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     } else {
       getCtx.lineTo(mouseX, mouseY);
       getCtx.stroke();
-
-      const canvas = canvasRef.current;
-      const dataURL = canvas.toDataURL();
-      setImageSrcs(
-        imageSrcs.map((imageSrc, index) =>
-          index === selected ? dataURL : imageSrc
-        )
-      );
-      setStore(store.push(dataURL));
+      setPaintState(true);
     }
   };
   const onPencil = () => {
@@ -74,30 +109,18 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     setOpenSetWidthState((prev) => !prev);
   };
   const setWidth = (event) => {
+    setWidthState(event.target.value);
     getCtx.lineWidth = event.target.value;
   };
   const openSetColor = () => {
     setOpenSetColorState((prev) => !prev);
   };
   const setColor = (event) => {
-    getCtx.strokeStyle = event.target.value;
-    setColorState(event.target.value);
+    setColorState(event.target.dataset.color);
+    getCtx.strokeStyle = event.target.dataset.color;
   };
   const goBack = () => {
-    setStore(store.pop());
-    const dataURL = store[store.length - 1];
-
-    getCtx.clearRect(0, 0, 608, 380);
-
-    const img = new Image();
-    img.src = dataURL;
-    img.onload = () => getCtx.drawImage(img, 0, 0);
-
-    setImageSrcs(
-      imageSrcs.map((imageSrc, index) =>
-        index === selected ? dataURL : imageSrc
-      )
-    );
+    setStore([...store.slice(0, store.length - 1)]);
   };
   const initCanvas = () => {
     getCtx.clearRect(0, 0, 608, 380);
@@ -106,6 +129,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
         index === selected ? undefined : imageSrc
       )
     );
+    setStore([]);
   };
 
   return (
@@ -114,9 +138,13 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
         <canvas
           ref={canvasRef}
           onMouseDown={() => setPainting(true)}
-          onMouseUp={() => setPainting(false)}
+          onMouseUp={() => {
+            setPainting(false);
+          }}
           onMouseMove={(e) => drawFn(e)}
-          onMouseLeave={() => setPainting(false)}
+          onMouseLeave={() => {
+            setPainting(false);
+          }}
         ></canvas>
       </div>
       <div className={style.tools}>
@@ -134,7 +162,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
                 type="range"
                 min="1"
                 max="20"
-                defaultValue="5"
+                defaultValue={widthState}
                 step="0.1"
                 onMouseUp={setWidth}
               />
@@ -143,7 +171,20 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
         </div>
         <div className={style.tool4} onClick={openSetColor}>
           색깔
-          {openSetColorState && <div className={style.setColor}>ㅇㅇ</div>}
+          {openSetColorState && (
+            <div className={style.setColor}>
+              {colors.map((color) => (
+                <div
+                  class="color-option"
+                  style={{ backgroundColor: color }}
+                  data-color={color}
+                  onClick={setColor}
+                >
+                  ㅇ
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div className={style.tool5} onClick={goBack}>
           뒤로가기
