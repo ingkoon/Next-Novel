@@ -1,4 +1,6 @@
 import os
+from time import sleep
+
 from allauth.socialaccount.providers.kakao import views as kakao_view
 from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
@@ -175,5 +177,14 @@ class UserTestAuthAPI(APIView):
         data = {
             'refresh': str(refresh),
             'access': str(refresh.access_token),
+        }
+        return Response(data=data)
+
+
+class MytestAPI(APIView):
+    def get(self, request):
+        sleep(10)
+        data = {
+            "sleep": "for 10sec"
         }
         return Response(data=data)

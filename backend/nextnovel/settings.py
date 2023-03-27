@@ -154,9 +154,9 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_THROTTLE_CLASSES': [
-        'nextnovel.throttles.LikeRateThrottle',
-    ],
+    # 'DEFAULT_THROTTLE_CLASSES': [
+    #     'nextnovel.throttles.LikeRateThrottle',
+    # ],
     'DEFAULT_THROTTLE_RATES': {
         'like': '1/s',
     }
@@ -237,13 +237,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
-## SILK
-SILKY_PYTHON_PROFILER = True
-
 ## CACHE
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://default:sixnextnovelgod@redis:6379',
     }
 }
 ## social provider
