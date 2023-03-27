@@ -1,6 +1,3 @@
-# import os
-# os.system("pip install -qq opencv-contrib-python diffusers transformers git+https://github.com/huggingface/accelerate.git")
-
 from diffusers.utils import load_image
 
 import cv2
@@ -29,13 +26,7 @@ pipe.enable_model_cpu_offload()
 
 def creat_image(input_image):
     # 1. 이미지 로드
-    # image = load_image("https://hf.co/datasets/huggingface/documentation-images/resolve/main/diffusers/input_image_vermeer.png")
-    print(input_image)
-
     image = load_image(input_image)
-    print(image)
-
-    # image
 
     # 2. 원본 이미지를 Canny Edge로 전환
     low_threshold = 100
@@ -49,14 +40,11 @@ def creat_image(input_image):
     canny_image = np.concatenate([canny_image, canny_image, canny_image], axis=2)
     canny_image = Image.fromarray(canny_image)
 
-    # canny_image
-
     # 3. Canny Edge 조건으로 새로운 이미지 생성
     prompt = "cartoon"
     num_steps = 20
     seed = 0
 
-    print("prev image")
     out_image = pipe(
         prompt,
         num_inference_steps=num_steps,
@@ -64,5 +52,4 @@ def creat_image(input_image):
         image=canny_image
     ).images[0]
 
-    print("after image")
     return out_image

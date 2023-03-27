@@ -99,9 +99,9 @@ async def image(file: UploadFile = File(...)):
     image = Image.open(io.BytesIO(image_bytes))
     image.save(file.filename)
 
+    start = time.time()
     res =creat_image(file.filename)
-    print("End")
-    print(res)
+    print(time.time()-start)
 
     # Save the image to a file
     res.save("image.png", format="PNG")
@@ -115,7 +115,6 @@ async def image(file: UploadFile = File(...)):
         io.BytesIO(img_bytes),
         media_type="image/png"
     )
-    # return creat_image(open(file.filename,"rb"))[1]
 
 @app.get('/cuda')
 async def hello():
