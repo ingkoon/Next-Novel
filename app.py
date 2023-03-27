@@ -3,12 +3,18 @@ import time
 
 from PIL import Image
 import io
-from fastapi import FastAPI, UploadFile, File, Form
+from fastapi import FastAPI, UploadFile, File, Form,Response
 from typing import List, Dict
+
+# from starlette.responses import StreamingResponse
+from fastapi.responses import StreamingResponse
+
 from gpt import run_openai_chatbot as chatbot
 import diffusion
 import caption
-from diffusion import creat_image
+# from diffusion import creat_image
+import diffusion_ControlNet
+from diffusion_ControlNet import creat_image
 from caption import inference_caption
 import torch
 import googletrans
@@ -92,7 +98,23 @@ async def image(file: UploadFile = File(...)):
     image_bytes = await file.read()
     image = Image.open(io.BytesIO(image_bytes))
     image.save(file.filename)
-    return creat_image(open(file.filename,"rb"))[1]
+
+    start = time.time()
+    res =creat_image(file.filename)
+    print(time.time()-start)
+
+    # Save the image to a file
+    res.save("image.png", format="PNG")
+
+    # Read the saved image file
+    with open("image.png", "rb") as f:
+        img_bytes = f.read()
+
+    # Create a streaming response
+    return StreamingResponse(
+        io.BytesIO(img_bytes),
+        media_type="image/png"
+    )
 
 @app.get('/cuda')
 async def hello():
