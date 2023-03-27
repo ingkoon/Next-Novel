@@ -9,13 +9,17 @@ export default function Member() {
   const [updateIsOpen, setUpdateIsOpen] = useState(false)
   const [deleteIsOpen, setDeleteIsOpen] = useState(false)
 
+  const closemodal = () => {
+    setUpdateIsOpen(false)
+  }
+
 
   return (
     <div className={style.btn}>
       <button onClick={() => setUpdateIsOpen(true)} className={style.memberbtn}>회원정보 수정</button>
       <button className={style.memberbtn}>회원 탈퇴</button>
 
-      <Modal isOpen={updateIsOpen} onRequestClose={() => setUpdateIsOpen(false)}
+      <Modal className={style.updatemodal} isOpen={updateIsOpen} onRequestClose={() => setUpdateIsOpen(false)}
         style ={{
           overlay : {
 
@@ -23,10 +27,11 @@ export default function Member() {
           content : {
             width : '792px',
             height : '526px',
-            backgroundColor : '#fffefc'
+            backgroundColor : '#fffefc',
+            margin: 'auto',
           }
         }}>
-        <Update/>
+        <Update closemodal={closemodal}/>
       </Modal>
       <Modal isOpen={deleteIsOpen}></Modal>
     </div>
