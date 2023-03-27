@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
-import style from './Book.module.css'
+import Materials from './Materials.jsx';
+import Qna from './Qna.jsx';
+import style from './Book.module.css';
 
 export default function Book(){
 
@@ -29,44 +31,51 @@ export default function Book(){
                 <div className={style.pages}>
                     <div className={style.page}>
                         <div className={style.cover}>
-                            <img
-                                src="https://i.pinimg.com/564x/f6/13/14/f61314f3ff9441fc1701b23457ec4685.jpg"
-                                alt="cover"
-                            ></img>
+                            <div className={style.coverimg}>
+                                <img
+                                    src="https://i.pinimg.com/564x/f6/13/14/f61314f3ff9441fc1701b23457ec4685.jpg"
+                                    alt="cover"
+                                ></img>
+                            </div>
+                            <div className={style.bookfooter}>
+                                "한줄소개글이 들어갑니다"
+                                Dovemayo_wild
+                            </div>
+                            <div className={style.fbar}></div>
                         </div>
                     </div>
                     <div className={style.page}>
-                        <h1>소재 6개 그림</h1>
+                        <Materials />
                     </div>
                     <div className={style.page}>
                         <h1>소설1번째</h1>
                     </div>
                     <div className={style.page}>
-                        <h1>질문1&그림</h1>
+                        <Qna />
                     </div>
                     <div className={style.page}>
                         <h1>이어가기1</h1>
                     </div>
                     <div className={style.page}>
-                        <h1>질문2&그림</h1>
+                        <Qna />
                     </div>
                     <div className={style.page}>
                         <h1>이어가기2</h1>
                     </div>
                     <div className={style.page}>
-                        <h1>질문3&그림</h1>
+                        <Qna />
                     </div>
                     <div className={style.page}>
                         <h1>이어가기3</h1>
                     </div>
                     <div className={style.page}>
-                        <h1>질문4&그림</h1>
+                        <Qna />
                     </div>
                     <div className={style.page}>
                         <h1>이어가기4</h1>
                     </div>
                     <div className={style.page}>
-                        <h1>질문5&그림</h1>
+                        <Qna />
                     </div>
                     <div className={style.page}>
                         <h1>이어가기5</h1>
@@ -78,7 +87,18 @@ export default function Book(){
                         <h1>서명</h1>
                     </div>
                     <div className={style.page}>
-                        <h1>끝.</h1>
+                        <div className={style.end}>
+                            <div className={style.eng}>
+                                THE END.
+                            </div>
+                            <div className={style.theend}>
+                                끝
+                            </div>
+                            <div className={style.jap}>
+                                OWARI.
+                            </div>
+                            <div className={style.ebar}></div>
+                        </div>
                     </div>
                 </div>
             </div>
