@@ -14,33 +14,226 @@
   width: 80px;
   height: 400px;
   margin-left: 30px;
-  background-color: gainsboro;
+  /* background-color: gainsboro; */
   display: flex;
   flex-direction: column;
 }
 .tools > div {
   flex: 1;
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tools > div:hover {
+  cursor: pointer;
 }
 .tool3 {
   position: relative;
 }
-.setWidth {
-  top: 0;
-  left: -300px;
+.setColor {
+  top: 50%;
+  left: -330px;
+  transform: translate(0, -50%);
   width: 300px;
-  height: 50px;
+  /* height: 50px; */
   position: absolute;
-  background-color: aqua;
+  background-color: orange;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  background-color: rgb(255, 255, 255);
+  border: 3px solid black;
+  padding: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.setColor:after {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-width: 10px 0 10px 15px;
+  border-color: transparent white;
+  display: block;
+  width: 0;
+  z-index: 1;
+  right: -14px;
+  top: 55px;
+}
+.setColor:before {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-width: 12px 0 12px 17px;
+  border-color: transparent #000000;
+  display: block;
+  width: 0;
+  z-index: 0;
+  right: -18px;
+  top: 53px;
 }
 .tool4 {
   position: relative;
 }
-.setColor {
-  top: 0;
-  left: -300px;
+.setWidth {
+  top: 50%;
+  left: -320px;
+  transform: translate(0, -50%);
   width: 300px;
   height: 50px;
   position: absolute;
-  background-color: orange;
+  background-color: white;
+  border: 3px solid black;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.setWidth:after {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-width: 10px 0 10px 15px;
+  border-color: transparent white;
+  display: block;
+  width: 0;
+  z-index: 1;
+  right: -14px;
+  top: 15px;
+}
+.setWidth:before {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-width: 12px 0 12px 17px;
+  border-color: transparent #000000;
+  display: block;
+  width: 0;
+  z-index: 0;
+  right: -18px;
+  top: 13px;
+}
+input[type="range"] {
+  width: 100%;
+  height: 28px; /* thumbHeight + (2 x thumbBorderWidth)*/
+  -webkit-appearance: none; /*remove the line*/
+  outline: none;
+  /*background-color:cyan;*/
+  border: 0; /*for firefox on android*/
+  padding: 0 8px; /*for IE*/
+  box-sizing: border-box;
+}
+
+/*chrome and opera*/
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #ccc; /*trackColor*/
+  height: 4px; /*trackHeight*/
+  border-radius: 4px; /*trackHeight*/
+  transition: 0.3s;
+}
+
+input[type="range"]:hover::-webkit-slider-runnable-track,
+input[type="range"]:focus::-webkit-slider-runnable-track {
+  background: #777; /*activeTrackColor*/
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: darkOrange; /*thumbColor*/
+  width: 28px; /* thumbHeight + (2 x thumbBorderWidth)*/
+  height: 28px; /* thumbHeight + (2 x thumbBorderWidth)*/
+  border-radius: 50%;
+  margin-top: -12px; /* -[thumbHeight + (2 x thumbBorderWidth) - trackHeight]/2*/
+  cursor: pointer;
+  border: 4px solid #fff; /*border-width should be equal to thumbBorderWidth if you want same border width across all browsers and border-color should match the background*/
+  transition: 0.3s;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb,
+input[type="range"]:focus::-webkit-slider-thumb {
+  background: darkOrange; /*activeThumbColor*/
+}
+
+/*firefox*/
+input[type="range"]::-moz-focus-outer {
+  border: 0;
+}
+
+input[type="range"]::-moz-range-track {
+  background: #ccc; /*trackColor*/
+  height: 4px; /*trackHeight*/
+  border-radius: 4px; /*trackHeight*/
+  /*background isn't animatable, so can't use transition*/
+}
+
+input[type="range"]:hover::-moz-range-track,
+input[type="range"]:focus::-moz-range-track {
+  background: #777; /*activeTrackColor*/
+}
+
+input[type="range"]::-moz-range-thumb {
+  background: darkOrange; /*thumbColor*/
+  width: 20px; /*thumbHeight*/
+  height: 20px; /*thumbHeight*/
+  border-radius: 50%;
+  cursor: pointer;
+  border: 4px solid #fff; /*border-width = thumbBorderWidth, border-color should match the background*/
+}
+
+input[type="range"]:hover::-moz-range-thumb,
+input[type="range"]:focus::-moz-range-thumb {
+  background: darkOrange; /*activeThumbColor*/
+}
+
+input[type="range"]::-moz-range-progress {
+  background: darkOrange; /*thumbColor*/
+  border-radius: 4px; /*trackHeight*/
+  height: 4px; /*trackHeight*/
+}
+
+input[type="range"]:hover::-moz-range-progress,
+input[type="range"]:focus::-moz-range-progress {
+  background: darkOrange; /*activeThumbColor*/
+}
+
+/*edge and IE*/
+input[type="range"]::-ms-track {
+  background: #ccc; /*trackColor*/
+  height: 4px; /*trackHeight*/
+  border-radius: 4px; /*trackHeight*/
+  border: none;
+  color: transparent;
+}
+
+input[type="range"]:hover::-ms-track,
+input[type="range"]:focus::-ms-track {
+  background: #777; /*activeTrackColor*/
+}
+
+input[type="range"]::-ms-thumb {
+  background: darkOrange; /*thumbColor*/
+  width: 20px; /*thumbHeight*/
+  height: 20px; /*thumbHeight*/
+  border-radius: 50%;
+  border: none;
+  margin: 0 4px 0; /*0 thumbBorderWidth 0*/
+  box-shadow: 0 0 0 4px #fff; /*0 0 0 thumbBorderWidth #fff, box-shadow color should match the background*/
+  /*cursor:pointer; doesn't work*/
+}
+
+input[type="range"]:hover::-ms-thumb,
+input[type="range"]:focus::-ms-thumb {
+  background: darkOrange; /*activeThumbColor*/
+}
+
+input[type="range"]::-ms-tooltip {
+  display: none; /*tooltip makes thumb sliding lagy*/
+}
+
+input[type="range"]::-ms-fill-lower {
+  background: darkOrange; /*thumbColor*/
+  border-radius: 4px; /*trackHeight*/
+}
+
+input[type="range"]:hover::-ms-fill-lower,
+input[type="range"]:focus::-ms-fill-lower {
+  background: darkOrange; /*activeThumbColor*/
 }

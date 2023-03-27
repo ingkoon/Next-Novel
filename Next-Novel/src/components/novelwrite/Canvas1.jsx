@@ -26,6 +26,21 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     "#5a34ad",
     "#3c49ab",
     "#3e8cef",
+    "#3fa0f1",
+    "#44b4cd",
+    "#328b7d",
+    "#55a549",
+    "#87bb44",
+    "#c7d737",
+    "#fce739",
+    "#f7b816",
+    "#f48c10",
+    "#f14b20",
+    "#6a4b3f",
+    "#597280",
+    "#c1c1c1",
+    "#6f6f6f",
+    "#000000",
   ];
 
   useEffect(() => {
@@ -148,14 +163,74 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
         ></canvas>
       </div>
       <div className={style.tools}>
-        <div className={style.tool1} onClick={onPencil}>
-          연필
+        <div className={style.tool1}>
+          <img
+            src={process.env.PUBLIC_URL + `/icon/pen.svg`}
+            alt="pen"
+            onClick={onPencil}
+          />
         </div>
-        <div className={style.tool2} onClick={onEraser}>
-          지우개
+        <div className={style.tool2}>
+          <img
+            src={process.env.PUBLIC_URL + `/icon/eraser.svg`}
+            alt="eraser"
+            onClick={onEraser}
+          />
         </div>
-        <div className={style.tool3} onClick={openSetWidth}>
-          굵기
+        <div className={style.tool3}>
+          <div
+            style={{
+              width: "50px",
+              height: "30px",
+              backgroundColor: `${colorState}`,
+              border: "3px solid black",
+            }}
+            onClick={openSetColor}
+          ></div>
+          {openSetColorState && (
+            <div className={style.setColor}>
+              {colors.map((color) => (
+                <div
+                  class="color-option"
+                  style={{
+                    backgroundColor: color,
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "50%",
+                    margin: "5px",
+                  }}
+                  data-color={color}
+                  onClick={(event) => {
+                    setColor(event);
+                    openSetColor();
+                  }}
+                ></div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className={style.tool4}>
+          <div
+            style={{
+              width: "50px",
+              height: "30px",
+              backgroundColor: "white",
+              border: "3px solid black",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={openSetWidth}
+          >
+            <div
+              style={{
+                width: `${widthState}px`,
+                height: `${widthState}px`,
+                backgroundColor: "black",
+                borderRadius: "50%",
+              }}
+            ></div>
+          </div>
           {openSetWidthState && (
             <div className={style.setWidth}>
               <input
@@ -164,33 +239,27 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
                 max="20"
                 defaultValue={widthState}
                 step="0.1"
-                onMouseUp={setWidth}
+                onMouseUp={(event) => {
+                  setWidth(event);
+                  openSetWidth();
+                }}
               />
             </div>
           )}
         </div>
-        <div className={style.tool4} onClick={openSetColor}>
-          색깔
-          {openSetColorState && (
-            <div className={style.setColor}>
-              {colors.map((color) => (
-                <div
-                  class="color-option"
-                  style={{ backgroundColor: color }}
-                  data-color={color}
-                  onClick={setColor}
-                >
-                  ㅇ
-                </div>
-              ))}
-            </div>
-          )}
+        <div className={style.tool5}>
+          <img
+            src={process.env.PUBLIC_URL + `/icon/back.svg`}
+            alt="back"
+            onClick={goBack}
+          />
         </div>
-        <div className={style.tool5} onClick={goBack}>
-          뒤로가기
-        </div>
-        <div className={style.tool6} onClick={initCanvas}>
-          휴지통
+        <div className={style.tool6}>
+          <img
+            src={process.env.PUBLIC_URL + `/icon/clear.svg`}
+            alt="clear"
+            onClick={initCanvas}
+          />
         </div>
       </div>
     </div>
