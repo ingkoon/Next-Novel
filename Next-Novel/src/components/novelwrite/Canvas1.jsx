@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useReducer } from "react";
 import style from "./Canvas1.module.css";
 
 export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
@@ -16,7 +16,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   const [colorState, setColorState] = useState("#000000");
   const [openSetWidthState, setOpenSetWidthState] = useState(false);
   const [openSetColorState, setOpenSetColorState] = useState(false);
-  const [store, setStore] = useState([]); //뒤로가기용
+  const [store, dispatch] = useReducer(reducer, []);
   const [paintState, setPaintState] = useState(false);
 
   const colors = [
@@ -62,7 +62,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     img.src = imageSrcs[selected];
     img.onload = () => getCtx.drawImage(img, 0, 0);
 
-    setStore([]);
+    dispatch({ type: "init" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
@@ -75,29 +75,10 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
           index === selected ? dataURL : imageSrc
         )
       );
-      setStore([...store, dataURL]);
+      dispatch({ type: "increment", dataURL });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [painting]);
-
-  useEffect(() => {
-    if (imageSrcs[selected] !== store[store.length - 1]) {
-      const dataURL = store[store.length - 1];
-
-      getCtx.clearRect(0, 0, 608, 380);
-
-      const img = new Image();
-      img.src = dataURL;
-      img.onload = () => getCtx.drawImage(img, 0, 0);
-
-      setImageSrcs(
-        imageSrcs.map((imageSrc, index) =>
-          index === selected ? dataURL : imageSrc
-        )
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store]);
 
   const drawFn = (e) => {
     // mouse position
@@ -134,8 +115,34 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     setColorState(event.target.dataset.color);
     getCtx.strokeStyle = event.target.dataset.color;
   };
+  function reducer(state, action) {
+    switch (action.type) {
+      case "increment":
+        return [...state, action.dataURL];
+      case "decrement":
+        return [...state.slice(0, state.length - 1)];
+      case "init":
+        return [];
+      default:
+        throw new Error();
+    }
+  }
   const goBack = () => {
-    setStore([...store.slice(0, store.length - 1)]);
+    dispatch({ type: "decrement" });
+
+    const dataURL = store[store.length - 1];
+
+    getCtx.clearRect(0, 0, 608, 380);
+
+    const img = new Image();
+    img.src = dataURL;
+    img.onload = () => getCtx.drawImage(img, 0, 0);
+
+    setImageSrcs(
+      imageSrcs.map((imageSrc, index) =>
+        index === selected ? dataURL : imageSrc
+      )
+    );
   };
   const initCanvas = () => {
     getCtx.clearRect(0, 0, 608, 380);
@@ -144,7 +151,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
         index === selected ? undefined : imageSrc
       )
     );
-    setStore([]);
+    dispatch({ type: "init" });
   };
 
   return (
