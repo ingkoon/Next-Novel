@@ -22,7 +22,7 @@
 
 .name {
   margin-left: 20px;
-  width:33%;
+  width: 33%;
 }
 
 .logo {
@@ -33,12 +33,12 @@
 }
 
 .menudiv {
-  width:33%;
+  width: 33%;
   display: flex;
   justify-content: space-evenly;
 }
 
-.menudiv a{
+.menudiv a {
   display: flex;
   align-items: center;
 }
@@ -52,7 +52,9 @@
   height: 26px;
 }
 
-.banner_search, .banner_pen, .banner_mypage {
+.banner_search,
+.banner_pen,
+.banner_mypage {
   width: 24px;
   height: 24px;
 }

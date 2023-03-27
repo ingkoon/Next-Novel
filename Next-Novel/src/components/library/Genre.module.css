@@ -10,14 +10,13 @@
   color: white;
 }
 
-.genre > button {
+.genre button {
   font-family: "gothic";
   border: 3px solid black;
   width: 100px;
   height: 50px;
   border-radius: 15px;
   font-size: 24px;
-  background-color: white;
   cursor: pointer;
   margin: 0 1%;
 }

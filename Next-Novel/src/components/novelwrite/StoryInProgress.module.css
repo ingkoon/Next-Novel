@@ -1,0 +1,23 @@
+.container {
+  width: 608px;
+  height: 380px;
+  border: 3px solid #000000;
+  filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.25));
+  border-radius: 20px;
+  background-image: url("https://images.unsplash.com/photo-1601662528567-526cd06f6582?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=415&q=80");
+  padding: 40px 12px 40px 40px;
+  box-sizing: border-box;
+  font-size: 24px;
+}
+.scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+.scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 8px;
+}

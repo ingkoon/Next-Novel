@@ -15,8 +15,8 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   useEffect(() => {
     // canvas useRef
     const canvas = canvasRef.current;
-    canvas.width = 800;
-    canvas.height = 500;
+    canvas.width = 608;
+    canvas.height = 380;
     const ctx = canvas.getContext("2d");
     ctx.lineJoin = "round";
     ctx.lineWidth = 2.5;
@@ -43,18 +43,19 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     } else {
       getCtx.lineTo(mouseX, mouseY);
       getCtx.stroke();
+
+      const canvas = canvasRef.current;
+      const dataURL = canvas.toDataURL();
+      setImageSrcs(
+        imageSrcs.map((imageSrc, index) =>
+          index === selected ? dataURL : imageSrc
+        )
+      );
     }
-    const canvas = canvasRef.current;
-    const dataURL = canvas.toDataURL();
-    setImageSrcs(
-      imageSrcs.map((imageSrc, index) =>
-        index === selected ? dataURL : imageSrc
-      )
-    );
   };
 
   return (
-    <div className={style.view}>
+    <div className={style.container}>
       <canvas
         className={style.canvas}
         ref={canvasRef}

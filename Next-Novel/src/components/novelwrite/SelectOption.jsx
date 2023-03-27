@@ -1,21 +1,64 @@
 import React from "react";
+import style from "./SelectOption.module.css";
 
 export default function SelectOption({ setStep, count, setCount }) {
+  const buttons = [
+    {
+      icon: "/icon/check.svg",
+      click1: "완료하기",
+      click3: "이대로 소설을\n마무리합니다",
+      event: () => setStep(5),
+    },
+    {
+      icon: "",
+      click1: "이어하기",
+      click3: "이야기를\n더 진행합니다",
+      event: () => {
+        if (count === 5) return;
+        setStep(4);
+        setCount(count + 1);
+      },
+    },
+    {
+      icon: "/icon/trashcan.svg",
+      click1: "처음부터",
+      click3: "모든 진행사항을\n초기화합니다",
+      event: () => setStep(0),
+    },
+  ];
   return (
-    <div>
-      <button onClick={() => setStep(5)}>완료하기</button>
-      {count < 5 && (
-        <button
-          onClick={() => {
-            setStep(4);
-            setCount(count + 1);
-          }}
-        >
-          {count}/5 이어하기
-        </button>
-      )}
-      {count === 5 && <button disabled>5/5 이어하기</button>}
-      <button onClick={() => setStep(0)}>처음부터</button>
+    <div className={style.container}>
+      {buttons.map((button, index) => {
+        return (
+          <div
+            className={`${style.component} ${
+              count === 5 && index === 1 ? style.disabled : ""
+            }`}
+          >
+            <div className={style.element1}></div>
+            <div className={style.element2}></div>
+            <div className={style.element3}></div>
+            <div className={style.content}>
+              <div className={style.icon}>
+                {index !== 1 && (
+                  <img src={process.env.PUBLIC_URL + button.icon} alt="icon" />
+                )}
+                {index === 1 && (
+                  <>
+                    <div className={style.count1}>{count}</div>
+                    <div className={style.count2}>/5</div>
+                  </>
+                )}
+              </div>
+              <div className={style.click} onClick={button.event}>
+                <div className={style.click1}>{button.click1}</div>
+                <div className={style.click2}></div>
+                <div className={style.click3}>{button.click3}</div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

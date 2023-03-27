@@ -1,0 +1,12 @@
+.cardlist {
+  display: flex;
+  overflow: scroll;
+  overflow: auto;
+  white-space: nowrap;
+
+}
+
+.cardlist::-webkit-scrollbar{
+  display: none; 
+}
+

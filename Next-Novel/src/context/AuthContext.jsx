@@ -8,7 +8,8 @@ export function AuthContextProvider({ children }) {
   useEffect(() => {
     //처음에만 사용자의 세션 정보가 남아있다면 state에 로그인 정보 저장
     // onUserStateChange((user) => setUser(user)); //api호출
-    setUser(true);
+    // onUserStateChange((user) => setUser(user));
+    setUser(user)
   }, []);
 
   return (
