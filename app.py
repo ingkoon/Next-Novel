@@ -31,13 +31,10 @@ pool = multiprocessing.Pool(processes=3)
 @app.post('/novel/start')
 async def novel_start(images: List[UploadFile] = Form(...),
                        genre: str = Form(...)):
-
-
     start = time.time()
     image_bytes = []
     for image in images:
         image_bytes.append(await image.read())
-
 
     en_string = []
     for i in image_bytes:
@@ -47,7 +44,7 @@ async def novel_start(images: List[UploadFile] = Form(...),
     ko_answer = translator.translate(en_answer, dest="ko").text
     print(time.time()-start)
 
-    return {"korean_answer" : ko_answer,"dialog_history" : new_history}
+    return {"caption" : en_string, "korean_answer" : ko_answer,"dialog_history" : new_history}
 
 @app.post('/novel/question')
 async def novel_question(dialog_history:str=Form(...)):
@@ -77,7 +74,7 @@ async def novel_sequence(image: UploadFile = Form(...),
     ko_answer = translator.translate(en_answer, dest="ko").text
     print(time.time()-start)
 
-    return {"korean_answer" : ko_answer,"dialog_history" : new_history}
+    return {"caption" : en_string, "korean_answer" : ko_answer,"dialog_history" : new_history}
 
 
 
