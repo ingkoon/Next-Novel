@@ -5,29 +5,6 @@ import BookList from "./BookList"
 import Gototop from "../common/GoToTop"
 
 export default function MyNovel() {
-  // const showContent = (e) => {
-  //   const book = document.querySelector("#booklist1")
-  //   const icon = document.querySelector('#tri1')
-  //   if (book.className === 'remove') {
-  //     book.className = 'appear'
-  //     icon.style.transform = 'rotate(0deg)'
-  //   } else {
-  //     // setTimeout(funtion() { book.className = 'disappear'}, 1001);
-  //     icon.style.transform = 'rotate(180deg)'
-  //   }
-  // }
-  // const showContent2 = (e) => {
-  //   const book2 = document.querySelector("#booklist2")
-  //   const icon2 = document.querySelector('#tri2')
-  //   if (book2.style.display === "none") {
-  //     book2.style.display = ""
-  //     icon2.style.transform = 'rotate(0deg)'
-  //   } else {
-  //     book2.style.display = "none"
-  //     icon2.style.transform = 'rotate(180deg)'
-  //   }
-  // }
-
 
   const parentRef = useRef(null);
   const childRef = useRef(null);
