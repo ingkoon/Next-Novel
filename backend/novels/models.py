@@ -52,6 +52,9 @@ class NovelContent(models.Model):
             MinValueValidator(1)
         ]
     )
+    query1 = models.TextField()
+    query2 = models.TextField()
+    query3 = models.TextField()
 
     class Meta:
         constraints = [

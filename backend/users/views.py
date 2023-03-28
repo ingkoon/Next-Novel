@@ -16,6 +16,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from nextnovel.utils import create_random_nickname
 from novels.models import Novel
 from novels.serializers import NovelListSerializer
 from users.models import User
@@ -37,10 +38,10 @@ def kakao_login(request):
 def kakao_callback(request):
     client_id = KAKAO_CLIENT_ID
     code = request.GET.get("code")
-
+    redirect_uri = "http://localhost:3000"
     # code로 access token 요청
     token_request = requests.get(
-        f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={KAKAO_CALLBACK_URI}&code={code}")
+        f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={redirect_uri}&code={code}")
     token_response_json = token_request.json()
 
     # 에러 발생 시 중단
@@ -56,8 +57,9 @@ def kakao_callback(request):
         headers={"Authorization": f"Bearer {access_token}"},
     )
     profile_json = profile_request.json()
-
+    print(profile_json)
     kakao_account = profile_json.get("kakao_account")
+
     email = kakao_account.get("email", None)  # 이메일!
 
     # 이메일 없으면 오류 => 카카오톡 최신 버전에서는 이메일 없이 가입 가능해서 추후 수정해야함
@@ -83,9 +85,9 @@ def kakao_callback(request):
         if accept_status != 200:
             return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
         accept_json = accept.json()
-        print(accept_json)
+
         accept_json.pop('user', None)
-        print(accept_json, 'hahaha')
+
         return JsonResponse(accept_json)
     except User.DoesNotExist:
         # 애초에 가입된 유저가 없으면 =>  새로 회원가입 & 해당유저의 jwt발급
@@ -97,6 +99,15 @@ def kakao_callback(request):
             return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
 
         accept_json = accept.json()
+        user_pk = accept_json.get('user').get('pk')
+        created_user = User.objects.get(pk=user_pk)
+        while True:
+            nickname = create_random_nickname()
+            if User.objects.filter(nickname=nickname).exists():
+                continue
+            created_user.nickname = nickname
+            created_user.save()
+            break
         accept_json.pop('user', None)
         return JsonResponse(accept_json)
     except SocialAccount.DoesNotExist:

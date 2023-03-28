@@ -9,6 +9,7 @@ defusedxml==0.7.1
 dj-rest-auth==3.0.0
 Django==4.1.7
 django-allauth==0.52.0
+django-cors-headers==3.14.0
 django-dbbackup==4.0.2
 django-extensions==3.2.1
 django-seed==0.3.1
@@ -19,12 +20,14 @@ djangorestframework-simplejwt==5.2.2
 drf-spectacular==0.26.0
 Faker==17.6.0
 gprof2dot==2022.7.29
+gunicorn==20.1.0
 idna==3.4
 inflection==0.5.1
 jsonschema==4.17.3
 oauthlib==3.2.2
 Pillow==9.4.0
 psycopg2==2.9.5
+psycopg2-binary==2.9.5
 pycodestyle==2.10.0
 pycparser==2.21
 PyJWT==2.6.0
