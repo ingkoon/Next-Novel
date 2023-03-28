@@ -1,12 +1,13 @@
 import style from "./AppBar.module.css"
 import "./AppBar.css"
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { Link } from "react-router-dom"
 import Modal from "react-modal"
 import Login from "../login/Login"
 
 import axios from 'axios';
 import { useLocation, useEffect } from 'react'
+import {AuthContext} from "../../context/AuthContext"
 
 export default function AppBar() {
   const [loginIsOpen, setLoginIsOpen] = useState(false)
@@ -14,11 +15,13 @@ export default function AppBar() {
     setLoginIsOpen(false)
   }
 
+  const {user} = useContext(AuthContext)
+
   return (
     <div className={style.Appbar}>
       <div className={style.name}>
-        <span style={{ float: "left" }}>&gt;_NxtNvl &#183; </span>
-        <span>visitor</span>
+        <span style={{ float: "left" }}>&gt;_NextNovel &#183; &nbsp;</span>
+        <span>{user.access_token == "" ? 'visitor' : 'member'}</span>
       </div>
       <div className={style.logo}>
         <Link to="/">
