@@ -16,6 +16,7 @@ controlnet = ControlNetModel.from_pretrained(
     controlnet_model,
     torch_dtype=torch.float16
 )
+
 pipe = StableDiffusionControlNetPipeline.from_pretrained(
     sd_model, controlnet=controlnet, torch_dtype=torch.float16
 )
@@ -23,10 +24,10 @@ pipe = StableDiffusionControlNetPipeline.from_pretrained(
 pipe.scheduler = UniPCMultistepScheduler.from_config(pipe.scheduler.config)
 pipe.enable_model_cpu_offload()
 
-
 def creat_image(input_image):
     # 1. 이미지 로드
     image = load_image(input_image)
+    # image.show()
 
     # 2. 원본 이미지를 Canny Edge로 전환
     low_threshold = 100
@@ -41,9 +42,9 @@ def creat_image(input_image):
     canny_image = Image.fromarray(canny_image)
 
     # 3. Canny Edge 조건으로 새로운 이미지 생성
-    prompt = "cartoon"
+    prompt = "drawing simply and lighthearted paintings"
     num_steps = 20
-    seed = 0
+    seed = 1
 
     out_image = pipe(
         prompt,

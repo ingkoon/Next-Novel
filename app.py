@@ -1,20 +1,18 @@
 import asyncio
+from datetime import datetime
 import time
 
 from PIL import Image
 import io
-from fastapi import FastAPI, UploadFile, File, Form,Response
+from fastapi import FastAPI, UploadFile, File, Form, Response
 from typing import List, Dict
 
-# from starlette.responses import StreamingResponse
 from fastapi.responses import StreamingResponse
 
 from gpt import run_openai_chatbot as chatbot
-import diffusion
 import caption
-# from diffusion import creat_image
-import diffusion_ControlNet
-from diffusion_ControlNet import creat_image
+import diffusion.diffusion_ControlNet
+from diffusion.diffusion_ControlNet import creat_image
 from caption import inference_caption
 import torch
 import googletrans
@@ -93,21 +91,27 @@ async def novel_end(dialog_history:str=Form(...)):
 
     return {"korean_answer" : ko_answer}
 
-@app.post('/image')
-async def image(file: UploadFile = File(...)):
-    image_bytes = await file.read()
-    image = Image.open(io.BytesIO(image_bytes))
-    image.save(file.filename)
+@app.post('/novel/image')
+async def image(image: UploadFile = Form(...)):
+    image_bytes = await image.read()
+    img = Image.open(io.BytesIO(image_bytes))
+
+    # Save the image to a file
+    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    filename = f"diffusion/{current_time}.png"
+    img.save(filename)
 
     start = time.time()
-    res =creat_image(file.filename)
+    res = creat_image(filename)
     print(time.time()-start)
 
     # Save the image to a file
-    res.save("image.png", format="PNG")
+    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    filename = f"diffusion/{current_time}.png"
+    res.save(filename)
 
     # Read the saved image file
-    with open("image.png", "rb") as f:
+    with open(filename, "rb") as f:
         img_bytes = f.read()
 
     # Create a streaming response
