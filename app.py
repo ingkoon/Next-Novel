@@ -47,7 +47,7 @@ async def novel_start(images: List[UploadFile] = Form(...),
 @app.post('/novel/question')
 async def novel_question(dialog_history:str=Form(...)):
     dialog_history = json.loads(dialog_history)
-    question = "Ask me 3 questions I wish the answers to those questions could be depicted in pictures"
+    question = "Based on the story , give me 3 simple questions to proceed the next story. I wish the answers to those questions could be depicted in pictures."
     en_answer, new_history = chatbot(question, dialog_history)
     ko_answer = translator.translate(en_answer, dest="ko").text
     query = ko_answer.split("\n")
