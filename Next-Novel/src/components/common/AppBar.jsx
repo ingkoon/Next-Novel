@@ -50,16 +50,20 @@ export default function AppBar() {
             alt="pen"
           />
         </Link>
-        {/* <Link to="/mypage">
-          <img src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"} className={style.banner_mypage} alt='idcard'></img>
-        </Link> */}
-        <div onClick={() => setLoginIsOpen(true)}>
-          <img
-            src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"}
-            className={style.banner_mypage}
-            alt="idcard"
-          />
-        </div>
+
+        {user.access_token == ''
+          ? <div onClick={() => setLoginIsOpen(true)}>
+              <img
+                src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"}
+                className={style.banner_mypage}
+                alt="idcard"
+              />
+            </div> 
+          : <Link to="/mypage">
+              <img src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"} className={style.banner_mypage} alt='idcard'></img>
+            </Link>
+          }
+   
       </div>
 
       <Modal isOpen={loginIsOpen} onRequestClose={() => setLoginIsOpen(false)}

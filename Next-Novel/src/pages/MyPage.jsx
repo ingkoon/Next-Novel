@@ -12,8 +12,6 @@ export default function MyPage() {
   return (
     <>
       <TitleBar name='계정' intro='아, 오셨군요.' subintro1='acc-ount' subintro2='aka-unto' img='idcard'/>
-      <div>{user && user.access_token}</div>
-      <div>{user && user.refresh_token}</div>
       <IdCard/>
       <MyNovel/>
     </>
