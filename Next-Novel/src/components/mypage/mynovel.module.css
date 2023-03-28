@@ -113,7 +113,7 @@
 
 .booklist {
   height: 0;
-  width: 100%;
+  width: 90%;
   overflow: hidden;
   transition: height 0.35s ease;
   padding: 0 5%;
