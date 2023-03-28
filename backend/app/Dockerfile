@@ -28,6 +28,9 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requir
 # pull official base image
 FROM python:3.10-alpine
 
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 # create directory for the app user
 RUN mkdir -p /home/app
 
@@ -38,6 +41,8 @@ RUN addgroup -S app && adduser -S app -G app
 ENV HOME=/home/app
 ENV APP_HOME=/home/app/web
 RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/staticfiles
+RUN mkdir $APP_HOME/mediafiles
 WORKDIR $APP_HOME
 
 # install dependencies

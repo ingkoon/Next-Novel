@@ -14,6 +14,8 @@ fi
 python manage.py flush --no-input
 python manage.py makemigrations
 python manage.py migrate
-#python manage.py collectstatic
+#아래 삭제
+python manage.py collectstatic
+python manage.py seed novels --number=100
 
 exec "$@"

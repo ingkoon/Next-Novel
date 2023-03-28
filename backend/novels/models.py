@@ -20,20 +20,20 @@ class Genre(models.IntegerChoices):
 
 class Novel(models.Model):
     class Status(models.IntegerChoices):
-        FINISHED = 1
-        PENDING = 2
-        WAIT_FOR_WRITE = 3
+        FINISHED = 1, 'Finished'
+        PENDING = 2, 'Pending'
+        WAIT_FOR_WRITE = 3, ' Wait_for_write'
 
-    title = models.CharField(max_length=100)
-    cover_img = models.ImageField()
-    introduction = models.TextField()
+    title = models.CharField(max_length=100, null=True)
+    cover_img = models.ImageField(null=True)
+    introduction = models.TextField(null=True)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    status = models.IntegerField(choices=Status.choices)
+    status = models.IntegerField(choices=Status.choices, default=Status.WAIT_FOR_WRITE)
     step = models.IntegerField(
-        # default=1,
+        default=1,
         validators=[
             MaxValueValidator(6),
             MinValueValidator(1)
@@ -41,6 +41,7 @@ class Novel(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     genre = models.IntegerField(choices=Genre.choices)
+    prompt = models.TextField()
 
 
 class NovelContent(models.Model):
@@ -64,7 +65,7 @@ class NovelContent(models.Model):
 
 class NovelContentImage(models.Model):
     novel_content = models.ForeignKey(NovelContent, on_delete=models.CASCADE)
-    image_file = models.ImageField()
+    image = models.ImageField()
     caption = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
