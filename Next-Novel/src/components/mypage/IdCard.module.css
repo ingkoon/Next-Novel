@@ -47,8 +47,8 @@
   margin-top: 10%;
   float: right;
   padding-right: 15px;
-  -webkit-animation: flicker-in-1 2s linear both;
-  animation: flicker-in-1 2s linear both;
+  -webkit-animation: flicker-in-1 1.5s linear both;
+  animation: flicker-in-1 1.5s linear both;
 }
 
 .circle {
@@ -89,8 +89,8 @@
 
 .right {
   display: flex;
-  -webkit-animation: flicker-in-1 2s linear both;
-  animation: flicker-in-1 2s linear both;
+  -webkit-animation: flicker-in-1 1s linear both;
+  animation: flicker-in-1 1s linear both;
 }
 
 .diag {

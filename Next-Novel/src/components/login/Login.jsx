@@ -7,6 +7,7 @@ export default function Login() {
     const { Kakao } = window
     Kakao.Auth.authorize({
       redirectUri: "http://localhost:3000",
+      prompts : "login" //항상 로그인을 하게 만드는거임.
     })
   }
 
