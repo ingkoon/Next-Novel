@@ -2,23 +2,18 @@ import React, { useEffect, useRef, useState, useReducer } from "react";
 import style from "./Canvas1.module.css";
 
 export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
-  // useRef
-  const canvasRef = useRef(null);
-  // getCtx
-  const [getCtx, setGetCtx] = useState(null);
-  // painting state
-  const [painting, setPainting] = useState(false);
+  const canvasRef = useRef(null); //canvas
+  const [getCtx, setGetCtx] = useState(null); //canvas
+  const [painting, setPainting] = useState(false); //그림을 그리고 있는지 아닌지
+  const [mouseX, setmouseX] = useState(); //캔버스 내 마우스 좌표
+  const [mouseY, setmouseY] = useState(); //캔버스 내 마우스 좌표
 
-  const [mouseX, setmouseX] = useState();
-  const [mouseY, setmouseY] = useState();
-
-  const [widthState, setWidthState] = useState(5);
-  const [colorState, setColorState] = useState("#000000");
-  const [openSetWidthState, setOpenSetWidthState] = useState(false);
-  const [openSetColorState, setOpenSetColorState] = useState(false);
-  const [store, dispatch] = useReducer(reducer, []);
-  const [paintState, setPaintState] = useState(false);
-
+  const [widthState, setWidthState] = useState(2); //펜 굵기 초기값
+  const [colorState, setColorState] = useState("#000000"); //펜 색 초기값
+  const [openSetWidthState, setOpenSetWidthState] = useState(false); //펜 굵기 설정 탭 on/off
+  const [openSetColorState, setOpenSetColorState] = useState(false); //펜 색 설정 탭 on/off
+  const [store, dispatch] = useReducer(reducer, [imageSrcs[selected]]); //뒤로가기 저장소
+  const [paintState, setPaintState] = useState(false); //캔버스 내 마우스 클릭중 or 클릭해제, 벗어남
   const colors = [
     "#e53730",
     "#d81758",
@@ -41,117 +36,132 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     "#c1c1c1",
     "#6f6f6f",
     "#000000",
-  ];
+  ]; //컬러파레트 색상
 
   useEffect(() => {
-    // canvas useRef
     const canvas = canvasRef.current;
     canvas.width = 608;
     canvas.height = 380;
     const ctx = canvas.getContext("2d");
     ctx.lineJoin = "round";
-    ctx.lineWidth = 2.5;
-    ctx.strokeStyle = "#000000";
+    ctx.lineCap = "round";
+    ctx.lineWidth = widthState;
+    ctx.strokeStyle = colorState;
     setGetCtx(ctx);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); //맨 처음 컴포넌트 설정
 
   useEffect(() => {
-    if (getCtx) getCtx.clearRect(0, 0, 608, 380);
+    if (getCtx) getCtx.clearRect(0, 0, 608, 380); //현재 캔버스 초기화
 
     const img = new Image();
     img.src = imageSrcs[selected];
-    img.onload = () => getCtx.drawImage(img, 0, 0);
+    img.onload = () => getCtx.drawImage(img, 0, 0); //캔버스 불러오기
 
-    dispatch({ type: "init" });
+    dispatch({ type: "init" }); //저장소 초기화
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected]);
+  }, [selected]); //n번째 캔버스 선택시
 
   useEffect(() => {
     if (!painting && paintState) {
+      //그림그리는상태가 아니고, 마우스에서 손이 떨어졌을 때
       const canvas = canvasRef.current;
       const dataURL = canvas.toDataURL();
       setImageSrcs(
         imageSrcs.map((imageSrc, index) =>
           index === selected ? dataURL : imageSrc
         )
-      );
-      dispatch({ type: "increment", dataURL });
+      ); //현재 캔버스를 완성그림에 저장하고
+      dispatch({ type: "increment", dataURL }); //저장소에 기록을 추가
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [painting]);
+  }, [painting]); //그림그리는 행위를 하는 상태
 
-  const drawFn = (e) => {
-    // mouse position
-    setmouseX(e.nativeEvent.offsetX);
-    setmouseY(e.nativeEvent.offsetY);
-    // console.log(mouseX, mouseY);
-    // drawing
-    if (!painting) {
-      getCtx.beginPath();
-      getCtx.moveTo(mouseX, mouseY);
-    } else {
-      getCtx.lineTo(mouseX, mouseY);
-      getCtx.stroke();
-      setPaintState(true);
-    }
-  };
-  const onPencil = () => {
-    getCtx.strokeStyle = colorState;
-  };
-  const onEraser = () => {
-    getCtx.strokeStyle = "white";
-  };
-  const openSetWidth = () => {
-    setOpenSetWidthState((prev) => !prev);
-  };
-  const setWidth = (event) => {
-    setWidthState(event.target.value);
-    getCtx.lineWidth = event.target.value;
-  };
-  const openSetColor = () => {
-    setOpenSetColorState((prev) => !prev);
-  };
-  const setColor = (event) => {
-    setColorState(event.target.dataset.color);
-    getCtx.strokeStyle = event.target.dataset.color;
-  };
   function reducer(state, action) {
+    //저장소 간리
     switch (action.type) {
-      case "increment":
+      case "increment": //그리기
         return [...state, action.dataURL];
-      case "decrement":
+      case "decrement": //뒤로가기
         return [...state.slice(0, state.length - 1)];
-      case "init":
-        return [];
+      case "init": //초기화
+        return [imageSrcs[selected]];
       default:
         throw new Error();
     }
   }
+
+  const drawFn = (e) => {
+    //마우스가 캔버스 위에 올라가있을때
+    setmouseX(e.nativeEvent.offsetX);
+    setmouseY(e.nativeEvent.offsetY);
+
+    if (!painting) {
+      //그리는 행위 중이 아님
+      getCtx.beginPath();
+      getCtx.moveTo(mouseX, mouseY);
+    } else {
+      //그리는 행위 중
+      getCtx.lineTo(mouseX, mouseY);
+      getCtx.stroke();
+      setPaintState(true); //마우스에 손이 눌러지고 있음
+    }
+  };
+  const onPencil = () => {
+    //펜 선택
+    getCtx.strokeStyle = colorState;
+  };
+  const onEraser = () => {
+    //지우개 선택
+    getCtx.strokeStyle = "white";
+  };
+  const openSetWidth = () => {
+    //펜 굵기 설정 탭 열기
+    setOpenSetWidthState((prev) => !prev);
+  };
+  const setWidth = (event) => {
+    //펜 굵기 설정하기
+    setWidthState(event.target.value);
+    getCtx.lineWidth = event.target.value;
+  };
+  const openSetColor = () => {
+    //펜 색 설정 탭 열기
+    setOpenSetColorState((prev) => !prev);
+  };
+  const setColor = (event) => {
+    //펜 색 설정하기
+    setColorState(event.target.dataset.color);
+    getCtx.strokeStyle = event.target.dataset.color;
+  };
   const goBack = () => {
-    dispatch({ type: "decrement" });
+    //뒤로가기
+    if (store.length === 1) return; //처음 상태면 return
 
-    const dataURL = store[store.length - 1];
+    dispatch({ type: "decrement" }); //저장소에서 맨 뒤 지우기
 
-    getCtx.clearRect(0, 0, 608, 380);
+    const dataURL = store[store.length - 2]; //dispatch가 비동기라서 -2를 하여 불러옴
+
+    getCtx.clearRect(0, 0, 608, 380); //현재 캔버스 초기화
 
     const img = new Image();
     img.src = dataURL;
-    img.onload = () => getCtx.drawImage(img, 0, 0);
+    img.onload = () => getCtx.drawImage(img, 0, 0); //이전 이미지 불러오기
 
     setImageSrcs(
       imageSrcs.map((imageSrc, index) =>
         index === selected ? dataURL : imageSrc
       )
-    );
+    ); //완성 그림에 전달
   };
   const initCanvas = () => {
-    getCtx.clearRect(0, 0, 608, 380);
+    //쓰레기통으로 캔버스 초기화
+    getCtx.clearRect(0, 0, 608, 380); //현재 캔버스 초기화
     setImageSrcs(
       imageSrcs.map((imageSrc, index) =>
         index === selected ? undefined : imageSrc
       )
-    );
-    dispatch({ type: "init" });
+    ); //완성 그림에 undefined 전달
+    dispatch({ type: "init" }); //저장소 초기화
   };
 
   return (
