@@ -1,10 +1,7 @@
 import style from "./login.module.css"
-import { useAuthContext } from "../../context/AuthContext";
 
 
 export default function Login() {
-
-  const {user, login, logout } = useAuthContext();
 
   function kakaoLogin() {
     const { Kakao } = window
