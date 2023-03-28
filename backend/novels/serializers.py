@@ -75,7 +75,6 @@ class NovelContentImageSerializer(serializers.ModelSerializer):
 
 
 class NovelStartSerializer(serializers.Serializer):
-    # images = NovelContentImageSerializer(many=True)
     images = serializers.ListField(
         child=serializers.ImageField(allow_empty_file=False, use_url=False),
         write_only=True
@@ -84,14 +83,11 @@ class NovelStartSerializer(serializers.Serializer):
     author = serializers.PrimaryKeyRelatedField(read_only=True)
 
     def validate_genre(self, value):
-        print(value)
-        print(Genre.labels)
         if value in Genre.labels:
             return Genre.get_value_from_label(value)
         raise serializers.ValidationError("Not allowed Genre")
 
     def create(self, validated_data):
-        print("create started")
         images_data = validated_data.pop('images')
         novel = Novel.objects.create(**validated_data)
         images = []
@@ -99,4 +95,30 @@ class NovelStartSerializer(serializers.Serializer):
         for image_data in images_data:
             image = NovelContentImage.objects.create(novel_content=novel_content, image=image_data)
             images.append(image)
-        return (novel, novel_content, images)
+        return novel, novel_content, images
+
+
+class NovelContinueSerializer(serializers.Serializer):
+    image = serializers.ImageField(allow_empty_file=False, use_url=False)
+    query = serializers.IntegerField(min_value=1, max_value=3)
+    step = serializers.IntegerField(min_value=2, max_value=6)
+    novel_id = serializers.PrimaryKeyRelatedField(queryset=Novel.objects.all())
+
+    def create(self, validated_data):
+        image_data = validated_data.pop("image")
+        query = validated_data.pop("query")
+
+        novel = validated_data.pop("novel_id")
+        print(validated_data.get("step"), novel)
+        novel_content = NovelContent.objects.get(step=validated_data.get("step"), novel=novel)
+        image = NovelContentImage.objects.create(novel_content=novel_content, image=image_data)
+
+        if query == 1:
+            selected_query = novel_content.query1
+        elif query == 2:
+            selected_query = novel_content.query2
+        else:
+            selected_query = novel_content.query3
+
+        return novel, novel_content, image, selected_query
+        # return image, selected_query

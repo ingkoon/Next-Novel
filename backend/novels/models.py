@@ -41,6 +41,7 @@ class Novel(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     genre = models.IntegerField(choices=Genre.choices)
+    prompt = models.TextField()
 
 
 class NovelContent(models.Model):
@@ -97,8 +98,3 @@ class NovelStats(models.Model):
     hit_count = models.PositiveIntegerField(default=0)
     comment_count = models.PositiveIntegerField(default=0)
     like_count = models.PositiveIntegerField(default=0)
-
-
-class NovelCreationPrompt(models.Model):
-    novel = models.OneToOneField(Novel, on_delete=models.CASCADE)
-    prompt = models.TextField()

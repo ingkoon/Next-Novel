@@ -150,7 +150,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        # 'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ),
 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
@@ -227,9 +227,10 @@ REST_AUTH = {
     'JWT_AUTH_COOKIE_USE_CSRF': False,
     'JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED': False,
 }
-KAKAO_CLIENT_ID = os.environ.get("SOCIAL_AUTH_KAKAO_CLIENT_ID", "f8ed452e0c40816d467de425d5b06427")
-KAKAO_SECRET = os.environ.get("SOCIAL_AUTH_KAKAO_SECRET", "874804")
+KAKAO_CLIENT_ID = os.environ.get("SOCIAL_AUTH_KAKAO_CLIENT_ID", None)
+KAKAO_SECRET = os.environ.get("SOCIAL_AUTH_KAKAO_SECRET", None)
 STATE = os.environ.get("STATE", "vasdvdsfav")
+REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD', None)
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -241,15 +242,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://default:sixnextnovelgod@redis:6379',
+        'LOCATION': f'redis://default:{REDIS_PASSWORD}@redis:6379',
     }
 }
 ## social provider
 SOCIALACCOUNT_PROVIDERS = {
     "kakao": {
         "APP": {
-            "client_id": "f8ed452e0c40816d467de425d5b06427",
-            "secret": "874804",
+            "client_id": KAKAO_CLIENT_ID,
+            "secret": KAKAO_SECRET,
         },
     },
 }

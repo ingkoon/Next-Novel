@@ -1,7 +1,11 @@
+import io
 import json
 import random
+from io import BytesIO
 
 import requests
+from PIL.Image import Image
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import QuerySet, F
 from rest_framework import status, parsers
 from rest_framework.filters import SearchFilter
@@ -14,7 +18,7 @@ from rest_framework.views import APIView
 from nextnovel.throttles import LikeRateThrottle
 from novels.models import NovelComment, Novel, NovelLike, Genre, NovelContent
 from novels.serializers import NovelPreviewSerializer, NovelDetailSerializer, \
-    NovelCommentSerializer, NovelLikeSerializer, NovelListSerializer, NovelStartSerializer
+    NovelCommentSerializer, NovelLikeSerializer, NovelListSerializer, NovelStartSerializer, NovelContinueSerializer
 
 
 def next_novel_content(novel_content):
@@ -201,15 +205,101 @@ class NovelStartAPI(APIView):
                 }
             ]
         }
+
         novel_content.content = story
         novel_content.save()
         next_content = next_novel_content(novel_content)
 
-        next_content.save(query1=response2_json.get("query1"),
-                          query2=response2_json.get("query2"),
-                          query3=response2_json.get("query3"))
+        query1 = response2_json.pop("query1")
+        query2 = response2_json.pop("query2")
+        query3 = response2_json.pop("query3")
+
+        next_content.query1 = query1
+        next_content.query2 = query2
+        next_content.query3 = query3
+        next_content.save()
+
+        dialog = json.dumps(response2_json)
+        novel.prompt = dialog
+        novel.save()
+
         response_data = {
             "id": novel.id,
+            "step": 1,
             "story": story,
+            "query": {
+                "1": query1,
+                "2": query2,
+                "3": query3
+            }
         }
         return Response(data=response_data, status=status.HTTP_200_OK)
+
+
+class NovelContinueAPI(APIView):
+
+    def post(self, request):
+        """
+        step, novel_id ,query (int),(image)
+
+        """
+        serializer = NovelContinueSerializer(data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            novel, novel_content, image, selected_query = serializer.save()
+        url = "http://j8a502.p.ssafy.io:8001/"
+        # url = "http://host.docker.internal:8001/"
+        sequence_url = url + "novel/sequence"
+
+        ### 실제
+
+        filename = image.image.name.split('/')[-1]
+        content_type = f"image/{filename.split('.')[1]}"
+        image_file = image.image.open(mode='r')
+        img_byte_arr = io.BytesIO
+        image_file.save(img_byte_arr)
+        img_byte_arr = img_byte_arr.getvalue()
+        print(img_byte_arr)
+        files = {'image': (filename, image_file)}
+        # images = request.FILES.getlist('image')
+        # files = []
+        # for image in images:
+        #     files.append(("images", (image.name, image.file, image.content_type)))
+
+        dialog_history = json.loads(novel.prompt)
+        # dialog_history = {
+        #     "query1": "1. 블랙홀 내부는 어떻게 생겼습니까?",
+        #     "query2": "2. 뇌는 어떻게 꿈을 꾸는가?",
+        #     "query3": "3. 인류 문명은 1000 년 안에 어떤 모습일까요?",
+        #     "dialog_history": [
+        #         {
+        #             "role": "user",
+        #             "content": "Act as a StoryTeller. Write an endless novel story in the genre of romance in 5 sentences based on an illustration of a bunny holding a carrot in its mouth . ,a drawing of a man lifting a barbell . ,a black and white drawing of a t - rex eating a piece of pizza . ,an image of a plane that is drawn in black ink . ,a drawing of an animal holding a leaf in it 's arms . ,a man jumping in the air to catch a ball . .And write a sentence that summarizes this story in 3 sentences"
+        #         },
+        #         {
+        #             "role": "assistant",
+        #             "content": ": Benny and Jack's relationship began with a shared love of carrots, but soon grew into a deeper bond filled with adventure and peril."
+        #         },
+        #         {
+        #             "role": "user",
+        #             "content": "Ask me 3 questions I wish the answers to those questions could be depicted in pictures"
+        #         },
+        #         {
+        #             "role": "assistant",
+        #             "content": "1. What does the inside of a black hole look like?\n2. How does the brain process dreams?\n3. What would human civilization look like in 1000 years?"
+        #         }
+        #     ]
+        # }
+        selected_query = "1. 블랙홀 내부는 어떻게 생겼습니까?"
+        data = {
+            "previous_question": json.dumps(selected_query, ensure_ascii=False).encode('utf-8'),
+            "dialog_history": json.dumps(dialog_history.get("dialog_history")),
+        }
+
+        response = requests.post(sequence_url, files=files, data=data)
+
+        print(response)
+
+        ### 테스트용
+
+        return Response(data={}, status=status.HTTP_200_OK)

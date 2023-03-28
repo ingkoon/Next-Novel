@@ -14,8 +14,8 @@ services:
       - env_files/.env
     depends_on:
       - db
-    ## for development only
     volumes:
+      ## for development only
       - .:/home/app/web
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
@@ -35,7 +35,6 @@ services:
     container_name: redis_server
     ports:
       - "6379:6379"
-    #    command: redis-server --requirepass sixnextnovelgod --appendonly yes
     command: redis-server /usr/local/conf/redis.conf
     volumes:
       - ./redis/redis.conf:/usr/local/conf/redis.conf
@@ -47,9 +46,9 @@ services:
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
-      - /opt/dist:/usr/share/nginx/html
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - web
 
@@ -57,3 +56,4 @@ volumes:
   postgres_data:
   static_volume:
   media_volume:
+
