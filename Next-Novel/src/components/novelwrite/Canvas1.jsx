@@ -7,8 +7,10 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   const [painting, setPainting] = useState(false); //그림을 그리고 있는지 아닌지
   const [mouseX, setmouseX] = useState(); //캔버스 내 마우스 좌표
   const [mouseY, setmouseY] = useState(); //캔버스 내 마우스 좌표
+  const canvasWidth = 608;
+  const canvasHeight = 380;
 
-  const [widthState, setWidthState] = useState(2); //펜 굵기 초기값
+  const [widthState, setWidthState] = useState(2.5); //펜 굵기 초기값
   const [colorState, setColorState] = useState("#000000"); //펜 색 초기값
   const [openSetWidthState, setOpenSetWidthState] = useState(false); //펜 굵기 설정 탭 on/off
   const [openSetColorState, setOpenSetColorState] = useState(false); //펜 색 설정 탭 on/off
@@ -40,8 +42,8 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    canvas.width = 608;
-    canvas.height = 380;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
     const ctx = canvas.getContext("2d");
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
@@ -52,7 +54,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   }, []); //맨 처음 컴포넌트 설정
 
   useEffect(() => {
-    if (getCtx) getCtx.clearRect(0, 0, 608, 380); //현재 캔버스 초기화
+    if (getCtx) getCtx.clearRect(0, 0, canvasWidth, canvasHeight); //현재 캔버스 초기화
 
     const img = new Image();
     img.src = imageSrcs[selected];
@@ -141,7 +143,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
 
     const dataURL = store[store.length - 2]; //dispatch가 비동기라서 -2를 하여 불러옴
 
-    getCtx.clearRect(0, 0, 608, 380); //현재 캔버스 초기화
+    getCtx.clearRect(0, 0, canvasWidth, canvasHeight); //현재 캔버스 초기화
 
     const img = new Image();
     img.src = dataURL;
@@ -155,7 +157,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   };
   const initCanvas = () => {
     //쓰레기통으로 캔버스 초기화
-    getCtx.clearRect(0, 0, 608, 380); //현재 캔버스 초기화
+    getCtx.clearRect(0, 0, canvasWidth, canvasHeight); //현재 캔버스 초기화
     setImageSrcs(
       imageSrcs.map((imageSrc, index) =>
         index === selected ? undefined : imageSrc
@@ -208,7 +210,6 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
             <div className={style.setColor}>
               {colors.map((color) => (
                 <div
-                  class="color-option"
                   style={{
                     backgroundColor: color,
                     width: "30px",

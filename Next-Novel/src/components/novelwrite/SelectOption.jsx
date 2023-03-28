@@ -34,6 +34,7 @@ export default function SelectOption({ setStep, count, setCount }) {
             className={`${style.component} ${
               count === 5 && index === 1 ? style.disabled : ""
             }`}
+            key={index}
           >
             <div className={style.element1}></div>
             <div className={style.element2}></div>
