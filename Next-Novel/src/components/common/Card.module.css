@@ -21,6 +21,7 @@
   color: white;
   font-family: wild;
   font-size: 24px;
+  width: 450px;
   height: 65%;
   border-bottom: 3px solid black;
   background-image: url('/public/img/just me.png');
@@ -41,6 +42,7 @@
 
 .ment {
   margin: 0 15% 20%;
+  white-space: normal;
 }
 
 .info{

@@ -12,6 +12,7 @@ import NovelRead from "./pages/NovelRead";
 import NovelSearch from "./pages/NovelSearch";
 import MyPage from "./pages/MyPage";
 import NovelWrite from "./pages/NovelWrite";
+import Modal from 'react-modal'
 
 const router = createBrowserRouter([
   {
@@ -63,3 +64,5 @@ root.render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
+
+Modal.setAppElement('#root')

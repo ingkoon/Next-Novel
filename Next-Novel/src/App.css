@@ -44,3 +44,8 @@
   font-family: "Jadyn_Maria";
   src: url(../public/fonts/Jadyn_Maria.ttf);
 }
+
+@font-face {
+  font-family: "handjet";
+  src: url(../public/fonts/Handjet.ttf);
+}
