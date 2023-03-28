@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState, useReducer } from "react";
-import style from "./Canvas2.module.css";
+import style from "./Canvas3.module.css";
 
-export default function Canvas2({ imageSrcs, setImageSrcs, selected }) {
+export default function Canvas3({ imageSrcs, setImageSrcs, selected }) {
   const canvasRef = useRef(null); //canvas
   const [getCtx, setGetCtx] = useState(null); //canvas
   const [painting, setPainting] = useState(false); //그림을 그리고 있는지 아닌지
   const [mouseX, setmouseX] = useState(); //캔버스 내 마우스 좌표
   const [mouseY, setmouseY] = useState(); //캔버스 내 마우스 좌표
-  const canvasWidth = 608;
-  const canvasHeight = 380;
+  const canvasWidth = 308;
+  const canvasHeight = 350;
 
   const [widthState, setWidthState] = useState(2.5); //펜 굵기 초기값
   const [colorState, setColorState] = useState("#000000"); //펜 색 초기값

@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./Question.module.css";
+import Modal from "react-modal";
+import StoryInProgress from "./StoryInProgress";
 
 export default function Question({ count, question }) {
+  const [IsOpen, setIsOpen] = useState(false);
+
+  const closemodal = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className={style.container}>
       <div className={style.box}>
@@ -14,8 +22,25 @@ export default function Question({ count, question }) {
         </div>
       </div>
       <div className={style.button}>
-        <button>지금까지의 스토리 보기</button>
+        <button onClick={() => setIsOpen(true)}>지금까지의 스토리 보기</button>
       </div>
+      <Modal
+        isOpen={IsOpen}
+        onRequestClose={() => setIsOpen(false)}
+        style={{
+          overlay: {},
+          content: {
+            width: "608px",
+            height: "380px",
+            margin: "auto",
+            padding: "0",
+            borderRadius: "20px",
+            border: "none",
+          },
+        }}
+      >
+        <StoryInProgress closemodal={closemodal} />
+      </Modal>
     </div>
   );
 }

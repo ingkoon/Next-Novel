@@ -6,7 +6,8 @@ import WriteStep2 from "./WriteStep2";
 import WriteStep3 from "./WriteStep3";
 import WriteStep4a from "./WriteStep4a";
 import WriteStep4b from "./WriteStep4b";
-import WriteStep5 from "./WriteStep5";
+import WriteStep5a from "./WriteStep5a";
+import WriteStep5b from "./WriteStep5b";
 import style from "./AfterStartWrite.module.css";
 
 export default function AfterStartWrite({ step, setStep }) {
@@ -20,16 +21,21 @@ export default function AfterStartWrite({ step, setStep }) {
         <CurrentStepIcon step={step} />
       </div>
       <div className={style.component}>
-        <img
-          src={process.env.PUBLIC_URL + "/img/circles_left.svg"}
-          className={style.circle_left}
-          alt="circle_left"
-        ></img>
-        <img
-          src={process.env.PUBLIC_URL + "/img/circles_right.svg"}
-          className={style.circle_right}
-          alt="circle_right"
-        ></img>
+        {step <= 5 && (
+          <>
+            <img
+              src={process.env.PUBLIC_URL + "/img/circles_left.svg"}
+              className={style.circle_left}
+              alt="circle_left"
+            ></img>
+            <img
+              src={process.env.PUBLIC_URL + "/img/circles_right.svg"}
+              className={style.circle_right}
+              alt="circle_right"
+            ></img>
+          </>
+        )}
+
         {step === 1 && (
           <WriteStep1
             setStep={setStep}
@@ -58,7 +64,8 @@ export default function AfterStartWrite({ step, setStep }) {
             step={step}
           />
         )}
-        {step === 5 && <WriteStep5 genre={genre} />}
+        {step === 5 && <WriteStep5a setStep={setStep} step={step} />}
+        {step === 5.5 && <WriteStep5b genre={genre} step={step} />}
       </div>
     </div>
   );
