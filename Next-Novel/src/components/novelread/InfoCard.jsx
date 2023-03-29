@@ -7,8 +7,8 @@ export default function InfoCard() {
         <div className={style.content}>
 
             <img src={process.env.PUBLIC_URL+'/img/NN_LOGO_text.svg'} className={style.logo} alt='NN_LOGO_text'></img>
-            <div className={style.header}>도서열람증</div>
-            <div className={style.title}>책제목</div>
+            <div className={style.header}>&gt;_ 도서열람증</div>
+            <div className={style.title}>오늘나는내일의너를만난다</div>
             <div className={style.sub}>
                 제작자 :
                 <div>&nbsp;닉네임최대열여섯글자밖에안되는데</div>

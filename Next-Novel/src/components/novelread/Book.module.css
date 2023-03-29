@@ -145,11 +145,6 @@ html {
 .cover{
   width: 100%;
   height: 100%;
-}
-
-.cover{
-  width: 100%;
-  height: 100%;
   object-fit: cover;
   display: flex;
   flex-direction: column;
@@ -161,19 +156,30 @@ html {
   width: 370px;
   height: 420px;
   background: blue;
-  border: 3px solid #090909;
+  border: 3px solid #f66f00;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.ogcover img{
+  width: 370px;
+  height: 420px;
+  background: blue;
+  border: 3px solid #f66f00;
   border-radius: 10px;
   object-fit: cover;
 }
 
 .bookfooter{
-  width: 100%;
+  font-family: 'wild';
+  width: 80%;
   height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 24px;
   /* background: #FFFEFC; */
+  text-align: center;
 }
 
 .fbar{
@@ -193,13 +199,21 @@ html {
   right: 0px;
 }
 
-.end{
+.tmi{
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lastpg{
   width: 100%;
   height: 100%;
 }
 .eng{
   position: absolute;
-  top: -30%;
+  top: 1%;
+  left: -4%;
   width: 100%;
   height: 100%;
   font-size: 120px;
@@ -207,6 +221,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'valverde';
 }
 .theend{
   position: absolute;
@@ -214,9 +229,10 @@ html {
   top: 48%;
   left: 40%;
   font-size: 100px;
+  font-family: 'LINESeedKR-Bd';
 }
 
-.temp{
+.fin{
   position: absolute;
   top: 8%;
   right: 10%;
@@ -256,6 +272,12 @@ html {
   align-items: center;
   flex-direction: column;
   color: #090909;
+  transition: background-color 0.3s ease;
+}
+
+.link:hover {
+  background-color: #f66f00;
+  color: #fff;
 }
 
 .comment{
@@ -280,4 +302,9 @@ html {
     to{
       transform: translatey(-5px);
     }
+  }
+
+  .ex{
+    margin-top: -20px;
+    font-family: 'LINESeedKR-Bd';
   }

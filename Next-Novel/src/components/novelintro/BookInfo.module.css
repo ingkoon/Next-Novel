@@ -89,7 +89,35 @@
     width: 48px;
     height: 48px;
 }
+.likebtn{
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    
+}
+.likebtn:hover{
+    background-color: #FC9BF8;
+}
+.like{
+    width: 48px;
+    height: 48px;
+}
 .nums{
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width:100px;
+    height:50px;
+}
+.likenums{
+    position: relative;
+    left: -2%;
     font-size: 24px;
     display: flex;
     justify-content: center;
@@ -156,10 +184,8 @@
     background: linear-gradient(to left, #c13a5b, #7129bd);
 }
 
-.icons{
+.bicon{
     /* margin-top: 17px; */
     height: 24px;
     width: 24px;
-    display: flex;
-    align-items: center;
 }

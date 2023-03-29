@@ -39,8 +39,15 @@ export default function Book(){
                                 ></img>
                             </div>
                             <div className={style.bookfooter}>
-                                "한줄소개글이 들어갑니다"
-                                Dovemayo_wild
+                                <span className={style.ex}>
+                                 "&nbsp; 
+                                </span>
+                                <span>
+                                    이거슨 한줄 소개글입니다. 최대 50자까지 쓸 수 있죠. 이거슨 한줄 소개글입니다.일이삼사
+                                </span>
+                                <span className={style.ex}>
+                                    &nbsp;"
+                                </span>
                             </div>
                             <div className={style.fbar}></div>
                         </div>
@@ -85,12 +92,20 @@ export default function Book(){
                         <h1>마무리</h1>
                     </div>
                     <div className={style.page}>
-                        <h1>원본표지</h1>
+                        <div className={style.ogcover}>
+                            <img
+                                src="https://i.pinimg.com/564x/f6/13/14/f61314f3ff9441fc1701b23457ec4685.jpg"
+                                alt="cover"
+                            ></img>
+                            <div className={style.tmi}>
+                                P.S. 책 표지는 위 그림으로 만들어졌습니다.
+                            </div>
+                        </div>
                     </div>
                     <div className={style.page}>
-                        <div className={style.end}>
+                        <div className={style.lastpg}>
                             <div className={style.eng}>
-                                THE END.
+                                THE &nbsp;&nbsp;END.
                             </div>
                             <div className={style.theend}>
                                 끝
@@ -98,7 +113,7 @@ export default function Book(){
                             <div className={style.ebar}></div>
                         </div>
                     </div>
-                    <div className={style.temp}>
+                    <div className={style.fin}>
                         <div className={style.block}>
                             <img src={process.env.PUBLIC_URL+'/icon/glasses_black.svg'} className={style.icon} alt='glasses_black'></img>
                             <Link to="/library/intro" className={style.link}>
@@ -111,7 +126,7 @@ export default function Book(){
                             <input type="text" className={style.comment} placeholder="          어떠셨나요?"/>
                             <div className={style.sbar}></div>
                             <Link to="/library/intro" className={style.link}>
-                                <h2>소감평작성</h2>
+                                <h2>소감평 작성</h2>
                             </Link>
                         </div>
                     </div>

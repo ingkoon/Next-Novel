@@ -63,3 +63,8 @@ body::-webkit-scrollbar-track {
   font-family: "handjet";
   src: url(../public/fonts/Handjet.ttf);
 }
+
+@font-face {
+  font-family: "valverde";
+  src: url(../public/fonts/Valverde-CondSemBdIta.otf);
+}

@@ -16,6 +16,9 @@
     left: 300px;
     border-radius: 100%;
     background: #F66F00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .booktemp{
