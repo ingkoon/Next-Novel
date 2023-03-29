@@ -25,11 +25,11 @@ app = FastAPI()
 pool = multiprocessing.Pool(processes=3)
 
 
-async def translate(before):
+def translate(before):
     start = time.time()
     question = before + "\n\nTranslate that only korean."
     after, history = chatbot(question, [])
-    print("번역시간 : "+time.time()-start)
+    print(f'번역시간 : {time.time()-start}')
     return after
 
 
