@@ -5,6 +5,7 @@ export default function Thumbnail(){
       <div>
         <div className={style.introBanner}>
             <div className={style.bookCircle}>
+              <div className={style.booktemp}></div>
             </div>
             <div className={style.bannerGrad}>
             </div>

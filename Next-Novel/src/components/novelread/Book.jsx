@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Materials from './Materials.jsx';
 import Qna from './Qna.jsx';
 import style from './Book.module.css';
+import { Link } from "react-router-dom"
 
 export default function Book(){
 
@@ -84,7 +85,7 @@ export default function Book(){
                         <h1>마무리</h1>
                     </div>
                     <div className={style.page}>
-                        <h1>서명</h1>
+                        <h1>원본표지</h1>
                     </div>
                     <div className={style.page}>
                         <div className={style.end}>
@@ -94,10 +95,24 @@ export default function Book(){
                             <div className={style.theend}>
                                 끝
                             </div>
-                            <div className={style.jap}>
-                                OWARI.
-                            </div>
                             <div className={style.ebar}></div>
+                        </div>
+                    </div>
+                    <div className={style.temp}>
+                        <div className={style.block}>
+                            <img src={process.env.PUBLIC_URL+'/icon/glasses_black.svg'} className={style.icon} alt='glasses_black'></img>
+                            <Link to="/library/intro" className={style.link}>
+                                <h2>돌아가기</h2>
+                            </Link>
+                        </div>
+                        <div className={style.blank}></div>
+                        <div className={style.block}>
+                            <img src={process.env.PUBLIC_URL+'/icon/comments2.svg'} className={style.icon} alt='comment_black'></img>
+                            <input type="text" className={style.comment} placeholder="          어떠셨나요?"/>
+                            <div className={style.sbar}></div>
+                            <Link to="/library/intro" className={style.link}>
+                                <h2>소감평작성</h2>
+                            </Link>
                         </div>
                     </div>
                 </div>

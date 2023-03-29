@@ -17,6 +17,18 @@
     border-radius: 100%;
     background: #F66F00;
 }
+
+.booktemp{
+    width: 220px;
+    height: 280px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    background: white;
+}
+
 .bannerGrad{
     position: absolute;
     width: 100%;

@@ -27,3 +27,16 @@
     flex-direction: column;
     align-items: center;
 }
+
+.icons{
+    animation: up-down 1.4s infinite ease-in-out alternate;
+  }
+  
+  @keyframes up-down{
+      from{
+        transform: translatey(5px);
+      }
+      to{
+        transform: translatey(-5px);
+      }
+    }

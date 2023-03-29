@@ -1,8 +1,14 @@
 import style from './BookInfo.module.css'
+import { Link } from "react-router-dom"
 
 export default function BookInfo(){
     return (
       <div>
+        <Link to="/library/read" className={style.link}>
+              <span className={style.front}><img src={process.env.PUBLIC_URL+'/icon/glasses.svg'} className={style.icons} alt='glasses_black'></img></span>
+              <span className={style.center}></span>
+              <span className={style.back}>열람</span>
+        </Link>
         <div className={style.blur}>
         </div>
         <div className={style.undertext}>
