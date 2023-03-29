@@ -5,7 +5,6 @@ import { Link } from "react-router-dom"
 import Modal from "react-modal"
 import Login from "../login/Login"
 
-import axios from 'axios';
 import { useLocation, useEffect } from 'react'
 import {AuthContext} from "../../context/AuthContext"
 
@@ -21,7 +20,7 @@ export default function AppBar() {
     <div className={style.Appbar}>
       <div className={style.name}>
         <span style={{ float: "left" }}>&gt;_NextNovel &#183; &nbsp;</span>
-        <span>{user.access_token == "" ? 'visitor' : 'member'}</span>
+        <span>{user.access_token === "" ? 'visitor' : 'member'}</span>
       </div>
       <div className={style.logo}>
         <Link to="/">
@@ -51,7 +50,7 @@ export default function AppBar() {
           />
         </Link>
 
-        {user.access_token == ''
+        {user.access_token === ''
           ? <div onClick={() => setLoginIsOpen(true)}>
               <img
                 src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"}
