@@ -2,14 +2,18 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 import axios from "axios"
-import { useEffect } from "react"
+import { useEffect, useContext, useState } from "react"
 import { useLocation } from "react-router-dom"
+
+import { AuthContext } from "../context/AuthContext"
 
 export default function Home() {
   const location = useLocation()
 
+  const {user, setUser } = useContext(AuthContext);
   useEffect(() => {
     const urlSearchParams = new URLSearchParams(location.search)
+    
     if (urlSearchParams.has("code")) {
       // If "code" exists, execute some logic
       const code = urlSearchParams.get("code")
@@ -26,6 +30,7 @@ export default function Home() {
         const refreshToken = res.data.refresh_token
         localStorage.setItem("access_token", accessToken)
         localStorage.setItem("refresh_token", refreshToken)
+        setUser({access_token : accessToken, refresh_token : refreshToken})
       })
       // ... add your logic here
     } else {
@@ -35,6 +40,8 @@ export default function Home() {
       // ... add your logic here
     }
   }, [location])
+
+
 
   return (
     <>
@@ -60,6 +67,7 @@ export default function Home() {
       <Link to="/laboratory">
         <h2>책제작페이지</h2>
       </Link>
+
     </>
   )
 }

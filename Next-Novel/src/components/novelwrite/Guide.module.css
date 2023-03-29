@@ -1,12 +1,11 @@
 .container {
   display: flex;
   align-items: center;
-  position: absolute;
-  /* border: 1px solid red; */
-  left: 150px;
 }
 .container > span {
   color: #f66f00;
   font-family: "LINESeedKR-Bd";
   margin-top: 3px;
+  white-space: pre-wrap;
+  margin-left: 10px;
 }

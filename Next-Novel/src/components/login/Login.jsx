@@ -1,15 +1,13 @@
 import style from "./login.module.css"
-import { useAuthContext } from "../../context/AuthContext";
 
 
 export default function Login() {
-
-  const {user, login, logout } = useAuthContext();
 
   function kakaoLogin() {
     const { Kakao } = window
     Kakao.Auth.authorize({
       redirectUri: "http://localhost:3000",
+      prompts : "login" //항상 로그인을 하게 만드는거임.
     })
   }
 

@@ -1,0 +1,99 @@
+.update {
+  font-family: 'LINESeedKR-Bd';
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 64px;
+  padding : 20px; 
+}
+
+.category {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  text-align: center;
+  height: 60%;
+  font-size: 32px;
+}
+
+.value {
+  display: flex;
+}
+
+.profile {
+  width: 110px;
+  height: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  justify-self: center;
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 50%;
+}
+
+.profile img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.updatebtn {
+  text-align: center;
+}
+
+.updatebtn button {
+  width: 130px;
+  height: 40px;
+  font-family: 'LINESeedKR-Bd';
+  font-size: 20px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.circle_left {
+  position: absolute;
+  left: 50px;
+  top: 50px;
+  width: 256px;
+  height: 256px;
+}
+
+.circle_right {
+  position : absolute;
+  right: 50px;
+  bottom: 50px;
+  width: 256px;
+  height: 256px;
+}
+
+.inputimg {
+  display: none;
+}
+
+.regdate {
+  align-self: center;
+}
+
+.nickname {
+  align-self: center;
+  font-size: 24px;
+}
+
+.nickname input {
+  font-size: 24px;
+  height: 30px;
+  width: 80%;
+}
+
+.icon {
+  margin: 20px 0;
+}
