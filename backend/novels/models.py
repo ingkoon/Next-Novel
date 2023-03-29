@@ -35,7 +35,7 @@ class Novel(models.Model):
     step = models.IntegerField(
         default=1,
         validators=[
-            MaxValueValidator(6),
+            MaxValueValidator(7),
             MinValueValidator(1)
         ]
     )
@@ -49,7 +49,7 @@ class NovelContent(models.Model):
     content = models.TextField()
     step = models.IntegerField(
         validators=[
-            MaxValueValidator(6),
+            MaxValueValidator(7),
             MinValueValidator(1)
         ]
     )

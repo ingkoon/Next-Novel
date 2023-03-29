@@ -14,10 +14,23 @@ class NovelStatsSerializer(serializers.ModelSerializer):
         exclude = ["id", "novel"]
 
 
+class NovelContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NovelContent
+        fields = "__all__"
+
+
 class NovelDetailSerializer(serializers.ModelSerializer):
+    prompt = serializers.JSONField()
+
     class Meta:
         model = Novel
         fields = "__all__"
+
+
+class NovelReadSerializer(serializers.Serializer):
+    novel = NovelDetailSerializer()
+    novel_content = NovelContentSerializer(many=True)
 
 
 class NovelListSerializer(serializers.ModelSerializer):
@@ -26,7 +39,7 @@ class NovelListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Novel
-        fields = ["id", "title", "author", "novel_stats"]
+        fields = ["id", "title", "author", "novel_stats", "cover_img", "introduction"]
 
 
 class NovelCommentCreateSerializer(serializers.ModelSerializer):
@@ -89,7 +102,10 @@ class NovelStartSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         images_data = validated_data.pop('images')
+        ##
         novel = Novel.objects.create(**validated_data)
+        novel_stats = NovelStats.objects.create(novel=novel)
+        ##
         images = []
         novel_content = NovelContent.objects.create(novel=novel, step=1)
         for image_data in images_data:
@@ -101,7 +117,7 @@ class NovelStartSerializer(serializers.Serializer):
 class NovelContinueSerializer(serializers.Serializer):
     image = serializers.ImageField(allow_empty_file=False, use_url=False)
     query = serializers.IntegerField(min_value=1, max_value=3)
-    step = serializers.IntegerField(min_value=2, max_value=6)
+    step = serializers.IntegerField(min_value=2, max_value=7)
     novel_id = serializers.PrimaryKeyRelatedField(queryset=Novel.objects.all())
 
     def create(self, validated_data):
@@ -109,7 +125,6 @@ class NovelContinueSerializer(serializers.Serializer):
         query = validated_data.pop("query")
 
         novel = validated_data.pop("novel_id")
-        print(validated_data.get("step"), novel)
         novel_content = NovelContent.objects.get(step=validated_data.get("step"), novel=novel)
         image = NovelContentImage.objects.create(novel_content=novel_content, image=image_data)
 
@@ -121,4 +136,8 @@ class NovelContinueSerializer(serializers.Serializer):
             selected_query = novel_content.query3
 
         return novel, novel_content, image, selected_query
-        # return image, selected_query
+
+
+class NovelEndSerializer(serializers.Serializer):
+    novel_id = serializers.PrimaryKeyRelatedField(queryset=Novel.objects.all())
+    step = serializers.IntegerField(min_value=2, max_value=7)

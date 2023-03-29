@@ -40,12 +40,13 @@ def kakao_login(request):
 def kakao_callback(request):
     client_id = KAKAO_CLIENT_ID
     code = request.GET.get("code")
+    print(client_id)
     redirect_uri = "http://localhost:3000"
     # code로 access token 요청
     token_request = requests.get(
         f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={redirect_uri}&code={code}")
     token_response_json = token_request.json()
-
+    print(token_request, 'haha')
     # 에러 발생 시 중단
     error = token_response_json.get("error", None)
     # if error is not None:
@@ -58,8 +59,9 @@ def kakao_callback(request):
         "https://kapi.kakao.com/v2/user/me",
         headers={"Authorization": f"Bearer {access_token}"},
     )
+    print(profile_request)
     profile_json = profile_request.json()
-    print(profile_json)
+
     kakao_account = profile_json.get("kakao_account")
 
     email = kakao_account.get("email", None)  # 이메일!
