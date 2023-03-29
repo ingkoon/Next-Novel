@@ -12,14 +12,17 @@ export default function NewCard(){
       <div className={style.newcard_infopart}>
         <div style={{height:'50px', marginTop:'20px'}}>
           <div className={style.newcard_new}>
-            NEW
+            추천
           </div>
         </div>
 
         <div className={style.newcard_intro}>
           <div className={style.newcard_ment}>
-            취미는 기타, 본업은 코딩 한 사내의 좌충우돌 개발자 생존기
+            <div>
+              취미는 기타, 본업은 코딩 한 사내의 좌충우돌 개발자 생존기
+            </div>
           </div>
+          <img src={process.env.PUBLIC_URL+'/icon/rainbow.svg'} className={style.rainbowbg} alt='rainbow'></img>
           <img src={process.env.PUBLIC_URL+'/icon/quote1_black.svg'} className={style.newcard_quote1} alt='quote1_black'></img>
           <img src={process.env.PUBLIC_URL+'/icon/quote2_black.svg'} className={style.newcard_quote2} alt='quote2_black'></img>
         </div>

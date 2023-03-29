@@ -42,7 +42,7 @@ export default function IdCard(){
                 <div className={style.info_title}>CREATOR</div>
                 <div className={style.info_bottom2}>
                   <div className={style.info_sub}>
-                    <div className={style.info_name}>테스트닉네임1</div>
+                    <div className={style.info_name}>ID 테스트닉네임은최대열여섯글자입니다</div>
                     <div className={style.info_date}>S/N 20230308.14.24.32</div>
                   </div>
                   <div className={style.info_nation}>
