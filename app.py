@@ -11,8 +11,8 @@ from fastapi.responses import StreamingResponse
 
 from gpt import run_openai_chatbot as chatbot
 import caption
-import diffusion.diffusion_ControlNet
-from diffusion.diffusion_ControlNet import creat_image
+# import diffusion.diffusion_ControlNet
+# from diffusion.diffusion_ControlNet import creat_image
 from caption import inference_caption
 import torch
 import googletrans
@@ -102,7 +102,8 @@ async def image(image: UploadFile = Form(...)):
     img.save(filename)
 
     start = time.time()
-    res = creat_image(filename)
+    # res = creat_image(filename)
+    res = img
     print(time.time()-start)
 
     # Save the image to a file
