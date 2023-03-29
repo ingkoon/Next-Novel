@@ -13,6 +13,7 @@ import style from "./AfterStartWrite.module.css";
 export default function AfterStartWrite({ step, setStep }) {
   const [count, setCount] = useState(0);
   const [genre, setGenre] = useState(1);
+  const genreName = ["", "romance", "fantasy", "mystery", "sf", "free"];
 
   return (
     <div>
@@ -27,12 +28,12 @@ export default function AfterStartWrite({ step, setStep }) {
               src={process.env.PUBLIC_URL + "/img/circles_left.svg"}
               className={style.circle_left}
               alt="circle_left"
-            ></img>
+            />
             <img
               src={process.env.PUBLIC_URL + "/img/circles_right.svg"}
               className={style.circle_right}
               alt="circle_right"
-            ></img>
+            />
           </>
         )}
 
@@ -44,7 +45,13 @@ export default function AfterStartWrite({ step, setStep }) {
             step={step}
           />
         )}
-        {step === 2 && <WriteStep2 setStep={setStep} step={step} />}
+        {step === 2 && (
+          <WriteStep2
+            setStep={setStep}
+            step={step}
+            genreName={genreName[genre]}
+          />
+        )}
         {step === 3 && (
           <WriteStep3
             setStep={setStep}

@@ -179,7 +179,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
           onMouseLeave={() => {
             setPainting(false);
           }}
-        ></canvas>
+        />
       </div>
       <div className={style.tools}>
         <div className={style.tool1}>
@@ -205,11 +205,12 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
               border: "3px solid black",
             }}
             onClick={openSetColor}
-          ></div>
+          />
           {openSetColorState && (
             <div className={style.setColor}>
-              {colors.map((color) => (
+              {colors.map((color, index) => (
                 <div
+                  key={index}
                   style={{
                     backgroundColor: color,
                     width: "30px",
@@ -222,7 +223,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
                     setColor(event);
                     openSetColor();
                   }}
-                ></div>
+                />
               ))}
             </div>
           )}
@@ -247,7 +248,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
                 backgroundColor: "black",
                 borderRadius: "50%",
               }}
-            ></div>
+            />
           </div>
           {openSetWidthState && (
             <div className={style.setWidth}>
