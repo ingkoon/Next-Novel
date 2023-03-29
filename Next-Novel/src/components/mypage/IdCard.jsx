@@ -1,7 +1,21 @@
 import style from './IdCard.module.css'
 import Member from './Member'
+import { useEffect } from 'react'
 
+import { user } from '../../api/user.js'
 export default function IdCard(){
+
+  // api 통신하기
+  async function getuser() {
+    const data = await user()
+    console.log(data)
+  }
+
+  // api 호출하기
+  useEffect(() => {
+    getuser()
+  })
+
   return (
     <div className={style.mypagewhole}>
       <div className={style.mypage}>
