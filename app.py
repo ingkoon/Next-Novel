@@ -11,8 +11,7 @@ from fastapi.responses import StreamingResponse
 
 from gpt import run_openai_chatbot as chatbot
 import caption
-# import diffusion.diffusion_ControlNet
-# from diffusion.diffusion_ControlNet import creat_image
+# from diffusion import diffusion_ControlNet
 from caption import inference_caption
 import torch
 import googletrans
@@ -135,34 +134,35 @@ async def novel_end(dialog_history:str=Form(...)):
     return {"korean_answer" : ko_answer}
 
 
-# @app.post('/novel/image')
-# async def image(image: UploadFile = Form(...)):
-#     image_bytes = await image.read()
-#     img = Image.open(io.BytesIO(image_bytes))
-#
-#     # Save the image to a file
-#     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-#     filename = f"diffusion/{current_time}.png"
-#     img.save(filename)
-#
-#     start = time.time()
-#     res = creat_image(filename)
-#     print(time.time()-start)
-#
-#     # Save the image to a file
-#     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-#     filename = f"diffusion/{current_time}.png"
-#     res.save(filename)
-#
-#     # Read the saved image file
-#     with open(filename, "rb") as f:
-#         img_bytes = f.read()
-#
-#     # Create a streaming response
-#     return StreamingResponse(
-#         io.BytesIO(img_bytes),
-#         media_type="image/png"
-#     )
+@app.post('/novel/image')
+async def image(image: UploadFile = Form(...)):
+    image_bytes = await image.read()
+    img = Image.open(io.BytesIO(image_bytes))
+
+    # Save the image to a file
+    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    filename = f"diffusion/{current_time}.png"
+    img.save(filename)
+
+    start = time.time()
+    # res = diffusion_ControlNet.creat_image(filename)
+    res = img
+    print(time.time()-start)
+
+    # Save the image to a file
+    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    filename = f"diffusion/{current_time}.png"
+    res.save(filename)
+
+    # Read the saved image file
+    with open(filename, "rb") as f:
+        img_bytes = f.read()
+
+    # Create a streaming response
+    return StreamingResponse(
+        io.BytesIO(img_bytes),
+        media_type="image/png"
+    )
 
 @app.get('/cuda')
 async def hello():
