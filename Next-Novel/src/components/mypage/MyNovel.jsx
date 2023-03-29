@@ -72,7 +72,7 @@ export default function MyNovel() {
       </div>
 
       <div ref={parentRef} className={style.booklist} id="booklist1">
-        <div ref={childRef} style={{'width':'90%'}}>
+        <div ref={childRef} style={{'width':'100%'}}>
           <BookList />
         </div>
       </div>
@@ -98,7 +98,7 @@ export default function MyNovel() {
       </div>
 
       <div ref={parentRef2} className={style.booklist} id="booklist2">
-        <div ref={childRef2} style={{'width':'90%'}}>
+        <div ref={childRef2} style={{'width':'100%'}}>
           <BookList />
         </div>
       </div>

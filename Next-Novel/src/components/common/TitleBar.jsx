@@ -15,7 +15,7 @@ function TitleBar({name, intro, subintro1, subintro2, img}){
           <div>{subintro2}</div>
         </div>
       </div>
-      <img src={process.env.PUBLIC_URL+'/icon/banner/'+img + '.svg'} alt='banner'></img>
+      <img style={ img === 'library' ? {} : {'transform':'rotate(-15deg)'}} src={process.env.PUBLIC_URL+'/icon/banner/'+img + '.svg'} alt='banner'/>
     </div>
   )
 }

@@ -9,6 +9,7 @@
   position: absolute;
   z-index: -1;
   left: 100px;
+  top : 50px;
 }
 
 .circle_right {
@@ -23,4 +24,9 @@
   display: flex;
   align-items: center;
   margin : 0 50px;
+}
+
+.swiper {
+  padding : 0 5%;
+  position: relative;
 }
