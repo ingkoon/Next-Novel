@@ -1,8 +1,8 @@
-import apiClient from "./client";
+import { tokeninstance } from "../api/Interceptors";
 const config = {
   headers: { "Content-Type": "multipart/form-data" },
 };
 
 export async function startNovelApi(formData) {
-  return apiClient.post(`api/novel/start/`, formData, config);
+  return tokeninstance.post(`novel/start/`, formData, config);
 }
