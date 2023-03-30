@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 
 import { user } from '../../api/user.js'
 export default function IdCard(){
-
   // api 호출하기
   useEffect(() => {
 
