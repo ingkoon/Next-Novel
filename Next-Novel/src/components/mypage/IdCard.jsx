@@ -4,15 +4,20 @@ import { useEffect } from 'react'
 
 import { user } from '../../api/user.js'
 export default function IdCard(){
-
-  // api 통신하기
-  async function getuser() {
-    const data = await user()
-    console.log(data)
-  }
-
   // api 호출하기
   useEffect(() => {
+
+    // api 통신하기
+    async function getuser() {
+      try {
+        const data = await user()
+        console.log(data)
+      }
+      catch(e) {
+        console.log(e)
+      }
+    }
+
     getuser()
   })
 

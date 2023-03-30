@@ -1,36 +1,92 @@
-import style from './Booklist.module.css'
-import Card from '../common/Card'
+import style from "./Booklist.module.css"
+import Card from "../common/Card"
+import Genre from "./Genre";
 
 //api
-import { useEffect, useState } from 'react'
-import { getnovels } from '../../api/library.js'
+import { useEffect, useState } from "react"
+import { getnovels, getgenre } from "../../api/library.js"
 
-export default function Booklist(){
+export default function Booklist() {
 
-  const [novels, setNovels] = useState()
-
-  let arr = []
-  for(let i=0;i<4;i++){
-    arr.push(Card)
-  }
-
-  // api 통신하기
-  async function getnovel() {
-    const data = await getnovels()
-    console.log(data)
-  }
+  const [novels, setNovels] = useState([])
+  let novellen = 0
+  const [arr, setArr] = useState()
 
   // api 호출하기
   useEffect(() => {
+    async function getnovel() {
+      try {
+        const data = await getnovels()
+        console.log(data)
+        novellen = data.data.results.length
+        setNovels(data.data.results)
+        
+        let tmp = []
+        for(let i=0;i<novellen;i++){
+          tmp = [...tmp]
+          tmp.push(Card)
+        }
+        setArr(tmp)
+      }
+      catch(e) {
+        console.log(e)
+      }
+    }
+    
     getnovel()
-  })
+
+  },[])
+  
+  const selectgenre = (data) => {
+    getgenreres(data)
+  }
+
+  async function getgenreres(genre){
+    const data = await getgenre(genre)
+    try {
+      novellen = data.data.results.length
+      setNovels(data.data.results)
+      
+      let tmp = []
+      for(let i=0;i<novellen;i++){
+        tmp = [...tmp]
+        tmp.push(Card)
+      }
+      setArr(tmp)
+    }
+    catch(e) {
+      console.log(e)
+    }
+  }
 
   return (
     <div>
-      <hr className={style.line}></hr>
+      <Genre selectgenre={selectgenre}/>
+      <hr className={style.line} />
       <div className={style.list}>
-        {arr.map((Component, index) => (
-          <Component key={index}/>
+        {arr?.map((Component, index) => (
+          <Component
+            key={index}
+            title={novels[index].title}
+            intro={novels[index].introduction}
+            author={novels[index].author}
+            img={novels[index].cover_img}
+            view={
+              novels && novels[index].novels_stats
+                ? novels[index].novels_stats.hit_count
+                : "0"
+            }
+            likes={
+              novels && novels[index].novels_stats
+                ? novels[index].novels_stats.hit_count
+                : "0"
+            }
+            comments={
+              novels && novels[index].novels_stats
+                ? novels[index].novels_stats.hit_count
+                : "0"
+            }
+          />
         ))}
       </div>
     </div>

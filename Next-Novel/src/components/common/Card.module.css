@@ -24,7 +24,6 @@
   width: 450px;
   height: 65%;
   border-bottom: 3px solid black;
-  background-image: url('/public/img/just me.png');
   background-size: cover;
   position: relative;
 }
@@ -41,8 +40,9 @@
 }
 
 .ment {
-  margin: 0 15% 20%;
-  white-space: normal;
+  margin: 0 15%;
+  padding-bottom:20%;
+  font-size: 24px;
 }
 
 .info{
