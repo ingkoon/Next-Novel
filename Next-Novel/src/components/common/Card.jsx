@@ -1,5 +1,6 @@
 import style from './Card.module.css'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Card({props}){
   const [isHovering, setIsHovering] = useState(false);
@@ -11,9 +12,13 @@ function Card({props}){
   const handleMouseOut = () => {
     setIsHovering(false);
   }
+  const navigate = useNavigate()
 
+  const navigateToPurchase = (id) => {
+    navigate(`/library/${id}/intro`)
+  }
   return (
-    <div className={style.card}>
+    <div className={style.card} onClick={()=>navigateToPurchase(props.id)}>
       <div className={isHovering ? style.none : style.intro} style={{'backgroundImage':`url(${props.cover_img})`}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
         <div className={style.introment}>
           <div className={style.ment}>
