@@ -49,12 +49,17 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     ctx.lineCap = "round";
     ctx.lineWidth = widthState;
     ctx.strokeStyle = colorState;
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
     setGetCtx(ctx);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); //맨 처음 컴포넌트 설정
 
   useEffect(() => {
-    if (getCtx) getCtx.clearRect(0, 0, canvasWidth, canvasHeight); //현재 캔버스 초기화
+    if (getCtx) {
+      getCtx.clearRect(0, 0, canvasWidth, canvasHeight);
+      getCtx.fillRect(0, 0, canvasWidth, canvasHeight);
+    } //현재 캔버스 초기화
 
     const img = new Image();
     img.src = imageSrcs[selected];
@@ -144,6 +149,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     const dataURL = store[store.length - 2]; //dispatch가 비동기라서 -2를 하여 불러옴
 
     getCtx.clearRect(0, 0, canvasWidth, canvasHeight); //현재 캔버스 초기화
+    getCtx.fillRect(0, 0, canvasWidth, canvasHeight);
 
     const img = new Image();
     img.src = dataURL;
@@ -158,6 +164,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   const initCanvas = () => {
     //쓰레기통으로 캔버스 초기화
     getCtx.clearRect(0, 0, canvasWidth, canvasHeight); //현재 캔버스 초기화
+    getCtx.fillRect(0, 0, canvasWidth, canvasHeight);
     setImageSrcs(
       imageSrcs.map((imageSrc, index) =>
         index === selected ? undefined : imageSrc
