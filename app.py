@@ -78,11 +78,8 @@ async def novel_question(dialog_history:str=Form(...)):
     ko_answer = translate(en_answer)
     query = ko_answer.split("\n")
 
-    for i in range(len(query)):
-        if query[i][0].isdigit() and query[i][1:3] == '. ':
-            query[i] = query[i][3:]
-
-    return {"query1" : query[0],"query2" : query[1],"query3" : query[2],"dialog_history" : new_history}
+    tmp = [query[-i].split(". ")[-1].split("?")[0]+"?" for i in range(1,4)]
+    return {"query1" : tmp[2],"query2" : tmp[1],"query3" : tmp[0],"dialog_history" : new_history}
 
 
 @app.post('/novel/sequence')
@@ -139,17 +136,28 @@ async def image(image: UploadFile = Form(...)):
     image_bytes = await image.read()
     img = Image.open(io.BytesIO(image_bytes))
 
-    # Save the image to a file
+    # en_string : 이미지캡셔닝(영어)
+    # en_word : 이미지캡셔닝 단어(영어)
+    en_string = inference_caption(image_bytes)
+    print(f"캡셔닝 문장 : {en_string}")
+    question = f'"{en_string}"\nInterpret this sentence and tell me in one word what object you drew'
+
+    start = time.time()
+    en_word, new_history = chatbot(question, [])
+    print(f"캡셔닝 단어 : {en_word}")
+    print(time.time() - start)
+
+    # diffusion 이전 그림 파일 저장
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     filename = f"diffusion/{current_time}.png"
     img.save(filename)
 
     start = time.time()
-    res = diffusion_ControlNet.creat_image(filename)
+    res = diffusion_ControlNet.creat_image(filename, en_word)
     # res = img
     print(time.time()-start)
 
-    # Save the image to a file
+    # diffusion 이후 그림 파일 저장
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     filename = f"diffusion/{current_time}.png"
     res.save(filename)
