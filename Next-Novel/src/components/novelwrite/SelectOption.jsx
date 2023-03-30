@@ -1,7 +1,9 @@
 import React from "react";
 import style from "./SelectOption.module.css";
+import { useNovelContext } from "../../context/NovelContext";
 
 export default function SelectOption({ setStep, count, setCount }) {
+  const { novel, setNovel } = useNovelContext();
   const buttons = [
     {
       icon: "/icon/check.svg",
@@ -15,6 +17,8 @@ export default function SelectOption({ setStep, count, setCount }) {
       click3: "이야기를\n더 진행합니다",
       event: () => {
         if (count === 5) return;
+        //보낼 novel 값 업데이트
+        setNovel({ ...novel, step: novel.step + 1 });
         setStep(4);
         setCount(count + 1);
       },
@@ -36,9 +40,9 @@ export default function SelectOption({ setStep, count, setCount }) {
             }`}
             key={index}
           >
-            <div className={style.element1}></div>
-            <div className={style.element2}></div>
-            <div className={style.element3}></div>
+            <div className={style.element1} />
+            <div className={style.element2} />
+            <div className={style.element3} />
             <div className={style.content}>
               <div className={style.icon}>
                 {index !== 1 && (
@@ -53,7 +57,7 @@ export default function SelectOption({ setStep, count, setCount }) {
               </div>
               <div className={style.click} onClick={button.event}>
                 <div className={style.click1}>{button.click1}</div>
-                <div className={style.click2}></div>
+                <div className={style.click2} />
                 <div className={style.click3}>{button.click3}</div>
               </div>
             </div>

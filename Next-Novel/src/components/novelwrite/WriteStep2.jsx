@@ -45,6 +45,8 @@ export default function WriteStep2({ setStep, step, genreName }) {
         console.log(res);
         //context 제어
         setNovel({
+          id: res.data.id,
+          step: res.data.step,
           materials: res.data.materials,
           story: res.data.story,
         });

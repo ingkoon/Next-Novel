@@ -11,12 +11,10 @@ export default function WriteStep4a({ setStep, count, step }) {
   const selected = 0;
   const button = () => setStep(4.5);
 
-  const question = "나그네는 무엇을 주고 갔나요? 나그네는 무엇을 주고 갔나요?";
-
   return (
     <div className={style.container}>
       <div className={style.component}>
-        <Question count={count} question={question} />
+        <Question count={count} />
         <Canvas2
           imageSrcs={imageSrcs}
           setImageSrcs={setImageSrcs}
