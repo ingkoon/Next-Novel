@@ -4,9 +4,11 @@ import PaintingInProgress from "./PaintingInProgress";
 import SelectOption from "./SelectOption";
 import StoryInProgress from "./StoryInProgress";
 import style from "./WriteStep3.module.css";
+import { useNovelContext } from "../../context/NovelContext";
 
 export default function WriteStep3({ setStep, count, setCount, step }) {
   const [whatInProgress, setWhatInProgress] = useState("story");
+  const { novel } = useNovelContext();
 
   const button = () =>
     whatInProgress === "story"
@@ -16,8 +18,8 @@ export default function WriteStep3({ setStep, count, setCount, step }) {
   return (
     <div className={style.container}>
       <div className={style.component}>
-        {whatInProgress === "story" && <StoryInProgress />}
-        {whatInProgress === "painting" && <PaintingInProgress />}
+        {whatInProgress === "story" && <StoryInProgress novel={novel} />}
+        {whatInProgress === "painting" && <PaintingInProgress novel={novel} />}
 
         <SelectOption setStep={setStep} count={count} setCount={setCount} />
       </div>

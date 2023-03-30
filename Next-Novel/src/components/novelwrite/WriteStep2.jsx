@@ -5,8 +5,10 @@ import Preview from "./Preview";
 import style from "./WriteStep2.module.css";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import Modal from "react-modal";
+import { useNovelContext } from "../../context/NovelContext";
 
 export default function WriteStep2({ setStep, step, genreName }) {
+  const { setNovel } = useNovelContext();
   const { startNovel } = useNovelWrite();
   const [imageSrcs, setImageSrcs] = useState(
     Array.from({ length: 6 }, () => undefined)
@@ -41,6 +43,11 @@ export default function WriteStep2({ setStep, step, genreName }) {
     startNovel.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
+        //context 제어
+        setNovel({
+          materials: res.data.materials,
+          story: res.data.story,
+        });
         setIsLoading((prev) => !prev);
         setStep(3);
       },
