@@ -12,6 +12,7 @@ import NovelRead from "./pages/NovelRead";
 import NovelSearch from "./pages/NovelSearch";
 import MyPage from "./pages/MyPage";
 import NovelWrite from "./pages/NovelWrite";
+import Landing from "./pages/Landing";
 import Modal from 'react-modal'
 
 const router = createBrowserRouter([
@@ -52,6 +53,14 @@ const router = createBrowserRouter([
         element: (
           // <ProtectedRoute>
           <NovelWrite />
+          // </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/landing",
+        element: (
+          // <ProtectedRoute>
+          <Landing />
           // </ProtectedRoute>
         ),
       },

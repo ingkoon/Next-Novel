@@ -67,6 +67,9 @@ export default function Home() {
       <Link to="/laboratory">
         <h2>책제작페이지</h2>
       </Link>
+      <Link to="/landing">
+        <h2>랜딩페이지</h2>
+      </Link>
 
     </>
   )
