@@ -1,19 +1,47 @@
 import style from './Update.module.css'
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
+import {patchuser, user} from "../../../api/user"
 
 export default function Update({closemodal}){
 
   const [imgFile, setImgFile] = useState("")
-  const [nickName, setNickName] = useState("테스트계정")
+  const [nickName, setNickName] = useState("")
+  const [profile, setProfile] = useState()
   const imgRef = useRef()
+  const [userinfo, setUserinfo] = useState()
+
+  // api 통신하기
+  async function getuser() {
+    try {
+      const data = await user()
+      let tmp = data.data.created_at
+      let year = tmp.substring(0, 4)
+      let month = tmp.substring(5,7)
+      let day = tmp.substring(8,10)
+      setNickName(data.data.nickname)
+      setImgFile(data.data.profile_image)
+      setUserinfo(year+'.'+month+'.'+day)
+    }
+    catch(e) {
+      console.log(e)
+    }
+  }
+
+  // api 호출하기
+  useEffect(() => {
+    getuser()
+  }, [])
+
 
   const saveImgFile = () => {
     const file = imgRef.current.files[0]
+    setProfile(file)
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onloadend = () => {
       setImgFile(reader.result)
     }
+
   }
 
   const changeprofile = () => {
@@ -23,6 +51,26 @@ export default function Update({closemodal}){
 
   const onChange = (e) => {
     setNickName(e.target.value)
+  }
+
+  const updateuser = () => {
+
+    const formData = new FormData()
+    formData.append('profile_image', profile)
+    formData.append('nickname', nickName)
+
+    async function updateuserinfo(){
+      try {
+        const data = await patchuser(formData)
+        console.log(data)
+        closemodal()
+      }
+      catch(e) {
+        console.log(e)
+      }
+    }
+
+    updateuserinfo()
   }
 
   return (
@@ -55,11 +103,11 @@ export default function Update({closemodal}){
         <label htmlFor='inputimg' className={style.profile}>
           <img src={imgFile ? imgFile : process.env.PUBLIC_URL+'img/tmp/girl2.jpg'} alt='updateprofile' onClick={changeprofile}></img>
         </label>
-        <div className={style.regdate}>2023.03.09</div>
+        <div className={style.regdate}>{userinfo}</div>
       </div>
 
       <div className={style.updatebtn}>
-        <button>확인</button>
+        <button onClick={updateuser}>확인</button>
       </div>
 
       <img src={process.env.PUBLIC_URL+'/img/circles_left.svg'} className={style.circle_left} alt='circles_left'></img>

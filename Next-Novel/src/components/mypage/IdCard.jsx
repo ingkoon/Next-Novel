@@ -8,30 +8,29 @@ export default function IdCard(){
   const [userinfo, setUserinfo] = useState("")
   const [date, setDate] = useState("")
 
+  // api 통신하기
+  async function getuser() {
+    try {
+      const data = await user()
+      setUserinfo(data.data)
+      let tmp = data.data.created_at
+      let year = tmp.substring(0, 4)
+      let month = tmp.substring(5,7)
+      let day = tmp.substring(8,10)
+      let hour = tmp.substring(11,13)
+      let min = tmp.substring(14,16)
+      let sec = tmp.substring(17,19)
+      setDate(year+month+day+'.'+hour+'.'+min+'.'+sec)
+    }
+    catch(e) {
+      console.log(e)
+    }
+  }
+
   // api 호출하기
   useEffect(() => {
-
-    // api 통신하기
-    async function getuser() {
-      try {
-        const data = await user()
-        setUserinfo(data.data)
-        let tmp = data.data.created_at
-        let year = tmp.substring(0, 4)
-        let month = tmp.substring(5,7)
-        let day = tmp.substring(8,10)
-        let hour = tmp.substring(11,13)
-        let min = tmp.substring(14,16)
-        let sec = tmp.substring(17,19)
-        setDate(year+month+day+'.'+hour+'.'+min+'.'+sec)
-      }
-      catch(e) {
-        console.log(e)
-      }
-    }
-
     getuser()
-  }, [])
+  }, [userinfo])
 
   return (
     <div className={style.mypagewhole}>

@@ -12,7 +12,20 @@ export async function getmynovel(){
   return res
 }
 
+// 좋아요한 소설
 export async function getlikenovel(){
   const res = await tokeninstance.get('user/liked-novel/')
+  return res
+}
+
+//회원정보 수정
+export async function patchuser(data) {
+  const res = await tokeninstance.patch('user/'
+    ,data
+    ,{
+      headers : {
+        "Content-Type" : "multipart/form-data"
+      }
+    })
   return res
 }
