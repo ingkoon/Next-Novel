@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { AuthContext } from "../context/AuthContext"
 
 
@@ -31,28 +31,62 @@ instance.interceptors.response.use(
   }
 )
 
-// 토큰 필요한 api
-tokeninstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('access_token')
-    if( token ) {
-      config.headers['Authorization'] = `Bearer ${token}`
-    }
-    return config
-  },
-  (error) => {
-    console.log(error)
-    return Promise.reject(error)
-  }
-)
+export default function Tokeninstance({children}) {
+  const { user } = useContext(AuthContext)
+  
+  useEffect(() => {
+    tokeninstance.interceptors.request.use(
+      (config) => {
+        // const token = localStorage.getItem('access_token')
+        const token = user.access_token
+        if( token ) {
+          config.headers['Authorization'] = `Bearer ${token}`
+        }
+        return config
+      },
+      (error) => {
+        console.log(error)
+        return Promise.reject(error)
+      }
+    )
 
-tokeninstance.interceptors.response.use(
-  (response) => {
-    return response
-  },
-  (error) => {
-    return Promise.reject(error)
-  }
-)
+    tokeninstance.interceptors.response.use(
+      (response) => {
+        return response
+      },
+      (error) => {
+        return Promise.reject(error)
+      }
+    )
+    // return tokeninstance.interceptors.response.eject(interceptor);
+  }, [])
+  return children
+}
+
+
+// 토큰 필요한 api
+// tokeninstance.interceptors.request.use(
+//   (config) => {
+//     // const token = localStorage.getItem('access_token')
+//     const token = user.access_token
+//     if( token ) {
+//       config.headers['Authorization'] = `Bearer ${token}`
+//     }
+//     return config
+//   },
+//   (error) => {
+//     console.log(error)
+//     return Promise.reject(error)
+//   }
+// )
+
+// tokeninstance.interceptors.response.use(
+//   (response) => {
+//     return response
+//   },
+//   (error) => {
+//     return Promise.reject(error)
+//   }
+// )
 
 export { instance, tokeninstance }

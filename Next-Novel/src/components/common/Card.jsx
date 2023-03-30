@@ -14,7 +14,7 @@ function Card({title, intro, author, img, view, likes, comments}){
 
   return (
     <div className={style.card}>
-      <div className={isHovering ? style.none : style.intro} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+      <div className={isHovering ? style.none : style.intro} style={ isHovering ? {'backgroundImage':`url(${img})`}: {}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
         <div className={style.introment}>
           <div className={style.ment}>
             {intro}
@@ -23,7 +23,7 @@ function Card({title, intro, author, img, view, likes, comments}){
         <img src={process.env.PUBLIC_URL+'/img/quote.png'} className={style.quote1} alt='quote1'></img>
         <img src={process.env.PUBLIC_URL+'/img/quote2.png'} className={style.quote2} alt='quote2'></img>
       </div>
-      <div className={isHovering ? style.intro : style.none } onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+      <div className={isHovering ? style.intro : style.none } style={ isHovering ? {'backgroundImage':`url(${img})`}: {}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
         <div className={style.introment}>
           <div className={style.intro2}>
             <img src={process.env.PUBLIC_URL+'/icon/glasses.svg'} style={{margin:'auto 5px'}} alt='glasses'></img>

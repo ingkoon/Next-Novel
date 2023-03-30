@@ -1,6 +1,27 @@
 import style from './NewCard.module.css'
 
+import { getrecommend } from "../../api/library.js"
+import { useEffect, useState } from 'react'
+
 export default function NewCard(){
+
+  const [reconovels, setReconovels] = useState([])
+
+  useEffect(() => {
+    async function getrecolist() {
+      const data = await getrecommend()
+      try {
+        console.log(data)
+        setReconovels(data.data.results)
+      }
+      catch(e) {
+        console.log(e)
+      }
+    }
+
+    getrecolist()
+  }, [])
+
   return (
     <div className={style.newcard}>
       <div className={style.img}>

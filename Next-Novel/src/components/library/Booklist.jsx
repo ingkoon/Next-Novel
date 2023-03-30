@@ -4,22 +4,9 @@ import Genre from "./Genre";
 
 //api
 import { useEffect, useState } from "react"
-import { getnovels } from "../../api/library.js"
-import { useLoaderData } from "react-router"
+import { getnovels, getgenre } from "../../api/library.js"
 
 export default function Booklist() {
-  
-  // api 통신하기
-  async function getnovel() {
-    const data = await getnovels()
-    try {
-      console.log(data)
-      setNovels(data.data.results)
-    }
-    catch(e) {
-      console.log(e)
-    }
-  }
 
   const [novels, setNovels] = useState([])
   let novellen = 0
@@ -28,8 +15,8 @@ export default function Booklist() {
   // api 호출하기
   useEffect(() => {
     async function getnovel() {
-      const data = await getnovels()
       try {
+        const data = await getnovels()
         console.log(data)
         novellen = data.data.results.length
         setNovels(data.data.results)
@@ -47,12 +34,34 @@ export default function Booklist() {
     }
     
     getnovel()
-    
+
   },[])
+  
+  const selectgenre = (data) => {
+    getgenreres(data)
+  }
+
+  async function getgenreres(genre){
+    const data = await getgenre(genre)
+    try {
+      novellen = data.data.results.length
+      setNovels(data.data.results)
+      
+      let tmp = []
+      for(let i=0;i<novellen;i++){
+        tmp = [...tmp]
+        tmp.push(Card)
+      }
+      setArr(tmp)
+    }
+    catch(e) {
+      console.log(e)
+    }
+  }
 
   return (
     <div>
-      <Genre/>
+      <Genre selectgenre={selectgenre}/>
       <hr className={style.line} />
       <div className={style.list}>
         {arr?.map((Component, index) => (
