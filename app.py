@@ -150,7 +150,9 @@ async def novel_end(dialog_history:str=Form(...)):
 async def image(image: UploadFile = Form(...)):
     image_bytes = await image.read()
     img = Image.open(io.BytesIO(image_bytes))
-
+    img = img.resize((308,350))
+    # 308 * 350 / diffusion
+    # 608 * 380 / caption
     # en_string : 이미지캡셔닝(영어)
     # en_word : 이미지캡셔닝 단어(영어)
     en_string = replace_word(inference_caption(image_bytes))
