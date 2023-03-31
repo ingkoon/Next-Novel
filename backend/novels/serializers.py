@@ -21,7 +21,7 @@ class NovelStatsSerializer(serializers.ModelSerializer):
 
 
 class NovelContentSerializer(serializers.ModelSerializer):
-    images = NovelContentImageSerializer(source="novelcontentimage_set", many=True)
+    images = NovelContentImageSerializer(source="novelcontentimage_set", many=True, allow_null=True)
 
     class Meta:
         model = NovelContent
@@ -29,19 +29,12 @@ class NovelContentSerializer(serializers.ModelSerializer):
 
 
 class NovelDetailSerializer(serializers.ModelSerializer):
-    prompt = serializers.JSONField()
-
     class Meta:
         model = Novel
         fields = "__all__"
 
 
 class NovelReadSerializer(serializers.Serializer):
-
-    def __init__(self, instance=None, data=None, request=None, **kwargs):
-        self.request = request
-        super().__init__(instance=instance, data=data, **kwargs)
-
     novel = NovelDetailSerializer()
     novel_content = NovelContentSerializer(many=True)
 

@@ -98,8 +98,9 @@ class NovelDetailAPI(RetrieveDestroyAPIView):
             "novel": instance,
             "novel_content": novel_content
         }
-        serializer = self.get_serializer(data=data, request=request)
-
+        serializer = self.get_serializer(data=data)
+        if serializer.is_valid(raise_exception=True):
+            pass
         instance.novelstats.hit_count = F('hit_count') + 1
         instance.novelstats.save()
         return Response(serializer.data)
