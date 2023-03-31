@@ -1,11 +1,20 @@
 import style from './NewCard.module.css'
+import { useNavigate } from 'react-router-dom';
+import Book3d from '../common/Book3d'
 
 export default function NewCard({props}){
 
+  const navigate = useNavigate()
+
+  const navigateToPurchase = (id) => {
+    navigate(`/library/${id}/intro`, { state : {id : id}})
+  }
+
   return (
-    <div className={style.newcard}>
+    <div className={style.newcard} onClick={()=>navigateToPurchase(props.id)}>
       <div className={style.img}>
-        <img src={props.cover_img} alt='cover_img'></img>
+        <Book3d img={props.cover_img}/>
+        {/* <img src={props.cover_img} alt='cover_img'></img> */}
       </div>
       <div className={style.strip}>
         <div className={style.newcard_line}></div>

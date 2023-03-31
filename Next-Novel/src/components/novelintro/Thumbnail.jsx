@@ -31,7 +31,7 @@ export default function Thumbnail(){
     <div>
       <div className={style.introBanner}>
           <div className={style.bookCircle}>
-            <Book3d img={novelinfo& novelinfo.cover_img}/>
+            <Book3d type="thumbnail" img={novelinfo& novelinfo.cover_img}/>
           </div>
           <div className={style.bannerGrad}>
           </div>

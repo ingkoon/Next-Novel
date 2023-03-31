@@ -10,6 +10,7 @@ export default function BookInfo(){
     const id = location.state.id
     const [novelid, setNovelid] = useState(id)
     const [novelinfo, setNovelinfo] = useState("")
+    const [create, setCreate] = useState("")
     
     const goTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -23,6 +24,11 @@ export default function BookInfo(){
                 const data = await getintro(novelid)
                 console.log(data)
                 setNovelinfo(data.data)
+
+                const year = data.data.created_at.substring(0, 4)
+                const month = data.data.created_at.substring(5, 7)
+                const date = data.data.created_at.substring(8, 10)
+                setCreate(year+"."+month+"."+date)
             }
             catch(e) {
                 console.log(e)
@@ -55,7 +61,7 @@ export default function BookInfo(){
                     </div>
                     <div>
                         <div className={style.etc2}>{novelinfo && novelinfo.author}</div>
-                        <div className={style.etc2}>{novelinfo && novelinfo.created_at}</div>
+                        <div className={style.etc2}>{novelinfo && create}</div>
                     </div>
                 </div>
             </div>
