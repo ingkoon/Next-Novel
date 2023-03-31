@@ -20,9 +20,7 @@ export default function Question({ count }) {
         <div className={style.Q}>Q.</div>
         <div className={style.count1}>{count}</div>
         <div className={style.count2}>/5</div>
-        <div className={style.question}>
-          {questions && questions.data.queries[0].query}
-        </div>
+        <div className={style.question}>{questions && questions[0].query}</div>
         <div className={style.dice}>
           <img src={process.env.PUBLIC_URL + `/icon/dice.svg`} alt="dice" />
         </div>

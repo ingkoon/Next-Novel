@@ -9,21 +9,21 @@ export default function SelectOption({ setStep, count, setCount }) {
   const { novel, setNovel } = useNovelContext();
 
   //hooks 폴더에 분리하고 싶었는데....
-  //useNovelWrite가 켜질 때마다 계속 불러와서 일단 여기서 바로 함.
-  const { isLoading, refetch, data: questions } = useQuery(
+  const { isFetching, refetch, data } = useQuery(
     ["questions"],
     () => fetchQuestions(novel.id, novel.step + 1),
     {
       enabled: false,
+      select: (data) => data.data,
     }
   );
   useEffect(() => {
-    if (questions) {
-      setNovel({ ...novel, questions: questions });
+    if (data) {
+      setNovel({ ...novel, questions: data.queries });
       setStep(4); //다음 페이지
       setCount(count + 1); //이어하기 횟수
     }
-  }, [questions]);
+  }, [data]);
 
   const buttons = [
     {
@@ -51,8 +51,8 @@ export default function SelectOption({ setStep, count, setCount }) {
   ];
   return (
     <div className={style.container}>
-      {/* <Modal
-        isOpen={isLoading}
+      <Modal
+        isOpen={isFetching}
         style={{
           overlay: {},
           content: {
@@ -67,7 +67,7 @@ export default function SelectOption({ setStep, count, setCount }) {
         }}
       >
         <img src={process.env.PUBLIC_URL + `/img/loading.gif`} alt="loading" />
-      </Modal> */}
+      </Modal>
       {buttons.map((button, index) => {
         return (
           <div
