@@ -1,12 +1,20 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { startNovelApi } from "../api/novelwrite";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { fetchQuestions, startNovelApi } from "../api/novelwrite";
+import { useNovelContext } from "../context/NovelContext";
 
 export default function useNovelWrite() {
-  const queryClient = useQueryClient();
+  const { novel, setNovel } = useNovelContext();
 
-  const startNovel = useMutation((formData) => startNovelApi(formData), {
-    //   onSuccess: () => queryClient.invalidateQueries(["products"]),
-  });
+  const getQuestions = useQuery(
+    ["questions"],
+    () => fetchQuestions(novel.id, novel.step + 1),
+    {
+      enabled: false,
+      select: (data) => data.data,
+    }
+  );
 
-  return { startNovel };
+  const startNovel = useMutation((formData) => startNovelApi(formData), {});
+
+  return { getQuestions, startNovel };
 }

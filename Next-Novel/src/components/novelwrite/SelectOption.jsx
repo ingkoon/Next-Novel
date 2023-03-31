@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from "react";
 import style from "./SelectOption.module.css";
 import { useNovelContext } from "../../context/NovelContext";
-import { useQuery } from "@tanstack/react-query";
-import { fetchQuestions } from "../../api/novelwrite";
+import useNovelWrite from "../../hooks/useNovelWrite";
+
 import Modal from "react-modal";
 
 export default function SelectOption({ setStep, count, setCount }) {
   const { novel, setNovel } = useNovelContext();
+  const {
+    getQuestions: { isFetching, refetch, data },
+  } = useNovelWrite();
 
-  //hooks 폴더에 분리하고 싶었는데....
-  const { isFetching, refetch, data } = useQuery(
-    ["questions"],
-    () => fetchQuestions(novel.id, novel.step + 1),
-    {
-      enabled: false,
-      select: (data) => data.data,
-    }
-  );
   useEffect(() => {
     if (data) {
       setNovel({ ...novel, questions: data.queries });
