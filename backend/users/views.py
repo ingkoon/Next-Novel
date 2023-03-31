@@ -41,13 +41,11 @@ def kakao_login(request):
 def kakao_callback(request):
     client_id = KAKAO_CLIENT_ID
     code = request.GET.get("code")
-    print(client_id)
     # code로 access token 요청
     token_request = requests.get(
         f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={REDIRECT_URI}&code={code}")
     token_response_json = token_request.json()
-    print(token_request, 'haha')
-    # 에러 발생 시 중단
+
     error = token_response_json.get("error", None)
     # if error is not None:
     #     raise JSONDecodeError(error)
@@ -59,7 +57,7 @@ def kakao_callback(request):
         "https://kapi.kakao.com/v2/user/me",
         headers={"Authorization": f"Bearer {access_token}"},
     )
-    print(profile_request)
+
     profile_json = profile_request.json()
 
     kakao_account = profile_json.get("kakao_account")
@@ -96,12 +94,12 @@ def kakao_callback(request):
         data = {'access_token': access_token, 'code': code}
         accept = requests.post(f"{BASE_URL}api/user/kakao/login/finish/", data=data)
         accept_status = accept.status_code
-
         if accept_status != 200:
             return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
 
         accept_json = accept.json()
-        user_pk = accept_json.get('user').get('pk')
+
+        user_pk = accept_json.get('user').pop('pk')
         created_user = User.objects.get(pk=user_pk)
         while True:
             nickname = create_random_nickname()
@@ -109,6 +107,7 @@ def kakao_callback(request):
                 continue
             created_user.nickname = nickname
             created_user.save()
+            accept_json['user']['nickname'] = nickname
             break
         return JsonResponse(accept_json)
     except SocialAccount.DoesNotExist:
