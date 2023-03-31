@@ -20,7 +20,7 @@ export default function Home() {
       console.log("Code exists:", code)
       axios({
         method: "get",
-        url: "http://localhost:8000/api/user/kakao/callback/",
+        url: process.env.REACT_APP_DATA_API+"user/kakao/callback/",
         params: {
           code: code,
         },

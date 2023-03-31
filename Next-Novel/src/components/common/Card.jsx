@@ -1,9 +1,11 @@
 import style from './Card.module.css'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {AuthContext} from "../../context/AuthContext" 
 
 function Card({props}){
   const [isHovering, setIsHovering] = useState(false);
+  const { user } = useContext(AuthContext)
 
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -38,7 +40,10 @@ function Card({props}){
             <img src={process.env.PUBLIC_URL+'/icon/comment.svg'} style={{margin:'auto 5px'}} alt='comment'></img>
             <span style={{margin:'0 5px'}}>{props && props.novel_stats.like_count}</span>
           </div>
-          <img src={process.env.PUBLIC_URL+'/icon/trash.svg'} className={style.trash} alt='trash'></img>
+          {user.nickname === props.author ?
+            <img src={process.env.PUBLIC_URL+'/icon/trash.svg'} className={style.trash} alt='trash'></img>
+            : <></>
+          }
         </div>
       </div>
       <div className={style.info}>
