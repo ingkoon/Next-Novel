@@ -47,9 +47,15 @@ export default function Comments(){
           <div className={style.line}></div>
       </div>
       <div className={style.commentbox}>
-          {arr?.map((Component, index)=> (
-            <Component key={index} props={commentlist[index]}/>
-          ))}
+          {arr ? 
+            <div>
+              {arr?.map((Component, index)=> (
+                <Component key={index} props={commentlist[index]}/>
+              ))}
+            </div>
+          :
+            <div> 등록된 감상평이 없습니다. </div>
+          }
           
       </div>
     </div>
