@@ -232,7 +232,7 @@ KAKAO_SECRET = os.environ.get("SOCIAL_AUTH_KAKAO_SECRET", None)
 STATE = os.environ.get("STATE", "vasdvdsfav")
 REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD', None)
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static-django/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'

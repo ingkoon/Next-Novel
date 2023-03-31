@@ -46,6 +46,7 @@ services:
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
+      - build_volume:/home/app/web/build
     ports:
       - 80:80
       - 443:443
@@ -56,3 +57,4 @@ volumes:
   postgres_data:
   static_volume:
   media_volume:
+  build_volume:

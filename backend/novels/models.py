@@ -26,7 +26,7 @@ class Novel(models.Model):
 
     title = models.CharField(max_length=100, null=True)
     cover_img = models.ImageField(null=True)
-    introduction = models.TextField(null=True)
+    introduction = models.TextField(null=True, max_length=50)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

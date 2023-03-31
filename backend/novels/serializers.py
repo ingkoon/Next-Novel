@@ -8,6 +8,12 @@ class UserNovelSerializer(serializers.ModelSerializer):
     pass
 
 
+class NovelContentImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NovelContentImage
+        fields = "__all__"
+
+
 class NovelStatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = NovelStats
@@ -15,6 +21,8 @@ class NovelStatsSerializer(serializers.ModelSerializer):
 
 
 class NovelContentSerializer(serializers.ModelSerializer):
+    images = NovelContentImageSerializer(source="novelcontentimage_set", many=True)
+
     class Meta:
         model = NovelContent
         fields = "__all__"
@@ -66,7 +74,7 @@ class NovelPreviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Novel
-        fields = ['id', 'author', 'created_at', 'novel_stats', 'title', 'cover_img']
+        fields = ['id', 'author', 'created_at', 'novel_stats', 'title', 'cover_img', 'introduction']
 
 
 class NovelSerializer(serializers.ModelSerializer):
@@ -79,12 +87,6 @@ class NovelLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = NovelLike
         fields = ["id", ]
-
-
-class NovelContentImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = NovelContentImage
-        fields = ['image']
 
 
 class NovelStartSerializer(serializers.Serializer):
@@ -141,3 +143,14 @@ class NovelContinueSerializer(serializers.Serializer):
 class NovelEndSerializer(serializers.Serializer):
     novel_id = serializers.PrimaryKeyRelatedField(queryset=Novel.objects.all())
     step = serializers.IntegerField(min_value=2, max_value=7)
+
+
+class NovelCoverImageSerializer(serializers.Serializer):
+    image = serializers.ImageField()
+    novel_id = serializers.PrimaryKeyRelatedField(queryset=Novel.objects.all())
+
+
+class NovelContentQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NovelContent
+        fields = ["query1", "query2", "query3"]

@@ -26,8 +26,9 @@ from nextnovel.settings import STATE, KAKAO_CLIENT_ID
 from users.serializers import UserProfileSerializer
 
 state = STATE
-BASE_URL = 'http://localhost:8000/'
+BASE_URL = os.environ.get('BASE_URL', "http://localhost:8000/")
 KAKAO_CALLBACK_URI = BASE_URL + 'api/user/kakao/callback/'
+REDIRECT_URI = os.environ.get("REDIRECT_URI", "http://localhost:3000")
 
 
 def kakao_login(request):
@@ -41,10 +42,9 @@ def kakao_callback(request):
     client_id = KAKAO_CLIENT_ID
     code = request.GET.get("code")
     print(client_id)
-    redirect_uri = "http://localhost:3000"
     # code로 access token 요청
     token_request = requests.get(
-        f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={redirect_uri}&code={code}")
+        f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={REDIRECT_URI}&code={code}")
     token_response_json = token_request.json()
     print(token_request, 'haha')
     # 에러 발생 시 중단
