@@ -24,3 +24,9 @@ class UserNicknameSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ['nickname', ]
+
+
+class UserKAKAOLoginRetrieveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ['nickname', 'pk']
