@@ -4,7 +4,6 @@ import Canvas1 from "./Canvas1";
 import Preview from "./Preview";
 import style from "./WriteStep2.module.css";
 import useNovelWrite from "../../hooks/useNovelWrite";
-import Modal from "react-modal";
 import { useNovelContext } from "../../context/NovelContext";
 import LoadingModal from "../common/LoadingModal";
 

@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import style from "./SelectOption.module.css";
 import { useNovelContext } from "../../context/NovelContext";
 import useNovelWrite from "../../hooks/useNovelWrite";
-
-import Modal from "react-modal";
 import LoadingModal from "../common/LoadingModal";
 
 export default function SelectOption({ setStep, count, setCount }) {
@@ -18,6 +16,7 @@ export default function SelectOption({ setStep, count, setCount }) {
       setStep(4); //다음 페이지
       setCount(count + 1); //이어하기 횟수
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const buttons = [

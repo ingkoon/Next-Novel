@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./Question.module.css";
 import Modal from "react-modal";
 import StoryInProgress from "./StoryInProgress";
 import { useNovelContext } from "../../context/NovelContext";
 
 export default function Question({ count }) {
-  const { novel } = useNovelContext();
+  const { novel, setNovel } = useNovelContext();
   const questions = novel.questions;
   const [selected, setSelected] = useState(0);
   const [IsOpen, setIsOpen] = useState(false);
@@ -16,6 +16,9 @@ export default function Question({ count }) {
   const handleSelected = () => {
     setSelected((selected + 1) % 3);
   };
+  useEffect(() => {
+    setNovel({ ...novel, selectedQuestion: questions[selected].index });
+  }, [selected]);
 
   return (
     <div className={style.container}>
@@ -23,9 +26,7 @@ export default function Question({ count }) {
         <div className={style.Q}>Q.</div>
         <div className={style.count1}>{count}</div>
         <div className={style.count2}>/5</div>
-        <div className={style.question}>
-          {questions && questions[selected].query}
-        </div>
+        <div className={style.question}>{questions[selected].query}</div>
         <div className={style.dice}>
           <img
             src={process.env.PUBLIC_URL + `/icon/dice.svg`}
