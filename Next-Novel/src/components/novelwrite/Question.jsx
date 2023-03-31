@@ -3,23 +3,16 @@ import style from "./Question.module.css";
 import Modal from "react-modal";
 import StoryInProgress from "./StoryInProgress";
 import { useNovelContext } from "../../context/NovelContext";
-import { useQuery } from "@tanstack/react-query";
-import { fetchQuestions } from "../../api/novelwrite";
 
 export default function Question({ count }) {
   const { novel } = useNovelContext();
-  //hooks 폴더에 분리하고 싶었는데....
-  //useNovelWrite가 켜질 때마다 계속 불러와서 일단 여기서 바로 함.
-  const { isLoading, data: questions } = useQuery(
-    ["questions", novel.id, novel.step],
-    () => fetchQuestions(novel.id, novel.step)
-  );
+  const questions = novel.questions;
+
   const [IsOpen, setIsOpen] = useState(false);
 
   const closemodal = () => {
     setIsOpen(false);
   };
-  console.log(questions);
 
   return (
     <div className={style.container}>
@@ -28,7 +21,6 @@ export default function Question({ count }) {
         <div className={style.count1}>{count}</div>
         <div className={style.count2}>/5</div>
         <div className={style.question}>
-          {isLoading && <p>Loading...</p>}
           {questions && questions.data.queries[0].query}
         </div>
         <div className={style.dice}>

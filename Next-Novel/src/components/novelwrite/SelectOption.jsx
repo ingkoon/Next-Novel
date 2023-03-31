@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import style from "./SelectOption.module.css";
 import { useNovelContext } from "../../context/NovelContext";
+import { useQuery } from "@tanstack/react-query";
+import { fetchQuestions } from "../../api/novelwrite";
+import Modal from "react-modal";
 
 export default function SelectOption({ setStep, count, setCount }) {
   const { novel, setNovel } = useNovelContext();
+
+  //hooks 폴더에 분리하고 싶었는데....
+  //useNovelWrite가 켜질 때마다 계속 불러와서 일단 여기서 바로 함.
+  const { isLoading, refetch, data: questions } = useQuery(
+    ["questions"],
+    () => fetchQuestions(novel.id, novel.step + 1),
+    {
+      enabled: false,
+    }
+  );
+  useEffect(() => {
+    if (questions) {
+      setNovel({ ...novel, questions: questions });
+      setStep(4); //다음 페이지
+      setCount(count + 1); //이어하기 횟수
+    }
+  }, [questions]);
+
   const buttons = [
     {
       icon: "/icon/check.svg",
@@ -17,10 +38,8 @@ export default function SelectOption({ setStep, count, setCount }) {
       click3: "이야기를\n더 진행합니다",
       event: () => {
         if (count === 5) return;
-        //보낼 novel 값 업데이트
-        setNovel({ ...novel, step: novel.step + 1 });
-        setStep(4);
-        setCount(count + 1);
+        setNovel((novel) => ({ ...novel, step: novel.step + 1 })); //보낼 novel 값 업데이트
+        refetch();
       },
     },
     {
@@ -32,6 +51,23 @@ export default function SelectOption({ setStep, count, setCount }) {
   ];
   return (
     <div className={style.container}>
+      {/* <Modal
+        isOpen={isLoading}
+        style={{
+          overlay: {},
+          content: {
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            inset: "0",
+            background: "none",
+          },
+        }}
+      >
+        <img src={process.env.PUBLIC_URL + `/img/loading.gif`} alt="loading" />
+      </Modal> */}
       {buttons.map((button, index) => {
         return (
           <div

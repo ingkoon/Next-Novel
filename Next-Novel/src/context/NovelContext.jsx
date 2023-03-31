@@ -8,6 +8,7 @@ export function NovelContextProvider({ children }) {
     step: undefined,
     materials: undefined,
     story: undefined,
+    questions: undefined,
   });
 
   return (
