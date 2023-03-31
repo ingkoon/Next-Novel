@@ -6,13 +6,17 @@ import { getintro } from '../../api/novel'
 
 export default function BookInfo(){
 
-    
     const location = useLocation()
     const id = location.state.id
     const [novelid, setNovelid] = useState(id)
     const [novelinfo, setNovelinfo] = useState("")
     
+    const goTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     useEffect(()=> {
+        goTop()
         setNovelid(id)
         async function intro() {
             try {

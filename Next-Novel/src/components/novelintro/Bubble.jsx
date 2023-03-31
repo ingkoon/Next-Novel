@@ -1,21 +1,36 @@
 import style from './Bubble.module.css';
+import {useEffect, useState} from 'react'
+export default function Bubble({props}){
 
-export default function Bubble(){
+    const [create, setCreate] = useState("")
+
+    useEffect(()=> {
+        const year = props.created_at.substring(0, 4)
+        const month = props.created_at.substring(5, 7)
+        const date = props.created_at.substring(8, 10)
+        setCreate(year+"."+month+"."+date)
+    })
+
+    function deletecomment(){
+        const id = props.id
+
+    }
+
     return(
         <>
         <div className={style.bubble}>
-            <img src={process.env.PUBLIC_URL+'/img/tmp/girl2.jpg'} className={style.profilepic} alt='girl2'></img>
+            <img src={props && props.author.profile_image} className={style.profilepic} alt='profileimage'></img>
             <div className={style.profilename}>
-                <span>닉네임이올시다</span>
+                <span>{props && props.author.nickname}</span>
             </div>
             <div className={style.bar}></div>
             <div className={style.ment}>
-                <span>이거슨열글자입니다용이거슨열글자입니다용이거슨열글자입니다용이거슨열글자입니다용이거슨열글자입니다용</span>
+                <span>{props && props.content}</span>
             </div>
             <div className={style.date}>
-                <span>2023.03.22</span>
+                <span>{props && create}</span>
             </div>
-            <div className={style.del}>
+            <div className={style.del} onClick={deletecomment}>
                 <img src={process.env.PUBLIC_URL+'/icon/trash_black.svg'} className={style.trash} alt='trash'></img>
             </div>
         </div>
