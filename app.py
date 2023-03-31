@@ -153,14 +153,14 @@ async def image(image: UploadFile = Form(...)):
 
     # en_string : 이미지캡셔닝(영어)
     # en_word : 이미지캡셔닝 단어(영어)
-    en_string = inference_caption(image_bytes)
+    en_string = replace_word(inference_caption(image_bytes))
     print(f"캡셔닝 문장 : {en_string}")
-    question = f'"{en_string}"\nInterpret this sentence and tell me in one word what object you drew'
+    # question = f'"{en_string}"\nInterpret this sentence and tell me in one word what object you drew'
 
-    start = time.time()
-    en_word, new_history = chatbot(question, [])
-    print(f"캡셔닝 단어 : {en_word}")
-    print(time.time() - start)
+    # start = time.time()
+    # en_word, new_history = chatbot(question, [])
+    # print(f"캡셔닝 단어 : {en_word}")
+    # print(time.time() - start)
 
     # diffusion 이전 그림 파일 저장
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -168,7 +168,7 @@ async def image(image: UploadFile = Form(...)):
     img.save(filename)
 
     start = time.time()
-    res = diffusion_ControlNet.creat_image(filename, en_word)
+    res = diffusion_ControlNet.creat_image(filename, en_string)
     # res = img
     print(time.time()-start)
 
