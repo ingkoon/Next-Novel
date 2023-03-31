@@ -8,16 +8,37 @@ class UserNovelSerializer(serializers.ModelSerializer):
     pass
 
 
+class NovelContentImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NovelContentImage
+        fields = "__all__"
+
+
 class NovelStatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = NovelStats
         exclude = ["id", "novel"]
 
 
+class NovelContentSerializer(serializers.ModelSerializer):
+    images = NovelContentImageSerializer(source="novelcontentimage_set", many=True)
+
+    class Meta:
+        model = NovelContent
+        fields = "__all__"
+
+
 class NovelDetailSerializer(serializers.ModelSerializer):
+    prompt = serializers.JSONField()
+
     class Meta:
         model = Novel
         fields = "__all__"
+
+
+class NovelReadSerializer(serializers.Serializer):
+    novel = NovelDetailSerializer()
+    novel_content = NovelContentSerializer(many=True)
 
 
 class NovelListSerializer(serializers.ModelSerializer):
@@ -26,7 +47,7 @@ class NovelListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Novel
-        fields = ["id", "title", "author", "novel_stats"]
+        fields = ["id", "title", "author", "novel_stats", "cover_img", "introduction"]
 
 
 class NovelCommentCreateSerializer(serializers.ModelSerializer):
@@ -53,7 +74,7 @@ class NovelPreviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Novel
-        fields = ['id', 'author', 'created_at', 'novel_stats', 'title', 'cover_img']
+        fields = ['id', 'author', 'created_at', 'novel_stats', 'title', 'cover_img', 'introduction']
 
 
 class NovelSerializer(serializers.ModelSerializer):
@@ -66,12 +87,6 @@ class NovelLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = NovelLike
         fields = ["id", ]
-
-
-class NovelContentImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = NovelContentImage
-        fields = ['image']
 
 
 class NovelStartSerializer(serializers.Serializer):
@@ -89,7 +104,10 @@ class NovelStartSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         images_data = validated_data.pop('images')
+        ##
         novel = Novel.objects.create(**validated_data)
+        novel_stats = NovelStats.objects.create(novel=novel)
+        ##
         images = []
         novel_content = NovelContent.objects.create(novel=novel, step=1)
         for image_data in images_data:
@@ -101,7 +119,7 @@ class NovelStartSerializer(serializers.Serializer):
 class NovelContinueSerializer(serializers.Serializer):
     image = serializers.ImageField(allow_empty_file=False, use_url=False)
     query = serializers.IntegerField(min_value=1, max_value=3)
-    step = serializers.IntegerField(min_value=2, max_value=6)
+    step = serializers.IntegerField(min_value=2, max_value=7)
     novel_id = serializers.PrimaryKeyRelatedField(queryset=Novel.objects.all())
 
     def create(self, validated_data):
@@ -109,7 +127,6 @@ class NovelContinueSerializer(serializers.Serializer):
         query = validated_data.pop("query")
 
         novel = validated_data.pop("novel_id")
-        print(validated_data.get("step"), novel)
         novel_content = NovelContent.objects.get(step=validated_data.get("step"), novel=novel)
         image = NovelContentImage.objects.create(novel_content=novel_content, image=image_data)
 
@@ -121,4 +138,19 @@ class NovelContinueSerializer(serializers.Serializer):
             selected_query = novel_content.query3
 
         return novel, novel_content, image, selected_query
-        # return image, selected_query
+
+
+class NovelEndSerializer(serializers.Serializer):
+    novel_id = serializers.PrimaryKeyRelatedField(queryset=Novel.objects.all())
+    step = serializers.IntegerField(min_value=2, max_value=7)
+
+
+class NovelCoverImageSerializer(serializers.Serializer):
+    image = serializers.ImageField()
+    novel_id = serializers.PrimaryKeyRelatedField(queryset=Novel.objects.all())
+
+
+class NovelContentQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NovelContent
+        fields = ["query1", "query2", "query3"]

@@ -26,7 +26,7 @@ class Novel(models.Model):
 
     title = models.CharField(max_length=100, null=True)
     cover_img = models.ImageField(null=True)
-    introduction = models.TextField(null=True)
+    introduction = models.TextField(null=True, max_length=50)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -35,7 +35,7 @@ class Novel(models.Model):
     step = models.IntegerField(
         default=1,
         validators=[
-            MaxValueValidator(6),
+            MaxValueValidator(7),
             MinValueValidator(1)
         ]
     )
@@ -49,7 +49,7 @@ class NovelContent(models.Model):
     content = models.TextField()
     step = models.IntegerField(
         validators=[
-            MaxValueValidator(6),
+            MaxValueValidator(7),
             MinValueValidator(1)
         ]
     )
