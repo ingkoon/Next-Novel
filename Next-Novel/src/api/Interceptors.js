@@ -5,11 +5,12 @@ import { AuthContext } from "../context/AuthContext"
 
 
 const instance = axios.create({
-  baseURL : 'http://localhost:8000/api/'
+  baseURL : process.env.REACT_APP_DATA_API
+  // baseURL : 'https://nextnovel.site/api/'
 })
 
 const tokeninstance = axios.create({
-  baseURL : 'http://localhost:8000/api/'
+  baseURL : process.env.REACT_APP_DATA_API
 })
 
 // token 필요없는 api

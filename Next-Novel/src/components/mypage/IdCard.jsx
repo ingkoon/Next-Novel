@@ -1,25 +1,36 @@
 import style from './IdCard.module.css'
 import Member from './Member'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { user } from '../../api/user.js'
 export default function IdCard(){
+
+  const [userinfo, setUserinfo] = useState("")
+  const [date, setDate] = useState("")
+
+  // api 통신하기
+  async function getuser() {
+    try {
+      const data = await user()
+      setUserinfo(data.data)
+      let tmp = data.data.created_at
+      let year = tmp.substring(0, 4)
+      let month = tmp.substring(5,7)
+      let day = tmp.substring(8,10)
+      let hour = tmp.substring(11,13)
+      let min = tmp.substring(14,16)
+      let sec = tmp.substring(17,19)
+      setDate(year+month+day+'.'+hour+'.'+min+'.'+sec)
+    }
+    catch(e) {
+      console.log(e)
+    }
+  }
+
   // api 호출하기
   useEffect(() => {
-
-    // api 통신하기
-    async function getuser() {
-      try {
-        const data = await user()
-        console.log(data)
-      }
-      catch(e) {
-        console.log(e)
-      }
-    }
-
     getuser()
-  })
+  }, [userinfo])
 
   return (
     <div className={style.mypagewhole}>
@@ -50,7 +61,7 @@ export default function IdCard(){
               <div className={style.info_top}>
                 <div className={style.info_nn}>Next Novel Lab</div>
                 <div className={style.info_img}>
-                  <img src={process.env.PUBLIC_URL+'img/tmp/girl2.jpg'} alt='girl2'/>
+                  <img src={userinfo.profile_image} alt='profile_image'/>
                   <div>
                     <img src={process.env.PUBLIC_URL + 'icon/logo_color.svg'} alt='logo_color' />
                   </div>
@@ -61,8 +72,8 @@ export default function IdCard(){
                 <div className={style.info_title}>CREATOR</div>
                 <div className={style.info_bottom2}>
                   <div className={style.info_sub}>
-                    <div className={style.info_name}>ID 테스트닉네임은최대열여섯글자입니다</div>
-                    <div className={style.info_date}>S/N 20230308.14.24.32</div>
+                    <div className={style.info_name}>ID {userinfo.nickname}</div>
+                    <div className={style.info_date}>S/N {date}</div>
                   </div>
                   <div className={style.info_nation}>
                     <img src={process.env.PUBLIC_URL+'img/tmp/girl2.jpg'} alt='girl2'/>

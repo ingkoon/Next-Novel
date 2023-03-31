@@ -38,6 +38,7 @@
   background-color: black;
   border-radius: 20px;
   font-size: 24px;
+  cursor: pointer;
 }
 
 .searchinput {

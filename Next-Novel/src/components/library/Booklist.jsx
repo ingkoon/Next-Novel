@@ -4,7 +4,7 @@ import Genre from "./Genre";
 
 //api
 import { useEffect, useState } from "react"
-import { getnovels, getgenre } from "../../api/library.js"
+import { getnovels, getgenre } from "../../api/library"
 
 export default function Booklist() {
 
@@ -16,6 +16,7 @@ export default function Booklist() {
   useEffect(() => {
     async function getnovel() {
       try {
+
         const data = await getnovels()
         console.log(data)
         novellen = data.data.results.length
@@ -58,7 +59,8 @@ export default function Booklist() {
       console.log(e)
     }
   }
-
+  
+  
   return (
     <div>
       <Genre selectgenre={selectgenre}/>
@@ -67,25 +69,7 @@ export default function Booklist() {
         {arr?.map((Component, index) => (
           <Component
             key={index}
-            title={novels[index].title}
-            intro={novels[index].introduction}
-            author={novels[index].author}
-            img={novels[index].cover_img}
-            view={
-              novels && novels[index].novels_stats
-                ? novels[index].novels_stats.hit_count
-                : "0"
-            }
-            likes={
-              novels && novels[index].novels_stats
-                ? novels[index].novels_stats.hit_count
-                : "0"
-            }
-            comments={
-              novels && novels[index].novels_stats
-                ? novels[index].novels_stats.hit_count
-                : "0"
-            }
+            props = {novels && novels[index]}
           />
         ))}
       </div>
