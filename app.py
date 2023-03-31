@@ -98,6 +98,7 @@ async def novel_sequence(image: UploadFile = Form(...),
 
     # en_previous_question : 질문(영어)
     # 한글로 받은 리퀘스트를 영어로 번역해서 gpt에게 쿼리로 던지기
+    print(ko_string)
     en_previous_question = translator.translate(previous_question, dest="en").text
 
     question = "'{}' the answer to th question is '{}'. Act as a Storyteller.".format(en_previous_question,en_string)\
