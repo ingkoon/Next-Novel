@@ -90,8 +90,6 @@ def kakao_callback(request):
             return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
         accept_json = accept.json()
 
-        accept_json.pop('user', None)
-
         return JsonResponse(accept_json)
     except User.DoesNotExist:
         # 애초에 가입된 유저가 없으면 =>  새로 회원가입 & 해당유저의 jwt발급
@@ -112,7 +110,6 @@ def kakao_callback(request):
             created_user.nickname = nickname
             created_user.save()
             break
-        accept_json.pop('user', None)
         return JsonResponse(accept_json)
     except SocialAccount.DoesNotExist:
         return JsonResponse({'err_msg': 'email exists but not social user'}, status=status.HTTP_400_BAD_REQUEST)
