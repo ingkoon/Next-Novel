@@ -7,6 +7,7 @@ import numpy as np
 from diffusers import StableDiffusionControlNetPipeline, ControlNetModel
 from diffusers import UniPCMultistepScheduler
 import torch
+from random import randint
 
 
 controlnet_model = "lllyasviel/sd-controlnet-canny"
@@ -44,7 +45,7 @@ def creat_image(input_image, caption):
     # 3. Canny Edge 조건으로 새로운 이미지 생성
     prompt = f"{caption}, high quality, photorealistic, sharp focus, depth of field"
     num_steps = 20
-    seed = 0
+    seed = randint(0, 10000)
 
     out_image = pipe(
         prompt,
