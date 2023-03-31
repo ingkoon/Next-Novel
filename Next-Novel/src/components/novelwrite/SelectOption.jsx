@@ -32,7 +32,8 @@ export default function SelectOption({ setStep, count, setCount }) {
       click3: "이야기를\n더 진행합니다",
       event: () => {
         if (count === 5) return;
-        setNovel((novel) => ({ ...novel, step: novel.step + 1 })); //보낼 novel 값 업데이트
+        //아래 두 코드는 비동기로 실행되기때문에 getQuestions이 실행될때 novel.step+1로 두었는데...
+        setNovel((novel) => ({ ...novel, step: novel.step + 1 }));
         refetch();
       },
     },

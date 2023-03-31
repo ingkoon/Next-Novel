@@ -7,11 +7,14 @@ import { useNovelContext } from "../../context/NovelContext";
 export default function Question({ count }) {
   const { novel } = useNovelContext();
   const questions = novel.questions;
-
+  const [selected, setSelected] = useState(0);
   const [IsOpen, setIsOpen] = useState(false);
 
   const closemodal = () => {
     setIsOpen(false);
+  };
+  const handleSelected = () => {
+    setSelected((selected + 1) % 3);
   };
 
   return (
@@ -20,9 +23,15 @@ export default function Question({ count }) {
         <div className={style.Q}>Q.</div>
         <div className={style.count1}>{count}</div>
         <div className={style.count2}>/5</div>
-        <div className={style.question}>{questions && questions[0].query}</div>
+        <div className={style.question}>
+          {questions && questions[selected].query}
+        </div>
         <div className={style.dice}>
-          <img src={process.env.PUBLIC_URL + `/icon/dice.svg`} alt="dice" />
+          <img
+            src={process.env.PUBLIC_URL + `/icon/dice.svg`}
+            alt="dice"
+            onClick={handleSelected}
+          />
         </div>
       </div>
       <div className={style.button}>
