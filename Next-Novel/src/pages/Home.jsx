@@ -28,9 +28,10 @@ export default function Home() {
         console.log(res)
         const accessToken = res.data.access_token
         const refreshToken = res.data.refresh_token
+        const nickname = res.data.user.nickname
         localStorage.setItem("access_token", accessToken)
         localStorage.setItem("refresh_token", refreshToken)
-        setUser({access_token : accessToken, refresh_token : refreshToken})
+        setUser({access_token : accessToken, refresh_token : refreshToken, nickname: nickname})
       })
       // ... add your logic here
     } else {

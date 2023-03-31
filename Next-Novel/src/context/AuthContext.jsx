@@ -28,7 +28,7 @@ export function AuthContextProvider({children}) {
   }
 
   const initState = {
-    user : {'access_token' : '', 'refresh_token':''},
+    user : {'access_token' : '', 'refresh_token':'', 'nickname':''},
     setUser
   }
   const [state, setState] = useState(initState);

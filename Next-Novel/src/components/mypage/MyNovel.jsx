@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import style from "./mynovel.module.css"
 import style2 from "../library/Booklist.module.css"
 import BookList from "./BookList"
@@ -45,6 +45,9 @@ export default function MyNovel() {
     setIsCollapse(!isCollapse)
   }, [isCollapse])
   
+  const [mylen, setMylen] = useState(0)
+  const [likelen, setLikelen ] = useState(0)
+
   return (
     <div>
       <hr className={style2.line} />
@@ -61,7 +64,7 @@ export default function MyNovel() {
 
         <div className={style.title}>제작한 소설</div>
 
-        <button>2</button>
+        <button>{mylen}</button>
         <div className={style.triangle}>
           <img
             src={process.env.PUBLIC_URL + "/icon/triangle.svg"}
@@ -73,7 +76,7 @@ export default function MyNovel() {
 
       <div ref={parentRef} className={style.booklist} id="booklist1">
         <div ref={childRef} style={{'width':'100%'}}>
-          <BookList />
+          <BookList type="my" setMylen={setMylen}/>
         </div>
       </div>
 
@@ -91,7 +94,7 @@ export default function MyNovel() {
 
         <div className={style.title}>좋아요 누른 소설</div>
 
-        <button>2</button>
+        <button>{likelen}</button>
         <div className={style.triangle} >
           <img src={process.env.PUBLIC_URL + "/icon/triangle.svg"} alt='' id='tri2' />
         </div>
@@ -99,7 +102,7 @@ export default function MyNovel() {
 
       <div ref={parentRef2} className={style.booklist} id="booklist2">
         <div ref={childRef2} style={{'width':'100%'}}>
-          <BookList />
+          <BookList type="like" setLikelen={setLikelen}/>
         </div>
       </div>
 

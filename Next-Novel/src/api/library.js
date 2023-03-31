@@ -21,3 +21,13 @@ export async function getrecommend() {
   const res = await instance.get('novel/recommend/')
   return res
 }
+
+// 검색 결과
+export async function getsearch(keyword) {
+  const res = await instance.get('novel', {
+    params : {
+      search : keyword
+    }
+  })
+  return res
+}

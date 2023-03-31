@@ -1,11 +1,11 @@
 import style from './Book3d.module.css'
 
-export default function Book3d(){
+export default function Book3d({type, img}){
     return (
-      <div className={style.wrapper}>
+      <div className={style.wrapper} style={type==='thumbnail' ? {transform : 'translate(10%, 10%'} : {transform : 'translate(50%, 50%'}}>
         <div className={style.book}>
             <div className={style.page1}>
-                <img src={process.env.PUBLIC_URL+'/img/tmp/girl2.jpg'} className={style.cover} alt='girl2'></img>
+                <img src={img} className={style.cover} alt='coverimage'></img>
             </div>
             <div className={style.page2}>
                 222
