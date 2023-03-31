@@ -15,7 +15,7 @@ function Card({props}){
   const navigate = useNavigate()
 
   const navigateToPurchase = (id) => {
-    navigate(`/library/${id}/intro`)
+    navigate(`/library/${id}/intro`, { state : {id : id}})
   }
   return (
     <div className={style.card} onClick={()=>navigateToPurchase(props.id)}>
