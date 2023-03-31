@@ -37,6 +37,11 @@ class NovelDetailSerializer(serializers.ModelSerializer):
 
 
 class NovelReadSerializer(serializers.Serializer):
+
+    def __init__(self, instance=None, data=None, request=None, **kwargs):
+        self.request = request
+        super().__init__(instance=instance, data=data, **kwargs)
+
     novel = NovelDetailSerializer()
     novel_content = NovelContentSerializer(many=True)
 

@@ -21,7 +21,7 @@ from novels.serializers import NovelPreviewSerializer, \
     NovelEndSerializer, NovelReadSerializer, NovelCoverImageSerializer, NovelContentQuestionSerializer
 
 url = os.environ.get("AI_URL", "http://j8a502.p.ssafy.io:8001/")
-# url = "http://3.37.140.32:8001/"
+url = "http://3.37.140.32:8001/"
 # url = "http://j8a502.p.ssafy.io:8001/"
 start_url = url + "novel/start"
 question_url = url + "novel/question"
@@ -98,7 +98,7 @@ class NovelDetailAPI(RetrieveDestroyAPIView):
             "novel": instance,
             "novel_content": novel_content
         }
-        serializer = self.get_serializer(data)
+        serializer = self.get_serializer(data=data, request=request)
 
         instance.novelstats.hit_count = F('hit_count') + 1
         instance.novelstats.save()
