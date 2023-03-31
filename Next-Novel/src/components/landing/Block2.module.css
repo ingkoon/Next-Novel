@@ -6,9 +6,11 @@
 
 .topDiv{
     display: flex;
+    opacity: 0.2;
 }
 .botDiv{
     display: flex;
+    opacity: 0.2;
 }
 .tlblock{
     width: 250px;

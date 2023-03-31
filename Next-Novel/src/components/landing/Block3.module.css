@@ -1,5 +1,5 @@
 .header {
-    padding-top: 110px;
+    padding-top: 115px;
     background-color: #000;
     box-sizing: border-box;
     overflow: hidden;
@@ -78,9 +78,17 @@
       stroke-dashoffset: 0;
     }
   }
-  
-  @keyframes floating {
-    50% {
-      transform: translate3d(0, 40px, 0);
+
+.svg1{
+  animation: up-down 1.4s infinite ease-in-out alternate;
+}
+
+@keyframes up-down{
+    from{
+      transform: translatey(5px);
     }
-  }
+    to{
+      transform: translatey(-25px);
+    }
+  
+}

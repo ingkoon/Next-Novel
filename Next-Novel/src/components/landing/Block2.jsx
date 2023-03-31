@@ -12,9 +12,7 @@ export default function Block2(){
 
     return(
         <div className={style.block}>
-            block1
             <div>
-                6G PRESENTS
                 <div className={style.topDiv}>
                     <div className={style.tlblock}></div>
                     <Nsvg className={style.topN} />

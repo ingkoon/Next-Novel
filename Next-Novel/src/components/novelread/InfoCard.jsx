@@ -1,6 +1,36 @@
 import style from './InfoCard.module.css';
+import { useEffect, useState } from 'react'
+import { Link, useLocation } from "react-router-dom"
+import { novelall } from '../../api/novelread'
 
 export default function InfoCard() {
+
+  const location = useLocation()
+  const id = location.state.id
+  const [novelid, setNovelid] = useState(id)
+  const [novelinfo, setNovelinfo] = useState("")
+  const [create, setCreate] = useState("")
+
+  useEffect(()=> {
+    console.log(id)
+    setNovelid(id)
+    async function nvinfo() {
+      try {
+        const data = await novelall(novelid)
+        console.log(data)
+        setNovelinfo(data.data)
+
+        const year = data.data.created_at.substring(0, 4)
+        const month = data.data.created_at.substring(5, 7)
+        const date = data.data.created_at.substring(8, 10)
+        setCreate(year+"."+month+"."+date)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    nvinfo()
+  }, [novelid])
+
   return (
     <div className={style.wrapper}>
         <div className={style.bar}></div>
@@ -8,14 +38,18 @@ export default function InfoCard() {
 
             <img src={process.env.PUBLIC_URL+'/img/NN_LOGO_text.svg'} className={style.logo} alt='NN_LOGO_text'></img>
             <div className={style.header}>&gt;_ 도서열람증</div>
-            <div className={style.title}>오늘나는내일의너를만난다</div>
+            <div className={style.title}>{novelinfo && novelinfo.novel.title}</div>
             <div className={style.sub}>
                 제작자 :
-                <div>&nbsp;닉네임최대열여섯글자밖에안되는데</div>
+                <div>&nbsp;{novelinfo && novelinfo.novel.author}</div>
             </div>
             <div className={style.sub}>
                 출간일 :
-                <div>&nbsp;2023.03.27</div>
+                <div>&nbsp;{novelinfo && create}</div>
+            </div>
+            <div className={style.sub}>
+                장르 :
+                <div>&nbsp;{novelinfo && novelinfo.novel.genre}</div>
             </div>
             <img src={process.env.PUBLIC_URL+'/img/barcode.svg'} className={style.barcode} alt='barcode'></img>
         </div>
