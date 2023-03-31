@@ -31,6 +31,13 @@ def translate(before):
     print(f'번역시간 : {time.time()-start}')
     return after
 
+def replace_word(before):
+    after = before.replace('a drawing of ', '').replace('an image of ', '').replace('a black and white drawing of ', '').replace(
+        'an illustration of ', '').replace('photograph', '').replace('painting', '').replace('portrait', '').replace(
+        'graphic', '').replace('snapshot', '').replace('sketch', '').replace('print', '').replace('photo', '').replace(
+        'cartoon', '')
+    return after
+
 
 @app.post('/novel/start')
 async def novel_start(images: List[UploadFile] = Form(...),
@@ -39,13 +46,15 @@ async def novel_start(images: List[UploadFile] = Form(...),
     for image in images:
         image_bytes.append(await image.read())
 
-    # en_string[] : 이미지 6개 캡셔닝한 결과(영어)
+    # caption_string[] : 이미지 6개 캡셔닝한 결과(영어)
     caption_string = []
     for i in image_bytes:
         caption_string.append(inference_caption(i))
 
-    # caption_string[]에서 "그림" 단어 지우기
-    en_string = [c.replace('a drawing of ', '').replace('an image of ', '').replace('a black and white drawing of ', '').replace('an illustration of ', '').replace('photograph', '').replace('painting', '').replace('portrait', '').replace('graphic', '').replace('snapshot', '').replace('sketch', '').replace('print', '').replace('photo', '').replace('cartoon', '') for c in caption_string]
+    # en_string[] : caption_string[]에서 "그림" 단어 지우기
+    en_string = []
+    for str in caption_string:
+        en_string.append(replace_word(str))
     print(en_string)
 
     # gpt에게 캡셔닝과 장르를 던져주고, 소설을 받음.
@@ -96,7 +105,7 @@ async def novel_sequence(image: UploadFile = Form(...),
 
     # en_string : 이미지캡셔닝결과(영어)
     image_bytes = await image.read()
-    en_string = inference_caption(image_bytes)
+    en_string = replace_word(inference_caption(image_bytes))
 
     # ko_string : 이미지캡셔닝결과(한글)
     ko_string = translate(en_string)
