@@ -14,11 +14,8 @@ export default function WriteStep2({ setStep, step, genreName }) {
     Array.from({ length: 6 }, () => undefined)
   );
   const [selected, setSelected] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
 
   const button = () => {
-    setIsLoading((prev) => !prev);
-
     const byteStrings = imageSrcs.map((dataUrl) =>
       window.atob(dataUrl.split(",")[1])
     );
@@ -50,7 +47,6 @@ export default function WriteStep2({ setStep, step, genreName }) {
           materials: res.data.materials,
           story: res.data.story,
         });
-        setIsLoading((prev) => !prev);
         setStep(3);
       },
     });
@@ -59,7 +55,7 @@ export default function WriteStep2({ setStep, step, genreName }) {
   return (
     <div className={style.container}>
       <Modal
-        isOpen={isLoading}
+        isOpen={startNovel.isLoading}
         style={{
           overlay: {},
           content: {
