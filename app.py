@@ -40,9 +40,13 @@ async def novel_start(images: List[UploadFile] = Form(...),
         image_bytes.append(await image.read())
 
     # en_string[] : 이미지 6개 캡셔닝한 결과(영어)
-    en_string = []
+    caption_string = []
     for i in image_bytes:
-        en_string.append(inference_caption(i))
+        caption_string.append(inference_caption(i))
+
+    # caption_string[]에서 "그림" 단어 지우기
+    en_string = [c.replace('a drawing of ', '').replace('an image of ', '').replace('a black and white drawing of ', '').replace('an illustration of ', '').replace('photograph', '').replace('painting', '').replace('portrait', '').replace('graphic', '').replace('snapshot', '').replace('sketch', '').replace('print', '').replace('photo', '').replace('cartoon', '') for c in caption_string]
+    print(en_string)
 
     # gpt에게 캡셔닝과 장르를 던져주고, 소설을 받음.
     # en_answer : 소설(영어)
@@ -55,7 +59,8 @@ async def novel_start(images: List[UploadFile] = Form(...),
     translate_before = ""
     for i in range(len(en_string)):
         translate_before += en_string[i] + "\n"
-    ko_string = translate(translate_before).split("\n")
+    ko_string = [translate(translate_before).split("\n")[-i] for i in range(1, 7)][::-1]
+    print(ko_string)
 
     # ko_answer : 소설(한글)
     ko_answer = translate(en_answer)
@@ -78,8 +83,8 @@ async def novel_question(dialog_history:str=Form(...)):
     ko_answer = translate(en_answer)
     query = ko_answer.split("\n")
 
-    tmp = [query[-i].split(". ")[-1].split("?")[0]+"?" for i in range(1,4)]
-    return {"query1" : tmp[2],"query2" : tmp[1],"query3" : tmp[0],"dialog_history" : new_history}
+    tmp = [query[-i].split(". ")[-1].split("?")[0]+"?" for i in range(1,4)][::-1]
+    return {"query1" : tmp[0],"query2" : tmp[1],"query3" : tmp[2],"dialog_history" : new_history}
 
 
 @app.post('/novel/sequence')
