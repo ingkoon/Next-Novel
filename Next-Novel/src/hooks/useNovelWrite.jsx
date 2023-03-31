@@ -1,5 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { fetchQuestions, startNovelApi } from "../api/novelwrite";
+import {
+  fetchQuestions,
+  startNovelApi,
+  continueNovelApi,
+} from "../api/novelwrite";
 import { useNovelContext } from "../context/NovelContext";
 
 export default function useNovelWrite() {
@@ -16,5 +20,10 @@ export default function useNovelWrite() {
 
   const startNovel = useMutation((formData) => startNovelApi(formData), {});
 
-  return { getQuestions, startNovel };
+  const continueNovel = useMutation(
+    (formData) => continueNovelApi(formData),
+    {}
+  );
+
+  return { getQuestions, startNovel, continueNovel };
 }

@@ -10,6 +10,7 @@ export function NovelContextProvider({ children }) {
     story: undefined,
     questions: undefined,
     selectedQuestion: undefined,
+    captions: [],
   });
 
   return (
