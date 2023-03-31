@@ -11,11 +11,11 @@ then
     echo "PostgreSQL started"
 fi
 
-python manage.py flush --no-input
-python manage.py makemigrations
-python manage.py migrate
-#아래 삭제
-python manage.py collectstatic
-python manage.py seed novels --number=100
+#python manage.py flush --no-input
+#python manage.py makemigrations
+#python manage.py migrate
+##아래 삭제
+#python manage.py collectstatic
+#python manage.py seed novels --number=100
 
 exec "$@"

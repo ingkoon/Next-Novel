@@ -159,6 +159,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 redis.conf
+nginx.conf
 # pytype static type analyzer
 .pytype/
 
