@@ -6,6 +6,7 @@ import style from "./WriteStep2.module.css";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import Modal from "react-modal";
 import { useNovelContext } from "../../context/NovelContext";
+import LoadingModal from "../common/LoadingModal";
 
 export default function WriteStep2({ setStep, step, genreName }) {
   const { setNovel } = useNovelContext();
@@ -54,23 +55,7 @@ export default function WriteStep2({ setStep, step, genreName }) {
 
   return (
     <div className={style.container}>
-      <Modal
-        isOpen={startNovel.isLoading}
-        style={{
-          overlay: {},
-          content: {
-            width: "100vw",
-            height: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            inset: "0",
-            background: "none",
-          },
-        }}
-      >
-        <img src={process.env.PUBLIC_URL + `/img/loading.gif`} alt="loading" />
-      </Modal>
+      <LoadingModal state={startNovel.isLoading} />
       <div className={style.component}>
         <Preview imageSrcs={imageSrcs} setSelected={setSelected} />
         <Canvas1

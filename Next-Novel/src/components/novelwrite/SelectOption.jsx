@@ -4,6 +4,7 @@ import { useNovelContext } from "../../context/NovelContext";
 import useNovelWrite from "../../hooks/useNovelWrite";
 
 import Modal from "react-modal";
+import LoadingModal from "../common/LoadingModal";
 
 export default function SelectOption({ setStep, count, setCount }) {
   const { novel, setNovel } = useNovelContext();
@@ -46,23 +47,7 @@ export default function SelectOption({ setStep, count, setCount }) {
   ];
   return (
     <div className={style.container}>
-      <Modal
-        isOpen={isFetching}
-        style={{
-          overlay: {},
-          content: {
-            width: "100vw",
-            height: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            inset: "0",
-            background: "none",
-          },
-        }}
-      >
-        <img src={process.env.PUBLIC_URL + `/img/loading.gif`} alt="loading" />
-      </Modal>
+      <LoadingModal state={isFetching} />
       {buttons.map((button, index) => {
         return (
           <div
