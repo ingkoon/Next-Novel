@@ -9,7 +9,7 @@ export default function Update({closemodal}){
   const [profile, setProfile] = useState()
   const imgRef = useRef()
   const [userinfo, setUserinfo] = useState()
-
+  
   // api 통신하기
   async function getuser() {
     try {

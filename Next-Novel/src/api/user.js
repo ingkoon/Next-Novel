@@ -29,3 +29,9 @@ export async function patchuser(data) {
     })
   return res
 }
+
+//회원 탈퇴
+export async function deleteuser() {
+  const res = await tokeninstance.delete()
+  return res
+}

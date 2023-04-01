@@ -17,3 +17,9 @@ export async function deletecomment(id) {
   const res = await tokeninstance.delete(`novel/${id}/comment/`)
   return res
 }
+
+// 글 삭제하기
+export async function deletenovel(id) {
+  const res = await tokeninstance.delete(`novel/${id}/`)
+  return res
+}

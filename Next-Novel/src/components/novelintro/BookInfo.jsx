@@ -34,11 +34,11 @@ export default function BookInfo(){
                 console.log(e)
             }
         }
-        intro(novelid)
+        intro()
     }, [novelid])
     return (
       <div>
-        <Link to="/library/read" className={style.link}>
+        <Link to={`/library/${novelid}/read`} className={style.link}>
               <span className={style.front}><img src={process.env.PUBLIC_URL+'/icon/glasses.svg'} className={style.bicon} alt='glasses_black'></img></span>
               <span className={style.center}></span>
               <span className={style.back}>열람</span>

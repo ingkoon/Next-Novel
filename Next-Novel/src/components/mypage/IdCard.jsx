@@ -30,7 +30,7 @@ export default function IdCard(){
   // api 호출하기
   useEffect(() => {
     getuser()
-  }, [userinfo])
+  }, [])
 
   return (
     <div className={style.mypagewhole}>
