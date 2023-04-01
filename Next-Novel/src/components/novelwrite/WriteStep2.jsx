@@ -8,7 +8,7 @@ import { useNovelContext } from "../../context/NovelContext";
 import LoadingModal from "../common/LoadingModal";
 
 export default function WriteStep2({ setStep, step, genreName }) {
-  const { setNovel } = useNovelContext();
+  const { novel, setNovel } = useNovelContext();
   const { startNovel } = useNovelWrite();
   const [imageSrcs, setImageSrcs] = useState(
     Array.from({ length: 6 }, () => undefined)
@@ -42,6 +42,7 @@ export default function WriteStep2({ setStep, step, genreName }) {
         console.log(res);
         //context 제어
         setNovel({
+          ...novel,
           id: res.data.id,
           step: res.data.step,
           materials: res.data.materials,

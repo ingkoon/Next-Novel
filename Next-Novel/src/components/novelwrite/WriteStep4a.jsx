@@ -6,15 +6,18 @@ import style from "./WriteStep4a.module.css";
 import { useNovelContext } from "../../context/NovelContext";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import LoadingModal from "../common/LoadingModal";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function WriteStep4a({ setStep, count, step }) {
   const { novel, setNovel } = useNovelContext();
   const { continueNovel } = useNovelWrite();
-
+  const queryClient = useQueryClient();
   const [imageSrcs, setImageSrcs] = useState(
     Array.from({ length: 1 }, () => undefined)
   );
+
   const selected = 0;
+  // const button = () => setStep(4.5);
   const button = () => {
     const byteStrings = imageSrcs.map((dataUrl) =>
       window.atob(dataUrl.split(",")[1])
@@ -48,10 +51,10 @@ export default function WriteStep4a({ setStep, count, step }) {
           story: novel.story + res.data.story,
           captions: [...novel.captions, res.data.caption],
         });
+        queryClient.removeQueries({ queryKey: ["questions"] });
         setStep(4.5);
       },
     });
-    // setStep(4.5);
   };
 
   return (
