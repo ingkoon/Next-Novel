@@ -26,12 +26,13 @@ const router = createBrowserRouter([
         element: <Novels />,
       },
       {
-        // path: "/library/:id/intro",
-        path: "/library/intro",
+        path: "/library/:id/intro",
+        // path: "/library/intro",
         element: <NovelIntro />,
       },
       {
-        path: "/library/:id/read",
+        // path: "/library/:id/read",
+        path: "/library/read",
         element: <NovelRead />,
       },
       {

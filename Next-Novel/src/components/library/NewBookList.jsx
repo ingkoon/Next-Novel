@@ -1,27 +1,53 @@
-import style from './NewBookList.module.css'
-import NewCard from "../library/NewCard";
+import style from "./NewBookList.module.css"
+import NewCard from "../library/NewCard"
+import { Component, useEffect, useState } from "react"
+import { Swiper, SwiperSlide } from "swiper/react"
 
-import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css"
+import "swiper/css/pagination"
+import "swiper/css/navigation"
+import { Autoplay, Pagination, Navigation } from "swiper"
 
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import { Autoplay, Pagination, Navigation } from "swiper";
+import { getrecommend } from "../../api/library.js"
 
 export default function NewBookList() {
+  const [reconovels, setReconovels] = useState([])
+  const [arr, setArr] = useState()
+
+  useEffect(() => {
+    async function getrecolist() {
+      try {
+        const data = await getrecommend()
+        console.log(data)
+        setReconovels(data.data)
+
+        let tmp = []
+        for (let i = 0; i < 5; i++) {
+          tmp = [...tmp]
+          tmp.push(NewCard)
+        }
+
+        setArr(tmp)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    getrecolist()
+  }, [])
+
   return (
     <div>
       <div className={style.swiper}>
-
         <Swiper
           style={{
-            '--swiper-navigation-color': '#000',
-            '--swiper-pagination-color': '#000',
+            "--swiper-navigation-color": "#000",
+            "--swiper-pagination-color": "#000",
           }}
           spaceBetween={30}
           centeredSlides={true}
           autoplay={{
-            delay: 5000,
+            delay: 500000,
             disableOnInteraction: false,
           }}
           pagination={{
@@ -31,26 +57,23 @@ export default function NewBookList() {
           modules={[Autoplay, Pagination, Navigation]}
           className="mySwiper"
         >
-          <SwiperSlide><NewCard/></SwiperSlide>
-          <SwiperSlide><NewCard/></SwiperSlide>
-          <SwiperSlide><NewCard/></SwiperSlide>
-          <SwiperSlide><NewCard/></SwiperSlide>
-          <SwiperSlide><NewCard/></SwiperSlide>
+          {arr?.map((Component, index) => (
+            <SwiperSlide key={index}>
+              <Component props={reconovels[index]} />
+            </SwiperSlide>
+          ))}
         </Swiper>
-        <img src={process.env.PUBLIC_URL+'/img/circles_left.svg'} className={style.circle_left} alt='circle_left'></img>
-        <img src={process.env.PUBLIC_URL+'/img/circles_right.svg'} className={style.circle_right} alt='circle_right'></img>
+        <img
+          src={process.env.PUBLIC_URL + "/img/circles_left.svg"}
+          className={style.circle_left}
+          alt="circle_left"
+        />
+        <img
+          src={process.env.PUBLIC_URL + "/img/circles_right.svg"}
+          className={style.circle_right}
+          alt="circle_right"
+        />
       </div>
-
-
-      {/* <div className={style.newbooklist}>
-        <div className={style.newbook_before}>
-          &lt;
-        </div>
-        <NewCard/>
-        <div className={style.newbook_next}>
-          &gt;
-        </div>
-      </div> */}
     </div>
   )
 }

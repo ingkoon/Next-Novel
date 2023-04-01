@@ -1,10 +1,20 @@
 import style from './NewCard.module.css'
+import { useNavigate } from 'react-router-dom';
+import Book3d from '../common/Book3d'
 
-export default function NewCard(){
+export default function NewCard({props}){
+
+  const navigate = useNavigate()
+
+  const navigateToPurchase = (id) => {
+    navigate(`/library/${id}/intro`, { state : {id : id}})
+  }
+
   return (
-    <div className={style.newcard}>
+    <div className={style.newcard} onClick={()=>navigateToPurchase(props.id)}>
       <div className={style.img}>
-        <img src={process.env.PUBLIC_URL+'/img/tmp/tmpimg2.png'} alt='tmpimg2'></img>
+        <Book3d img={props.cover_img}/>
+        {/* <img src={props.cover_img} alt='cover_img'></img> */}
       </div>
       <div className={style.strip}>
         <div className={style.newcard_line}></div>
@@ -19,7 +29,7 @@ export default function NewCard(){
         <div className={style.newcard_intro}>
           <div className={style.newcard_ment}>
             <div>
-              취미는 기타, 본업은 코딩 한 사내의 좌충우돌 개발자 생존기
+              {props.introduction}
             </div>
           </div>
           <img src={process.env.PUBLIC_URL+'/icon/rainbow.svg'} className={style.rainbowbg} alt='rainbow'></img>
@@ -28,17 +38,17 @@ export default function NewCard(){
         </div>
 
         <div className={style.newcard_info}>
-          <div className={style.newcard_title}>그냥, 취미해!</div>
-          <div className={style.newcard_writer}>찰스</div>
+          <div className={style.newcard_title}>{props.title}</div>
+          <div className={style.newcard_writer}>{props.author}</div>
           <div className={style.newcard_last}>
             <div className={style.newcard_date}>
-              출간일 : 2023.03.08
+              출간일 : {props.created_at.slice(0,10)}
             </div>
             <div style={{display:'flex', marginRight:'10px'}}>
               <img src={process.env.PUBLIC_URL+'/icon/heart_black.svg'} style={{margin:'auto 5px'}} alt='heart_black'></img>
-              <div className={style.newcard_heart}>23</div>
+              <div className={style.newcard_heart}>{props.novel_stats.like_count}</div>
               <img src={process.env.PUBLIC_URL+'/icon/comment_black.svg'} style={{margin:'auto 5px'}} alt='comment_black'></img>
-              <div className={style.newcard_comment}>11</div>
+              <div className={style.newcard_comment}>{props.novel_stats.comment_count}</div>
             </div>
           </div>
         </div>

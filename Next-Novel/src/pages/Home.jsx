@@ -20,7 +20,7 @@ export default function Home() {
       console.log("Code exists:", code)
       axios({
         method: "get",
-        url: "http://localhost:8000/api/user/kakao/callback/",
+        url: process.env.REACT_APP_DATA_API+"user/kakao/callback/",
         params: {
           code: code,
         },
@@ -28,9 +28,10 @@ export default function Home() {
         console.log(res)
         const accessToken = res.data.access_token
         const refreshToken = res.data.refresh_token
+        const nickname = res.data.user.nickname
         localStorage.setItem("access_token", accessToken)
         localStorage.setItem("refresh_token", refreshToken)
-        setUser({access_token : accessToken, refresh_token : refreshToken})
+        setUser({access_token : accessToken, refresh_token : refreshToken, nickname: nickname})
       })
       // ... add your logic here
     } else {
@@ -57,6 +58,9 @@ export default function Home() {
       </Link>
       <Link to="/library/intro">
         <h2>책인트로</h2>
+      </Link>
+      <Link to="/library/read">
+        <h2>책읽기</h2>
       </Link>
       <Link to="/mypage">
         <h2>마이페이지</h2>

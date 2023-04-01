@@ -1,0 +1,42 @@
+.review{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.gamsang{
+    width: 150px;
+    height: 50px;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.line{
+    width: 150px;
+    height: 3px;
+    background: #090909;
+}
+.commentbox{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icons{
+    animation: up-down 1.4s infinite ease-in-out alternate;
+  }
+  
+  @keyframes up-down{
+      from{
+        transform: translatey(5px);
+      }
+      to{
+        transform: translatey(-5px);
+      }
+    }

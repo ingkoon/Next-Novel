@@ -1,0 +1,28 @@
+.wrapper{
+    width: 500px;
+    height: 550px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: #F66F00; */
+    /* overflow-y: scroll; */
+}
+
+.what{
+    width: 100%;
+    
+}
+.col{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pic{
+    width: 300px;
+    height: 150px;
+    background: white;
+    border: black solid 2px;
+    margin: 10px 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
