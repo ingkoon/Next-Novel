@@ -43,11 +43,6 @@ export default function BookInfo(){
               <span className={style.center}></span>
               <span className={style.back}>열람</span>
         </Link>
-        <div className={style.blur}>
-        </div>
-        <div className={style.undertext}>
-            <span>{novelinfo && novelinfo.title}</span>
-        </div>
         <div className={style.info}>
             <div className={style.wrap}>
                 <div className={style.title}>
@@ -82,6 +77,11 @@ export default function BookInfo(){
                 </div>
             </div>
         </div>
+        {/* <div className={style.undertext}>
+            <div className={style.blur}>
+                <span>{novelinfo && novelinfo.title}</span>
+            </div>
+        </div> */}
       </div>
     )
   }

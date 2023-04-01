@@ -1,7 +1,7 @@
 import style from './Delete.module.css'
 import { deletenovel, deletecomment } from '../../../api/novel'
 
-export default function Delete({type, id, closemodal}) {
+export default function Delete({type, id, closemodal, comid}) {
 
   async function delnovel() {
     try {
@@ -16,7 +16,7 @@ export default function Delete({type, id, closemodal}) {
 
   async function delcomment() {
     try {
-      const data = await deletecomment(id)
+      const data = await deletecomment(id, comid)
       console.log(data)
       closemodal()
     }

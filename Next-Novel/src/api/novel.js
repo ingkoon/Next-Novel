@@ -13,8 +13,8 @@ export async function getcomment(id) {
 }
 
 // 댓글 삭제하기
-export async function deletecomment(id) {
-  const res = await tokeninstance.delete(`novel/${id}/comment/`)
+export async function deletecomment(id, commentid) {
+  const res = await tokeninstance.delete(`novel/${id}/comment/${commentid}/`)
   return res
 }
 

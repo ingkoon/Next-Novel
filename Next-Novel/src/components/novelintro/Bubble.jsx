@@ -4,7 +4,7 @@ import {AuthContext} from "../../context/AuthContext"
 import Modal from "react-modal"
 import Delete from '../mypage/modal/Delete'
 
-export default function Bubble({props}){
+export default function Bubble({props, id, updatelist}){
 
     const [create, setCreate] = useState("")
     const { user } = useContext(AuthContext)
@@ -21,6 +21,7 @@ export default function Bubble({props}){
         setModal(true)
     }
     const closemodal = () => {
+        updatelist()
         setModal(false)
     }
 
@@ -57,10 +58,9 @@ export default function Bubble({props}){
                 height : '360px',
                 backgroundColor : '#fffefc',
                 margin: 'auto',
-                zIndex: '5',
             }
             }}>
-            <Delete type="comment" id={props.id} closemodal={closemodal}/>
+            <Delete type="comment" id={id} closemodal={closemodal} comid={props.id}/>
         </Modal>
         </>
     )
