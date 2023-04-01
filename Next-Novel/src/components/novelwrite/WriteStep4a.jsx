@@ -48,7 +48,7 @@ export default function WriteStep4a({ setStep, count, step }) {
         //context 제어
         setNovel({
           ...novel,
-          story: novel.story + res.data.story,
+          story: novel.story + "\n\n" + res.data.story,
           captions: [...novel.captions, res.data.caption],
         });
         queryClient.removeQueries({ queryKey: ["questions"] });
