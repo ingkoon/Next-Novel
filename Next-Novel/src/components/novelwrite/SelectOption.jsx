@@ -9,6 +9,7 @@ export default function SelectOption({ setStep, count, setCount }) {
   const {
     getQuestions: { isFetching, refetch, data },
   } = useNovelWrite();
+  const { endNovel } = useNovelWrite();
 
   useEffect(() => {
     if (data) {
@@ -24,7 +25,17 @@ export default function SelectOption({ setStep, count, setCount }) {
       icon: "/icon/check.svg",
       click1: "완료하기",
       click3: "이대로 소설을\n마무리합니다",
-      event: () => setStep(5),
+      event: () => {
+        const formData = new FormData();
+        formData.append("step", novel.step + 1);
+        formData.append("novel_id", novel.id);
+        endNovel.mutate(formData, {
+          onSuccess: () => {
+            setStep(5);
+          },
+        });
+        setNovel((novel) => ({ ...novel, step: novel.step + 1 }));
+      },
     },
     {
       icon: "",
@@ -47,6 +58,7 @@ export default function SelectOption({ setStep, count, setCount }) {
   return (
     <div className={style.container}>
       <LoadingModal state={isFetching} />
+      <LoadingModal state={endNovel.isLoading} />
       {buttons.map((button, index) => {
         return (
           <div

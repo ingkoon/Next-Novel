@@ -3,6 +3,7 @@ import {
   fetchQuestions,
   startNovelApi,
   continueNovelApi,
+  endNovelApi,
 } from "../api/novelwrite";
 import { useNovelContext } from "../context/NovelContext";
 
@@ -25,5 +26,7 @@ export default function useNovelWrite() {
     {}
   );
 
-  return { getQuestions, startNovel, continueNovel };
+  const endNovel = useMutation((formData) => endNovelApi(formData), {});
+
+  return { getQuestions, startNovel, continueNovel, endNovel };
 }

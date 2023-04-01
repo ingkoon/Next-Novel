@@ -13,3 +13,7 @@ export async function startNovelApi(formData) {
 export async function continueNovelApi(formData) {
   return tokeninstance.post(`novel/continue/`, formData, config);
 }
+
+export async function endNovelApi(formData) {
+  return tokeninstance.post(`novel/end/`, formData);
+}
