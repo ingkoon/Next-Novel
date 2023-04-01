@@ -14,8 +14,18 @@ export default function WriteStep2({ setStep, step, genreName }) {
     Array.from({ length: 6 }, () => undefined)
   );
   const [selected, setSelected] = useState(0);
+  const [isShaking, setIsShaking] = useState(false);
 
   const button = () => {
+    //그림 유효성 검사
+    for (let imageSrc of imageSrcs) {
+      if (!imageSrc) {
+        setIsShaking(true);
+        setTimeout(() => setIsShaking(false), 800); // 0.8초 후 클래스 제거
+        return;
+      }
+    }
+
     const byteStrings = imageSrcs.map((dataUrl) =>
       window.atob(dataUrl.split(",")[1])
     );
@@ -64,7 +74,7 @@ export default function WriteStep2({ setStep, step, genreName }) {
           selected={selected}
         />
       </div>
-      <Bottom step={step} name="제출" button={button} />
+      <Bottom step={step} name="제출" button={button} isShaking={isShaking} />
     </div>
   );
 }

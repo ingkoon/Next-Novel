@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./Guide.module.css";
 
-export default function Guide({ step, count }) {
+export default function Guide({ step, count, isShaking }) {
   const desc = [
     "",
     "소설의 장르를 선택하세요",
@@ -18,11 +18,13 @@ export default function Guide({ step, count }) {
 
   return (
     <div className={style.container}>
-      <img
-        src={process.env.PUBLIC_URL + `/icon/question_mark.svg`}
-        alt="question_mark"
-      />
-      <span>{desc[flooredStep]}</span>
+      <div className={isShaking ? style.shake : ""}>
+        <img
+          src={process.env.PUBLIC_URL + `/icon/question_mark.svg`}
+          alt="question_mark"
+        />
+        <span>{desc[flooredStep]}</span>
+      </div>
     </div>
   );
 }

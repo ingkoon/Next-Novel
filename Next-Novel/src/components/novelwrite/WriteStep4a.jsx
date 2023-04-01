@@ -15,10 +15,18 @@ export default function WriteStep4a({ setStep, count, step }) {
   const [imageSrcs, setImageSrcs] = useState(
     Array.from({ length: 1 }, () => undefined)
   );
-
+  const [isShaking, setIsShaking] = useState(false);
   const selected = 0;
   // const button = () => setStep(4.5);
   const button = () => {
+    //그림 유효성 검사
+    for (let imageSrc of imageSrcs) {
+      if (!imageSrc) {
+        setIsShaking(true);
+        setTimeout(() => setIsShaking(false), 800); // 0.8초 후 클래스 제거
+        return;
+      }
+    }
     const byteStrings = imageSrcs.map((dataUrl) =>
       window.atob(dataUrl.split(",")[1])
     );
@@ -68,7 +76,7 @@ export default function WriteStep4a({ setStep, count, step }) {
           selected={selected}
         />
       </div>
-      <Bottom step={step} name="제출" button={button} />
+      <Bottom step={step} name="제출" button={button} isShaking={isShaking} />
     </div>
   );
 }
