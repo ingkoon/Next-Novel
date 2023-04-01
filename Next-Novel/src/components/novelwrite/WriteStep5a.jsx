@@ -10,7 +10,11 @@ export default function WriteStep5a({ setStep, step }) {
   const selected = 0;
   const button = () => {
     //표지 유효성 검사 코드
-    //표지 안만들면 return
+    if (!cover) {
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 800); // 0.8초 후 클래스 제거
+      return;
+    }
     setStep(5.5);
   };
   const makeCover = () => {
@@ -23,24 +27,12 @@ export default function WriteStep5a({ setStep, step }) {
       }
     }
     //cover 만들기 코드
+    setCover(sample);
   };
-  const result = [
-    "https://images.unsplash.com/photo-1678553542991-6bdca4108416?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-    "https://images.unsplash.com/photo-1679882428282-78da16ccecf2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-    "https://images.unsplash.com/photo-1679663956946-79bbb6bae250?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-    "https://images.unsplash.com/photo-1679623591379-2f11ce2937c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-  ];
-  const [resultSelected, setResultSelected] = useState(0);
+  const [cover, setCover] = useState(undefined);
+  const sample =
+    "https://images.unsplash.com/photo-1679882428282-78da16ccecf2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80";
   const [isShaking, setIsShaking] = useState(false);
-
-  const moveLeft = () => {
-    if (resultSelected === 0) return;
-    setResultSelected((prev) => prev - 1);
-  };
-  const moveRight = () => {
-    if (resultSelected === 3) return;
-    setResultSelected((prev) => prev + 1);
-  };
 
   return (
     <div className={style.container}>
@@ -67,32 +59,17 @@ export default function WriteStep5a({ setStep, step }) {
           <div className={style.result}>
             <div className={style.img}>
               <div className={style.frame}>
-                <img
-                  src={result[resultSelected]}
-                  className={style.cover}
-                  alt="cover"
-                />
-                {/* <img
-                  src={process.env.PUBLIC_URL + "/icon/cover_wait.svg"}
-                  className={style.cover_wait}
-                  alt="cover_wait"
-                ></img> */}
+                {cover && (
+                  <img src={sample} className={style.cover} alt="cover" />
+                )}
+                {!cover && (
+                  <img
+                    src={process.env.PUBLIC_URL + "/icon/cover_wait.svg"}
+                    className={style.cover_wait}
+                    alt="cover_wait"
+                  />
+                )}
               </div>
-            </div>
-            <div className={style.move}>
-              <img
-                src={process.env.PUBLIC_URL + "/icon/left_arrow.svg"}
-                className={style.left_arrow}
-                alt="left_arrow"
-                onClick={moveLeft}
-              />
-              <span>{resultSelected + 1}/4</span>
-              <img
-                src={process.env.PUBLIC_URL + "/icon/right_arrow.svg"}
-                className={style.right_arrow}
-                alt="right_arrow"
-                onClick={moveRight}
-              />
             </div>
           </div>
         </div>

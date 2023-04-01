@@ -7,8 +7,8 @@ export default function Canvas3({ imageSrcs, setImageSrcs, selected }) {
   const [painting, setPainting] = useState(false); //그림을 그리고 있는지 아닌지
   const [mouseX, setmouseX] = useState(); //캔버스 내 마우스 좌표
   const [mouseY, setmouseY] = useState(); //캔버스 내 마우스 좌표
-  const canvasWidth = 308;
-  const canvasHeight = 350;
+  const canvasWidth = 343.2;
+  const canvasHeight = 390;
 
   const [widthState, setWidthState] = useState(2.5); //펜 굵기 초기값
   const [colorState, setColorState] = useState("#000000"); //펜 색 초기값
