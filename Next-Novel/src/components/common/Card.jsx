@@ -72,7 +72,7 @@ function Card({props, updatelist}){
     <Modal isOpen={modal} onRequestClose={() => setModal(false)}
       style ={{
         overlay : {
-
+          zIndex : '100'
         },
         content : {
           width : '792px',
