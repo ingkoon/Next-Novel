@@ -19,7 +19,7 @@ export default function PaintingInProgress() {
             <div key={index}>
               <img
                 src={process.env.REACT_APP_IMAGE_API + material.image}
-                alt="material_image"
+                alt=""
               />
               <span>{material.caption}</span>
             </div>
@@ -29,7 +29,7 @@ export default function PaintingInProgress() {
           {tempDatas2.map((tempData, index) => (
             <div key={index}>
               <div />
-              <img src={tempData.painting} alt="dd" />
+              <img src={tempData.painting} alt="d" />
               <span>{tempData.text}</span>
             </div>
           ))}
