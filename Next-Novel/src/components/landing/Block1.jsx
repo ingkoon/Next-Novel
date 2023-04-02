@@ -47,11 +47,19 @@ export default function Block1(){
         textDisplay(p);
     }, []);
 
+    const goNext = () => {
+        window.scrollTo({ top: 722, behavior: 'smooth' });
+    }
+
+
     return(
         <div className={style.block}>
             <div className={style.presents}>
                 6G PRESENTS...
                 <div className={style.bar}></div>
+            </div>
+            <div>
+                <img src={process.env.PUBLIC_URL+'/img/NN_LOGO_text.svg'} className={style.logo} alt='NN_LOGO_text'></img>
             </div>
             <p className={style.par}>
                 넥스트노벨에 오신것을 환영합니다.<br /><br />
@@ -59,6 +67,9 @@ export default function Block1(){
                 BETWEEN HUMAN IMAGINATION AND<br /> 
                 ARTIFICIAL INTELLIGENCE
             </p>
+            <div className={style.next} onClick={goNext}>
+                <div className={style.slide}></div>
+            </div>
         </div>
     )
 }
