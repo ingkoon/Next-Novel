@@ -17,6 +17,17 @@ class Genre(models.IntegerChoices):
                 return choice_value
         return None
 
+    @classmethod
+    def get_korean_value_from_label(cls, label):
+        genre_dict = {
+            1: "로맨스",
+            4: "SF",
+            2: "판타지",
+            3: "추리",
+            5: "자유"
+        }
+        return genre_dict.get(label)
+
 
 class Novel(models.Model):
     class Status(models.IntegerChoices):
@@ -25,6 +36,7 @@ class Novel(models.Model):
         WAIT_FOR_WRITE = 3, ' Wait_for_write'
 
     title = models.CharField(max_length=100, null=True)
+    original_cover_img = models.ImageField(null=True, default="defaults/default_image.jpg")
     cover_img = models.ImageField(null=True)
     introduction = models.TextField(null=True, max_length=50)
     author = models.ForeignKey(
@@ -56,6 +68,7 @@ class NovelContent(models.Model):
     query1 = models.TextField()
     query2 = models.TextField()
     query3 = models.TextField()
+    chosen_query = models.TextField()
 
     class Meta:
         constraints = [

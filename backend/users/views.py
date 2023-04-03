@@ -5,6 +5,7 @@ from allauth.socialaccount.providers.kakao import views as kakao_view
 from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
+from django.core.files.base import ContentFile
 from django.db.models import QuerySet
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -45,11 +46,6 @@ def kakao_callback(request):
     token_request = requests.get(
         f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={REDIRECT_URI}&code={code}")
     token_response_json = token_request.json()
-
-    error = token_response_json.get("error", None)
-    # if error is not None:
-    #     raise JSONDecodeError(error)
-
     access_token = token_response_json.get("access_token")
 
     # access token으로 카카오톡 프로필 요청
@@ -67,9 +63,6 @@ def kakao_callback(request):
     # 이메일 없으면 오류 => 카카오톡 최신 버전에서는 이메일 없이 가입 가능해서 추후 수정해야함
     if email is None:
         return JsonResponse({'err_msg': 'failed to get email'}, status=status.HTTP_400_BAD_REQUEST)
-    # profile = kakao_account.get("profile")
-    # nickname = profile.get("nickname")
-    # profile_image = profile.get("thumbnail_image_url")
 
     try:
         # 유저가 있는지 탐색
@@ -90,6 +83,7 @@ def kakao_callback(request):
 
         return JsonResponse(accept_json)
     except User.DoesNotExist:
+
         # 애초에 가입된 유저가 없으면 =>  새로 회원가입 & 해당유저의 jwt발급
         data = {'access_token': access_token, 'code': code}
         accept = requests.post(f"{BASE_URL}api/user/kakao/login/finish/", data=data)
@@ -101,14 +95,24 @@ def kakao_callback(request):
 
         user_pk = accept_json.get('user').pop('pk')
         created_user = User.objects.get(pk=user_pk)
+
+        # 닉네임 로직
         while True:
             nickname = create_random_nickname()
             if User.objects.filter(nickname=nickname).exists():
                 continue
             created_user.nickname = nickname
-            created_user.save()
             accept_json['user']['nickname'] = nickname
             break
+        # profile image 로직
+        profile_image = profile_json.get("properties").get("profile_image")
+        response = requests.get(profile_image)
+        image_content = ContentFile(response.content)
+        file_name = f"temp_profile.png"
+
+        created_user.profile_image.save(file_name, image_content)
+        created_user.save()
+
         return JsonResponse(accept_json)
     except SocialAccount.DoesNotExist:
         return JsonResponse({'err_msg': 'email exists but not social user'}, status=status.HTTP_400_BAD_REQUEST)
