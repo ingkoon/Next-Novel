@@ -8,10 +8,10 @@ export function NovelContextProvider({ children }) {
     id: undefined,
     step: undefined,
     materials: undefined,
+    newMaterials: [],
     story: undefined,
     questions: undefined,
     selectedQuestion: undefined,
-    captions: [],
   });
 
   return (
