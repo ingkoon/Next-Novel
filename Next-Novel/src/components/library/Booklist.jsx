@@ -16,7 +16,7 @@ export default function Booklist() {
   useEffect(() => {
     async function getnovel() {
       try {
-
+  
         const data = await getnovels()
         console.log(data)
         novellen = data.data.results.length

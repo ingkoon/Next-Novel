@@ -1,12 +1,15 @@
 import style from './Bubble.module.css';
 import {useEffect, useState, useContext } from 'react'
-import {AuthContext} from "../../context/AuthContext" 
+import {AuthContext} from "../../context/AuthContext"
+import Modal from "react-modal"
+import Delete from '../mypage/modal/Delete'
 
-export default function Bubble({props}){
+export default function Bubble({props, id, updatelist}){
 
     const [create, setCreate] = useState("")
     const { user } = useContext(AuthContext)
-    
+    const [modal, setModal] = useState(false)
+
     useEffect(()=> {
         const year = props.created_at.substring(0, 4)
         const month = props.created_at.substring(5, 7)
@@ -14,9 +17,12 @@ export default function Bubble({props}){
         setCreate(year+"."+month+"."+date)
     })
 
-    function deletecomment(){
-        const id = props.id
-        
+    const deletecomment = () => {
+        setModal(true)
+    }
+    const closemodal = () => {
+        updatelist()
+        setModal(false)
     }
 
     return(
@@ -41,6 +47,21 @@ export default function Bubble({props}){
                 <></>
             }
         </div>
+
+        <Modal isOpen={modal} onRequestClose={() => setModal(false)}
+            style ={{
+            overlay : {
+                zIndex : '100'
+            },
+            content : {
+                width : '792px',
+                height : '360px',
+                backgroundColor : '#fffefc',
+                margin: 'auto',
+            }
+            }}>
+            <Delete type="comment" id={id} closemodal={closemodal} comid={props.id}/>
+        </Modal>
         </>
     )
 }

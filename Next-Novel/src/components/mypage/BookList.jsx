@@ -9,13 +9,15 @@ export default function BookList({type, setMylen, setLikelen}){
 
   const [noveldata, setNoveldata] = useState([])
   const [arr, setArr] = useState()
+  let novellen = 0
+  
 
   async function mynovels(){
     try {
       const data = await getmynovel()
       console.log(data)
       setNoveldata(data.data)
-      let novellen = data.data.length
+      novellen = data.data.length
       let tmp = []
       for(let i=0;i<novellen;i++){
         tmp = [...tmp]
@@ -52,13 +54,17 @@ export default function BookList({type, setMylen, setLikelen}){
     else if (type === 'like') {
       likenovels()
     }
-  }, [])
+  }, [novellen])
+
+  const updatelist = () => {
+    mynovels()
+  }
 
   return (
     <div>
       <div className={style.cardlist}>
         {arr?.map((Component, index) => (
-          <Component props={noveldata[index]} key={index} className={style.cardcompo}/>
+          <Component updatelist={updatelist} props={noveldata[index]} key={index} className={style.cardcompo}/>
         ))}
       </div>
     </div>
