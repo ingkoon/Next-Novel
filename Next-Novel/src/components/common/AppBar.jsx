@@ -1,6 +1,6 @@
 import style from "./AppBar.module.css"
 import "./AppBar.css"
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useRef } from "react"
 import { Link } from "react-router-dom"
 import Modal from "react-modal"
 import Login from "../login/Login"
@@ -81,6 +81,7 @@ export default function AppBar() {
         }}>
         <Login closemodal={closemodal} />
       </Modal>
+
     </div>
   )
 }

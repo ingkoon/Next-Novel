@@ -1,6 +1,7 @@
 import style from './BookInfo.module.css'
 import { Link, useLocation } from "react-router-dom"
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 import { getintro, postliked } from '../../api/novel'
 
@@ -49,13 +50,19 @@ export default function BookInfo(){
         intro()
     }, [novelid])
 
+    const navigate = useNavigate()
+
+    const navigateToRead = (id) => {
+        navigate(`/library/${id}/read`, { state : {id : id}})
+    }
+
     return (
       <div>
-        <Link to={`/library/${novelid}/read`} className={style.link}>
+        <div className={style.link} onClick={()=>navigateToRead(novelid)}>
               <span className={style.front}><img src={process.env.PUBLIC_URL+'/icon/glasses.svg'} className={style.bicon} alt='glasses_black'></img></span>
               <span className={style.center}></span>
               <span className={style.back}>열람</span>
-        </Link>
+        </div>
         <div className={style.blur}>
         </div>
         <div className={style.undertext}>
