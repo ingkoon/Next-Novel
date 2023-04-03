@@ -12,6 +12,7 @@ export function NovelContextProvider({ children }) {
     story: undefined,
     questions: undefined,
     selectedQuestion: undefined,
+    cover: undefined,
   });
 
   return (

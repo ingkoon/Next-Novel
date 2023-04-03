@@ -17,3 +17,7 @@ export async function continueNovelApi(formData) {
 export async function endNovelApi(formData) {
   return tokeninstance.post(`novel/end/`, formData);
 }
+
+export async function makeCoverRequestApi(formData) {
+  return tokeninstance.post(`novel/cover-image/`, formData, config);
+}
