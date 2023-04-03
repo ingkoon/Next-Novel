@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
+import style from "./LoadingModal.module.css";
 
 export default function LoadingModal({ state }) {
   return (
@@ -21,7 +22,17 @@ export default function LoadingModal({ state }) {
           },
         }}
       >
-        <img src={process.env.PUBLIC_URL + `/img/loading.gif`} alt="loading" />
+        <div className={style["lds-grid"]}>
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
       </Modal>
     </>
   );

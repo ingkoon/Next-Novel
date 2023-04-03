@@ -131,6 +131,7 @@ export default function WriteStep5b({ step }) {
         </div>
         <div className={style.end}>
           <div>
+            <div className={style.slide} />
             <div className={style.end1}>
               <img src={process.env.PUBLIC_URL + `/img/path.png`} alt="path" />
             </div>
