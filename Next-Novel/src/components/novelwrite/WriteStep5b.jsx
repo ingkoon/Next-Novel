@@ -4,12 +4,14 @@ import style from "./WriteStep5b.module.css";
 import { useNovelContext } from "../../context/NovelContext";
 import LoadingModal from "../common/LoadingModal";
 import useNovelWrite from "../../hooks/useNovelWrite";
+import { useNavigate } from "react-router-dom";
 
 export default function WriteStep5b({ step }) {
   const { novel } = useNovelContext();
   const [input, setInput] = useState({});
   const [isShaking, setIsShaking] = useState(false);
   const { finNovel } = useNovelWrite();
+  const navigate = useNavigate();
 
   const buttons = [
     {
@@ -44,6 +46,7 @@ export default function WriteStep5b({ step }) {
     finNovel.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
+        navigate(`/library/${novel.id}/intro`, { state: { id: novel.id } });
       },
     });
   };
