@@ -68,7 +68,7 @@ export default function AppBar() {
       <Modal isOpen={loginIsOpen} onRequestClose={() => setLoginIsOpen(false)}
         style = {{
           overlay : {
-
+            zIndex: '100'
           },
           content : {
             width: '400px',

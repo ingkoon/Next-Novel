@@ -31,8 +31,8 @@ const router = createBrowserRouter([
         element: <NovelIntro />,
       },
       {
-        // path: "/library/:id/read",
-        path: "/library/read",
+        path: "/library/:id/read",
+        // path: "/library/read",
         element: <NovelRead />,
       },
       {
