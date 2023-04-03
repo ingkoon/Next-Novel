@@ -74,7 +74,7 @@ export default function AfterStartWrite({ step, setStep }) {
             />
           )}
           {step === 5 && <WriteStep5a setStep={setStep} step={step} />}
-          {step === 5.5 && <WriteStep5b genre={genre} step={step} />}
+          {step === 5.5 && <WriteStep5b step={step} />}
         </div>
       </div>
     </NovelContextProvider>

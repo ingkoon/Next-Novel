@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import Guide from "./Guide";
 import style from "./WriteStep5b.module.css";
 import { useNovelContext } from "../../context/NovelContext";
+import LoadingModal from "../common/LoadingModal";
+import useNovelWrite from "../../hooks/useNovelWrite";
 
-export default function WriteStep5b({ genre, step }) {
+export default function WriteStep5b({ step }) {
   const { novel } = useNovelContext();
   const [input, setInput] = useState({});
+  const [isShaking, setIsShaking] = useState(false);
+  const { finNovel } = useNovelWrite();
+
   const buttons = [
     {
       icon: "",
@@ -26,12 +31,30 @@ export default function WriteStep5b({ genre, step }) {
     setInput((input) => ({ ...input, [name]: value }));
   };
 
+  const button = () => {
+    if (!input.title || !input.desc) {
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 800); // 0.8초 후 클래스 제거
+      return;
+    }
+    const formData = new FormData();
+    formData.append("novel_id", novel.id);
+    formData.append("title", input.title);
+    formData.append("introduction", input.desc);
+    finNovel.mutate(formData, {
+      onSuccess: (res) => {
+        console.log(res);
+      },
+    });
+  };
+
   return (
     <div className={style.container}>
+      <LoadingModal state={finNovel.isLoading} />
       <div className={style.left}>
         <div className={style.cover}>
           <img
-            src="https://images.unsplash.com/photo-1678553542991-6bdca4108416?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+            src={process.env.REACT_APP_IMAGE_API + novel.cover}
             alt="cover"
           />
         </div>
@@ -101,14 +124,14 @@ export default function WriteStep5b({ genre, step }) {
           })}
         </div>
         <div className={style.guide}>
-          <Guide step={step} />
+          <Guide step={step} isShaking={isShaking} />
         </div>
         <div className={style.end}>
           <div>
             <div className={style.end1}>
               <img src={process.env.PUBLIC_URL + `/img/path.png`} alt="path" />
             </div>
-            <div className={style.fin}>
+            <div className={style.fin} onClick={button}>
               <div className={style.end2} />
               <div className={style.end3}>Fin</div>
             </div>

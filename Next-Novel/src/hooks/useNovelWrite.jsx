@@ -5,6 +5,7 @@ import {
   continueNovelApi,
   endNovelApi,
   makeCoverRequestApi,
+  finNovelApi,
 } from "../api/novelwrite";
 import { useNovelContext } from "../context/NovelContext";
 
@@ -34,11 +35,14 @@ export default function useNovelWrite() {
     {}
   );
 
+  const finNovel = useMutation((formData) => finNovelApi(formData), {});
+
   return {
     getQuestions,
     startNovel,
     continueNovel,
     endNovel,
     makeCoverRequest,
+    finNovel,
   };
 }

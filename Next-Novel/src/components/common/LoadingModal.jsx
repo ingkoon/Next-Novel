@@ -7,7 +7,9 @@ export default function LoadingModal({ state }) {
       <Modal
         isOpen={state}
         style={{
-          overlay: {},
+          overlay: {
+            zIndex: "100",
+          },
           content: {
             width: "100vw",
             height: "100vh",
