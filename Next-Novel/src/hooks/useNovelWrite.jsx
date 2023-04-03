@@ -4,11 +4,13 @@ import {
   startNovelApi,
   continueNovelApi,
   endNovelApi,
+  makeCoverRequestApi,
+  finNovelApi,
 } from "../api/novelwrite";
 import { useNovelContext } from "../context/NovelContext";
 
 export default function useNovelWrite() {
-  const { novel, setNovel } = useNovelContext();
+  const { novel } = useNovelContext();
 
   const getQuestions = useQuery(
     ["questions"],
@@ -28,5 +30,19 @@ export default function useNovelWrite() {
 
   const endNovel = useMutation((formData) => endNovelApi(formData), {});
 
-  return { getQuestions, startNovel, continueNovel, endNovel };
+  const makeCoverRequest = useMutation(
+    (formData) => makeCoverRequestApi(formData),
+    {}
+  );
+
+  const finNovel = useMutation((formData) => finNovelApi(formData), {});
+
+  return {
+    getQuestions,
+    startNovel,
+    continueNovel,
+    endNovel,
+    makeCoverRequest,
+    finNovel,
+  };
 }

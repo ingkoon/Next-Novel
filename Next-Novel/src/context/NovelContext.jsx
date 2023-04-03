@@ -4,13 +4,15 @@ export const NovelContext = createContext();
 
 export function NovelContextProvider({ children }) {
   const [novel, setNovel] = useState({
+    genre: undefined,
     id: undefined,
     step: undefined,
     materials: undefined,
+    newMaterials: [],
     story: undefined,
     questions: undefined,
     selectedQuestion: undefined,
-    captions: [],
+    cover: undefined,
   });
 
   return (

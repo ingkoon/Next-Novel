@@ -57,7 +57,7 @@ export default function WriteStep4a({ setStep, count, step }) {
         setNovel({
           ...novel,
           story: novel.story + "\n\n" + res.data.story,
-          captions: [...novel.captions, res.data.caption],
+          newMaterials: [...novel.newMaterials, res.data.newMaterial],
         });
         queryClient.removeQueries({ queryKey: ["questions"] });
         setStep(4.5);
