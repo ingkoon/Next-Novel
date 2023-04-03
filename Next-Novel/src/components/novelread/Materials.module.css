@@ -1,5 +1,5 @@
 .wrapper{
-    width: 500px;
+    width: 600px;
     height: 550px;
     display: flex;
     justify-content: center;
@@ -10,19 +10,44 @@
 
 .what{
     width: 100%;
-    
-}
-.col{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    
 }
 
 .pic{
-    width: 300px;
+    width: 250px;
     height: 150px;
     background: white;
     border: black solid 2px;
     margin: 10px 20px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    /* object-fit: cover; */
+    overflow: hidden;
+}
+
+.pic img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.inpic{
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover; */
+}
+
+.caption{
+    color: black;
+    width: 207px;
+    height: 20px;
+    position: absolute;
+    font-size: 15px;
+    text-align: center;
+    margin: 5px 0px 5px 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

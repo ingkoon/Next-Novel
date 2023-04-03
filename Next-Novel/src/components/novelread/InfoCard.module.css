@@ -40,7 +40,7 @@
     position: relative;
     top: 40%;
     left: 10%;
-    width: 80%;
+    width: 350px;
     height: 100px;
     font-size: 40px;
 }
@@ -49,6 +49,8 @@
     top: 45%;
     left: 10%;
     display: flex;
+    font-size: 18px;
+    margin-bottom: 5px;
 }
 .barcode{
     position: absolute;

@@ -1,10 +1,39 @@
-import { useEffect } from 'react';
+import style from './Book.module.css';
 import Materials from './Materials.jsx';
 import Qna from './Qna.jsx';
-import style from './Book.module.css';
-import { Link } from "react-router-dom"
+import { useEffect, useState } from 'react'
+import { Link, useLocation } from "react-router-dom"
+import { novelall } from '../../api/novelread'
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Book(){
+
+    const location = useLocation();
+    const id = location.state.id;
+    const [novelid, setNovelid] = useState(id);
+    const [novelinfo, setNovelinfo] = useState("");
+    const [novelContent, setNovelContent] = useState("");
+    const [lastPage, setLastPage] = useState("");
+
+    const [create, setCreate] = useState("");
+  
+    async function nvinfo() {
+      try {
+        const data = await novelall(novelid)
+        console.log(data)
+        setNovelinfo(data.data)
+        setNovelContent(data.data.novel_detail.slice(0, data.data.novel_detail.length-1));
+        setLastPage(data.data.novel_detail.slice(data.data.novel_detail.length-1, data.data.novel_detail.length));
+
+        const year = data.data.novel.created_at.substring(0, 4)
+        const month = data.data.novel.created_at.substring(5, 7)
+        const date = data.data.novel.created_at.substring(8, 10)
+        setCreate(year+"."+month+"."+date)
+      } catch (e) {
+        console.log(e)
+      }
+    };
 
     useEffect(() => {
         const pages = document.querySelectorAll(`.${style.page}`);
@@ -23,18 +52,22 @@ export default function Book(){
               this.nextElementSibling.classList.add(style.flipped);
             }
           });
-        }
-      }, []);
+        };
+
+        setNovelid(id)
+        nvinfo()
+      }, [novelid]);
+  
 
     return (
         <div className={style.back}>
-            <div className={style.book}>
-                <div className={style.pages}>
+            {novelinfo && <div className={style.book}>
+                {novelinfo && <div className={style.pages}>
                     <div className={style.page}>
                         <div className={style.cover}>
                             <div className={style.coverimg}>
                                 <img
-                                    src="https://i.pinimg.com/564x/f6/13/14/f61314f3ff9441fc1701b23457ec4685.jpg"
+                                    src={novelinfo && process.env.REACT_APP_IMAGE_API + novelinfo.novel.cover_img}
                                     alt="cover"
                                 ></img>
                             </div>
@@ -43,7 +76,7 @@ export default function Book(){
                                  "&nbsp; 
                                 </span>
                                 <span>
-                                    이거슨 한줄 소개글입니다. 최대 50자까지 쓸 수 있죠. 이거슨 한줄 소개글입니다.일이삼사
+                                    {novelinfo && novelinfo.novel.introduction}
                                 </span>
                                 <span className={style.ex}>
                                     &nbsp;"
@@ -52,50 +85,30 @@ export default function Book(){
                             <div className={style.fbar}></div>
                         </div>
                     </div>
+
+                    {novelContent.map((item, index) => {
+
+                        return <>
+                        
+                            <div className={style.page}>
+                                {index === 0 && <Materials mat={item} />}
+                                {index > 0 && <Qna qna={item} />}
+                            </div>
+                            <div className={style.page}>
+                                <h1>{item.content}</h1>
+                            </div>
+                        
+                        </>
+                    })}
+
                     <div className={style.page}>
-                        <Materials />
-                    </div>
-                    <div className={style.page}>
-                        <h1>소설1번째</h1>
-                    </div>
-                    <div className={style.page}>
-                        <Qna />
-                    </div>
-                    <div className={style.page}>
-                        <h1>이어가기1</h1>
-                    </div>
-                    <div className={style.page}>
-                        <Qna />
-                    </div>
-                    <div className={style.page}>
-                        <h1>이어가기2</h1>
-                    </div>
-                    <div className={style.page}>
-                        <Qna />
-                    </div>
-                    <div className={style.page}>
-                        <h1>이어가기3</h1>
-                    </div>
-                    <div className={style.page}>
-                        <Qna />
-                    </div>
-                    <div className={style.page}>
-                        <h1>이어가기4</h1>
-                    </div>
-                    <div className={style.page}>
-                        <Qna />
-                    </div>
-                    <div className={style.page}>
-                        <h1>이어가기5</h1>
-                    </div>
-                    <div className={style.page}>
-                        <h1>마무리</h1>
+                        <h1>{lastPage[0].content}</h1>
                     </div>
                     <div className={style.page}>
                         <div className={style.ogcover}>
                             <img
-                                src="https://i.pinimg.com/564x/f6/13/14/f61314f3ff9441fc1701b23457ec4685.jpg"
-                                alt="cover"
+                                src={novelinfo && process.env.REACT_APP_IMAGE_API + novelinfo.novel.original_cover_img}
+                                alt="ogcover"
                             ></img>
                             <div className={style.tmi}>
                                 P.S. 책 표지는 위 그림으로 만들어졌습니다.
@@ -130,8 +143,8 @@ export default function Book(){
                             </Link>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div>}
+            </div>}
         </div>
     )
   }
