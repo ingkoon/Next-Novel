@@ -5,7 +5,7 @@ import Modal from "react-modal"
 import Update from "./modal/Update"
 import Unregi from "./modal/Unregi"
 
-export default function Member() {
+export default function Member({updatemember}) {
 
   const [updateIsOpen, setUpdateIsOpen] = useState(false)
   const [deleteIsOpen, setDeleteIsOpen] = useState(false)
@@ -13,6 +13,7 @@ export default function Member() {
   const closemodal = () => {
     setUpdateIsOpen(false)
     setDeleteIsOpen(false)
+    updatemember()
   }
 
 

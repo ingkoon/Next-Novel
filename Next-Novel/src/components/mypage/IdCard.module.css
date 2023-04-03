@@ -253,6 +253,17 @@
   margin-right: 10px;
 }
 
+.logo {
+  display: flex;
+  width: 50%;
+  height: 100%;
+  background-color: wheat;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background: linear-gradient(#F2CD3C, #FF9243);
+}
+
 
  @-webkit-keyframes flicker-in-1 {
   0% {

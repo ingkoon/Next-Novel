@@ -101,7 +101,7 @@ export default function Update({closemodal}){
           <input onChange={onChange} value={nickName}></input>
         </div>
         <label htmlFor='inputimg' className={style.profile}>
-          <img src={imgFile ? imgFile : process.env.PUBLIC_URL+'img/tmp/girl2.jpg'} alt='updateprofile' onClick={changeprofile}></img>
+          <img src={imgFile ? imgFile : '' } alt='updateprofile' onClick={changeprofile}></img>
         </label>
         <div className={style.regdate}>{userinfo}</div>
       </div>

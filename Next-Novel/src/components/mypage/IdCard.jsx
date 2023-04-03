@@ -27,6 +27,11 @@ export default function IdCard(){
     }
   }
 
+  const updatemember = () => {
+    getuser()
+  }
+
+
   // api 호출하기
   useEffect(() => {
     getuser()
@@ -62,8 +67,9 @@ export default function IdCard(){
                 <div className={style.info_nn}>Next Novel Lab</div>
                 <div className={style.info_img}>
                   <img src={userinfo.profile_image} alt='profile_image'/>
-                  <div>
+                  <div className={style.logo}>
                     <img src={process.env.PUBLIC_URL + 'icon/logo_color.svg'} alt='logo_color' />
+                    <img src={process.env.PUBLIC_URL + 'img/logo_circle.svg'} alt='logo_circle'/>
                   </div>
                 </div>
               </div>
@@ -76,7 +82,7 @@ export default function IdCard(){
                     <div className={style.info_date}>S/N {date}</div>
                   </div>
                   <div className={style.info_nation}>
-                    <img src={process.env.PUBLIC_URL+'img/tmp/girl2.jpg'} alt='girl2'/>
+                    <img src={process.env.PUBLIC_URL+'img/korea.png'} alt='girl2'/>
                   </div>
                 </div>
               </div>
@@ -127,7 +133,7 @@ export default function IdCard(){
         <img src={process.env.PUBLIC_URL+'/img/circles_right_top.svg'} className={style.circles} alt='circles'></img>
       </div>
 
-      <Member/>
+      <Member updatemember={updatemember}/>
     </div>
   )
 }

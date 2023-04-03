@@ -37,7 +37,7 @@ function Card({props, updatelist}){
   return (
     <>
     
-    <div className={style.card} onClick={(e)=>{console.log(e); navigateToPurchase(props.id)}}>
+    <div className={style.card} onClick={(e)=>navigateToPurchase(props.id)}>
       <div className={isHovering ? style.none : style.intro} style={{'backgroundImage':`url(${props.cover_img})`}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
         <div className={style.introment}>
           <div className={style.ment}>
@@ -55,7 +55,7 @@ function Card({props, updatelist}){
             <img src={process.env.PUBLIC_URL+'/icon/heart.svg'} style={{margin:'auto 5px'}} alt='heart'></img>
             <span style={{margin:'0 5px'}}>{props && props.novel_stats.like_count}</span>
             <img src={process.env.PUBLIC_URL+'/icon/comment.svg'} style={{margin:'auto 5px'}} alt='comment'></img>
-            <span style={{margin:'0 5px'}}>{props && props.novel_stats.like_count}</span>
+            <span style={{margin:'0 5px'}}>{props && props.novel_stats.comment_count}</span>
           </div>
           {user.nickname === props.author ?
             <img onClick={delnovel} src={process.env.PUBLIC_URL+'/icon/trash.svg'} className={style.trash} alt='trash'></img>
