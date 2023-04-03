@@ -45,7 +45,29 @@ def creat_image(input_image, caption):
     # 3. Canny Edge 조건으로 새로운 이미지 생성
     prompt = f"{caption}, high quality, photorealistic, sharp focus, depth of field"
     num_steps = 20
-    seed = randint(0, 10000)
+    seed = randint(0, 100)
+
+    out_image = pipe(
+        prompt,
+        num_inference_steps=num_steps,
+        generator=torch.manual_seed(seed),
+        image=canny_image
+    ).images[0]
+
+    # out_image가 검정색 이미지인 경우, 다시 diffusion
+    gray_image = out_image.convert("L")
+    px = gray_image.load()
+    h, w = gray_image.size
+    print(h, w)
+    for i in range(h):
+        for j in range(w):
+            if px[i,j] != 0:
+                return out_image
+
+    # 이미지 재생성
+    prompt = f"high quality, photorealistic, sharp focus, depth of field"
+    num_steps = 20
+    seed = randint(0, 100)
 
     out_image = pipe(
         prompt,
