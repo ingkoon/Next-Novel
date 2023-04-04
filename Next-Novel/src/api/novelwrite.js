@@ -25,3 +25,7 @@ export async function makeCoverRequestApi(formData) {
 export async function finNovelApi(formData) {
   return tokeninstance.post(`novel/complete/`, formData);
 }
+
+export async function fetchPaintings() {
+  return tokeninstance.get(`user/drawing/`);
+}

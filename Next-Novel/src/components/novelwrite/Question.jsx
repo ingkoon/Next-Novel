@@ -50,6 +50,7 @@ export default function Question({ count }) {
             padding: "0",
             borderRadius: "20px",
             border: "none",
+            background: "none",
           },
         }}
       >

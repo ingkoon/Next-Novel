@@ -33,7 +33,12 @@
   font-size: 18px;
   box-shadow: 3px 3px 0px 0px rgba(242, 205, 60, 1);
   padding-top: 5px;
+  border: none;
+  transition: all 0.3s ease;
 }
 .button:hover {
   cursor: pointer;
+  background-color: #f66f00;
+  box-shadow: 3px 3px 0px 0px black;
+  transition: all 0.3s ease;
 }
