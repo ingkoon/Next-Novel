@@ -28,6 +28,19 @@
 .tools > div:hover {
   cursor: pointer;
 }
+.tool1,
+.tool2 {
+  transition: all 0.3s ease;
+}
+.tool1:hover,
+.tool2:hover {
+  transform: scale(1.15);
+  transition: all 0.3s ease;
+}
+.tool1.selected,
+.tool2.selected {
+  transform: scale(1.15);
+}
 .tool3 {
   position: relative;
 }
