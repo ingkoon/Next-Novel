@@ -9,14 +9,17 @@
   overflow: hidden;
 }
 
+.book3d {
+  transform: scale(1.5);
+}
 .img {
   width: 450px;
   display: flex;
 }
 
 .img img {
-  width: 400px;
-  height: 400px;
+  width: 200px;
+  height: 216px;
   margin : auto;
 }
 

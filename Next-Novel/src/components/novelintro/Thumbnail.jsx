@@ -31,14 +31,14 @@ export default function Thumbnail(){
     <div>
       <div className={style.introBanner}>
           <div className={style.bookCircle}>
-            <Book3d type="thumbnail" img={novelinfo& novelinfo.cover_img}/>
+            <Book3d type="thumbnail" img={novelinfo && novelinfo.cover_img}/>
           </div>
           <div className={style.bannerGrad}>
           </div>
           <div className={style.quote}>
               <img src={process.env.PUBLIC_URL+'/icon/quote1_black.svg'} className={style.newcard_quote1} alt='quote1_black'></img>
               <div className={style.quotetext}>
-                  <span>{novelinfo&&novelinfo.introduction}</span>
+                  {novelinfo&&novelinfo.introduction}
               </div>
               <img src={process.env.PUBLIC_URL+'/icon/quote2_black.svg'} className={style.newcard_quote2} alt='quote2_black'></img>
           </div>

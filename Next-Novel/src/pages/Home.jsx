@@ -71,7 +71,7 @@ export default function Home() {
       <Link to="/landing">
         <h2>랜딩페이지</h2>
       </Link>
-
+      
     </>
   )
 }
