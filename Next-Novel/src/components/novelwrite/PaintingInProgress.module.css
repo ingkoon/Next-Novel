@@ -76,9 +76,11 @@
 }
 .material > div > img {
   width: 100%;
+  aspect-ratio: 608 / 380;
   border: 3px solid #000000;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
+  background-color: white;
 }
 .material > div > span {
   margin: 10px 0;
@@ -98,9 +100,11 @@
 }
 .answer > div > img {
   width: 100%;
+  aspect-ratio: 608 / 380;
   border: 3px solid #000000;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
+  background-color: white;
 }
 .answer > div > span {
   margin: 10px 0;
