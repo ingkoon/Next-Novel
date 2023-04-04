@@ -53,6 +53,11 @@
   height: 40px;
   display: flex;
   justify-content: space-between;
+  transition: all 0.3s ease;
+}
+.content:hover {
+  transform: scale(1.1);
+  transition: all 0.3s ease;
 }
 .icon {
   width: 50px;

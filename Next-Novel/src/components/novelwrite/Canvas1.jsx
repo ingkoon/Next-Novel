@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useReducer } from "react";
 import style from "./Canvas1.module.css";
+import useNovelWrite from "../../hooks/useNovelWrite";
 
 export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   const canvasRef = useRef(null); //canvas
@@ -16,13 +17,15 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   const [openSetColorState, setOpenSetColorState] = useState(false); //펜 색 설정 탭 on/off
   const [store, dispatch] = useReducer(reducer, [imageSrcs[selected]]); //뒤로가기 저장소
   const [paintState, setPaintState] = useState(false); //캔버스 내 마우스 클릭중 or 클릭해제, 벗어남
+  const [penSelected, setPenSelected] = useState(true);
+  const [eraserSelected, setEraserSelected] = useState(false);
   const colors = [
-    "#e53730",
+    "#ed1c24",
     "#d81758",
+    "#ffaec9",
     "#8a23a4",
     "#5a34ad",
     "#3c49ab",
-    "#3e8cef",
     "#3fa0f1",
     "#44b4cd",
     "#328b7d",
@@ -39,6 +42,50 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     "#6f6f6f",
     "#000000",
   ]; //컬러파레트 색상
+  const {
+    getPaintings: { refetch, data },
+  } = useNovelWrite();
+  const [paintings, setPaintings] = useState();
+  useEffect(() => {
+    if (data) {
+      Promise.all(
+        data.map((image) => {
+          return fetch(image.image)
+            .then((response) => response.blob())
+            .then((blob) => {
+              // Blob을 Data URL 형식으로 변환합니다.
+              return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = () => {
+                  // 변환된 Data URL을 resolve 함수를 호출하여 반환합니다.
+                  resolve(reader.result);
+                };
+              });
+            });
+        })
+      ).then((results) => {
+        // 모든 reader.result 값을 배열로 출력합니다.
+        console.log(results);
+        setPaintings(results);
+      });
+    }
+  }, [data]);
+  const [loadState, setLoadState] = useState(false);
+  const loadToCanvas = (choose) => {
+    const dataURL = paintings[choose];
+
+    const img = new Image();
+    img.src = dataURL;
+    img.onload = () => getCtx.drawImage(img, 0, 0); //이전 이미지 불러오기
+
+    setImageSrcs(
+      imageSrcs.map((imageSrc, index) =>
+        index === selected ? dataURL : imageSrc
+      )
+    ); //현재 캔버스를 완성그림에 저장하고
+    dispatch({ type: "increment", dataURL }); //저장소에 기록을 추가
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -125,6 +172,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   const openSetWidth = () => {
     //펜 굵기 설정 탭 열기
     setOpenSetWidthState((prev) => !prev);
+    setOpenSetColorState(false);
   };
   const setWidth = (event) => {
     //펜 굵기 설정하기
@@ -134,11 +182,14 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   const openSetColor = () => {
     //펜 색 설정 탭 열기
     setOpenSetColorState((prev) => !prev);
+    setOpenSetWidthState(false);
   };
   const setColor = (event) => {
     //펜 색 설정하기
     setColorState(event.target.dataset.color);
-    getCtx.strokeStyle = event.target.dataset.color;
+    if (penSelected) {
+      getCtx.strokeStyle = event.target.dataset.color;
+    }
   };
   const goBack = () => {
     //뒤로가기
@@ -189,18 +240,28 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
         />
       </div>
       <div className={style.tools}>
-        <div className={style.tool1}>
+        <div className={`${style.tool1} ${penSelected ? style.selected : ""}`}>
           <img
             src={process.env.PUBLIC_URL + `/icon/pen.svg`}
             alt="pen"
-            onClick={onPencil}
+            onClick={() => {
+              onPencil();
+              setPenSelected(true);
+              setEraserSelected(false);
+            }}
           />
         </div>
-        <div className={style.tool2}>
+        <div
+          className={`${style.tool2} ${eraserSelected ? style.selected : ""}`}
+        >
           <img
             src={process.env.PUBLIC_URL + `/icon/eraser.svg`}
             alt="eraser"
-            onClick={onEraser}
+            onClick={() => {
+              onEraser();
+              setPenSelected(false);
+              setEraserSelected(true);
+            }}
           />
         </div>
         <div className={style.tool3}>
@@ -288,6 +349,38 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
           />
         </div>
       </div>
+      <div
+        className={style.openLoadButton}
+        onClick={() => {
+          setLoadState((prev) => !prev);
+          refetch();
+        }}
+      >
+        <img src={process.env.PUBLIC_URL + `/icon/history.svg`} alt="history" />
+      </div>
+      {loadState && (
+        <div className={style.load}>
+          <div className={style.tap}>
+            <span>그림 불러오기</span>
+            <button onClick={() => setLoadState(false)}>X</button>
+          </div>
+          <div className={style.paintings}>
+            <div className={style.scroll}>
+              {data?.map((image, index) => (
+                <img
+                  src={image.image}
+                  alt=""
+                  key={index}
+                  onClick={() => {
+                    loadToCanvas(index);
+                    setLoadState(false);
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

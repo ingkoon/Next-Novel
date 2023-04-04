@@ -1,26 +1,28 @@
-import style from "./AppBar.module.css"
-import "./AppBar.css"
-import React, { useState, useContext, useRef } from "react"
-import { Link } from "react-router-dom"
-import Modal from "react-modal"
-import Login from "../login/Login"
-
-import { useLocation, useEffect } from 'react'
-import {AuthContext} from "../../context/AuthContext"
+import style from "./AppBar.module.css";
+import "./AppBar.css";
+import React, { useState, useContext, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Modal from "react-modal";
+import Login from "../login/Login";
+import { v4 as uuid } from "uuid";
+import { useLocation, useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function AppBar() {
-  const [loginIsOpen, setLoginIsOpen] = useState(false)
+  const navigate = useNavigate();
+  const [loginIsOpen, setLoginIsOpen] = useState(false);
   const closemodal = () => {
-    setLoginIsOpen(false)
-  }
+    setLoginIsOpen(false);
+  };
 
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
   return (
     <div className={style.Appbar}>
       <div className={style.name}>
         <span style={{ float: "left" }}>&gt;_NextNovel &#183; &nbsp;</span>
-        <span>{user.access_token === "" ? 'visitor' : 'member'}</span>
+        {/* <span>{user.access_token === "" ? 'visitor' : 'member'}</span> */}
+        <span>{!localStorage.getItem('access_token') ? 'visitor' : 'member'}</span>
       </div>
       <div className={style.logo}>
         <Link to="/">
@@ -42,7 +44,13 @@ export default function AppBar() {
             alt="search"
           />
         </Link>
-        <Link to="/laboratory">
+        <Link
+          to="/laboratory"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/laboratory", { state: uuid() });
+          }}
+        >
           <img
             src={process.env.PUBLIC_URL + "/icon/banner/pen.svg"}
             className={style.banner_pen}
@@ -50,7 +58,8 @@ export default function AppBar() {
           />
         </Link>
 
-        {user.access_token === ''
+        {/* {user.access_token === '' */}
+        {!localStorage.getItem("access_token")
           ? <div onClick={() => setLoginIsOpen(true)}>
               <img
                 src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"}
@@ -65,23 +74,25 @@ export default function AppBar() {
    
       </div>
 
-      <Modal isOpen={loginIsOpen} onRequestClose={() => setLoginIsOpen(false)}
-        style = {{
-          overlay : {
-            zIndex: '100'
+      <Modal
+        isOpen={loginIsOpen}
+        onRequestClose={() => setLoginIsOpen(false)}
+        style={{
+          overlay: {
+            zIndex: "100",
           },
-          content : {
-            width: '400px',
-            height: '500px',
-            margin: 'auto',
-            padding: '0',
-            borderRadius: '20px',
-            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.5)'
-          }
-        }}>
+          content: {
+            width: "400px",
+            height: "500px",
+            margin: "auto",
+            padding: "0",
+            borderRadius: "20px",
+            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.5)",
+          },
+        }}
+      >
         <Login closemodal={closemodal} />
       </Modal>
-
     </div>
-  )
+  );
 }
