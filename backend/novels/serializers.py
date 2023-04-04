@@ -8,6 +8,12 @@ class UserNovelSerializer(serializers.ModelSerializer):
     pass
 
 
+class NovelContentImageOnlySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NovelContentImage
+        fields = ['image']
+
+
 class NovelContentImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = NovelContentImage
@@ -28,15 +34,26 @@ class NovelContentSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class GenreField(serializers.Field):
+    def to_representation(self, obj):
+        return Genre.get_value_from_label(obj)
+
+
 class NovelDetailSerializer(serializers.ModelSerializer):
+    author = serializers.CharField(source="author.nickname", read_only=True)
+    genre = serializers.CharField(source='get_genre_display')
+
     class Meta:
         model = Novel
         fields = "__all__"
 
 
-class NovelReadSerializer(serializers.Serializer):
-    novel = NovelDetailSerializer()
-    novel_content = NovelContentSerializer(many=True)
+class NovelReadSerializer(serializers.ModelSerializer):
+    images = NovelContentImageSerializer(source="novelcontentimage_set", many=True, allow_null=True)
+
+    class Meta:
+        model = NovelContent
+        fields = "__all__"
 
 
 class NovelListSerializer(serializers.ModelSerializer):
@@ -69,10 +86,17 @@ class NovelCommentSerializer(serializers.ModelSerializer):
 class NovelPreviewSerializer(serializers.ModelSerializer):
     author = serializers.CharField(source="author.nickname", read_only=True)
     novel_stats = NovelStatsSerializer(source="novelstats")
+    user_liked = serializers.SerializerMethodField()
 
     class Meta:
         model = Novel
-        fields = ['id', 'author', 'created_at', 'novel_stats', 'title', 'cover_img', 'introduction']
+        fields = ['id', 'author', 'created_at', 'novel_stats', 'title', 'cover_img', 'introduction', 'user_liked']
+
+    def get_user_liked(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            return NovelLike.objects.filter(novel=obj, user=user).exists()
+        return False
 
 
 class NovelSerializer(serializers.ModelSerializer):
@@ -127,7 +151,6 @@ class NovelContinueSerializer(serializers.Serializer):
         novel = validated_data.pop("novel_id")
         novel_content = NovelContent.objects.get(step=validated_data.get("step"), novel=novel)
         image = NovelContentImage.objects.create(novel_content=novel_content, image=image_data)
-
         if query == 1:
             selected_query = novel_content.query1
         elif query == 2:
@@ -152,3 +175,17 @@ class NovelContentQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = NovelContent
         fields = ["query1", "query2", "query3"]
+
+
+class NovelCompleteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Novel
+        fields = ['title', 'introduction']
+
+
+class NovelImageSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(source='cover_img')
+
+    class Meta:
+        model = Novel
+        fields = ['image']

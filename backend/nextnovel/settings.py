@@ -45,12 +45,12 @@ INSTALLED_APPS = [
     'django_extensions',
 
     'corsheaders',
-    # 'silk',
+    'silk',
     # 'debug_toolbar',
 ]
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-    # 'silk.middleware.SilkyMiddleware',
+    'silk.middleware.SilkyMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

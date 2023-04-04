@@ -5,6 +5,7 @@ from allauth.socialaccount.providers.kakao import views as kakao_view
 from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
+from django.core.files.base import ContentFile
 from django.db.models import QuerySet
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -19,8 +20,8 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from nextnovel.utils import create_random_nickname
-from novels.models import Novel
-from novels.serializers import NovelListSerializer
+from novels.models import Novel, NovelContentImage
+from novels.serializers import NovelListSerializer, NovelContentImageSerializer, NovelContentImageOnlySerializer
 from users.models import User
 from nextnovel.settings import STATE, KAKAO_CLIENT_ID
 from users.serializers import UserProfileSerializer
@@ -29,6 +30,15 @@ state = STATE
 BASE_URL = os.environ.get('BASE_URL', "http://localhost:8000/")
 KAKAO_CALLBACK_URI = BASE_URL + 'api/user/kakao/callback/'
 REDIRECT_URI = os.environ.get("REDIRECT_URI", "http://localhost:3000")
+
+
+def get_random_nickname():
+    while True:
+        nickname = create_random_nickname()
+        if User.objects.filter(nickname=nickname).exists():
+            continue
+        break
+    return nickname
 
 
 def kakao_login(request):
@@ -45,11 +55,6 @@ def kakao_callback(request):
     token_request = requests.get(
         f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={REDIRECT_URI}&code={code}")
     token_response_json = token_request.json()
-
-    error = token_response_json.get("error", None)
-    # if error is not None:
-    #     raise JSONDecodeError(error)
-
     access_token = token_response_json.get("access_token")
 
     # access token으로 카카오톡 프로필 요청
@@ -67,9 +72,6 @@ def kakao_callback(request):
     # 이메일 없으면 오류 => 카카오톡 최신 버전에서는 이메일 없이 가입 가능해서 추후 수정해야함
     if email is None:
         return JsonResponse({'err_msg': 'failed to get email'}, status=status.HTTP_400_BAD_REQUEST)
-    # profile = kakao_account.get("profile")
-    # nickname = profile.get("nickname")
-    # profile_image = profile.get("thumbnail_image_url")
 
     try:
         # 유저가 있는지 탐색
@@ -95,21 +97,29 @@ def kakao_callback(request):
         accept = requests.post(f"{BASE_URL}api/user/kakao/login/finish/", data=data)
         accept_status = accept.status_code
         if accept_status != 200:
-            return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
+            return Response(data={'err_msg': 'failed to signup'}, status=accept_status)
 
         accept_json = accept.json()
 
         user_pk = accept_json.get('user').pop('pk')
         created_user = User.objects.get(pk=user_pk)
-        while True:
-            nickname = create_random_nickname()
-            if User.objects.filter(nickname=nickname).exists():
-                continue
-            created_user.nickname = nickname
-            created_user.save()
-            accept_json['user']['nickname'] = nickname
-            break
-        return JsonResponse(accept_json)
+
+        # 닉네임 로직
+        nickname = get_random_nickname()
+        created_user.nickname = nickname
+        accept_json['user']['nickname'] = nickname
+
+        # profile image 로직
+        profile_image = profile_json.get("properties").get("profile_image")
+        response = requests.get(profile_image)
+        image_content = ContentFile(response.content)
+        file_name = f"temp_profile.png"
+        created_user.profile_image.save(file_name, image_content)
+        created_user.save()
+
+        return Response(data=accept_json, status=status.HTTP_201_CREATED)
+
+
     except SocialAccount.DoesNotExist:
         return JsonResponse({'err_msg': 'email exists but not social user'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -181,8 +191,18 @@ class UserTestAuthAPI(APIView):
 
 class MytestAPI(APIView):
     def get(self, request):
-        sleep(10)
         data = {
             "sleep": "for 10sec"
         }
-        return Response(data=data)
+        return Response(data=data, status=200)
+
+
+class UserDrawingsListAPI(ListAPIView):
+    queryset = NovelContentImage.objects.select_related("novel_content__novel__author").only('image',
+                                                                                             "novel_content__novel__author")
+
+    serializer_class = NovelContentImageOnlySerializer
+
+    def get_queryset(self):
+        queryset = self.queryset.filter(novel_content__novel__author=self.request.user)
+        return queryset
