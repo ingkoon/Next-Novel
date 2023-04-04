@@ -6,6 +6,7 @@ import {
   endNovelApi,
   makeCoverRequestApi,
   finNovelApi,
+  fetchPaintings,
 } from "../api/novelwrite";
 import { useNovelContext } from "../context/NovelContext";
 
@@ -37,6 +38,11 @@ export default function useNovelWrite() {
 
   const finNovel = useMutation((formData) => finNovelApi(formData), {});
 
+  const getPaintings = useQuery(["paintings"], fetchPaintings, {
+    enabled: false,
+    select: (data) => data.data,
+  });
+
   return {
     getQuestions,
     startNovel,
@@ -44,5 +50,6 @@ export default function useNovelWrite() {
     endNovel,
     makeCoverRequest,
     finNovel,
+    getPaintings,
   };
 }

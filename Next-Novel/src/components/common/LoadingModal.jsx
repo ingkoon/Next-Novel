@@ -1,5 +1,6 @@
-import React, { useEffect } from "react"
-import Modal from "react-modal"
+import React from "react";
+import Modal from "react-modal";
+import style from "./LoadingModal.module.css";
 
 export default function LoadingModal({ state }) {
   return (
@@ -11,20 +12,28 @@ export default function LoadingModal({ state }) {
             zIndex: "100",
           },
           content: {
-            width: "700px",
-            height: "500px",
+            width: "100vw",
+            height: "100vh",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            background: "#090909",
-            margin: "auto",
-            overflowX : 'hidden'
+            inset: "0",
+            background: "none",
           },
         }}
       >
-        <img src={process.env.PUBLIC_URL + `/img/loading.gif`} alt="loading" />
-
+        <div className={style["lds-grid"]}>
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
       </Modal>
     </>
-  )
+  );
 }

@@ -16,13 +16,15 @@ export default function Canvas3({ imageSrcs, setImageSrcs, selected }) {
   const [openSetColorState, setOpenSetColorState] = useState(false); //펜 색 설정 탭 on/off
   const [store, dispatch] = useReducer(reducer, [imageSrcs[selected]]); //뒤로가기 저장소
   const [paintState, setPaintState] = useState(false); //캔버스 내 마우스 클릭중 or 클릭해제, 벗어남
+  const [penSelected, setPenSelected] = useState(true);
+  const [eraserSelected, setEraserSelected] = useState(false);
   const colors = [
-    "#e53730",
+    "#ed1c24",
     "#d81758",
+    "#ffaec9",
     "#8a23a4",
     "#5a34ad",
     "#3c49ab",
-    "#3e8cef",
     "#3fa0f1",
     "#44b4cd",
     "#328b7d",
@@ -125,6 +127,7 @@ export default function Canvas3({ imageSrcs, setImageSrcs, selected }) {
   const openSetWidth = () => {
     //펜 굵기 설정 탭 열기
     setOpenSetWidthState((prev) => !prev);
+    setOpenSetColorState(false);
   };
   const setWidth = (event) => {
     //펜 굵기 설정하기
@@ -134,11 +137,14 @@ export default function Canvas3({ imageSrcs, setImageSrcs, selected }) {
   const openSetColor = () => {
     //펜 색 설정 탭 열기
     setOpenSetColorState((prev) => !prev);
+    setOpenSetWidthState(false);
   };
   const setColor = (event) => {
     //펜 색 설정하기
     setColorState(event.target.dataset.color);
-    getCtx.strokeStyle = event.target.dataset.color;
+    if (penSelected) {
+      getCtx.strokeStyle = event.target.dataset.color;
+    }
   };
   const goBack = () => {
     //뒤로가기
@@ -189,18 +195,28 @@ export default function Canvas3({ imageSrcs, setImageSrcs, selected }) {
         />
       </div>
       <div className={style.tools}>
-        <div className={style.tool1}>
+        <div className={`${style.tool1} ${penSelected ? style.selected : ""}`}>
           <img
             src={process.env.PUBLIC_URL + `/icon/pen.svg`}
             alt="pen"
-            onClick={onPencil}
+            onClick={() => {
+              onPencil();
+              setPenSelected(true);
+              setEraserSelected(false);
+            }}
           />
         </div>
-        <div className={style.tool2}>
+        <div
+          className={`${style.tool2} ${eraserSelected ? style.selected : ""}`}
+        >
           <img
             src={process.env.PUBLIC_URL + `/icon/eraser.svg`}
             alt="eraser"
-            onClick={onEraser}
+            onClick={() => {
+              onEraser();
+              setPenSelected(false);
+              setEraserSelected(true);
+            }}
           />
         </div>
         <div className={style.tool3}>
