@@ -1,5 +1,7 @@
-import React from "react";
-import Modal from "react-modal";
+import React, { useEffect } from "react"
+import Modal from "react-modal"
+
+import Snakegame from "../game/Snakegame.jsx"
 
 export default function LoadingModal({ state }) {
   return (
@@ -11,18 +13,20 @@ export default function LoadingModal({ state }) {
             zIndex: "100",
           },
           content: {
-            width: "100vw",
-            height: "100vh",
+            width: "700px",
+            height: "500px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            inset: "0",
-            background: "none",
+            background: "#090909",
+            margin: "auto",
+            overflowX : 'hidden'
           },
         }}
       >
-        <img src={process.env.PUBLIC_URL + `/img/loading.gif`} alt="loading" />
+        {/* <img src={process.env.PUBLIC_URL + `/img/loading.gif`} alt="loading" /> */}
+        <Snakegame />
       </Modal>
     </>
-  );
+  )
 }
