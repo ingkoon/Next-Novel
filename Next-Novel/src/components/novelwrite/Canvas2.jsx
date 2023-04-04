@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useReducer } from "react";
 import style from "./Canvas2.module.css";
+import useNovelWrite from "../../hooks/useNovelWrite";
 
 export default function Canvas2({ imageSrcs, setImageSrcs, selected }) {
   const canvasRef = useRef(null); //canvas
@@ -41,6 +42,50 @@ export default function Canvas2({ imageSrcs, setImageSrcs, selected }) {
     "#6f6f6f",
     "#000000",
   ]; //컬러파레트 색상
+  const {
+    getPaintings: { refetch, data },
+  } = useNovelWrite();
+  const [paintings, setPaintings] = useState();
+  useEffect(() => {
+    if (data) {
+      Promise.all(
+        data.map((image) => {
+          return fetch(image.image)
+            .then((response) => response.blob())
+            .then((blob) => {
+              // Blob을 Data URL 형식으로 변환합니다.
+              return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = () => {
+                  // 변환된 Data URL을 resolve 함수를 호출하여 반환합니다.
+                  resolve(reader.result);
+                };
+              });
+            });
+        })
+      ).then((results) => {
+        // 모든 reader.result 값을 배열로 출력합니다.
+        console.log(results);
+        setPaintings(results);
+      });
+    }
+  }, [data]);
+  const [loadState, setLoadState] = useState(false);
+  const loadToCanvas = (choose) => {
+    const dataURL = paintings[choose];
+
+    const img = new Image();
+    img.src = dataURL;
+    img.onload = () => getCtx.drawImage(img, 0, 0); //이전 이미지 불러오기
+
+    setImageSrcs(
+      imageSrcs.map((imageSrc, index) =>
+        index === selected ? dataURL : imageSrc
+      )
+    ); //현재 캔버스를 완성그림에 저장하고
+    dispatch({ type: "increment", dataURL }); //저장소에 기록을 추가
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -304,6 +349,38 @@ export default function Canvas2({ imageSrcs, setImageSrcs, selected }) {
           />
         </div>
       </div>
+      <div
+        className={style.openLoadButton}
+        onClick={() => {
+          setLoadState((prev) => !prev);
+          refetch();
+        }}
+      >
+        <img src={process.env.PUBLIC_URL + `/icon/history.svg`} alt="history" />
+      </div>
+      {loadState && (
+        <div className={style.load}>
+          <div className={style.tap}>
+            <span>그림 불러오기</span>
+            <button onClick={() => setLoadState(false)}>X</button>
+          </div>
+          <div className={style.paintings}>
+            <div className={style.scroll}>
+              {data?.map((image, index) => (
+                <img
+                  src={image.image}
+                  alt=""
+                  key={index}
+                  onClick={() => {
+                    loadToCanvas(index);
+                    setLoadState(false);
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
