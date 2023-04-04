@@ -1,46 +1,40 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-import axios from "axios"
-import { useEffect, useContext, useState } from "react"
-import { useLocation } from "react-router-dom"
-
-import { AuthContext } from "../context/AuthContext"
-
 export default function Home() {
-  const location = useLocation()
+  // const location = useLocation()
 
-  const {user, setUser } = useContext(AuthContext);
-  useEffect(() => {
-    const urlSearchParams = new URLSearchParams(location.search)
+  // const {user, setUser } = useContext(AuthContext);
+  // useEffect(() => {
+  //   const urlSearchParams = new URLSearchParams(location.search)
     
-    if (urlSearchParams.has("code")) {
-      // If "code" exists, execute some logic
-      const code = urlSearchParams.get("code")
-      console.log("Code exists:", code)
-      axios({
-        method: "get",
-        url: process.env.REACT_APP_DATA_API+"user/kakao/callback/",
-        params: {
-          code: code,
-        },
-      }).then((res) => {
-        console.log(res)
-        const accessToken = res.data.access_token
-        const refreshToken = res.data.refresh_token
-        const nickname = res.data.user.nickname
-        localStorage.setItem("access_token", accessToken)
-        localStorage.setItem("refresh_token", refreshToken)
-        setUser({access_token : accessToken, refresh_token : refreshToken, nickname: nickname})
-      })
-      // ... add your logic here
-    } else {
-      // If "code" does not exist, execute some other logic
-      console.log("Code does not exist")
+  //   if (urlSearchParams.has("code")) {
+  //     // If "code" exists, execute some logic
+  //     const code = urlSearchParams.get("code")
+  //     console.log("Code exists:", code)
+  //     axios({
+  //       method: "get",
+  //       url: process.env.REACT_APP_DATA_API+"user/kakao/callback/",
+  //       params: {
+  //         code: code,
+  //       },
+  //     }).then((res) => {
+  //       console.log(res)
+  //       const accessToken = res.data.access_token
+  //       const refreshToken = res.data.refresh_token
+  //       const nickname = res.data.user.nickname
+  //       localStorage.setItem("access_token", accessToken)
+  //       localStorage.setItem("refresh_token", refreshToken)
+  //       setUser({access_token : accessToken, refresh_token : refreshToken, nickname: nickname})
+  //     })
+  //     // ... add your logic here
+  //   } else {
+  //     // If "code" does not exist, execute some other logic
+  //     console.log("Code does not exist")
 
-      // ... add your logic here
-    }
-  }, [location])
+  //     // ... add your logic here
+  //   }
+  // }, [location])
 
 
 
