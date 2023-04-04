@@ -134,7 +134,7 @@
     position: absolute;
     top: 290px;
     right:20%;
-    /* z-index: 3; */
+    z-index: 3;
     text-decoration: none;
     color: #FFFEFC;
     background: #090909;

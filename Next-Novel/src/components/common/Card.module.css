@@ -1,11 +1,17 @@
 .card {
   background-color: white;
   border-radius: 15px;
-  width: 450px;
+  width: 420px;
   height: 350px;
   position: relative;
-  margin: 10px;
+  margin: 25px;
   cursor: pointer;
+  box-shadow: 0 10px 10px 5px #00000025;
+  transition: all .2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
 }
 
 .card > img {
@@ -22,7 +28,7 @@
   color: white;
   font-family: wild;
   font-size: 24px;
-  width: 450px;
+  width: 420px;
   height: 65%;
   border-bottom: 3px solid black;
   background-size: cover;
@@ -41,6 +47,10 @@
   border-radius: 15px 15px 0 0;
 }
 
+.none {
+  display: none;
+}
+
 .ment {
   margin: 0 15%;
   padding-bottom:20%;
@@ -50,7 +60,7 @@
 }
 
 .info{
-  flex: 1;
+  height: 35%;
   font-family: 'gothic';
   margin-left: 40%;
   float: left;
@@ -75,12 +85,8 @@
 
 .quote2 {
   position: absolute;
-  bottom : 2%;
+  bottom : 25%;
   right: 2%;
-}
-
-.none {
-  display: none;
 }
 
 .intro2 {

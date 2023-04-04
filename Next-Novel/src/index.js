@@ -1,19 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./index.css";
-import App from "./App";
-import Home from "./pages/Home";
-import NotFound from "./pages/NotFound";
+import React from "react"
+import ReactDOM from "react-dom/client"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import "./index.css"
+import App from "./App"
+import Home from "./pages/Home"
+import NotFound from "./pages/NotFound"
 // import ProtectedRoute from "./pages/ProtectedRoute";
-import Novels from "./pages/Novels";
-import NovelIntro from "./pages/NovelIntro";
-import NovelRead from "./pages/NovelRead";
-import NovelSearch from "./pages/NovelSearch";
-import MyPage from "./pages/MyPage";
-import NovelWrite from "./pages/NovelWrite";
-import Landing from "./pages/Landing";
-import Modal from 'react-modal'
+import Novels from "./pages/Novels"
+import NovelIntro from "./pages/NovelIntro"
+import NovelRead from "./pages/NovelRead"
+import NovelSearch from "./pages/NovelSearch"
+import MyPage from "./pages/MyPage"
+import NovelWrite from "./pages/NovelWrite"
+import Landing from "./pages/Landing"
+import Modal from "react-modal"
 
 const router = createBrowserRouter([
   {
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <NotFound />,
     children: [
-      { index: true, path: "/", element: <Home /> },
+      { index: true, path: "/", element: <Landing /> },
       {
         path: "/library",
         element: <Novels />,
@@ -56,23 +56,23 @@ const router = createBrowserRouter([
           // </ProtectedRoute>
         ),
       },
-      {
-        path: "/landing",
-        element: (
-          // <ProtectedRoute>
-          <Landing />
-          // </ProtectedRoute>
-        ),
-      },
+      // {
+      //   path: "/landing",
+      //   element: (
+      //     // <ProtectedRoute>
+      //     <Landing />
+      //     // </ProtectedRoute>
+      //   ),
+      // },
     ],
   },
-]);
+])
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>
-);
+)
 
-Modal.setAppElement('#root')
+Modal.setAppElement("#root")

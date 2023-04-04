@@ -1,6 +1,8 @@
 import React, { useEffect } from "react"
 import Modal from "react-modal"
 
+import Snakegame from "../game/Snakegame.jsx"
+
 export default function LoadingModal({ state }) {
   return (
     <>
@@ -22,8 +24,7 @@ export default function LoadingModal({ state }) {
           },
         }}
       >
-        <img src={process.env.PUBLIC_URL + `/img/loading.gif`} alt="loading" />
-
+        <Snakegame />
       </Modal>
     </>
   )

@@ -13,7 +13,7 @@ export default function NewCard({props}){
   return (
     <div className={style.newcard} onClick={()=>navigateToPurchase(props.id)}>
       <div className={style.img}>
-        <Book3d img={props.cover_img}/>
+        <Book3d img={props.cover_img} style={style.book3d}/>
         {/* <img src={props.cover_img} alt='cover_img'></img> */}
       </div>
       <div className={style.strip}>

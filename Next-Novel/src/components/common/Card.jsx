@@ -36,9 +36,8 @@ function Card({props, updatelist}){
   }
   return (
     <>
-    
     <div className={style.card} onClick={(e)=>navigateToPurchase(props.id)}>
-      <div className={isHovering ? style.none : style.intro} style={{'backgroundImage':`url(${props.cover_img})`}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+    <div className={isHovering ? style.none : style.intro} style={{'backgroundImage':`url(${props.cover_img})`}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
         <div className={style.introment}>
           <div className={style.ment}>
             {props && props.introduction}
@@ -68,6 +67,7 @@ function Card({props, updatelist}){
         <div className={style.writer}>{props && props.author}</div>
       </div>
       <img src={props && props.cover_img} alt='bookimg'></img>
+
     </div>
     <Modal isOpen={modal} onRequestClose={() => setModal(false)}
       style ={{

@@ -202,7 +202,7 @@
 .info_img {
   display: flex;
   width: 100%;
-  flex-grow: 1;
+  height: 272px;
 }
 
 .info_img img {
