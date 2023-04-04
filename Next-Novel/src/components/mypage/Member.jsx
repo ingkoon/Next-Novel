@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import Modal from "react-modal"
 
 import Update from "./modal/Update"
-import Unregi from "./modal/Unregi"
+import Logout from "./modal/Logout"
 
 export default function Member({updatemember}) {
 
@@ -20,7 +20,7 @@ export default function Member({updatemember}) {
   return (
     <div className={style.btn}>
       <button onClick={() => setUpdateIsOpen(true)} className={style.memberbtn}>회원정보 수정</button>
-      <button onClick={() => setDeleteIsOpen(true)} className={style.memberbtn}>회원 탈퇴</button>
+      <button onClick={() => setDeleteIsOpen(true)} className={style.memberbtn}>로그아웃</button>
 
       <Modal className={style.updatemodal} isOpen={updateIsOpen} onRequestClose={() => setUpdateIsOpen(false)}
         style ={{
@@ -49,7 +49,7 @@ export default function Member({updatemember}) {
             margin: 'auto',
           }
         }}>
-        <Unregi closemodal={closemodal}/>
+        <Logout closemodal={closemodal}/>
       </Modal>
     </div>
   )

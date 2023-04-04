@@ -13,6 +13,7 @@ import NovelSearch from "./pages/NovelSearch"
 import MyPage from "./pages/MyPage"
 import NovelWrite from "./pages/NovelWrite"
 import Landing from "./pages/Landing"
+import OnlyLogin from "./components/login/OnlyLogin"
 import Modal from "react-modal"
 
 const router = createBrowserRouter([
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, path: "/", element: <Landing /> },
+      {
+        path : "/login",
+        element : <OnlyLogin/>
+      },
       {
         path: "/library",
         element: <Novels />,
