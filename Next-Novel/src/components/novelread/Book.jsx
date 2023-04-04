@@ -1,10 +1,14 @@
 import style from './Book.module.css';
 import Materials from './Materials.jsx';
 import Qna from './Qna.jsx';
-import { useEffect, useState } from 'react'
+
+import { useCallback, useEffect, useState, useRef } from 'react'
 import { Link, useLocation } from "react-router-dom"
-import { novelall } from '../../api/novelread'
 import { useNavigate } from 'react-router-dom';
+//api
+import { novelall } from '../../api/novelread'
+import useCommentWrite from "../../hooks/useCommentWrite";
+
 
 
 export default function Book(){
@@ -15,8 +19,12 @@ export default function Book(){
     const [novelinfo, setNovelinfo] = useState("");
     const [novelContent, setNovelContent] = useState("");
     const [lastPage, setLastPage] = useState("");
+    const [rerender, setRerender] = useState("");
+    const page_ref = useRef();
 
     const [create, setCreate] = useState("");
+    const [input, setInput] = useState({});
+    const { submitComment } = useCommentWrite();
   
     async function nvinfo() {
       try {
@@ -35,10 +43,22 @@ export default function Book(){
       }
     };
 
+    // const forceUpdate = useCallback(() => updateState({}), []);
+
     useEffect(() => {
+        console.log('mount useEffect');
+        setNovelid(id)
+        nvinfo()
+      }, [novelid]);
+
+    useEffect(() => {
+        console.log('zIndex useEffect');
         const pages = document.querySelectorAll(`.${style.page}`);
+        console.log(pages.length);
         for (let i = 0; i < pages.length; i++) {
           const page = pages[i];
+          
+            console.log(i);
           if (i % 2 === 0) {
             page.style.zIndex = pages.length - i;
           }
@@ -53,11 +73,36 @@ export default function Book(){
             }
           });
         };
+        setRerender("hi")
+      }, [page_ref.current]);
 
-        setNovelid(id)
-        nvinfo()
-      }, [novelid]);
-  
+
+      const navigate = useNavigate();
+
+      const navigateToIntro = (id) => {
+        navigate(`/library/${id}/intro`, { state : {id : id}})
+      }
+
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setInput((input) => ({ ...input, [name]: value }));
+      };
+
+      const submit = () => {
+        if (!input.comm) {
+          return;
+        }
+        const formData = new FormData();
+        formData.append("novel_id", novelinfo.novel.id);
+        formData.append("comm", input.comm);
+        submitComment.mutate(formData, {
+          onSuccess: (res) => {
+            console.log(res);
+            navigate(`/library/${novelinfo.novel.id}/intro`, { state: { id: novelinfo.novel.id } });
+          },
+        });
+      };
+    
 
     return (
         <div className={style.back}>
@@ -68,7 +113,7 @@ export default function Book(){
                             <div className={style.coverimg}>
                                 <img
                                     src={novelinfo && process.env.REACT_APP_IMAGE_API + novelinfo.novel.cover_img}
-                                    alt="cover"
+                                    alt="coverimg"
                                 ></img>
                             </div>
                             <div className={style.bookfooter}>
@@ -85,21 +130,21 @@ export default function Book(){
                             <div className={style.fbar}></div>
                         </div>
                     </div>
-
                     {novelContent.map((item, index) => {
 
                         return <>
                         
-                            <div className={style.page}>
+                            <div className={style.page} ref={page_ref}>
                                 {index === 0 && <Materials mat={item} />}
                                 {index > 0 && <Qna qna={item} />}
                             </div>
-                            <div className={style.page}>
+                            <div className={style.page} ref={page_ref}>
                                 <h1>{item.content}</h1>
                             </div>
                         
                         </>
                     })}
+                    
 
                     <div className={style.page}>
                         <h1>{lastPage[0].content}</h1>
@@ -129,18 +174,28 @@ export default function Book(){
                     <div className={style.fin}>
                         <div className={style.block}>
                             <img src={process.env.PUBLIC_URL+'/icon/glasses_black.svg'} className={style.icon} alt='glasses_black'></img>
-                            <Link to="/library/intro" className={style.link}>
+                            <div className={style.link} onClick={()=>navigateToIntro(novelid)}>
                                 <h2>돌아가기</h2>
-                            </Link>
+                            </div>
                         </div>
                         <div className={style.blank}></div>
                         <div className={style.block}>
                             <img src={process.env.PUBLIC_URL+'/icon/comments2.svg'} className={style.icon} alt='comment_black'></img>
-                            <input type="text" className={style.comment} placeholder="          어떠셨나요?"/>
+                            <div>
+                                <input
+                                    className={style.comment}
+                                    type="text"
+                                    name="comm"
+                                    value={input.comm ?? ""}
+                                    placeholder="          어떠셨나요?"
+                                    required
+                                    onChange={handleChange}
+                                />
+                            </div>
                             <div className={style.sbar}></div>
-                            <Link to="/library/intro" className={style.link}>
+                            <div className={style.link} onclick={submit}>
                                 <h2>소감평 작성</h2>
-                            </Link>
+                            </div>
                         </div>
                     </div>
                 </div>}
