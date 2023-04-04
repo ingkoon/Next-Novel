@@ -8,6 +8,12 @@ class UserNovelSerializer(serializers.ModelSerializer):
     pass
 
 
+class NovelContentImageOnlySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NovelContentImage
+        fields = ['image']
+
+
 class NovelContentImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = NovelContentImage
@@ -151,7 +157,7 @@ class NovelContinueSerializer(serializers.Serializer):
             selected_query = novel_content.query2
         else:
             selected_query = novel_content.query3
-        
+
         return novel, novel_content, image, selected_query
 
 

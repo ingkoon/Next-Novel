@@ -20,8 +20,8 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from nextnovel.utils import create_random_nickname
-from novels.models import Novel
-from novels.serializers import NovelListSerializer
+from novels.models import Novel, NovelContentImage
+from novels.serializers import NovelListSerializer, NovelContentImageSerializer, NovelContentImageOnlySerializer
 from users.models import User
 from nextnovel.settings import STATE, KAKAO_CLIENT_ID
 from users.serializers import UserProfileSerializer
@@ -30,6 +30,15 @@ state = STATE
 BASE_URL = os.environ.get('BASE_URL', "http://localhost:8000/")
 KAKAO_CALLBACK_URI = BASE_URL + 'api/user/kakao/callback/'
 REDIRECT_URI = os.environ.get("REDIRECT_URI", "http://localhost:3000")
+
+
+def get_random_nickname():
+    while True:
+        nickname = create_random_nickname()
+        if User.objects.filter(nickname=nickname).exists():
+            continue
+        break
+    return nickname
 
 
 def kakao_login(request):
@@ -83,13 +92,12 @@ def kakao_callback(request):
 
         return JsonResponse(accept_json)
     except User.DoesNotExist:
-
         # 애초에 가입된 유저가 없으면 =>  새로 회원가입 & 해당유저의 jwt발급
         data = {'access_token': access_token, 'code': code}
         accept = requests.post(f"{BASE_URL}api/user/kakao/login/finish/", data=data)
         accept_status = accept.status_code
         if accept_status != 200:
-            return JsonResponse({'err_msg': 'failed to signup'}, status=accept_status)
+            return Response(data={'err_msg': 'failed to signup'}, status=accept_status)
 
         accept_json = accept.json()
 
@@ -97,23 +105,21 @@ def kakao_callback(request):
         created_user = User.objects.get(pk=user_pk)
 
         # 닉네임 로직
-        while True:
-            nickname = create_random_nickname()
-            if User.objects.filter(nickname=nickname).exists():
-                continue
-            created_user.nickname = nickname
-            accept_json['user']['nickname'] = nickname
-            break
+        nickname = get_random_nickname()
+        created_user.nickname = nickname
+        accept_json['user']['nickname'] = nickname
+
         # profile image 로직
         profile_image = profile_json.get("properties").get("profile_image")
         response = requests.get(profile_image)
         image_content = ContentFile(response.content)
         file_name = f"temp_profile.png"
-
         created_user.profile_image.save(file_name, image_content)
         created_user.save()
 
-        return JsonResponse(accept_json)
+        return Response(data=accept_json, status=status.HTTP_201_CREATED)
+
+
     except SocialAccount.DoesNotExist:
         return JsonResponse({'err_msg': 'email exists but not social user'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -185,8 +191,18 @@ class UserTestAuthAPI(APIView):
 
 class MytestAPI(APIView):
     def get(self, request):
-        sleep(10)
         data = {
             "sleep": "for 10sec"
         }
-        return Response(data=data)
+        return Response(data=data, status=200)
+
+
+class UserDrawingsListAPI(ListAPIView):
+    queryset = NovelContentImage.objects.select_related("novel_content__novel__author").only('image',
+                                                                                             "novel_content__novel__author")
+
+    serializer_class = NovelContentImageOnlySerializer
+
+    def get_queryset(self):
+        queryset = self.queryset.filter(novel_content__novel__author=self.request.user)
+        return queryset

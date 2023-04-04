@@ -3,6 +3,7 @@ import os
 import time
 
 import requests
+from django.core.cache import cache
 from django.core.files.base import ContentFile
 from django.db import transaction
 from django.db.models import QuerySet, F
@@ -15,6 +16,7 @@ from rest_framework.pagination import CursorPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
+from silk.profiling.profiler import silk_profile
 
 from nextnovel.exceptions import RequestAIServerError
 from nextnovel.throttles import LikeRateThrottle
@@ -23,6 +25,7 @@ from novels.serializers import NovelPreviewSerializer, \
     NovelCommentSerializer, NovelLikeSerializer, NovelListSerializer, NovelStartSerializer, NovelContinueSerializer, \
     NovelEndSerializer, NovelReadSerializer, NovelCoverImageSerializer, NovelContentQuestionSerializer, \
     NovelCompleteSerializer, NovelDetailSerializer, NovelContentSerializer, NovelImageSerializer
+from users.models import User
 
 url = os.environ.get("AI_URL", "http://j8a502.p.ssafy.io:8001/")
 url = "http://3.37.140.32:8001/"
@@ -96,6 +99,16 @@ class NovelPreviewAPI(RetrieveAPIView):
         return queryset
 
 
+def novel_hit(novel: Novel, user: User):
+    cache_key = f'novel_hit:{novel.id}:{user.id}'
+
+    recent_hit = cache.get(cache_key)
+    if not recent_hit:
+        novel.novelstats.hit_count = F('hit_count') + 1
+        novel.novelstats.save()
+        cache.set(cache_key, int(time.time()), 0)
+
+
 class NovelDetailAPI(RetrieveDestroyAPIView):
     queryset = Novel.objects.all().select_related("author")
     serializer_class = NovelReadSerializer
@@ -103,7 +116,8 @@ class NovelDetailAPI(RetrieveDestroyAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        novel_content = NovelContent.objects.filter(novel=instance).prefetch_related("novelcontentimage_set").order_by(
+        novel_content = NovelContent.objects.filter(novel=instance).prefetch_related(
+            "novelcontentimage_set").order_by(
             'step')
 
         serializer = self.get_serializer(instance=novel_content, many=True)
@@ -112,32 +126,9 @@ class NovelDetailAPI(RetrieveDestroyAPIView):
             'novel': serializer_novel.data,
             'novel_detail': serializer.data
         }
-        instance.novelstats.hit_count = F('hit_count') + 1
-        instance.novelstats.save()
+        novel_hit(instance, self.request.user)
+
         return Response(response_data)
-
-
-# class NovelCommentAPI(ModelViewSet):
-#     queryset = NovelComment.objects.all()
-#     serializer_class = NovelCommentSerializer
-#     lookup_url_kwarg = 'novel_id'
-#
-#     def perform_create(self, serializer):
-#         novel_pk = self.kwargs.get("novel_id")
-#         novel = Novel.objects.get(pk=novel_pk)
-#         novel.novelstats.comment_count = F('comment_count') + 1
-#         novel.novelstats.save()
-#         serializer.save(novel=novel, author=self.request.user)
-#
-#     def get_queryset(self):
-#         queryset = self.queryset
-#         if isinstance(queryset, QuerySet):
-#             # Ensure queryset is re-evaluated on each request.
-#             queryset = queryset.all()
-#         novel_pk = self.kwargs.get("novel_id")
-#         novel = Novel.objects.get(pk=novel_pk)
-#         queryset = queryset.select_related("author").filter(novel=novel)
-#         return queryset
 
 
 class NovelCommentAPI(ListCreateAPIView):
@@ -577,15 +568,13 @@ class NovelQuestionAPI(RetrieveAPIView):
         }
         return Response(data)
 
-
 class NovelCompleteAPI(APIView):
     serializer_class = NovelCompleteSerializer
 
     def post(self, request):
-        print("haha")
         novel = get_object_or_404(Novel, pk=request.data['novel_id'])
         serializer = NovelCompleteSerializer(novel, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-        print(serializer.data)
+
         return Response(data=serializer.data, status=status.HTTP_200_OK)
