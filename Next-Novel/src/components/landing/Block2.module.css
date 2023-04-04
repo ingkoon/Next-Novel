@@ -1,0 +1,62 @@
+.block{
+    width: 100%;
+    height: calc(100vh - 56px);
+    background: #f66f00;
+}
+
+.topDiv{
+    display: flex;
+    opacity: 0.2;
+}
+.botDiv{
+    display: flex;
+    opacity: 0.2;
+}
+.tlblock{
+    width: 250px;
+    height: 188px;
+    background: #FFFEFC;
+}
+.topN{
+    margin-right: 50px;
+}
+.topE{
+    margin-right: 50px;
+}
+.topX{
+    margin-right: 50px;
+}
+.topT{
+    
+}
+.trblock{
+    width: 135px;
+    height: 188px;
+    background: #FFFEFC;
+}
+
+.blblock{
+    width: 100px;
+    height: 188px;
+    background: #FFFEFC;
+}
+.botN{
+    margin-right: 50px;
+}
+.botO{
+    margin-right: 50px;
+}
+.botV{
+    margin-right: 50px;
+}
+.botE{
+    margin-right: 50px;
+}
+.botL{
+    
+}
+.brblock{
+    width: 53px;
+    height: 188px;
+    background: #FFFEFC;
+}

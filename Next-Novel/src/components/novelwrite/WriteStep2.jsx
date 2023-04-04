@@ -5,7 +5,7 @@ import Preview from "./Preview";
 import style from "./WriteStep2.module.css";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import { useNovelContext } from "../../context/NovelContext";
-import LoadingModal from "../common/LoadingModal";
+import LoadingGameModal from "../common/LoadingGameModal";
 
 export default function WriteStep2({ setStep, step, genreName }) {
   const { novel, setNovel } = useNovelContext();
@@ -66,7 +66,7 @@ export default function WriteStep2({ setStep, step, genreName }) {
 
   return (
     <div className={style.container}>
-      <LoadingModal state={startNovel.isLoading} />
+      <LoadingGameModal state={startNovel.isLoading} />
       <div className={style.component}>
         <Preview imageSrcs={imageSrcs} setSelected={setSelected} />
         <Canvas1

@@ -1,8 +1,7 @@
 .wrapper{
-    /* transform: translate(10%,10%); */
     width: 250px;
     height: 270px;
-    z-index: 2;
+    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,6 +20,11 @@
     background: #d9d9d9;
     z-index: 10;
     border: 3px solid #090909;
+}
+
+.page1 img {
+    width: 200px;
+    height: 220px;
 }
 .page2{
     position: absolute;

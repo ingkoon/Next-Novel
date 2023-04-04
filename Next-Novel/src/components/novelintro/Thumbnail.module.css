@@ -4,7 +4,6 @@
     height: 320px;
     left: 0px;
     background: #FFFEFC;
-    
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -28,7 +27,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 3;
+    /* z-index: 3; */
     background: white;
 }
 
@@ -37,7 +36,7 @@
     width: 100%;
     height: 320px;
     background: linear-gradient(180deg, rgba(242, 205, 60, 0) 0%, rgba(242, 205, 60, 0.6) 100%);
-    z-index: 1;
+    /* z-index: 1; */
 }
 .quote{
     display: flex;
@@ -62,18 +61,20 @@
     font-size: 26px;
     top: 50px;
     left:50px;
+    justify-content: center;
+    width: 80%;
     display: flex;
     align-items: center;
     text-align: center;
-    z-index: 2;
+    /* z-index: 2; */
 }
 .newcard_quote1{
     position: absolute;
-    z-index: 2;
+    /* z-index: 2; */
 }
 .newcard_quote2{
     position: absolute;
     right: 0px;
     bottom: 0px;
-    z-index: 2;
+    /* z-index: 2; */
 }
