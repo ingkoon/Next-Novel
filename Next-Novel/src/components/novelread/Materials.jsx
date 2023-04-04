@@ -1,22 +1,23 @@
 import style from './Materials.module.css';
 
-export default function Materials() {
-  return (
-    <div className={style.wrapper}>
-        <div className={style.what}>
-            <div className={style.col}>
-                <div className={style.pic}></div>
-                <div className={style.pic}></div>
-            </div>
-            <div className={style.col}>
-                <div className={style.pic}></div>
-                <div className={style.pic}></div>
-            </div>
-            <div className={style.col}>
-                <div className={style.pic}></div>
-                <div className={style.pic}></div>
+export default function Materials({mat}) {
+
+    return (
+        <div className={style.wrapper}>
+            <div className={style.what}>
+                {mat.images.map((item) => {
+
+                    return <>          
+                        <div className={style.pic}>
+                            <div className={style.inpic}>
+                                <img src={item.image} alt="" />
+                            </div>
+                            <div className={style.caption}>{item.caption}</div>
+                        </div>
+                    </>
+
+                })}
             </div>
         </div>
-    </div>
   )
 }

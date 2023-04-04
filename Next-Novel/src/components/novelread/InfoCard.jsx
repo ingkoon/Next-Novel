@@ -11,23 +11,24 @@ export default function InfoCard() {
   const [novelinfo, setNovelinfo] = useState("")
   const [create, setCreate] = useState("")
 
+  async function nvinfo() {
+    try {
+      const data = await novelall(novelid)
+      console.log(data)
+      setNovelinfo(data.data)
+
+      const year = data.data.novel.created_at.substring(0, 4)
+      const month = data.data.novel.created_at.substring(5, 7)
+      const date = data.data.novel.created_at.substring(8, 10)
+      setCreate(year+"."+month+"."+date)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   useEffect(()=> {
     console.log(id)
     setNovelid(id)
-    async function nvinfo() {
-      try {
-        const data = await novelall(novelid)
-        console.log(data)
-        setNovelinfo(data.data)
-
-        const year = data.data.created_at.substring(0, 4)
-        const month = data.data.created_at.substring(5, 7)
-        const date = data.data.created_at.substring(8, 10)
-        setCreate(year+"."+month+"."+date)
-      } catch (e) {
-        console.log(e)
-      }
-    }
     nvinfo()
   }, [novelid])
 

@@ -1,15 +1,64 @@
-import { useEffect } from 'react';
+import style from './Book.module.css';
 import Materials from './Materials.jsx';
 import Qna from './Qna.jsx';
-import style from './Book.module.css';
-import { Link } from "react-router-dom"
+
+import { useCallback, useEffect, useState, useRef } from 'react'
+import { Link, useLocation } from "react-router-dom"
+import { useNavigate } from 'react-router-dom';
+//api
+import { novelall } from '../../api/novelread'
+import useCommentWrite from "../../hooks/useCommentWrite";
+
+
 
 export default function Book(){
 
+    const location = useLocation();
+    const id = location.state.id;
+    const [novelid, setNovelid] = useState(id);
+    const [novelinfo, setNovelinfo] = useState("");
+    const [novelContent, setNovelContent] = useState("");
+    const [lastPage, setLastPage] = useState("");
+    const [rerender, setRerender] = useState("");
+    const page_ref = useRef();
+
+    const [create, setCreate] = useState("");
+    const [input, setInput] = useState({});
+    const { submitComment } = useCommentWrite();
+  
+    async function nvinfo() {
+      try {
+        const data = await novelall(novelid)
+        console.log(data)
+        setNovelinfo(data.data)
+        setNovelContent(data.data.novel_detail.slice(0, data.data.novel_detail.length-1));
+        setLastPage(data.data.novel_detail.slice(data.data.novel_detail.length-1, data.data.novel_detail.length));
+
+        const year = data.data.novel.created_at.substring(0, 4)
+        const month = data.data.novel.created_at.substring(5, 7)
+        const date = data.data.novel.created_at.substring(8, 10)
+        setCreate(year+"."+month+"."+date)
+      } catch (e) {
+        console.log(e)
+      }
+    };
+
+    // const forceUpdate = useCallback(() => updateState({}), []);
+
     useEffect(() => {
+        console.log('mount useEffect');
+        setNovelid(id)
+        nvinfo()
+      }, [novelid]);
+
+    useEffect(() => {
+        console.log('zIndex useEffect');
         const pages = document.querySelectorAll(`.${style.page}`);
+        console.log(pages.length);
         for (let i = 0; i < pages.length; i++) {
           const page = pages[i];
+          
+            console.log(i);
           if (i % 2 === 0) {
             page.style.zIndex = pages.length - i;
           }
@@ -23,19 +72,48 @@ export default function Book(){
               this.nextElementSibling.classList.add(style.flipped);
             }
           });
+        };
+        setRerender("hi")
+      }, [page_ref.current]);
+
+
+      const navigate = useNavigate();
+
+      const navigateToIntro = (id) => {
+        navigate(`/library/${id}/intro`, { state : {id : id}})
+      }
+
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setInput((input) => ({ ...input, [name]: value }));
+      };
+
+      const submit = () => {
+        if (!input.comm) {
+          return;
         }
-      }, []);
+        const formData = new FormData();
+        formData.append("novel_id", novelinfo.novel.id);
+        formData.append("comm", input.comm);
+        submitComment.mutate(formData, {
+          onSuccess: (res) => {
+            console.log(res);
+            navigate(`/library/${novelinfo.novel.id}/intro`, { state: { id: novelinfo.novel.id } });
+          },
+        });
+      };
+    
 
     return (
         <div className={style.back}>
-            <div className={style.book}>
-                <div className={style.pages}>
+            {novelinfo && <div className={style.book}>
+                {novelinfo && <div className={style.pages}>
                     <div className={style.page}>
                         <div className={style.cover}>
                             <div className={style.coverimg}>
                                 <img
-                                    src="https://i.pinimg.com/564x/f6/13/14/f61314f3ff9441fc1701b23457ec4685.jpg"
-                                    alt="cover"
+                                    src={novelinfo && process.env.REACT_APP_IMAGE_API + novelinfo.novel.cover_img}
+                                    alt="coverimg"
                                 ></img>
                             </div>
                             <div className={style.bookfooter}>
@@ -43,7 +121,7 @@ export default function Book(){
                                  "&nbsp; 
                                 </span>
                                 <span>
-                                    이거슨 한줄 소개글입니다. 최대 50자까지 쓸 수 있죠. 이거슨 한줄 소개글입니다.일이삼사
+                                    {novelinfo && novelinfo.novel.introduction}
                                 </span>
                                 <span className={style.ex}>
                                     &nbsp;"
@@ -52,50 +130,30 @@ export default function Book(){
                             <div className={style.fbar}></div>
                         </div>
                     </div>
+                    {novelContent.map((item, index) => {
+
+                        return <>
+                        
+                            <div className={style.page} ref={page_ref}>
+                                {index === 0 && <Materials mat={item} />}
+                                {index > 0 && <Qna qna={item} />}
+                            </div>
+                            <div className={style.page} ref={page_ref}>
+                                <h1>{item.content}</h1>
+                            </div>
+                        
+                        </>
+                    })}
+                    
+
                     <div className={style.page}>
-                        <Materials />
-                    </div>
-                    <div className={style.page}>
-                        <h1>소설1번째</h1>
-                    </div>
-                    <div className={style.page}>
-                        <Qna />
-                    </div>
-                    <div className={style.page}>
-                        <h1>이어가기1</h1>
-                    </div>
-                    <div className={style.page}>
-                        <Qna />
-                    </div>
-                    <div className={style.page}>
-                        <h1>이어가기2</h1>
-                    </div>
-                    <div className={style.page}>
-                        <Qna />
-                    </div>
-                    <div className={style.page}>
-                        <h1>이어가기3</h1>
-                    </div>
-                    <div className={style.page}>
-                        <Qna />
-                    </div>
-                    <div className={style.page}>
-                        <h1>이어가기4</h1>
-                    </div>
-                    <div className={style.page}>
-                        <Qna />
-                    </div>
-                    <div className={style.page}>
-                        <h1>이어가기5</h1>
-                    </div>
-                    <div className={style.page}>
-                        <h1>마무리</h1>
+                        <h1>{lastPage[0].content}</h1>
                     </div>
                     <div className={style.page}>
                         <div className={style.ogcover}>
                             <img
-                                src="https://i.pinimg.com/564x/f6/13/14/f61314f3ff9441fc1701b23457ec4685.jpg"
-                                alt="cover"
+                                src={novelinfo && process.env.REACT_APP_IMAGE_API + novelinfo.novel.original_cover_img}
+                                alt="ogcover"
                             ></img>
                             <div className={style.tmi}>
                                 P.S. 책 표지는 위 그림으로 만들어졌습니다.
@@ -116,22 +174,32 @@ export default function Book(){
                     <div className={style.fin}>
                         <div className={style.block}>
                             <img src={process.env.PUBLIC_URL+'/icon/glasses_black.svg'} className={style.icon} alt='glasses_black'></img>
-                            <Link to="/library/intro" className={style.link}>
+                            <div className={style.link} onClick={()=>navigateToIntro(novelid)}>
                                 <h2>돌아가기</h2>
-                            </Link>
+                            </div>
                         </div>
                         <div className={style.blank}></div>
                         <div className={style.block}>
                             <img src={process.env.PUBLIC_URL+'/icon/comments2.svg'} className={style.icon} alt='comment_black'></img>
-                            <input type="text" className={style.comment} placeholder="          어떠셨나요?"/>
+                            <div>
+                                <input
+                                    className={style.comment}
+                                    type="text"
+                                    name="comm"
+                                    value={input.comm ?? ""}
+                                    placeholder="          어떠셨나요?"
+                                    required
+                                    onChange={handleChange}
+                                />
+                            </div>
                             <div className={style.sbar}></div>
-                            <Link to="/library/intro" className={style.link}>
+                            <div className={style.link} onclick={submit}>
                                 <h2>소감평 작성</h2>
-                            </Link>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div>}
+            </div>}
         </div>
     )
   }

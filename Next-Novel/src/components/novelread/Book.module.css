@@ -273,6 +273,7 @@ html {
   flex-direction: column;
   color: #090909;
   transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
 .link:hover {
