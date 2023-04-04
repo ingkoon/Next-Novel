@@ -5,7 +5,7 @@ import Preview from "./Preview";
 import style from "./WriteStep2.module.css";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import { useNovelContext } from "../../context/NovelContext";
-import LoadingModal from "../common/LoadingModal";
+import LoadingGameModal from "../common/LoadingGameModal";
 
 export default function WriteStep2({ setStep, step, genreName }) {
   const { novel, setNovel } = useNovelContext();
@@ -16,62 +16,57 @@ export default function WriteStep2({ setStep, step, genreName }) {
   const [selected, setSelected] = useState(0);
   const [isShaking, setIsShaking] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
   const button = () => {
-    setIsLoading(true)
-    setTimeout(() => setIsLoading(false), 800000); // 0.8초 후 클래스 제거
-  }
-  // const button = () => {
-  //   //그림 유효성 검사
-  //   for (let imageSrc of imageSrcs) {
-  //     if (!imageSrc) {
-  //       setIsShaking(true);
-  //       setTimeout(() => setIsShaking(false), 800); // 0.8초 후 클래스 제거
-  //       return;
-  //     }
-  //   }
+    //그림 유효성 검사
+    for (let imageSrc of imageSrcs) {
+      if (!imageSrc) {
+        setIsShaking(true);
+        setTimeout(() => setIsShaking(false), 800); // 0.8초 후 클래스 제거
+        return;
+      }
+    }
 
-  //   const byteStrings = imageSrcs.map((dataUrl) =>
-  //     window.atob(dataUrl.split(",")[1])
-  //   );
-  //   const arrays = byteStrings.map((byteString) => {
-  //     let array = [];
-  //     for (let i = 0; i < byteString.length; i++) {
-  //       array.push(byteString.charCodeAt(i));
-  //     }
-  //     return array;
-  //   });
-  //   const myBlobs = arrays.map(
-  //     (array) => new Blob([new Uint8Array(array)], { type: "image/png" })
-  //   );
-  //   const files = myBlobs.map(
-  //     (myBlob, index) =>
-  //       new File([myBlob], "".concat("material", index, ".png"))
-  //   );
-  //   // console.log(files);
-  //   const formData = new FormData();
-  //   files.forEach((file) => formData.append("images", file));
-  //   formData.append("genre", genreName);
-  //   startNovel.mutate(formData, {
-  //     onSuccess: (res) => {
-  //       console.log(res);
-  //       //context 제어
-  //       setNovel({
-  //         ...novel,
-  //         genre: res.data.genre,
-  //         id: res.data.id,
-  //         step: res.data.step,
-  //         materials: res.data.materials,
-  //         story: res.data.story,
-  //       });
-  //       setStep(3);
-  //     },
-  //   });
-  // };
+    const byteStrings = imageSrcs.map((dataUrl) =>
+      window.atob(dataUrl.split(",")[1])
+    );
+    const arrays = byteStrings.map((byteString) => {
+      let array = [];
+      for (let i = 0; i < byteString.length; i++) {
+        array.push(byteString.charCodeAt(i));
+      }
+      return array;
+    });
+    const myBlobs = arrays.map(
+      (array) => new Blob([new Uint8Array(array)], { type: "image/png" })
+    );
+    const files = myBlobs.map(
+      (myBlob, index) =>
+        new File([myBlob], "".concat("material", index, ".png"))
+    );
+    // console.log(files);
+    const formData = new FormData();
+    files.forEach((file) => formData.append("images", file));
+    formData.append("genre", genreName);
+    startNovel.mutate(formData, {
+      onSuccess: (res) => {
+        console.log(res);
+        //context 제어
+        setNovel({
+          ...novel,
+          genre: res.data.genre,
+          id: res.data.id,
+          step: res.data.step,
+          materials: res.data.materials,
+          story: res.data.story,
+        });
+        setStep(3);
+      },
+    });
+  };
 
   return (
     <div className={style.container}>
-      <LoadingModal state={isLoading} />
+      <LoadingGameModal state={startNovel.isLoading} />
       <div className={style.component}>
         <Preview imageSrcs={imageSrcs} setSelected={setSelected} />
         <Canvas1
