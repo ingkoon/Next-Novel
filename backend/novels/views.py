@@ -338,6 +338,7 @@ class NovelStartAPI(APIView):
             5: "자유"
 
         }
+        print(caption)
         response_data = {
             "id": novel.id,
             "step": 1,
