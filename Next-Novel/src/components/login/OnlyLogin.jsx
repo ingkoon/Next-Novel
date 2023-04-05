@@ -29,6 +29,7 @@ export default function OnlyLogin() {
         const nickname = res.data.user.nickname
         localStorage.setItem("access_token", accessToken)
         localStorage.setItem("refresh_token", refreshToken)
+        localStorage.setItem("nickname", nickname)
         setUser({access_token : accessToken, refresh_token : refreshToken, nickname: nickname})
       })
       

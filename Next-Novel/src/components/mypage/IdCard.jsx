@@ -2,7 +2,7 @@ import style from './IdCard.module.css'
 import Member from './Member'
 import { useEffect, useState } from 'react'
 
-import { user } from '../../api/user.js'
+import { getuserinfo } from '../../api/user.js'
 export default function IdCard(){
 
   const [userinfo, setUserinfo] = useState("")
@@ -11,7 +11,7 @@ export default function IdCard(){
   // api 통신하기
   async function getuser() {
     try {
-      const data = await user()
+      const data = await getuserinfo()
       setUserinfo(data.data)
       let tmp = data.data.created_at
       let year = tmp.substring(0, 4)
