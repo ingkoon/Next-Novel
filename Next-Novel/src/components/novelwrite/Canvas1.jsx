@@ -5,15 +5,12 @@ import useNovelWrite from "../../hooks/useNovelWrite";
 export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   const canvasRef = useRef(null); //canvas
   const [getCtx, setGetCtx] = useState(null); //canvas
-  const [rect, setRect] = useState()
+  const [rect, setRect] = useState(); //터치용
   const [painting, setPainting] = useState(false); //그림을 그리고 있는지 아닌지
   const [mouseX, setmouseX] = useState(); //캔버스 내 마우스 좌표
   const [mouseY, setmouseY] = useState(); //캔버스 내 마우스 좌표
-  const [touchX, setTouchX] = useState(); //캔버스 내 터치 좌표
-  const [touchY, setTouchY] = useState(); //캔버스 내 터치 좌표
   const [lasttouchX, setLastTouchX] = useState(); //캔버스 내 터치 좌표
   const [lasttouchY, setLastTouchY] = useState(); //캔버스 내 터치 좌표
-  const [touching, setTouching] = useState(false) // 터치 하고있는지 아닌지
   const canvasWidth = 608;
   const canvasHeight = 380;
 
@@ -22,7 +19,6 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   const [openSetWidthState, setOpenSetWidthState] = useState(false); //펜 굵기 설정 탭 on/off
   const [openSetColorState, setOpenSetColorState] = useState(false); //펜 색 설정 탭 on/off
   const [store, dispatch] = useReducer(reducer, [imageSrcs[selected]]); //뒤로가기 저장소
-  const [paintState, setPaintState] = useState(false); //캔버스 내 마우스 클릭중 or 클릭해제, 벗어남
   const [penSelected, setPenSelected] = useState(true);
   const [eraserSelected, setEraserSelected] = useState(false);
   const colors = [
@@ -98,7 +94,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
     const ctx = canvas.getContext("2d");
-    setRect(canvas.getBoundingClientRect())
+    setRect(canvas.getBoundingClientRect());
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     ctx.lineWidth = widthState;
@@ -124,7 +120,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   }, [selected]); //n번째 캔버스 선택시
 
   useEffect(() => {
-    if (!painting && paintState) {
+    if (!painting) {
       //그림그리는상태가 아니고, 마우스에서 손이 떨어졌을 때
       const canvas = canvasRef.current;
       const dataURL = canvas.toDataURL();
@@ -165,39 +161,46 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
       //그리는 행위 중
       getCtx.lineTo(mouseX, mouseY);
       getCtx.stroke();
-      setPaintState(true); //마우스에 손이 눌러지고 있음
     }
   };
 
   const touchStart = (e) => {
-    getCtx.beginPath()
-    setPainting(true)
-    setLastTouchX(e.touches[0].pageX - rect.left)
-    setLastTouchY(e.touches[0].pageY - rect.top)
-    getCtx.moveTo(e.touches[0].pageX - rect.left, e.touches[0].pageY - rect.top)
+    getCtx.beginPath();
+    setPainting(true);
+    setLastTouchX(e.touches[0].pageX - rect.left);
+    setLastTouchY(e.touches[0].pageY - rect.top);
+    getCtx.moveTo(
+      e.touches[0].pageX - rect.left,
+      e.touches[0].pageY - rect.top
+    );
 
-    getCtx.arc(e.touches[0].pageX - rect.left, e.touches[0].pageY - rect.top, widthState/2, 0, 2*Math.PI)
-    getCtx.stroke()
-
-  }
+    getCtx.arc(
+      e.touches[0].pageX - rect.left,
+      e.touches[0].pageY - rect.top,
+      widthState / 2,
+      0,
+      2 * Math.PI
+    );
+    getCtx.stroke();
+  };
 
   const touch = (e) => {
-    if(painting) {
-      getCtx.moveTo(lasttouchX, lasttouchY)
-      let x = e.touches[0].pageX - rect.left
-      let y = e.touches[0].pageY - rect.top
-      getCtx.lineTo(x, y)
-      setLastTouchX(e.touches[0].pageX - rect.left)
-      setLastTouchY(e.touches[0].pageY - rect.top)
-      getCtx.stroke()
-      setLastTouchX(x)
-      setLastTouchY(y)
+    if (painting) {
+      getCtx.moveTo(lasttouchX, lasttouchY);
+      let x = e.touches[0].pageX - rect.left;
+      let y = e.touches[0].pageY - rect.top;
+      getCtx.lineTo(x, y);
+      setLastTouchX(e.touches[0].pageX - rect.left);
+      setLastTouchY(e.touches[0].pageY - rect.top);
+      getCtx.stroke();
+      setLastTouchX(x);
+      setLastTouchY(y);
     }
-  }
-  
+  };
+
   const touchEnd = (e) => {
-    setPainting(false)
-  }
+    setPainting(false);
+  };
 
   const onPencil = () => {
     //펜 선택
@@ -275,9 +278,15 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
           onMouseLeave={() => {
             setPainting(false);
           }}
-          onTouchStart={(e) => {touchStart(e); console.log("터치스타트")}}
-          onTouchMove={(e) => {touch(e); console.log("터치")}}
-          onTouchEnd={(e) => {touchEnd(e)}}
+          onTouchStart={(e) => {
+            touchStart(e);
+          }}
+          onTouchMove={(e) => {
+            touch(e);
+          }}
+          onTouchEnd={(e) => {
+            touchEnd(e);
+          }}
         />
       </div>
       <div className={style.tools}>
