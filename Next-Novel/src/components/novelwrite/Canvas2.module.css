@@ -329,6 +329,10 @@
   margin: 10px;
 }
 
+.scroll > img:hover {
+  cursor: pointer;
+}
+
 .load {
   -webkit-animation: slide-in-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
     both;
