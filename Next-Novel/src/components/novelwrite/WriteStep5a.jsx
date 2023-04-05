@@ -89,7 +89,7 @@ export default function WriteStep5a({ setStep, step }) {
           </button>
         </div>
         <div className={style.right}>
-          <div className={style.space} />
+          {/* <div className={style.space} /> */}
           <div className={style.result}>
             <div className={style.img}>
               <div className={style.frame}>

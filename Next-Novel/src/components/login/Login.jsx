@@ -16,7 +16,8 @@ export default function Login() {
     <div
       className={style.loginmodal}
       style={{
-        backgroundImage: `url('${process.env.PUBLIC_URL}/img/login_bg.jpg')`,
+        // backgroundImage: `url('${process.env.PUBLIC_URL}/img/login_bg.jpg')`, 
+        backgroundImage: `url('${process.env.PUBLIC_URL}/img/login_bg.jpg')`, 
       }}
     >
       <div className={style.topborder}>

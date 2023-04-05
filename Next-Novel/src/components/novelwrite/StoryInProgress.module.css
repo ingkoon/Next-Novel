@@ -47,10 +47,11 @@
   }
 }
 .scroll {
-  width: 100%;
+  /* width: 100%; */
   height: 100%;
   overflow-y: scroll;
   white-space: pre-wrap;
+  padding-right: 15px;
 }
 .scroll::-webkit-scrollbar {
   width: 8px;
