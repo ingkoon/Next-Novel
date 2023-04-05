@@ -93,7 +93,7 @@ export default function Snakegame({state}) {
     currentSnake.unshift(currentSnake[0] + direction)
     // movement ends here
     eatApple(squares, tail)
-    if (squares[currentSnake[0]].classList) {
+    if (state) {
       squares[currentSnake[0]].classList.add(style.snake)   
     }
   }
