@@ -10,8 +10,8 @@ export default function Canvas3({ imageSrcs, setImageSrcs, selected }) {
   const [mouseY, setmouseY] = useState(); //캔버스 내 마우스 좌표
   const [lasttouchX, setLastTouchX] = useState(); //캔버스 내 터치 좌표
   const [lasttouchY, setLastTouchY] = useState(); //캔버스 내 터치 좌표
-  const canvasWidth = 608;
-  const canvasHeight = 380;
+  const canvasWidth = 343.2;
+  const canvasHeight = 390;
 
   const [widthState, setWidthState] = useState(2.5); //펜 굵기 초기값
   const [colorState, setColorState] = useState("#000000"); //펜 색 초기값
