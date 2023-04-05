@@ -1,16 +1,15 @@
 .wrapper1{
     display: flex;
     justify-content: center;
-    align-self: center;
+    position: relative;
+    top: -2380px;
+    left: 27.7%;
+    width: 700px;
 }
 .bbb{
-    position: absolute;
-    top: 490%;
-    left: 55%;
     font-family: 'LINESeedKR-Bd';
     font-size: 60px;
     width: 650px;
-    height: 300px;
     background: linear-gradient(94.67deg, #6D03C0 0%, #1DE13D 19.41%, #1DE1A6 42.68%, #6D03C0 57.92%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

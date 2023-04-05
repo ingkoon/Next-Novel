@@ -47,12 +47,6 @@ export default function Type99() {
   return (
     <div className={style.wrapper}>
       <div ref={typeitRef} className={style.bbb}></div>
-      <div className={style.guide}>
-        guide
-      </div>
-      <div className={style.next} onClick={goNext}>
-        <div className={style.slide}></div>
-      </div>
     </div>
   );
 }

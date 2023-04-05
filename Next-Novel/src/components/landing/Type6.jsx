@@ -7,7 +7,7 @@ export default function Type6() {
   useEffect(() => {
     const startTypingAnimation = () => {
       const instance = new window.TypeIt(typeitRef.current, {
-        strings: ['고도의 과학기술은 마법과도 같이 느껴지죠','인공지능과 인간의 상상력이 합쳐진 collaboration!','기대한 것 이상이랍니다'],
+        strings: ['고도로 발전한 과학기술은 마법과도 같이 느껴지죠','인공지능과 인간의 상상력이 합쳐진 collaboration!'],
         speed: 10,
         loop: false,
       });

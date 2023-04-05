@@ -26,8 +26,8 @@
     /* animation: up-down 1s infinite ease-in-out alternate; */
     text-align: center;
 
-    -webkit-animation: fade-in 2s cubic-bezier(0.390, 0.575, 0.565, 1.000) 11s both;
-    animation: fade-in 2s cubic-bezier(0.390, 0.575, 0.565, 1.000) 11s both;
+    -webkit-animation: fade-in 2s cubic-bezier(0.390, 0.575, 0.565, 1.000) 10s both;
+    animation: fade-in 2s cubic-bezier(0.390, 0.575, 0.565, 1.000) 10s both;
 }
 
 @keyframes up-down{

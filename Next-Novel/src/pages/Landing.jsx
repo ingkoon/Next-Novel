@@ -1,4 +1,5 @@
 import React from "react";
+import style from '../components/landing/landing.module.css'
 import Block1 from '../components/landing/Block1'
 import Block2 from '../components/landing/Block2'
 import Block3 from '../components/landing/Block3'
@@ -17,8 +18,8 @@ import Type99 from '../components/landing/Type99'
 
 export default function Landing() {
   return (
-    <>
-        <Block1 />
+    <div className={style.whole}>
+        {/* <Block1 /> */}
         <Block3 />
         <Type1 />
         <Type2 />
@@ -31,6 +32,6 @@ export default function Landing() {
         <Type9 />
         <Type99 />
         <Block4 />
-    </>
+    </div>
   );
 }

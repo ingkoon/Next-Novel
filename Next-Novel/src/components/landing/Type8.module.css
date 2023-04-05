@@ -1,15 +1,14 @@
 .wrapper{
     display: flex;
     justify-content: center;
-    align-self: center;
+    position: relative;
+    top: -2380px;
+    left: 27.7%;
+    width: 700px;
 }
 .bbb{
-    position: absolute;
-    top: 520%;
-    left: 55%;
     font-family: 'LINESeedKR-Bd';
     font-size: 30px;
     width: 650px;
-    height: 200px;
     color: #576265;
 }
