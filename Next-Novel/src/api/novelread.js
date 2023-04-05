@@ -4,7 +4,7 @@ import {tokeninstance} from '../api/Interceptors';
 
 // 소설 정보(제목, 작성자, 출간일, 장르) , 소설 불러오기
 export async function novelall(id){
-    const res = await instance.get(`novel/${id}/`)
+    const res = await tokeninstance.get(`novel/${id}/`)
     return res
   }
 
