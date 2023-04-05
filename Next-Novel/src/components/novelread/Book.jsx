@@ -20,7 +20,7 @@ export default function Book(){
     const [novelid, setNovelid] = useState(id);
     const [novelinfo, setNovelinfo] = useState("");
     const [novelContent, setNovelContent] = useState("");
-    const [lastPage, setLastPage] = useState("");
+    const [lastPage, setLastPage] = useState();
     const [rerender, setRerender] = useState("");
     const page_ref = useRef();
 
@@ -29,6 +29,7 @@ export default function Book(){
     const { submitComment } = useCommentWrite();
     const [flag,setFlag] = useState(false);
     async function nvinfo() {
+      console.log("노벨아이디"+novelid)
       try {
         const data = await novelall(novelid)
         console.log(data)
@@ -211,10 +212,10 @@ export default function Book(){
                         
                             <div className={style.page} ref={page_ref}>
                                 {index === 0 && <Materials mat={item} />}
-                                {index > 0 && <Qna qna={item} />}
+                                {index > 0 && <Qna qna={item} index={index} />}
                             </div>
                             <div className={style.page} ref={page_ref}>
-                                <h1>{item.content}</h1>
+                                <span className={style.text}>{item.content}</span>
                             </div>
                         
                         </>
@@ -222,7 +223,7 @@ export default function Book(){
                     
 
                     <div className={style.page}>
-                        <h1>{lastPage[0].content}</h1>
+                        <span className={style.text}>{lastPage[0].content}</span>
                     </div>
                     <div className={style.page}>
                         <div className={style.ogcover}>

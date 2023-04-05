@@ -309,3 +309,10 @@ html {
     margin-top: -20px;
     font-family: 'LINESeedKR-Bd';
   }
+
+  .text{
+    line-height : 1.7;
+    font-size: 20px;
+    margin: 70px;
+    white-space: pre-wrap;
+  }
