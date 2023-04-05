@@ -382,3 +382,8 @@ pyrightconfig.json
 
 docker-compose.yml
 entrypoint.sh
+.idea/
+__pycache__/
+venv/
+*.jpg
+*.png
