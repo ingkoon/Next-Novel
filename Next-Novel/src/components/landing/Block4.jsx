@@ -10,6 +10,9 @@ export default function Block4(){
                 <div className={style.steps}>
                     <div className={style.vs}>
                         <img src={process.env.PUBLIC_URL+'/icon/logo.svg'} className={style.sicon} alt='vector_step1'></img>
+                        <div className={style.num}>
+                            1
+                        </div>
                     </div>
                 </div>
                 <div className={style.steps}>

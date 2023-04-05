@@ -7,7 +7,7 @@ export default function Type7() {
   useEffect(() => {
     const startTypingAnimation = () => {
       const instance = new window.TypeIt(typeitRef.current, {
-        strings: ['금상첨화. 화룡정점.','마지막까지 맡겨주세요'],
+        strings: ['금상첨화. 화룡정점.','그림까지 맡겨주세요'],
         speed: 20,
         loop: false,
       });

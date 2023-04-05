@@ -233,15 +233,16 @@ to{
 
 .guide{
   position: absolute;
-  top: 599%;
+  bottom: 1800px;
   left: 69%;
-  color: #FFFEFC;
+  color: yellow;
   font-family: 'handjet';
   font-size: 30px;
+  z-index: 3;
 }
 .next{
   position: absolute;
-  top: 604%;
+  top: 4400px;
   left: 69%;
   border-radius: 60px;
   display: flex;

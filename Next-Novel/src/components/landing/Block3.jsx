@@ -149,9 +149,9 @@ const goNext2 = () => {
             <div className={style.content2}>
                 <Draw3 className={style.svg3}/>
             </div>
-            <div className={style.guide}>
+            {/* <div className={style.guide}>
                 guide
-            </div>
+            </div> */}
             <div className={style.next} onClick={goNext2}>
                 <div className={style.slide}></div>
             </div>
