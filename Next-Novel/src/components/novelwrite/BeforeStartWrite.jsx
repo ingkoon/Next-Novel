@@ -19,6 +19,7 @@ export default function BeforeStartWrite({ step, setStep }) {
   return (
     <div>
       <Modal
+        closeTimeoutMS={200}
         isOpen={loginIsOpen}
         onRequestClose={() => setLoginIsOpen(false)}
         style={{
