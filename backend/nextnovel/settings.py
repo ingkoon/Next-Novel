@@ -5,49 +5,75 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "secret")
+DEV = os.environ.get("DEV")
+if DEV == 'TRUE':
+    DEBUG = True
+    ALLOWED_HOSTS = ['*']
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        # site 설정도!
+        'django.contrib.sites',
+        # app
+        'users',
+        'novels',
+        # cors
+        'corsheaders',
+        # Libraries
+        'rest_framework',
+        'rest_framework.authtoken',
+        'rest_framework_simplejwt',
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+        'dj_rest_auth',
+        'dj_rest_auth.registration',
+        # allauth for registration
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+        'allauth.socialaccount.providers.kakao',
+        'django_seed',
+        'drf_spectacular',
+        'django_extensions',
 
-ALLOWED_HOSTS = ['*']
+        'silk',
+    ]
+else:
+    DEBUG = False
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        # site 설정도!
+        'django.contrib.sites',
+        # app
+        'users',
+        'novels',
+        # cors
+        'corsheaders',
 
-# Application definition
+        # Libraries
 
+        'rest_framework',
+        'rest_framework.authtoken',
+        'rest_framework_simplejwt',
+        'dj_rest_auth',
+        'dj_rest_auth.registration',
+        # allauth for registration
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+        'allauth.socialaccount.providers.kakao',
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    # site 설정도!
-    'django.contrib.sites',
-    # MY app
-    'users',
-    'novels',
+        'django_seed',
+    ]
 
-    # Libraries
-    'rest_framework',
-    'rest_framework.authtoken',
-    'rest_framework_simplejwt',
-
-    'dj_rest_auth',
-    'dj_rest_auth.registration',
-
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.kakao',
-
-    'django_seed',
-    'drf_spectacular',
-    'django_extensions',
-
-    'corsheaders',
-    'silk',
-    # 'debug_toolbar',
-]
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'silk.middleware.SilkyMiddleware',
@@ -79,9 +105,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'nextnovel.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     "default": {
@@ -228,6 +251,7 @@ REST_AUTH = {
     'JWT_AUTH_COOKIE_USE_CSRF': False,
     'JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED': False,
 }
+
 KAKAO_CLIENT_ID = os.environ.get("SOCIAL_AUTH_KAKAO_CLIENT_ID", None)
 KAKAO_SECRET = os.environ.get("SOCIAL_AUTH_KAKAO_SECRET", None)
 STATE = os.environ.get("STATE", "vasdvdsfav")

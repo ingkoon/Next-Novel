@@ -15,6 +15,7 @@ from rest_framework import status
 from json import JSONDecodeError
 
 from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -48,80 +49,81 @@ def kakao_login(request):
         f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={KAKAO_CALLBACK_URI}&response_type=code&scope=account_email")
 
 
-def kakao_callback(request):
-    client_id = KAKAO_CLIENT_ID
-    code = request.GET.get("code")
-    # code로 access token 요청
-    token_request = requests.get(
-        f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={REDIRECT_URI}&code={code}")
-    token_response_json = token_request.json()
-    access_token = token_response_json.get("access_token")
+class KakaoCallback(APIView):
+    def get(self, request):
+        client_id = KAKAO_CLIENT_ID
+        code = request.GET.get("code")
+        # code로 access token 요청
+        token_request = requests.get(
+            f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={REDIRECT_URI}&code={code}")
+        token_response_json = token_request.json()
+        access_token = token_response_json.get("access_token")
 
-    # access token으로 카카오톡 프로필 요청
-    profile_request = requests.post(
-        "https://kapi.kakao.com/v2/user/me",
-        headers={"Authorization": f"Bearer {access_token}"},
-    )
+        # access token으로 카카오톡 프로필 요청
+        profile_request = requests.post(
+            "https://kapi.kakao.com/v2/user/me",
+            headers={"Authorization": f"Bearer {access_token}"},
+        )
 
-    profile_json = profile_request.json()
+        profile_json = profile_request.json()
 
-    kakao_account = profile_json.get("kakao_account")
+        kakao_account = profile_json.get("kakao_account")
 
-    email = kakao_account.get("email", None)  # 이메일!
+        email = kakao_account.get("email", None)  # 이메일!
 
-    # 이메일 없으면 오류 => 카카오톡 최신 버전에서는 이메일 없이 가입 가능해서 추후 수정해야함
-    if email is None:
-        return JsonResponse({'err_msg': 'failed to get email'}, status=status.HTTP_400_BAD_REQUEST)
+        # 이메일 없으면 오류 => 카카오톡 최신 버전에서는 이메일 없이 가입 가능해서 추후 수정해야함
+        if email is None:
+            return JsonResponse({'err_msg': 'failed to get email'}, status=status.HTTP_400_BAD_REQUEST)
 
-    try:
-        # 유저가 있는지 탐색
-        user = User.objects.get(email=email)
-        social_user = SocialAccount.objects.get(user=user)
+        try:
+            # 유저가 있는지 탐색
+            user = User.objects.get(email=email)
+            social_user = SocialAccount.objects.get(user=user)
 
-        if social_user.provider != 'kakao':
-            return JsonResponse({'err_msg': 'no matching social type'}, status=status.HTTP_400_BAD_REQUEST)
+            if social_user.provider != 'kakao':
+                return JsonResponse({'err_msg': 'no matching social type'}, status=status.HTTP_400_BAD_REQUEST)
 
-        data = {'access_token': access_token, 'code': code}
-        # FIX ME
-        accept = requests.post(f"{BASE_URL}api/user/kakao/login/finish/", data=data)
-        accept_status = accept.status_code
+            data = {'access_token': access_token, 'code': code}
+            # FIX ME
+            accept = requests.post(f"{BASE_URL}api/user/kakao/login/finish/", data=data)
+            accept_status = accept.status_code
 
-        if accept_status != 200:
-            return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
-        accept_json = accept.json()
+            if accept_status != 200:
+                return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
+            accept_json = accept.json()
+            print(f"{user.nickname} logged in")
+            return JsonResponse(accept_json)
+        except User.DoesNotExist:
+            # 애초에 가입된 유저가 없으면 =>  새로 회원가입 & 해당유저의 jwt발급
+            data = {'access_token': access_token, 'code': code}
+            accept = requests.post(f"{BASE_URL}api/user/kakao/login/finish/", data=data)
+            accept_status = accept.status_code
+            if accept_status != 200:
+                return Response(data={'err_msg': 'failed to signup'}, status=accept_status)
 
-        return JsonResponse(accept_json)
-    except User.DoesNotExist:
-        # 애초에 가입된 유저가 없으면 =>  새로 회원가입 & 해당유저의 jwt발급
-        data = {'access_token': access_token, 'code': code}
-        accept = requests.post(f"{BASE_URL}api/user/kakao/login/finish/", data=data)
-        accept_status = accept.status_code
-        if accept_status != 200:
-            return Response(data={'err_msg': 'failed to signup'}, status=accept_status)
+            accept_json = accept.json()
 
-        accept_json = accept.json()
+            user_pk = accept_json.get('user').pop('pk')
+            created_user = User.objects.get(pk=user_pk)
 
-        user_pk = accept_json.get('user').pop('pk')
-        created_user = User.objects.get(pk=user_pk)
+            # 닉네임 로직
+            nickname = get_random_nickname()
+            created_user.nickname = nickname
+            accept_json['user']['nickname'] = nickname
 
-        # 닉네임 로직
-        nickname = get_random_nickname()
-        created_user.nickname = nickname
-        accept_json['user']['nickname'] = nickname
+            # profile image 로직
+            profile_image = profile_json.get("properties").get("profile_image")
+            response = requests.get(profile_image)
+            image_content = ContentFile(response.content)
+            file_name = f"temp_profile.png"
+            created_user.profile_image.save(file_name, image_content)
+            created_user.save()
 
-        # profile image 로직
-        profile_image = profile_json.get("properties").get("profile_image")
-        response = requests.get(profile_image)
-        image_content = ContentFile(response.content)
-        file_name = f"temp_profile.png"
-        created_user.profile_image.save(file_name, image_content)
-        created_user.save()
-
-        return Response(data=accept_json, status=status.HTTP_201_CREATED)
+            return Response(data=accept_json, status=status.HTTP_201_CREATED)
 
 
-    except SocialAccount.DoesNotExist:
-        return JsonResponse({'err_msg': 'email exists but not social user'}, status=status.HTTP_400_BAD_REQUEST)
+        except SocialAccount.DoesNotExist:
+            return JsonResponse({'err_msg': 'email exists but not social user'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class KakaoLogin(SocialLoginView):
@@ -131,6 +133,7 @@ class KakaoLogin(SocialLoginView):
 
 
 class UserProfileAPI(RetrieveUpdateAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = UserProfileSerializer
 
     def get_object(self):
@@ -138,7 +141,8 @@ class UserProfileAPI(RetrieveUpdateAPIView):
 
 
 class UserNovelAPI(ListAPIView):
-    queryset = Novel.objects.all()
+    permission_classes = [IsAuthenticated]
+    queryset = Novel.objects.all().filter(status=Novel.Status.FINISHED)
     serializer_class = NovelListSerializer
 
     def get_queryset(self):
