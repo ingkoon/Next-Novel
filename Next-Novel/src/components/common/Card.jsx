@@ -66,10 +66,10 @@ function Card({props, updatelist}){
         <div className={style.title}>{props && props.title}</div>
         <div className={style.writer}>{props && props.author}</div>
       </div>
-      <img src={props && props.cover_img} alt='bookimg'></img>
+      <img src={props && props.cover_img} className={style.bookimg} alt='bookimg'></img>
 
     </div>
-    <Modal isOpen={modal} onRequestClose={() => setModal(false)}
+    <Modal isOpen={modal} closeTimeoutMS={200} onRequestClose={() => setModal(false)}
       style ={{
         overlay : {
           zIndex : '100'

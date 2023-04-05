@@ -21,8 +21,12 @@ export default function NewBookList() {
         console.log(data)
         setReconovels(data.data)
 
+        let datalen = 5
+        if (data.data.length < 5) {
+          datalen = data.data.length
+        }
         let tmp = []
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < datalen; i++) {
           tmp = [...tmp]
           tmp.push(NewCard)
         }

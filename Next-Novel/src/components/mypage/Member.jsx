@@ -22,7 +22,7 @@ export default function Member({updatemember}) {
       <button onClick={() => setUpdateIsOpen(true)} className={style.memberbtn}>회원정보 수정</button>
       <button onClick={() => setDeleteIsOpen(true)} className={style.memberbtn}>로그아웃</button>
 
-      <Modal className={style.updatemodal} isOpen={updateIsOpen} onRequestClose={() => setUpdateIsOpen(false)}
+      <Modal className={style.updatemodal} closeTimeoutMS={200} isOpen={updateIsOpen} onRequestClose={() => setUpdateIsOpen(false)}
         style ={{
           overlay : {
 
@@ -37,7 +37,7 @@ export default function Member({updatemember}) {
         <Update closemodal={closemodal}/>
       </Modal>
 
-      <Modal isOpen={deleteIsOpen} onRequestClose={() => setDeleteIsOpen(false)}
+      <Modal isOpen={deleteIsOpen} closeTimeoutMS={200} onRequestClose={() => setDeleteIsOpen(false)}
         style ={{
           overlay : {
 

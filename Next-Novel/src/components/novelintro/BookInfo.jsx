@@ -93,7 +93,7 @@ export default function BookInfo(){
                 <div className={style.etc3}>
                     <div className={style.likebtn} onClick={liked}>
                         { novelinfo.user_liked 
-                        ? <img src={process.env.PUBLIC_URL+'/icon/heart_black.svg'} className={style.like} alt='heart'></img>
+                        ? <img src={process.env.PUBLIC_URL+'/icon/black_heart.svg'} className={style.like} alt='heart'></img>
                         : <img src={process.env.PUBLIC_URL+'/icon/heart_outline.svg'} className={style.like} alt='heart'></img>
                         }
                         

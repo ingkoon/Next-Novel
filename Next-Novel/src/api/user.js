@@ -1,7 +1,7 @@
 import { tokeninstance } from '../api/Interceptors';
 
 // 회원정보
-export async function user(){
+export async function getuserinfo(){
   const res = await tokeninstance.get('user/')
   return res
 }

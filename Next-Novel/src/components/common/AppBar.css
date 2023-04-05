@@ -11,4 +11,15 @@
 .ReactModal__Overlay {
   background-color: rgba(87, 98, 101, 0.6) !important;
   backdrop-filter: blur(5px);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
 } 
+
+
+.ReactModal__Overlay--after-open{
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+  opacity: 0;
+}
