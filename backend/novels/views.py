@@ -252,7 +252,7 @@ class NovelStartAPI(APIView):
         }
         ##################
         ## 실제
-        if DEV == 'TRUE':
+        if DEV != 'TRUE':
             response = requests.post(start_url, files=files, data=data)
             if response.status_code != 200:
                 raise RequestAIServerError
@@ -361,7 +361,7 @@ class NovelContinueAPI(APIView):
             novel, novel_content, image, selected_query = serializer.save()
 
         ### 실제
-        if DEV == 'TRUE':
+        if DEV != 'TRUE':
             filename = image.image.name.split('/')[-1]
             image_file = image.image.open(mode='rb')
 
@@ -400,7 +400,7 @@ class NovelContinueAPI(APIView):
         story = response_json.pop("korean_answer")
         dialog_history = response_json.pop("dialog_history")
         #############
-        if DEV == 'TRUE':
+        if DEV != 'TRUE':
             response2_json = retrieve_question_from_ai_json(dialog_history)
         ## 테스트용
         else:
@@ -493,7 +493,7 @@ class NovelEndAPI(APIView):
         }
         ######
         # 실제
-        if DEV == 'TRUE':
+        if DEV != 'TRUE':
             # print("response_started")
             response = requests.post(end_url, data=data)
             response_json = response.json()
@@ -533,7 +533,7 @@ class NovelCoverImageAPI(APIView):
         # print(novel.cover_img)
 
         ### 실제
-        
+
         files = {'image': (image.name, image.file)}
         response = requests.post(image_url, files=files)
         ### 가짜
