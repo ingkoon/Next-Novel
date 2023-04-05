@@ -25,7 +25,7 @@ export default function Book(){
     const [create, setCreate] = useState("");
     const [input, setInput] = useState({});
     const { submitComment } = useCommentWrite();
-  
+    const [flag,setFlag] = useState(false);
     async function nvinfo() {
       try {
         const data = await novelall(novelid)
@@ -38,6 +38,7 @@ export default function Book(){
         const month = data.data.novel.created_at.substring(5, 7)
         const date = data.data.novel.created_at.substring(8, 10)
         setCreate(year+"."+month+"."+date)
+        setFlag(true)
       } catch (e) {
         console.log(e)
       }
@@ -74,7 +75,7 @@ export default function Book(){
           });
         };
         setRerender("hi")
-      }, [page_ref.current]);
+      }, [flag]);
 
 
       const navigate = useNavigate();
