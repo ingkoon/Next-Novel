@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 440px;
+  height: 90px;
+}
+.component {
+  position: relative;
+  padding: 0 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 1.5px 0;
+}
+.component.black {
+  border-bottom: 3px solid black;
+}
+.component > span {
+  font-family: "LINESeedKR-Bd";
+  font-size: 16px;
+  position: absolute;
+  top: 35px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.black > span {
+  color: white;
+}
+.white > span {
+  color: black;
+}
+.component > img {
+  height: 40px;
+}

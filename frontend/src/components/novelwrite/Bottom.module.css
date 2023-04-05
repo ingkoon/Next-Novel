@@ -1,0 +1,44 @@
+.bottom {
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: 30px;
+  /* border: 1px solid blue; */
+}
+.guide {
+  position: absolute;
+  left: 150px;
+}
+.middle {
+  position: relative;
+  margin: 0 auto;
+  width: 350px;
+  /* border: 1px solid red; */
+  text-align: center;
+}
+.middle > img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+.button {
+  width: 126px;
+  height: 46px;
+  background-color: #090909;
+  color: white;
+  font-family: "LINESeedKR-Bd";
+  font-size: 18px;
+  box-shadow: 3px 3px 0px 0px rgba(242, 205, 60, 1);
+  padding-top: 5px;
+  border: none;
+  transition: all 0.3s ease;
+}
+.button:hover {
+  cursor: pointer;
+  background-color: #f66f00;
+  box-shadow: 3px 3px 0px 0px black;
+  transition: all 0.3s ease;
+}
