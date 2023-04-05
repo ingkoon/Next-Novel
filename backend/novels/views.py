@@ -133,8 +133,10 @@ class NovelCommentAPI(ListCreateAPIView):
     def perform_create(self, serializer):
         novel_pk = self.kwargs.get("novel_id")
         novel = Novel.objects.get(pk=novel_pk)
+        time.sleep(3)
         novel.novelstats.comment_count = F('comment_count') + 1
         novel.novelstats.save()
+
         serializer.save(novel=novel, author=self.request.user)
 
     def get_queryset(self):
@@ -224,7 +226,7 @@ class NovelStartAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, **kwargs):
-
+        time.sleep(1000)
         serializer = NovelStartSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             novel, novel_content, images = serializer.save(author=request.user)
