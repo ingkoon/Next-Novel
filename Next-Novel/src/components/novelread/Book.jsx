@@ -88,18 +88,41 @@ export default function Book(){
         setInput((input) => ({ ...input, [name]: value }));
       };
 
+      // const submit = () => {
+      //   if (!input.comm) {
+      //     return;
+      //   }
+      //   const formData = new FormData();
+        
+      //   formData.append("novel_id", novelid);
+      //   console.log("novelId불러오기:" + novelid)
+      //   formData.append("comm", input.comm);
+      //   submitComment.mutate(formData, {
+      //     onSuccess: (res) => {
+      //       console.log(res);
+      //       navigate(`/library/${id}/intro`, { state: { id: novelid } });
+      //     },
+      //   });
+      // };
+
       const submit = () => {
         if (!input.comm) {
           return;
         }
-        const formData = new FormData();
-        formData.append("novel_id", novelinfo.novel.id);
-        formData.append("comm", input.comm);
-        submitComment.mutate(formData, {
-          onSuccess: (res) => {
+        const requestData = {
+          novel_id: novelid,
+          comm : input.comm,
+        }
+        
+        console.log("requestData 불러오기:" + requestData)
+        submitComment.mutate(requestData, {
+          onSuccess: (res) => { 
             console.log(res);
-            navigate(`/library/${novelinfo.novel.id}/intro`, { state: { id: novelinfo.novel.id } });
+            navigate(`/library/${id}/intro`, { state: { id: novelid } });
           },
+          headers : {
+            "Content-Type" : "application/json",
+          }
         });
       };
     
@@ -193,8 +216,8 @@ export default function Book(){
                                 />
                             </div>
                             <div className={style.sbar}></div>
-                            <div className={style.link} onclick={submit}>
-                                <h2>소감평 작성</h2>
+                            <div className={style.link} onClick={submit}>
+                                <h2>소감평작성</h2>
                             </div>
                         </div>
                     </div>
