@@ -13,9 +13,9 @@ export default function useCommentWrite() {
     //     writecomment(formData.novel_id, formData.comm)
     // });
 
-    const submitComment = useMutation((requestData)  => {
+    const submitComment = useMutation(async (requestData)  => {
         console.log(requestData.novel_id, requestData.comm);
-        writecomment(requestData.novel_id, requestData.comm)
+        await writecomment(requestData.novel_id, requestData.comm)
     });
 
 

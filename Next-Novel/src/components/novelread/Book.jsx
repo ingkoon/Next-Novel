@@ -147,9 +147,10 @@ export default function Book(){
         console.log("requestData 불러오기:" + requestData)
         await submitComment.mutate(requestData, {
           onSuccess: (res) => { 
-            console.log(res);
+            console.log(res,1111111111111111111111111111);
             navigate(`/library/${id}/intro`, { state: { id: novelid } });
           },
+          staleTime: Infinity,
           headers : {
             "Content-Type" : "application/json",
           }
