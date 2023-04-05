@@ -42,7 +42,7 @@ if DEV == 'TRUE':
         'silk',
     ]
 else:
-    DEBUG = False
+    DEBUG = True
     # INSTALLED_APPS = [
     #     'django.contrib.admin',
     #     'django.contrib.auth',
