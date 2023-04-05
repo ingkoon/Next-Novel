@@ -3,9 +3,6 @@ import style from "./Snakegame.module.css"
 
 export default function Snakegame({state}) {
   
-
-  let playAgain = document.querySelector(".playAgain")
-  let play = document.querySelector(".play")
   let width = 20
   let currentIndex = 0
   let appleIndex = 0
@@ -16,6 +13,7 @@ export default function Snakegame({state}) {
   let intervalTime = 0
   let interval = 0
   const [maxscore, setMaxscore] = useState(localStorage.getItem("snakegame_score"))
+  const [isplaying, setIsplaying] = useState(false)
 
   const handleContentLoaded = () => {
 
@@ -30,12 +28,18 @@ export default function Snakegame({state}) {
     glitch(h2)
     h1.classList.add(style.hidden)
     return () => {
+      setIsplaying(false)
       clearInterval(interval)
     }
   }, [])
 
   useEffect(() => {
-    // console.log(score)
+    console.log("useeffect")
+    console.log("effect", score)
+    if(score > maxscore) {
+      localStorage.setItem("snakegame_score", score)
+      setMaxscore(localStorage.getItem("snakegame_score"))
+    }
   }, [score, maxscore])
 
   //createboard function
@@ -50,8 +54,23 @@ export default function Snakegame({state}) {
     setScore(0)
   }
 
+  useEffect(() => {
+    if(isplaying) {
+      const up = document.querySelector('#up')
+      const down = document.querySelector('#down')
+      const right = document.querySelector('#right')
+      const left = document.querySelector('#left')
+
+      up.addEventListener("click", ()=> direction = -width)
+      down.addEventListener("click", ()=> direction = +width)
+      left.addEventListener("click", ()=> direction = -1)
+      right.addEventListener("click", ()=> direction = 1)
+    }
+  }, [isplaying])
+
   //startgame function
   function startGame() {
+    setIsplaying(true)
     const h1 = document.querySelector('#gameover')
     let h2 = document.querySelector('#start')
     h1.classList.add(style.hidden)
@@ -71,12 +90,6 @@ export default function Snakegame({state}) {
   function moveOutcome() {
     let squares = document.querySelectorAll("#grid div")
     if (checkForHits(squares)) {
-      if(maxscore < score ) {
-        console.log("score", score)
-        localStorage.setItem("snakegame_score", score)
-        setMaxscore(score+1)
-      }
-      setMaxscore(localStorage.getItem("snakegame_score"))
       
       let h1 = document.querySelector('#gameover')
       h1.classList.remove(style.hidden)
@@ -212,8 +225,26 @@ export default function Snakegame({state}) {
             <div data-txt="READY" className={style.starttxt}>READY</div>
           </div>
           <div className={style.rightpart}>
-            <div className={style.scoreDisplay}>현재 점수 : {score}</div>
-            <div className={style.scoreDisplay}>최고 점수 : {maxscore}</div>
+            <div>
+              <div className={style.scoreDisplay}>현재 점수 : {score}</div>
+              <div className={style.scoreDisplay}>최고 점수 : {maxscore ? maxscore : 0}</div>
+              <div style={{'fontSize':'15px', 'marginTop':'10px'}}>
+                키보드 혹은 아래 버튼을
+                <div>
+                  이용해주세요.
+                </div>
+              </div>
+            </div>
+
+            <div className={style.arrow}>
+              <img className={style.arrowup} id='up' src={process.env.PUBLIC_URL + 'icon/arrow.svg'}/>
+              <div className={style.leftright}>
+                <img className={style.arrowleft} id='left' src={process.env.PUBLIC_URL + 'icon/arrow.svg'}/>
+                <img className={style.arrowright} id='right' src={process.env.PUBLIC_URL + 'icon/arrow.svg'}/>
+              </div>
+
+              <img className={style.arrowdown} id='down' src={process.env.PUBLIC_URL + 'icon/arrow.svg'}/>
+            </div>
           </div>
         </div>
       </div>
