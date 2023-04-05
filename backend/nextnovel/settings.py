@@ -43,6 +43,36 @@ if DEV == 'TRUE':
     ]
 else:
     DEBUG = False
+    # INSTALLED_APPS = [
+    #     'django.contrib.admin',
+    #     'django.contrib.auth',
+    #     'django.contrib.contenttypes',
+    #     'django.contrib.sessions',
+    #     'django.contrib.messages',
+    #     'django.contrib.staticfiles',
+    #     # site 설정도!
+    #     'django.contrib.sites',
+    #     # app
+    #     'users',
+    #     'novels',
+    #     # cors
+    #     'corsheaders',
+    #
+    #     # Libraries
+    #
+    #     'rest_framework',
+    #     'rest_framework.authtoken',
+    #     'rest_framework_simplejwt',
+    #     'dj_rest_auth',
+    #     'dj_rest_auth.registration',
+    #     # allauth for registration
+    #     'allauth',
+    #     'allauth.account',
+    #     'allauth.socialaccount',
+    #     'allauth.socialaccount.providers.kakao',
+    #
+    #     'django_seed',
+    # ]
     INSTALLED_APPS = [
         'django.contrib.admin',
         'django.contrib.auth',
@@ -57,12 +87,11 @@ else:
         'novels',
         # cors
         'corsheaders',
-
         # Libraries
-
         'rest_framework',
         'rest_framework.authtoken',
         'rest_framework_simplejwt',
+
         'dj_rest_auth',
         'dj_rest_auth.registration',
         # allauth for registration
@@ -70,10 +99,12 @@ else:
         'allauth.account',
         'allauth.socialaccount',
         'allauth.socialaccount.providers.kakao',
-
         'django_seed',
-    ]
+        'drf_spectacular',
+        'django_extensions',
 
+        'silk',
+    ]
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'silk.middleware.SilkyMiddleware',
