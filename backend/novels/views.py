@@ -19,6 +19,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from nextnovel.exceptions import RequestAIServerError
+from nextnovel.permissions import IsOwnerOrReadOnly
 from nextnovel.settings import DEV
 from nextnovel.throttles import LikeRateThrottle
 from novels.models import NovelComment, Novel, NovelLike, Genre, NovelContent, NovelContentImage, NovelStats
@@ -87,12 +88,7 @@ class NovelPreviewAPI(RetrieveAPIView):
         return context
 
     def get_queryset(self):
-        queryset = self.queryset
-        if isinstance(queryset, QuerySet):
-            # Ensure queryset is re-evaluated on each request.
-            queryset = queryset.all()
-
-        queryset = queryset.select_related('author', 'novelstats')
+        queryset = self.queryset.select_related('author', 'novelstats')
 
         return queryset
 
@@ -100,22 +96,19 @@ class NovelPreviewAPI(RetrieveAPIView):
 def novel_hit(novel: Novel, user: User):
     if user.is_anonymous:
         return None
-
-    cache_key = f'novel_hit:{novel.id}:{user.id}'
-    recent_hit = cache.get(cache_key)
-    if not recent_hit:
-        novel.novelstats.hit_count = F('hit_count') + 1
-        novel.novelstats.save()
-        cache.set(cache_key, int(time.time()), 360)
+    novel.novelstats.hit_count = F('hit_count') + 1
+    novel.novelstats.save()
 
 
 class NovelDetailAPI(RetrieveDestroyAPIView):
     queryset = Novel.objects.all().select_related("author")
     serializer_class = NovelReadSerializer
+    permission_classes = [IsOwnerOrReadOnly]
     lookup_url_kwarg = 'novel_id'
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
+
         novel_content = NovelContent.objects.filter(novel=instance).prefetch_related(
             "novelcontentimage_set").order_by(
             'step')
@@ -151,22 +144,22 @@ class NovelCommentAPI(ListCreateAPIView):
             queryset = queryset.all()
         novel_pk = self.kwargs.get("novel_id")
         novel = Novel.objects.get(pk=novel_pk)
-        queryset = queryset.select_related("author").filter(novel=novel)
+        queryset = queryset.select_related("author").filter(novel=novel).order_by('-id')
         return queryset
 
 
 class NovelCommentDeleteAPI(DestroyAPIView):
     queryset = NovelComment.objects.all()
     serializer_class = NovelCommentSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
     lookup_url_kwarg = 'comment_id'
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
+        self.check_object_permissions(request, instance)
+        self.perform_destroy(instance)
         instance.novel.novelstats.comment_count = F('comment_count') - 1
         instance.novel.novelstats.save()
-        self.perform_destroy(instance)
-
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -183,7 +176,6 @@ class NovelLikeAPI(CreateAPIView):
     def perform_create(self, serializer):
         novel = self.get_novel()
         obj = self.get_queryset().filter(novel=novel, user=self.request.user)
-        print(novel.novelstats)
         if obj:
             obj.delete()
             novel.novelstats.like_count = F('like_count') - 1
@@ -194,7 +186,6 @@ class NovelLikeAPI(CreateAPIView):
             novel.novelstats.like_count = F('like_count') + 1
             novel.novelstats.save()
             return False
-        # Fix me
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -234,15 +225,10 @@ class NovelStartAPI(APIView):
 
     def post(self, request, **kwargs):
 
-        # last_novel = Novel.objects.filter(author=request.user).last()
-        # if last_novel:
-        #     if last_novel.status != Novel.Status.FINISHED:
-        #         last_novel.delete()
-
         serializer = NovelStartSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             novel, novel_content, images = serializer.save(author=request.user)
-            # novel, novel_content, images = serializer.save(author=User.objects.get(pk=1))
+
         files = []
         for image in images:
             filename = image.image.name.split('/')[-1]
@@ -311,15 +297,12 @@ class NovelStartAPI(APIView):
                     }
                 ]
             }
-        #############
 
-        ## 캡셔닝 처리
         caption = response_json.pop("caption")
         for i in range(len(images)):
             image = images[i]
             image.caption = caption[i]
         NovelContentImage.objects.bulk_update(images, ["caption"])
-        ##
 
         novel_content.content = story
         novel_content.save()
@@ -338,9 +321,8 @@ class NovelStartAPI(APIView):
             2: "판타지",
             3: "추리",
             5: "자유"
-
         }
-        print(caption)
+
         response_data = {
             "id": novel.id,
             "step": 1,
@@ -528,20 +510,8 @@ class NovelCoverImageAPI(APIView):
             novel = serializer.validated_data.get("novel_id")
             image = serializer.validated_data.get("image")
 
-        # filename = image.image.name.split('/')[-1]
-        # image_file = image.image.open(mode='rb')
-        #
-        # files = {'image': (filename, image_file)}
-        #
-        # print(novel.cover_img)
-
-        ### 실제
-
         files = {'image': (image.name, image.file)}
         response = requests.post(image_url, files=files)
-        ### 가짜
-        # temp_url = "https://cdn.newsculture.press/news/photo/202212/513486_627441_526.jpg"
-        # response = requests.get(temp_url)
 
         if response.status_code != 200:
             raise RequestAIServerError
@@ -550,11 +520,10 @@ class NovelCoverImageAPI(APIView):
 
         novel.cover_img.save(file_name, image_content)
         novel.original_cover_img.save("original.png", image)
-        # print(novel.id, novel.cover_img)
 
         novel.save()
         serializer = NovelImageSerializer(instance=novel)
-        # print("saved")
+
         return Response(data=serializer.data)
 
 
@@ -582,11 +551,12 @@ class NovelQuestionAPI(RetrieveAPIView):
 
 
 class NovelCompleteAPI(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
     serializer_class = NovelCompleteSerializer
 
     def post(self, request):
         novel = get_object_or_404(Novel, pk=request.data['novel_id'])
+        self.check_object_permissions(self.request, novel)
         serializer = NovelCompleteSerializer(novel, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(status=Novel.Status.FINISHED)
