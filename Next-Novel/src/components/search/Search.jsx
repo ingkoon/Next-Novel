@@ -1,7 +1,7 @@
 import style from './Search.module.css'
 import Booklist from './Booklist'
 
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import { getsearch } from "../../api/library"
 
 export default function Search(){
@@ -36,6 +36,10 @@ export default function Search(){
       search()
     }
   }
+
+  useEffect(() => {
+    getsearchlist("")
+  })
 
   return (
     <div>

@@ -15,7 +15,7 @@ export default function Genre({selectgenre}){
   return (
     <div className={style.genre}>
       <div>| 장르 : </div>
-      <button className={style.clicked} onClick={click}>전체</button>
+      <button className={style.clicked} onClick={(e)=> {click(e); selectgenre('');}}>전체</button>
       <button onClick={(e)=> {click(e); selectgenre('mystery');}} id='mystery'>추리</button>
       <button onClick={(e)=> {click(e); selectgenre('fantasy')}} >판타지</button>
       <button onClick={(e)=> {click(e); selectgenre('sf')}}> SF</button>

@@ -120,6 +120,7 @@
   word-break: keep-all;
   position: relative;
   z-index: 1;
+  justify-content: center;
 }
 
 .newcard_ment {
