@@ -87,7 +87,7 @@ else:
     #
     #     'django_seed',
     # ]
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['j8a502.p.ssafy.io']
     INSTALLED_APPS = [
         'django.contrib.admin',
         'django.contrib.auth',
