@@ -16,7 +16,10 @@ urlpatterns = [
     path('kakao/callback/', KakaoCallback.as_view(), name='kakao_callback'),
     path('kakao/login/finish/', KakaoLogin.as_view(), name='kakao_login_todjango'),
 ]
-
+urlpatterns += [
+    path('test_login/', UserTestAuthAPI.as_view(), name='user_test_login'),
+    path('test_sleep/', MytestAPI.as_view()),
+]
 if os.environ.get("DEV") == 'TRUE':
     urlpatterns += [
         path('test_login/', UserTestAuthAPI.as_view(), name='user_test_login'),
