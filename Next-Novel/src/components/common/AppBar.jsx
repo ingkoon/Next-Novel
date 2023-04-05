@@ -44,19 +44,30 @@ export default function AppBar() {
             alt="search"
           />
         </Link>
-        <Link
-          to="/laboratory"
-          onClick={(e) => {
-            e.preventDefault();
-            navigate("/laboratory", { state: uuid() });
-          }}
-        >
-          <img
-            src={process.env.PUBLIC_URL + "/icon/banner/pen.svg"}
-            className={style.banner_pen}
-            alt="pen"
-          />
-        </Link>
+
+        {!localStorage.getItem("access_token")
+          ? <div onClick={() => setLoginIsOpen(true)}>
+              <img
+                src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"}
+                className={style.banner_mypage}
+                alt="idcard"
+              />
+            </div> 
+          : 
+            <Link
+              to="/laboratory"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/laboratory", { state: uuid() });
+              }}
+            >
+              <img
+                src={process.env.PUBLIC_URL + "/icon/banner/pen.svg"}
+                className={style.banner_pen}
+                alt="pen"
+              />
+            </Link>
+          }
 
         {/* {user.access_token === '' */}
         {!localStorage.getItem("access_token")
@@ -75,6 +86,7 @@ export default function AppBar() {
       </div>
 
       <Modal
+        closeTimeoutMS={200}
         isOpen={loginIsOpen}
         onRequestClose={() => setLoginIsOpen(false)}
         style={{

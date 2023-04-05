@@ -1,6 +1,7 @@
 import style from './Update.module.css'
-import React, { useState, useRef, useEffect } from "react"
-import {patchuser, user} from "../../../api/user"
+import React, { useState, useRef, useEffect, useContext } from "react"
+import {patchuser, getuserinfo} from "../../../api/user"
+import {AuthContext} from "../../../context/AuthContext"
 
 export default function Update({closemodal}){
 
@@ -9,11 +10,12 @@ export default function Update({closemodal}){
   const [profile, setProfile] = useState()
   const imgRef = useRef()
   const [userinfo, setUserinfo] = useState()
-  
+  const { user, setUser } = useContext(AuthContext)
+
   // api 통신하기
   async function getuser() {
     try {
-      const data = await user()
+      const data = await getuserinfo()
       let tmp = data.data.created_at
       let year = tmp.substring(0, 4)
       let month = tmp.substring(5,7)
@@ -56,13 +58,19 @@ export default function Update({closemodal}){
   const updateuser = () => {
 
     const formData = new FormData()
-    formData.append('profile_image', profile)
+
+    if(profile !== undefined) {
+      formData.append('profile_image', profile)
+    }
     formData.append('nickname', nickName)
+
 
     async function updateuserinfo(){
       try {
         const data = await patchuser(formData)
         console.log(data)
+
+        localStorage.setItem('nickname', nickName)
         closemodal()
       }
       catch(e) {
