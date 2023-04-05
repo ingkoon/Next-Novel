@@ -41,6 +41,18 @@ if DEV == 'TRUE':
 
         'silk',
     ]
+    MIDDLEWARE = [
+        'corsheaders.middleware.CorsMiddleware',
+        'silk.middleware.SilkyMiddleware',
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ]
+
 else:
     DEBUG = True
     # INSTALLED_APPS = [
@@ -106,17 +118,17 @@ else:
 
         'silk',
     ]
-MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    'silk.middleware.SilkyMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    MIDDLEWARE = [
+        'corsheaders.middleware.CorsMiddleware',
+        # 'silk.middleware.SilkyMiddleware',
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ]
 
 ROOT_URLCONF = 'nextnovel.urls'
 
