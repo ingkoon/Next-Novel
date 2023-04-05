@@ -13,7 +13,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, RetrieveDestroyAPIView, ListCreateAPIView, \
     ListAPIView, DestroyAPIView
 from rest_framework.pagination import CursorPagination
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -134,6 +134,7 @@ class NovelDetailAPI(RetrieveDestroyAPIView):
 class NovelCommentAPI(ListCreateAPIView):
     queryset = NovelComment.objects.all()
     serializer_class = NovelCommentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
     lookup_url_kwarg = 'novel_id'
 
     def perform_create(self, serializer):
@@ -157,6 +158,7 @@ class NovelCommentAPI(ListCreateAPIView):
 class NovelCommentDeleteAPI(DestroyAPIView):
     queryset = NovelComment.objects.all()
     serializer_class = NovelCommentSerializer
+    permission_classes = [IsAuthenticated]
     lookup_url_kwarg = 'comment_id'
 
     def destroy(self, request, *args, **kwargs):
@@ -232,10 +234,10 @@ class NovelStartAPI(APIView):
 
     def post(self, request, **kwargs):
 
-        last_novel = Novel.objects.filter(author=request.user).last()
-        if last_novel:
-            if last_novel.status != Novel.Status.FINISHED:
-                last_novel.delete()
+        # last_novel = Novel.objects.filter(author=request.user).last()
+        # if last_novel:
+        #     if last_novel.status != Novel.Status.FINISHED:
+        #         last_novel.delete()
 
         serializer = NovelStartSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
