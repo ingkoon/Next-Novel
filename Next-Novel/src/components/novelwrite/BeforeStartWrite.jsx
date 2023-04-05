@@ -3,6 +3,7 @@ import TitleBar from "../common/TitleBar";
 import style from "./BeforeStartWrite.module.css";
 
 export default function BeforeStartWrite({ step, setStep }) {
+  
   return (
     <div>
       <TitleBar
@@ -49,6 +50,9 @@ export default function BeforeStartWrite({ step, setStep }) {
           alt="circle_right"
         ></img>
       </div>
+
+
+
     </div>
   );
 }

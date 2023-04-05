@@ -5,9 +5,15 @@ import useNovelWrite from "../../hooks/useNovelWrite";
 export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
   const canvasRef = useRef(null); //canvas
   const [getCtx, setGetCtx] = useState(null); //canvas
+  const [rect, setRect] = useState()
   const [painting, setPainting] = useState(false); //그림을 그리고 있는지 아닌지
   const [mouseX, setmouseX] = useState(); //캔버스 내 마우스 좌표
   const [mouseY, setmouseY] = useState(); //캔버스 내 마우스 좌표
+  const [touchX, setTouchX] = useState(); //캔버스 내 터치 좌표
+  const [touchY, setTouchY] = useState(); //캔버스 내 터치 좌표
+  const [lasttouchX, setLastTouchX] = useState(); //캔버스 내 터치 좌표
+  const [lasttouchY, setLastTouchY] = useState(); //캔버스 내 터치 좌표
+  const [touching, setTouching] = useState(false) // 터치 하고있는지 아닌지
   const canvasWidth = 608;
   const canvasHeight = 380;
 
@@ -92,6 +98,7 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
     const ctx = canvas.getContext("2d");
+    setRect(canvas.getBoundingClientRect())
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     ctx.lineWidth = widthState;
@@ -161,6 +168,37 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
       setPaintState(true); //마우스에 손이 눌러지고 있음
     }
   };
+
+  const touchStart = (e) => {
+    getCtx.beginPath()
+    setPainting(true)
+    setLastTouchX(e.touches[0].pageX - rect.left)
+    setLastTouchY(e.touches[0].pageY - rect.top)
+    getCtx.moveTo(e.touches[0].pageX - rect.left, e.touches[0].pageY - rect.top)
+
+    getCtx.arc(e.touches[0].pageX - rect.left, e.touches[0].pageY - rect.top, widthState/2, 0, 2*Math.PI)
+    getCtx.stroke()
+
+  }
+
+  const touch = (e) => {
+    if(painting) {
+      getCtx.moveTo(lasttouchX, lasttouchY)
+      let x = e.touches[0].pageX - rect.left
+      let y = e.touches[0].pageY - rect.top
+      getCtx.lineTo(x, y)
+      setLastTouchX(e.touches[0].pageX - rect.left)
+      setLastTouchY(e.touches[0].pageY - rect.top)
+      getCtx.stroke()
+      setLastTouchX(x)
+      setLastTouchY(y)
+    }
+  }
+  
+  const touchEnd = (e) => {
+    setPainting(false)
+  }
+
   const onPencil = () => {
     //펜 선택
     getCtx.strokeStyle = colorState;
@@ -237,6 +275,9 @@ export default function Canvas1({ imageSrcs, setImageSrcs, selected }) {
           onMouseLeave={() => {
             setPainting(false);
           }}
+          onTouchStart={(e) => {touchStart(e); console.log("터치스타트")}}
+          onTouchMove={(e) => {touch(e); console.log("터치")}}
+          onTouchEnd={(e) => {touchEnd(e)}}
         />
       </div>
       <div className={style.tools}>
