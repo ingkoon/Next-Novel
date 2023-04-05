@@ -1,6 +1,8 @@
 import style from './Book.module.css';
 import Materials from './Materials.jsx';
 import Qna from './Qna.jsx';
+import Modal from "react-modal";
+import Login from "../login/Login";
 
 import { useCallback, useEffect, useState, useRef } from 'react'
 import { Link, useLocation } from "react-router-dom"
@@ -106,7 +108,33 @@ export default function Book(){
       //   });
       // };
 
-      const submit = () => {
+      // const submit = () => {
+      //   if (!input.comm) {
+      //     return;
+      //   }
+      //   const requestData = {
+      //     novel_id: novelid,
+      //     comm : input.comm,
+      //   }
+        
+      //   console.log("requestData 불러오기:" + requestData)
+      //   submitComment.mutate(requestData, {
+      //     onSuccess: (res) => { 
+      //       console.log(res);
+      //       navigate(`/library/${id}/intro`, { state: { id: novelid } });
+      //     },
+      //     headers : {
+      //       "Content-Type" : "application/json",
+      //     }
+      //   });
+      // };
+
+      const [loginIsOpen, setLoginIsOpen] = useState(false);
+      const submit = async() => {
+        if (!localStorage.getItem("access_token")) {
+          setLoginIsOpen(true);
+          return;
+        }
         if (!input.comm) {
           return;
         }
@@ -116,7 +144,7 @@ export default function Book(){
         }
         
         console.log("requestData 불러오기:" + requestData)
-        submitComment.mutate(requestData, {
+        await submitComment.mutate(requestData, {
           onSuccess: (res) => { 
             console.log(res);
             navigate(`/library/${id}/intro`, { state: { id: novelid } });
@@ -124,12 +152,35 @@ export default function Book(){
           headers : {
             "Content-Type" : "application/json",
           }
-        });
+        })
+      };
+      const closemodal = () => {
+        setLoginIsOpen(false);
       };
     
 
     return (
         <div className={style.back}>
+          <Modal
+            closeTimeoutMS={200}
+            isOpen={loginIsOpen}
+            onRequestClose={() => setLoginIsOpen(false)}
+            style={{
+              overlay: {
+                zIndex: "100",
+              },
+              content: {
+                width: "400px",
+                height: "500px",
+                margin: "auto",
+                padding: "0",
+                borderRadius: "20px",
+                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.5)",
+              },
+            }}
+          >
+            <Login closemodal={closemodal} />
+          </Modal>
             {novelinfo && <div className={style.book}>
                 {novelinfo && <div className={style.pages}>
                     <div className={style.page}>

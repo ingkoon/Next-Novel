@@ -50,8 +50,9 @@
 }
 .num{
     font-family: 'LINESeedKR-Bd';
-    position: relative;
-    left: -35%;
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
     color: #FFFEFC;
     font-size: 24px;
     z-index: 2;
