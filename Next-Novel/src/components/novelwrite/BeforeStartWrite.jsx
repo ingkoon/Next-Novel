@@ -84,7 +84,6 @@ export default function BeforeStartWrite({ step, setStep }) {
       </div>
 
 
-
     </div>
   );
 }
