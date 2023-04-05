@@ -82,6 +82,9 @@ export default function BeforeStartWrite({ step, setStep }) {
           alt="circle_right"
         />
       </div>
+
+
+
     </div>
   );
 }

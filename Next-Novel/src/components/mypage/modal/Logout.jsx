@@ -16,6 +16,7 @@ export default function Delete({closemodal}) {
   const logout = () => {
     localStorage.removeItem("access_token")
     localStorage.removeItem("refresh_token")
+    localStorage.removeItem("nickname")
     closemodal()
     goTop()
     navigateToHome()

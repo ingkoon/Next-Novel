@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import style from "./Snakegame.module.css"
 
-export default function Snakegame() {
+export default function Snakegame({state}) {
   
 
   let playAgain = document.querySelector(".playAgain")
@@ -29,6 +29,9 @@ export default function Snakegame() {
     glitch(h1)
     glitch(h2)
     h1.classList.add(style.hidden)
+    return () => {
+      clearInterval(interval)
+    }
   }, [])
 
   useEffect(() => {
@@ -90,11 +93,14 @@ export default function Snakegame() {
     currentSnake.unshift(currentSnake[0] + direction)
     // movement ends here
     eatApple(squares, tail)
-    squares[currentSnake[0]].classList.add(style.snake)
+    if (squares[currentSnake[0]].classList) {
+      squares[currentSnake[0]].classList.add(style.snake)   
+    }
   }
 
   function checkForHits(squares) {
     if (
+      (state) &&
       (currentSnake[0] + width >= width * width && direction === width) ||
       (currentSnake[0] % width === width - 1 && direction === 1) ||
       (currentSnake[0] % width === 0 && direction === -1) ||
