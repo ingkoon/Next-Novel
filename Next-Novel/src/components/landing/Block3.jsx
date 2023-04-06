@@ -73,7 +73,7 @@ const goNext2 = () => {
         // const path3 = document.querySelector(`.${style.svg4} path`);
 
         // Get the SVG paths and contents
-        const content1 = document.querySelector(`.${style.content1}`);
+        const content1 = document.querySelector('#content1');
         // const content2 = document.querySelector(`.${style.content2}`);
         // const content3 = document.querySelector(`.${style.content3}`);
 
@@ -143,7 +143,7 @@ const goNext2 = () => {
             <div className={style.header} ref={secondBlock}>
                 <Draw1 className={style.svg1} />
             </div>
-            <div className={style.content1}>
+            <div className={style.content1} id='content1'>
                 <Draw2 className={style.svg2}/>
             </div>
             <div className={style.content2}>
