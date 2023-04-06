@@ -9,6 +9,7 @@ export default function Booklist({novels}) {
   const [arr, setArr] = useState([])
 
   let novellen = novels.length
+  console.log(novellen)
   useEffect(() => {
     let tmp = []
     for(let i=0; i < novellen; i++){

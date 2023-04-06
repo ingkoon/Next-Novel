@@ -38,8 +38,8 @@ export default function Search(){
   }
 
   useEffect(() => {
-    getsearchlist("")
-  })
+    search()
+  }, [])
 
   return (
     <div>
