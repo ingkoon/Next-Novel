@@ -22,7 +22,7 @@ export default function Block4(){
                         장르 선택
                     </div>
                     <div className={style.context}>
-                        <img src={process.env.PUBLIC_URL+'/img/snoopy2rm.png'} className={style.banner} alt='NN_LOGO_text'></img>
+                        <img src={process.env.PUBLIC_URL+'/img/icn1.svg'} className={style.banner1} alt='NN_LOGO_text'></img>
                     </div>
                 </div>
                 <div className={style.steps}>
@@ -36,7 +36,7 @@ export default function Block4(){
                         소재 그리기
                     </div>
                     <div className={style.context}>
-                        <img src={process.env.PUBLIC_URL+'/img/snoopy2rm.png'} className={style.banner} alt='NN_LOGO_text'></img>
+                        <img src={process.env.PUBLIC_URL+'/img/icn2.svg'} className={style.banner2} alt='NN_LOGO_text'></img>
                     </div>
                 </div>
                 <div className={style.steps}>
@@ -50,7 +50,7 @@ export default function Block4(){
                         소설 진행
                     </div>
                     <div className={style.context}>
-
+                        <img src={process.env.PUBLIC_URL+'/img/icn3.svg'} className={style.banner3} alt='NN_LOGO_text'></img>
                     </div>
                 </div>
                 <div className={style.steps}>
@@ -64,8 +64,7 @@ export default function Block4(){
                         완성 & 공유
                     </div>
                     <div className={style.context}>
-                        <img src={process.env.PUBLIC_URL+'/img/snoopy4rm.png'} className={style.banner} alt='NN_LOGO_text'></img>
-                        <div className={style.circle}></div>
+                        <img src={process.env.PUBLIC_URL+'/img/icn4.svg'} className={style.banner4} alt='NN_LOGO_text'></img>
                     </div> 
                 </div>
 

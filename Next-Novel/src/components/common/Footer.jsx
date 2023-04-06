@@ -23,10 +23,10 @@ export default function Footer(){
             </div>
             <div className={style.text1}>
                 NEXT_NOVEL : 넥스트노벨<br />
-                &copy; All Rights Reserved<br/><br /> 
-                <span>AI 소설 웹서비스&nbsp;&nbsp;[인공지능 : 영상]</span><br />
+                <span className={style.gray}>&copy; All Rights Reserved</span><br/><br /> 
+                <span>AI 소설 웹서비스&nbsp;&nbsp;</span><span className={style.gray}>[인공지능 : 영상]</span><br />
                 
-                A502 team: 6G&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BE:&nbsp;이정범 이명규 강은진&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FE:&nbsp;김수빈 소지현 서철원
+                Team 6G&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BE:&nbsp;<span className={style.gray}>이정범 이명규 강은진</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FE:&nbsp;<span className={style.gray}>김수빈 소지현 서철원</span>
             </div>
         </div>
     )
