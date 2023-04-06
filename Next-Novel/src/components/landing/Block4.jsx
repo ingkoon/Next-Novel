@@ -1,11 +1,15 @@
 import style from './Block4.module.css';
+import { useState } from 'react';
+import Modal from 'react-modal';
+import Snakegame from '../game/Snakegame';
 
 export default function Block4(){
 
     const goTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-
+    
+    const [modalisOpen, setModalisOpen] = useState(false)
     return(
         <div className={style.block}>
            <div className={style.title}>이용가이드</div>
@@ -95,8 +99,8 @@ export default function Block4(){
                 가입하고 나만의 소설을 만들어보세요.<br />
                 <span className={style.under}>소설 제작, 감상평, 즐겨찾기 등 다양한 기능들을 체험하세요.</span>
            </div>
-           <div>
-                <img src={process.env.PUBLIC_URL+'/img/NN_LOGO_text.svg'} className={style.under2} alt='NN_LOGO_text'></img>
+           <div onClick={()=> setModalisOpen(true)}>
+                <img  src={process.env.PUBLIC_URL+'/img/NN_LOGO_text.svg'} className={style.under2} alt='NN_LOGO_text'></img>
            </div>
            <div className={style.bonus}>
                 <span className={style.under3}>Next Novel</span><br />
@@ -108,6 +112,29 @@ export default function Block4(){
             <div className={style.top}>
                 top
             </div>
+            <Modal
+                closeTimeoutMS={200}
+                isOpen={modalisOpen}
+                onRequestClose={() => setModalisOpen(false)}
+                style={{
+                overlay: {
+                    zIndex: "100",
+                },
+                content: {
+                    width: "700px",
+                    height: "500px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    background: "#090909",
+                    margin: "auto",
+                    overflowX : 'hidden'
+                },
+                }}
+            >
+                <Snakegame state={"egg"}/>
+            </Modal>
+
         </div>
     )
 }

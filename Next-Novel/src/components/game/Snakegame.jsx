@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import style from "./Snakegame.module.css"
 
 
-export default function Snakegame() {
+export default function Snakegame({state}) {
   
   let width = 20
   let currentIndex = 0
@@ -147,6 +147,7 @@ export default function Snakegame() {
   }
 
   function control(e) {
+    
     if ( e.key === 'ArrowUp') {
       direction = -width
     }
@@ -203,16 +204,20 @@ export default function Snakegame() {
   return (
     <>
       <div className={style.loadingmodal}>
-        <div className={style.text}>
-          <span>소</span>
-          <span>설</span>
-          <span>작</span>
-          <span>성</span>
-          <span>중</span>
-          <span>.</span>
-          <span>.</span>
-          <span>.</span>
-        </div>
+        {state && state !== 'egg' ?
+          <div className={style.text}>
+            <span>소</span>
+            <span>설</span>
+            <span>작</span>
+            <span>성</span>
+            <span>중</span>
+            <span>.</span>
+            <span>.</span>
+            <span>.</span>
+          </div>
+        :
+          <></>
+        }
         <div className={style.gamepart}>
           <div className={style.grid} id="grid"></div>
           <div className={style.gameover} id='gameover' onClick={replay}>

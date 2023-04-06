@@ -26,7 +26,7 @@ export default function LoadingModal({ state }) {
         }}
       >
         
-        <Snakegame/>
+        <Snakegame state=""/>
       </Modal>
     </>
   )
