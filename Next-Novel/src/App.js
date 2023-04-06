@@ -5,9 +5,27 @@ import { AuthContextProvider } from "./context/AuthContext"
 import AppBar from "./components/common/AppBar"
 import style from "./mobile.module.css"
 
+import TagManager from "./module"
+import { useEffect } from "react"
+import { useLocation } from "react-router-dom"
+
 const queryClient = new QueryClient()
 
 function App() {
+  const tagManager = new TagManager(
+    "https://ec2-3-38-85-143.ap-northeast-2.compute.amazonaws.com/api/v1/dump",
+    "026f3f30-cf15-47a4-a691-f0e4e1439bc6",
+    ["click"],
+    "*"
+  )
+
+  const location = useLocation()
+  useEffect(() => {
+    tagManager.attach()
+    return () => {
+      tagManager.detach()
+    }
+  }, [location])
 
   return (
     <>
