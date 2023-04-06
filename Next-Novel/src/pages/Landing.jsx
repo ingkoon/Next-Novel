@@ -1,7 +1,7 @@
 import React from "react";
 import style from '../components/landing/landing.module.css'
-import Block1 from '../components/landing/Block1'
-import Block2 from '../components/landing/Block2'
+// import Block1 from '../components/landing/Block1'
+// import Block2 from '../components/landing/Block2'
 import Block3 from '../components/landing/Block3'
 import Block4 from '../components/landing/Block4'
 
@@ -15,6 +15,8 @@ import Type7 from '../components/landing/Type7'
 import Type8 from '../components/landing/Type8'
 import Type9 from '../components/landing/Type9'
 import Type99 from '../components/landing/Type99'
+
+import Footer from '../components/common/Footer'
 
 export default function Landing() {
   return (
@@ -32,6 +34,7 @@ export default function Landing() {
         <Type9 />
         <Type99 />
         <Block4 />
+        <Footer />
     </div>
   );
 }
