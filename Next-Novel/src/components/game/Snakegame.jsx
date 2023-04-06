@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import style from "./Snakegame.module.css"
 
-export default function Snakegame({state}) {
+
+export default function Snakegame() {
   
   let width = 20
   let currentIndex = 0
@@ -34,18 +35,17 @@ export default function Snakegame({state}) {
   }, [])
 
   useEffect(() => {
-    console.log("useeffect")
-    console.log("effect", score)
+    settingscore()
+  }, [score])
+
+  function settingscore() {
     if(score > maxscore) {
       localStorage.setItem("snakegame_score", score)
       setMaxscore(localStorage.getItem("snakegame_score"))
     }
-  }, [score, maxscore])
-
+  }
   //createboard function
   function createBoard() {
-    console.log("create")
-    // popup.style.display = "none"
     let grid = document.querySelector("#grid")
     for (let i = 0; i < 400; i++) {
       let div = document.createElement("div")
@@ -67,6 +67,7 @@ export default function Snakegame({state}) {
       right.addEventListener("click", ()=> direction = 1)
     }
   }, [isplaying])
+
 
   //startgame function
   function startGame() {
@@ -90,7 +91,6 @@ export default function Snakegame({state}) {
   function moveOutcome() {
     let squares = document.querySelectorAll("#grid div")
     if (checkForHits(squares)) {
-      
       let h1 = document.querySelector('#gameover')
       h1.classList.remove(style.hidden)
 
@@ -106,14 +106,13 @@ export default function Snakegame({state}) {
     currentSnake.unshift(currentSnake[0] + direction)
     // movement ends here
     eatApple(squares, tail)
-    if (state) {
+    if(squares[currentSnake[0]].classList) {
       squares[currentSnake[0]].classList.add(style.snake)   
     }
   }
 
   function checkForHits(squares) {
     if (
-      (state) &&
       (currentSnake[0] + width >= width * width && direction === width) ||
       (currentSnake[0] % width === width - 1 && direction === 1) ||
       (currentSnake[0] % width === 0 && direction === -1) ||
@@ -134,7 +133,6 @@ export default function Snakegame({state}) {
       currentSnake.push(tail)
       randomApple(squares)
       setScore(score => score + 1)
-      console.log(score)
       clearInterval(interval)
       intervalTime = intervalTime * speed
       interval = setInterval(moveOutcome, intervalTime)
@@ -169,7 +167,6 @@ export default function Snakegame({state}) {
     document.addEventListener("keydown", control)
     createBoard()
     startGame()
-    // popup.style.display = "none"
   }
 
   function glitch(element) {

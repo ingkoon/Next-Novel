@@ -1,9 +1,10 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import Modal from "react-modal"
 
 import Snakegame from "../game/Snakegame.jsx"
 
 export default function LoadingModal({ state }) {
+
   return (
     <>
       <Modal
@@ -24,7 +25,8 @@ export default function LoadingModal({ state }) {
           },
         }}
       >
-        <Snakegame state={state}/>
+        
+        <Snakegame/>
       </Modal>
     </>
   )
