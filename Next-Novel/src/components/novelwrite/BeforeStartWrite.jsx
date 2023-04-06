@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import TitleBar from "../common/TitleBar";
 import style from "./BeforeStartWrite.module.css";
 import Modal from "react-modal";
@@ -16,6 +16,45 @@ export default function BeforeStartWrite({ step, setStep }) {
   const closemodal = () => {
     setLoginIsOpen(false);
   };
+
+  const typeitRef = useRef(null);
+  useEffect(() => {
+    const startTypingAnimation = () => {
+      const instance = new window.TypeIt(typeitRef.current, {
+        strings: ['내가 그리고','AI가 써주는 소설을','만들어볼까요?'],
+        speed: 20,
+        loop: false,
+      });
+
+      instance.go();
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            startTypingAnimation();
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 1.0, // The observer callback will be called when the element is 100% visible
+      }
+    );
+
+    if (typeitRef.current) {
+      observer.observe(typeitRef.current);
+    }
+
+    return () => {
+      if (typeitRef.current) {
+        observer.unobserve(typeitRef.current);
+      }
+    };
+  }, []);
+
+
   return (
     <div>
       <Modal
@@ -71,13 +110,7 @@ export default function BeforeStartWrite({ step, setStep }) {
               className={style.NN_LOGO}
               alt="NN_LOGO"
             />
-            <span>
-              내가 그리고
-              <br />
-              AI가 써주는 소설을
-              <br />
-              만들어볼까요?
-            </span>
+            <div ref={typeitRef} className={style.typing}></div>
             <button onClick={start}>시작하기</button>
           </div>
         </div>
