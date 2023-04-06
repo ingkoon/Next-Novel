@@ -1,19 +1,26 @@
-import "./App.css";
-import { Outlet } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AuthContextProvider } from "./context/AuthContext";
-import AppBar from "./components/common/AppBar";
-import style from "./mobile.module.css";
-import TagManager from "./module";
+import "./App.css"
+import { Outlet } from "react-router-dom"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { AuthContextProvider } from "./context/AuthContext"
+import AppBar from "./components/common/AppBar"
+import style from "./mobile.module.css"
+import TagManager from "./module"
+import { useEffect } from "react"
+import { useLocation } from "react-router-dom"
 
-const queryClient = new QueryClient();
-const tagManager = new TagManager('http://ec2-3-38-85-143.ap-northeast-2.compute.amazonaws.com/api/v1/dump', "1d08756c-9039-4595-934b-71100ef08795", ['click'])
+const queryClient = new QueryClient()
+const tagManager = new TagManager(
+  "https://ec2-3-38-85-143.ap-northeast-2.compute.amazonaws.com/api/v1/dump",
+  "1d08756c-9039-4595-934b-71100ef08795",
+  ["click"],
+  "*"
+)
 function App() {
   const location = useLocation()
   useEffect(() => {
-    tagManager.attach();
+    tagManager.attach()
     return () => {
-      tagManager.detach();
+      tagManager.detach()
     }
   }, [location])
   return (
@@ -26,7 +33,7 @@ function App() {
         </AuthContextProvider>
       </QueryClientProvider>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

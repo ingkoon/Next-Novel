@@ -36,6 +36,7 @@ export default function AppBar() {
             className={style.banner_book}
             alt="library"
           />
+          <div className={style.arrow_box}>도서관</div>
         </Link>
         <Link to="/library/search">
           <img
@@ -43,6 +44,7 @@ export default function AppBar() {
             className={style.banner_search}
             alt="search"
           />
+          <div className={style.arrow_box}>검색</div>
         </Link>
 
         <Link
@@ -57,19 +59,22 @@ export default function AppBar() {
             className={style.banner_pen}
             alt="pen"
           />
+          <div className={style.arrow_box}>소설생성</div>
         </Link>
 
         {/* {user.access_token === '' */}
         {!localStorage.getItem("access_token")
-          ? <div onClick={() => setLoginIsOpen(true)}>
+          ? <div className={style.loginimg} onClick={() => setLoginIsOpen(true)}>
               <img
                 src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"}
-                className={style.banner_mypage}
+                className={style.banner_login}
                 alt="idcard"
               />
+              <div className={style.arrow_box}>로그인</div>
             </div> 
           : <Link to="/mypage">
               <img src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"} className={style.banner_mypage} alt='idcard'></img>
+              <div className={style.arrow_box}>내정보</div>
             </Link>
           }
    
