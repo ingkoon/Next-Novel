@@ -15,6 +15,7 @@ import NovelWrite from "./pages/NovelWrite"
 import Landing from "./pages/Landing"
 import OnlyLogin from "./components/login/OnlyLogin"
 import Modal from "react-modal"
+import {BrowserRouter} from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -76,7 +77,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   // <React.StrictMode>
+  <BrowserRouter>
     <RouterProvider router={router} />
+  </BrowserRouter>
   // </React.StrictMode>
 )
 
