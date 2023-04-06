@@ -8,7 +8,7 @@ export default function GoToTop(){
 
   return (
     <div className={style.gotop} onClick={goTop}>
-      <hr/>
+      <hr className={style.hr}/>
       ↑맨위로
     </div>
   )
