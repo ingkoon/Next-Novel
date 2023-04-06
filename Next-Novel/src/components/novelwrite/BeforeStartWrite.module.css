@@ -6,7 +6,7 @@
 .orange_path {
   position: absolute;
   z-index: -2;
-  top: 180px;
+  top: 230px;
   height: 90px;
   max-width: 100vw;
   overflow: hidden;
@@ -137,4 +137,16 @@
 }
 .before_start_write_box_content > button:hover {
   cursor: pointer;
+}
+
+.typing{
+  position: relative;
+  top: 40px;
+  width: 100%;
+  font-family: 'gothic';
+  font-size: 40px;
+  color: #fffefc;
+  text-align: center;
+  z-index: 10;
+  letter-spacing: 5px;
 }
