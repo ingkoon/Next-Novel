@@ -2,6 +2,7 @@ import React from "react";
 import TitleBar from '../components/common/TitleBar'
 import Booklist from '../components/library/Booklist'
 import GoTop from "../components/common/GoToTop";
+import Footer from '../components/common/Footer'
 import NewBookList from "../components/library/NewBookList"
 
 export default function Novels() {
@@ -11,6 +12,7 @@ export default function Novels() {
       <NewBookList/>
       <Booklist/>
       <GoTop/>
+      <Footer />
     </>
   );
 }
