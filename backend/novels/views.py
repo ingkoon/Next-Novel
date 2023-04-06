@@ -200,7 +200,7 @@ class NovelLikeAPI(CreateAPIView):
 
 class NovelListPagination(CursorPagination):
     ordering = "-id"
-    page_size = 12
+    page_size = 1000
     cursor_query_param = "cursor"
 
 
