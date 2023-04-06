@@ -3,7 +3,14 @@
   display: flex;
   justify-content: center;
 }
-
+.orange_path {
+  position: absolute;
+  z-index: -2;
+  top: 180px;
+  height: 90px;
+  max-width: 100vw;
+  overflow: hidden;
+}
 .circle_left {
   position: absolute;
   z-index: -1;

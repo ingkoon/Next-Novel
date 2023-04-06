@@ -47,6 +47,11 @@ export default function BeforeStartWrite({ step, setStep }) {
       />
       <div className={style.before_start_write_content}>
         <img
+          src={process.env.PUBLIC_URL + "/img/orange_path.svg"}
+          className={style.orange_path}
+          alt="orange_path"
+        />
+        <img
           src={process.env.PUBLIC_URL + "/img/circles_left.svg"}
           className={style.circle_left}
           alt="circle_left"
@@ -82,8 +87,6 @@ export default function BeforeStartWrite({ step, setStep }) {
           alt="circle_right"
         />
       </div>
-
-
     </div>
   );
 }
