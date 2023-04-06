@@ -140,7 +140,7 @@ def create_random_nickname():
             "프로세스",
             "프로그램"
             ]
-    number = str(random.randint(1, 100000000))
+    number = str(random.randint(1, 99))
     first_pick = random.choice(first)
     last_pick = random.choice(last)
     return first_pick + last_pick + number
