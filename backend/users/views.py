@@ -10,9 +10,7 @@ from django.db.models import QuerySet
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import requests
-# Create your views here.
 from rest_framework import status
-from json import JSONDecodeError
 
 from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -71,7 +69,7 @@ class KakaoCallback(APIView):
 
         email = kakao_account.get("email", None)  # 이메일!
 
-        # 이메일 없으면 오류 => 카카오톡 최신 버전에서는 이메일 없이 가입 가능해서 추후 수정해야함
+        # 이메일 없으면 오류
         if email is None:
             return JsonResponse({'err_msg': 'failed to get email'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -91,8 +89,7 @@ class KakaoCallback(APIView):
             if accept_status != 200:
                 return JsonResponse({'err_msg': 'failed to signin'}, status=accept_status)
             accept_json = accept.json()
-            print(f"{user.nickname} logged in")
-            return JsonResponse(accept_json)
+            return Response(accept_json, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             # 애초에 가입된 유저가 없으면 =>  새로 회원가입 & 해당유저의 jwt발급
             data = {'access_token': access_token, 'code': code}
@@ -146,16 +143,7 @@ class UserNovelAPI(ListAPIView):
     serializer_class = NovelListSerializer
 
     def get_queryset(self):
-        assert self.queryset is not None, (
-                "'%s' should either include a `queryset` attribute, "
-                "or override the `get_queryset()` method."
-                % self.__class__.__name__
-        )
-
         queryset = self.queryset
-        if isinstance(queryset, QuerySet):
-            # Ensure queryset is re-evaluated on each request.
-            queryset = queryset.all()
         queryset = queryset.filter(author=self.request.user).select_related('author', 'novelstats')
         return queryset
 
@@ -165,16 +153,7 @@ class UserLikedNovelAPI(ListAPIView):
     serializer_class = NovelListSerializer
 
     def get_queryset(self):
-        assert self.queryset is not None, (
-                "'%s' should either include a `queryset` attribute, "
-                "or override the `get_queryset()` method."
-                % self.__class__.__name__
-        )
-
         queryset = self.queryset
-        if isinstance(queryset, QuerySet):
-            # Ensure queryset is re-evaluated on each request.
-            queryset = queryset.all()
         queryset = queryset.filter(novellike__user=self.request.user).select_related('author', 'novelstats')
         return queryset
 

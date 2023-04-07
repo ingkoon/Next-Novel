@@ -70,10 +70,7 @@ class NovelRecAPI(ListAPIView):
     serializer_class = NovelPreviewSerializer
 
     def get_queryset(self):
-        queryset = self.queryset
-        if isinstance(queryset, QuerySet):
-            # Ensure queryset is re-evaluated on each request.
-            queryset = queryset.all()
+        queryset = self.queryset.all().select_related("author", "novelstats")
         return queryset.order_by('?')[:5]
 
 
@@ -109,9 +106,10 @@ class NovelDetailAPI(RetrieveDestroyAPIView):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
 
-        novel_content = NovelContent.objects.filter(novel=instance).prefetch_related(
-            "novelcontentimage_set").order_by(
-            'step')
+        novel_content = NovelContent.objects \
+            .filter(novel=instance) \
+            .prefetch_related("novelcontentimage_set") \
+            .order_by('step')
 
         serializer = self.get_serializer(instance=novel_content, many=True)
         serializer_novel = NovelDetailSerializer(instance=instance)
@@ -135,13 +133,11 @@ class NovelCommentAPI(ListCreateAPIView):
         novel = Novel.objects.get(pk=novel_pk)
         novel.novelstats.comment_count = F('comment_count') + 1
         novel.novelstats.save()
+
         serializer.save(novel=novel, author=self.request.user)
 
     def get_queryset(self):
         queryset = self.queryset
-        if isinstance(queryset, QuerySet):
-            # Ensure queryset is re-evaluated on each request.
-            queryset = queryset.all()
         novel_pk = self.kwargs.get("novel_id")
         novel = Novel.objects.get(pk=novel_pk)
         queryset = queryset.select_related("author").filter(novel=novel).order_by('-id')
@@ -199,7 +195,7 @@ class NovelLikeAPI(CreateAPIView):
 
 class NovelListPagination(CursorPagination):
     ordering = "-id"
-    page_size = 12
+    page_size = 1000
     cursor_query_param = "cursor"
 
 
@@ -224,6 +220,9 @@ class NovelStartAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, **kwargs):
+        if os.environ.get("DEMO") == 'TRUE':
+            if request.user.nickname != "DEMO용":
+                return Response({}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         serializer = NovelStartSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -238,7 +237,7 @@ class NovelStartAPI(APIView):
         data = {
             "genre": request.data['genre']
         }
-        ##################
+
         ## 실제
         if DEV != 'TRUE':
             response = requests.post(start_url, files=files, data=data)
