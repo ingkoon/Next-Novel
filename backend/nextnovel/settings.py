@@ -57,37 +57,7 @@ else:
     DEBUG = True
     USE_X_FORWARDED_HOST = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    # INSTALLED_APPS = [
-    #     'django.contrib.admin',
-    #     'django.contrib.auth',
-    #     'django.contrib.contenttypes',
-    #     'django.contrib.sessions',
-    #     'django.contrib.messages',
-    #     'django.contrib.staticfiles',
-    #     # site 설정도!
-    #     'django.contrib.sites',
-    #     # app
-    #     'users',
-    #     'novels',
-    #     # cors
-    #     'corsheaders',
-    #
-    #     # Libraries
-    #
-    #     'rest_framework',
-    #     'rest_framework.authtoken',
-    #     'rest_framework_simplejwt',
-    #     'dj_rest_auth',
-    #     'dj_rest_auth.registration',
-    #     # allauth for registration
-    #     'allauth',
-    #     'allauth.account',
-    #     'allauth.socialaccount',
-    #     'allauth.socialaccount.providers.kakao',
-    #
-    #     'django_seed',
-    # ]
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['j8a502.p.ssafy.io']
     INSTALLED_APPS = [
         'django.contrib.admin',
         'django.contrib.auth',
@@ -122,7 +92,6 @@ else:
     ]
     MIDDLEWARE = [
         'corsheaders.middleware.CorsMiddleware',
-        # 'silk.middleware.SilkyMiddleware',
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
@@ -163,9 +132,6 @@ DATABASES = {
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -180,17 +146,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -213,27 +175,23 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        # 'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근
-        # 'rest_framework.permissions.IsAdminUser', # 관리자만 접근
         'rest_framework.permissions.AllowAny',  # 누구나 접근
     ),
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+
     ),
 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    # 'DEFAULT_THROTTLE_CLASSES': [
-    #     'nextnovel.throttles.LikeRateThrottle',
-    # ],
+
     'DEFAULT_THROTTLE_RATES': {
         'like': '1/s',
     }
 }
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=3),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=24),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
     'UPDATE_LAST_LOGIN': False,
