@@ -1,0 +1,121 @@
+.Appbar {
+  height: 56px;
+  width: 100%;
+  background-color: #f66f00;
+  font-size: 24px;
+  color: white;
+  font-family: "gothic";
+  display: flex;
+  align-items: center;
+  font-family: 'LINESeedKR-Bd'
+}
+
+.logo a {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.menu {
+  margin-right: 20px;
+  float: right;
+}
+
+.name {
+  margin-left: 20px;
+  width: 33%;
+}
+
+.logo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menudiv {
+  width: 33%;
+  display: flex;
+  justify-content: space-evenly;
+
+}
+
+.menudiv a {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.loginimg {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.menudiv > img {
+  cursor: pointer;
+}
+
+.banner_book,
+.banner_search,
+.banner_pen,
+.banner_mypage,
+.banner_login {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.arrow_box {
+  display: none;
+  position: absolute;
+  top : 50px;
+  width: 100px;
+  padding: 8px;
+  left: -160%;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  background: #fffefc;
+  color: black;
+  font-size: 14px;
+  z-index: 99;
+  text-align: center;
+  border: 2px solid black;
+}
+
+.arrow_box:after, .arrow_box:before {
+
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -10px;
+  border: solid transparent;
+  pointer-events: none;
+  content: ' ';
+  text-align: center;
+}
+.arrow_box:after {
+  border-color: rgba(136, 183, 213, 0);
+  border-bottom-color: #fffefc;
+  border-width: 10px;
+  margin-left: -10px;
+}
+
+.arrow_box:before {
+  border-color: rgba(194, 225, 245, 0);
+  border-bottom-color: black;
+  border-width: 12px;
+  margin-left : -12px;
+}
+
+
+.banner_book:hover + .arrow_box,
+.banner_search:hover + .arrow_box,
+.banner_pen:hover + .arrow_box,
+.banner_mypage:hover + .arrow_box, 
+.banner_login:hover + .arrow_box {
+  display: block;
+}

@@ -1,0 +1,104 @@
+.card {
+  background-color: white;
+  border-radius: 15px;
+  width: 420px;
+  height: 350px;
+  position: relative;
+  margin: 25px;
+  cursor: pointer;
+  box-shadow: 0 10px 10px 5px #00000025;
+  transition: all .2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card > img {
+  width: 30%;
+  height: 50%;
+  object-fit: cover;
+  border: 1px solid black;
+  position: absolute;
+  bottom: 10%;
+  left: 10%;
+  box-shadow: 0 10px 10px 5px #00000025;
+}
+
+.intro {
+  color: white;
+  font-family: wild;
+  font-size: 24px;
+  width: 420px;
+  height: 65%;
+  border-bottom: 3px solid black;
+  background-size: cover;
+  position: relative;
+  border-radius: 15px 15px 0 0;
+}
+
+.introment {
+  height: 100%;
+  background-color: #ABABAB90;
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 15px 15px 0 0;
+}
+
+.none {
+  display: none;
+}
+
+.ment {
+  margin: 0 15%;
+  padding-bottom:20%;
+  font-size: 24px;
+  white-space: normal;
+  text-align: center;
+}
+
+.info{
+  height: 35%;
+  font-family: 'gothic';
+  margin-left: 40%;
+  float: left;
+  padding-top : 20px;
+  padding-left: 20px;
+}
+
+.title {
+  font-size: 24px;
+}
+
+.writer {
+  font-size: 16px;
+  float: left;
+}
+
+.quote1{
+  position: absolute;
+  top: 2%;
+  left : 2%;
+}
+
+.quote2 {
+  position: absolute;
+  bottom : 25%;
+  right: 2%;
+}
+
+.intro2 {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.trash {
+  position: absolute;
+  bottom : 10px;
+  right: 10px;
+}
