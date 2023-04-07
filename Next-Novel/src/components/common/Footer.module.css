@@ -1,0 +1,116 @@
+.block{
+    height: 250px;
+    background: #090909;
+}
+
+.toppart{
+    width: 100%;
+}
+.botpart{
+    width: 100%;
+}
+
+.twrap{
+    display: flex;
+    width: 293px;
+    /* background: blue; */
+    position: relative;
+    top: 70px;
+    left: 1232px;
+}
+
+.bwrap{
+    display: flex;
+    width: 293px;
+    /* background: blue; */
+    position: relative;
+    top: 80px;
+    left: 1174px;
+}
+
+.topN{
+    opacity: 50%;
+    height: 50px;
+    margin-right: 10px;
+    animation: lds-grid 1.2s linear infinite;
+    animation-delay: 0s;
+}
+.topE{
+    opacity: 50%;
+    height: 50px;
+    margin-right: 10px;
+    animation: lds-grid 1.2s linear infinite;
+    animation-delay: -0.4s;
+}
+.topX{
+    opacity: 50%;
+    height: 50px;
+    margin-right: 10px;
+    animation: lds-grid 1.2s linear infinite;
+    animation-delay: -0.8s;
+}
+
+.topT{
+    opacity: 50%;
+    height: 50px;
+    animation: lds-grid 1.2s linear infinite;
+    animation-delay: -0.4s;
+}
+
+.botN{
+    opacity: 50%;
+    height: 50px;
+    margin-right: 10px;
+    animation: lds-grid 1.2s linear infinite;
+    animation-delay: -0.8s;
+}
+.botO{
+    opacity: 50%;
+    height: 50px;
+    margin-right: 10px;
+    animation: lds-grid 1.2s linear infinite;
+    animation-delay: -1.2s;
+}
+.botV{
+    opacity: 50%;
+    height: 50px;
+    margin-right: 10px;
+    animation: lds-grid 1.2s linear infinite;
+    animation-delay: -0.8s;
+}
+.botE{
+    opacity: 50%;
+    height: 50px;
+    margin-right: 10px;
+    animation: lds-grid 1.2s linear infinite;
+    animation-delay: -1.2s;
+}
+.botL{
+    opacity: 50%;
+    height: 50px;
+    animation: lds-grid 1.2s linear infinite;
+    animation-delay: -1.6s;
+}
+
+.text1{
+    color: #FFFEFC;
+    font-family: 'LINESeedKR-Bd';
+    position: relative;
+    top: -25px;
+    left: 50px;
+    width: 600px;
+    /* background: yellow; */
+}
+
+.gray{
+    color: #acacac;
+}
+
+@keyframes lds-grid {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,239 @@
+.block{
+    width: 100%;
+    height: 1500px;
+    background: #FFFEFC;
+}
+
+.title{
+    position: relative;
+    width: 300px;
+    top: 5%;
+    left: 8%;
+    font-family: 'LINESeedKR-Bd';
+    font-size: 64px;
+}
+
+.container{
+    position: relative;
+    top: 23%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 90%;
+    height: 35%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    border: 2px solid #FFFEFC;
+}
+
+.steps{
+    position: relative;
+    top: 10%;
+    width: 22%;
+    height: 70%;
+    border: 3px solid #090909;
+    box-shadow: 0px 4px 4px #ACACAC;
+}
+
+.vs{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 100px;
+    height: 100px;
+    background: #FFFEFC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sicon{
+    width: 60px;
+}
+.num{
+    font-family: 'LINESeedKR-Bd';
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    color: #FFFEFC;
+    font-size: 24px;
+    z-index: 2;
+}
+
+.name{
+    position: relative;
+    top: -10%;
+    color: #090909;
+    font-size: 30px;
+    font-weight: 700;
+    font-family: 'wild';
+    text-align: center;
+    /* border: 1px solid #090909; */
+}
+
+.context{
+    position: relative;
+    top: -10%;
+    width: 100%;
+    height: 250px;
+    /* background: yellow; */
+    overflow: hidden;
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner1{
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    animation: up-down 1s infinite ease-in-out alternate;
+    animation-delay: 0.2s;
+    z-index: 5;
+    /* border: 1px solid #090909; */
+}
+.banner2{
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+  animation: up-down 1s infinite ease-in-out alternate;
+  animation-delay: 0.4s;
+  z-index: 5;
+  /* border: 1px solid #090909; */
+}
+.banner3{
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+  animation: up-down 1s infinite ease-in-out alternate;
+  animation-delay: 0.6s;
+  z-index: 5;
+  /* border: 1px solid #090909; */
+}
+.banner4{
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+  animation: up-down 1s infinite ease-in-out alternate;
+  animation-delay: 0.8s;
+  z-index: 5;
+  /* border: 1px solid #090909; */
+}
+
+.explain{
+    position: relative;
+    top: 5%;
+    width: 22%;
+    height: 15%;
+    /* border: 1px solid #090909; */
+
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.exp{
+    color: #090909;
+    font-size: 19px;
+    font-family: 'gothic';
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+@keyframes up-down{
+    from{
+      transform: translatey(5px);
+    }
+    to{
+      transform: translatey(-5px);
+    }
+  } 
+
+.bonus{
+    position: relative;
+    top: 300px;
+    width: 100%;
+    color: #090909;
+    text-align: center;
+    font-size: 48px;
+    font-family: 'LINESeedKR-Bd';
+}
+
+.under{
+    font-size: 36px;
+    color: #88969A;
+    text-align: center;
+}
+
+.under2{
+    position: relative;
+    top: 400px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 7;
+}
+
+.under3{
+    position: relative;
+    top: 50px;
+    width: 100%;
+    color: #090909;
+    text-align: center;
+    font-size: 24px;
+    font-family: 'LINESeedKR-Bd';
+}
+
+.under4{
+    position: relative;
+    top: 20px;
+    font-size: 24px;
+    color: #88969A;
+}
+
+.next{
+    position: relative;
+    top: 400px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%) rotate(180deg);
+    border-radius: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  .next:hover{
+    background-color: #F66F0030;
+  }
+  
+  .slide{
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    
+    border-top: 20px solid black;
+    animation: up-down 1s infinite ease-in-out alternate;
+  }
+  @keyframes up-down{
+    from{
+      transform: translatey(7px);
+    }
+    to{
+      transform: translatey(-2px);
+    }
+  }
+
+  .top{
+    position: relative;
+    top: 380px;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'LINESeedKR-Bd';
+  }
