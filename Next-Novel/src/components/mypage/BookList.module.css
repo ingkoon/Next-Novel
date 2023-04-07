@@ -1,0 +1,27 @@
+.cardlist {
+  display: flex;
+  overflow-x: auto;
+  overflow-y:hidden;
+  white-space: nowrap;
+
+}
+
+/* .cardlist::-webkit-scrollbar{
+  display: none; 
+} */
+
+/* 스크롤바의 폭 너비 */
+.cardlist::-webkit-scrollbar {
+  width: 5px; 
+  height: 10px;
+}
+
+.cardlist::-webkit-scrollbar-thumb {
+  background: #f66f00; /* 스크롤바 색상 */
+  border-radius: 10px; /* 스크롤바 둥근 테두리 */
+}
+
+.cardlist::-webkit-scrollbar-track {
+  background: #f66f0050;  /*스크롤바 뒷 배경 색상*/
+  border-radius: 10px;
+}

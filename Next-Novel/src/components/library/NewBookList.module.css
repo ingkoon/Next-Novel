@@ -1,0 +1,32 @@
+.newbooklist {
+  position: relative;
+  display: flex;
+  margin: 50px auto;
+  justify-content: center;
+}
+
+.circle_left {
+  position: absolute;
+  z-index: -1;
+  left: 100px;
+  top : 50px;
+}
+
+.circle_right {
+  position : absolute;
+  z-index: -1;
+  right: 100px;
+  bottom: 0;
+}
+
+.newbook_before, .newbook_next {
+  font-size: 50px;
+  display: flex;
+  align-items: center;
+  margin : 0 50px;
+}
+
+.swiper {
+  padding : 0 5%;
+  position: relative;
+}

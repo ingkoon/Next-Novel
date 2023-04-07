@@ -1,0 +1,14 @@
+.wrapper{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 4600px;
+    left: 8%;
+    width: 600px;
+}
+.bbb{
+    font-family: 'LINESeedKR-Bd';
+    font-size: 30px;
+    width: 100%;
+    color: #ACACAC;
+}

@@ -1,0 +1,19 @@
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+.aaa{
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    font-family: 'LINESeedKR-Bd';
+    font-size: 60px;
+    width: 700px;
+    height: 300px;
+    background: linear-gradient(93.55deg, #FFFEFC 0%, #FF5E03 24.62%, #F66F00 48.82%, #F2CD3C 69.23%, #FFFEFC 96.59%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}

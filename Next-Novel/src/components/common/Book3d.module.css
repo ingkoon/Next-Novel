@@ -1,0 +1,79 @@
+.wrapper{
+    width: 250px;
+    height: 270px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.book{
+    width: 100%;
+    height: 100%;
+}
+.page1{
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 80%;
+    height: 80%;
+    transform: matrix(1, 0, -0.19, 0.98, 0, 0);
+    background: #d9d9d9;
+    z-index: 10;
+    border: 3px solid #090909;
+}
+
+.page1 img {
+    width: 200px;
+    height: 220px;
+}
+.page2{
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    width: 80%;
+    height: 80%;
+    transform: matrix(1, 0, -0.19, 0.98, 0, 0);
+    background: #f3f3f3;
+    z-index: 9;
+    border: 3px solid #090909;
+}
+.page3{
+    position: absolute;
+    top: 4%;
+    left: 4%;
+    width: 80%;
+    height: 80%;
+    transform: matrix(1, 0, -0.19, 0.98, 0, 0);
+    background: #f3f3f3;
+    z-index: 8;
+    border: 3px solid #090909;
+}
+.page4{
+    position: absolute;
+    top: 6%;
+    left: 6%;
+    width: 80%;
+    height: 80%;
+    transform: matrix(1, 0, -0.19, 0.98, 0, 0);
+    background: #f3f3f3;
+    z-index: 7;
+    border: 3px solid #090909;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.edge{
+    width: 23px;
+    height: 3px;
+    border-radius: 2px;
+    transform: rotate(45deg);
+    background: black;
+    position: absolute;
+    z-index: 10;
+    top: 83.5%;
+    left: -9.4%;
+}
+
+.cover{
+    width: 100%;
+    height: 100%;
+}

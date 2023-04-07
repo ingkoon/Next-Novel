@@ -1,0 +1,112 @@
+.container {
+  width: 608px;
+  height: 380px;
+  border: 3px solid #000000;
+  filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.25));
+  border-radius: 20px;
+  background-image: url("https://images.unsplash.com/photo-1601662528567-526cd06f6582?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=415&q=80");
+  padding: 40px 12px 40px 40px;
+  box-sizing: border-box;
+}
+.container {
+  -webkit-animation: swing-in-top-bck 0.6s
+    cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  animation: swing-in-top-bck 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+@-webkit-keyframes swing-in-top-bck {
+  0% {
+    -webkit-transform: rotateX(70deg);
+    transform: rotateX(70deg);
+    -webkit-transform-origin: top;
+    transform-origin: top;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    -webkit-transform-origin: top;
+    transform-origin: top;
+    opacity: 1;
+  }
+}
+@keyframes swing-in-top-bck {
+  0% {
+    -webkit-transform: rotateX(70deg);
+    transform: rotateX(70deg);
+    -webkit-transform-origin: top;
+    transform-origin: top;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    -webkit-transform-origin: top;
+    transform-origin: top;
+    opacity: 1;
+  }
+}
+
+.scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+.scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 8px;
+}
+.material {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* border: 1px solid red; */
+}
+.material > div {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid red; */
+  width: 250px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.material > div > img {
+  width: 100%;
+  aspect-ratio: 608 / 380;
+  border: 3px solid #000000;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  background-color: white;
+}
+.material > div > span {
+  margin: 10px 0;
+  font-size: 18px;
+}
+.answer > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.answer > div > div {
+  height: 2px;
+  width: 100%;
+  background-color: #000000;
+  margin: 50px 0;
+}
+.answer > div > img {
+  width: 100%;
+  aspect-ratio: 608 / 380;
+  border: 3px solid #000000;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  background-color: white;
+}
+.answer > div > span {
+  margin: 10px 0;
+  font-size: 18px;
+}

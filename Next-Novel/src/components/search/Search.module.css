@@ -1,0 +1,64 @@
+.search_result {
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.searchpart {
+  position: relative;
+  display: flex;
+  margin: 50px auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle_left {
+  position: absolute;
+  z-index: -1;
+  left: 100px;
+  top:0;
+}
+
+.circle_right {
+  position : absolute;
+  z-index: -1;
+  right: 100px;
+  top: 0;
+}
+
+.search {
+  font-size : 48px;
+  margin-right: 10%;
+}
+
+.searchbtn {
+  font-family: 'gothic';
+  width: 140px;
+  height: 50px;
+  color: white;
+  background-color: black;
+  border-radius: 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.searchinput {
+  width: 450px;
+  height: 50px;
+  border : 0;
+  border-bottom: 7px solid black;
+  margin-left: 15px;
+  font-size: 25px;
+  font-family: 'gothic';
+}
+
+.searchinput:focus {
+  outline: none;
+}
+
+.form {
+  display: flex;
+}
+
+.searchicon {
+  width: 20%;
+}
