@@ -1,0 +1,104 @@
+.bubble {
+    position: relative;
+    background: #fffefc;
+    color: #090909;
+    font-size: 20px;
+    box-shadow: 0px 4px 4px 0px rgba(163, 163, 163, 0.5);
+    text-align: center;
+    width: 1000px;
+    height: 100px;
+    border-radius: 0px;
+    padding: 0px;
+    border: #090909 solid 3px;
+    margin: 40px;
+    display: flex;
+    align-items: center;
+}
+.bubble:after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    z-index: 1;
+    border-style: solid;
+    border-color: #fffefc transparent;
+    border-width: 20px 20px 0;
+    bottom: -20px;
+    left: 10%;
+    margin-left: -20px;
+}
+.bubble:before {
+    content: '';
+    position: absolute;
+    width: 0;
+    z-index: 0;
+    border-style: solid;
+    border-color: #090909 transparent;
+    border-width: 24px 24px 0px;
+    bottom: -24px;
+    left: 10%;
+    margin-left: -24px;
+    display: block;
+}
+.profilepic{
+    position: absolute;
+    left: 7%;
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    /* background: #F66F00; */
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+.profilename{
+    position: absolute;
+    font-size: 16px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    color:#090909;
+    left: 16%;
+}
+.bar{
+    position: absolute;
+    width: 3px;
+    height: 50px;
+    left: 30%;
+    background: #090909;
+}
+.ment{
+    position: absolute;
+    color: #090909;
+    font-size: 20px;
+    left: 31%;
+    width: 400px;
+    /* background-color: blue; */
+    padding: 0 20px;
+    
+}
+.date{
+    position: absolute;
+    color: #ABABAB;
+    font-size: 16px;
+    left: 75%;
+    width: 110px;
+    /* background-color: green; */
+}
+.del{
+    position: absolute;
+    color: #090909;
+    font-size: 16px;
+    left: 88%;
+    width: 5%;
+    height: 50px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    
+    transition: background-color 0.3s ease;
+}
+.del:hover{
+    background-color: #d9d9d9;
+}
+.trash{
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}

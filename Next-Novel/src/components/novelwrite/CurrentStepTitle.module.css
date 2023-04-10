@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 420px;
+  height: 90px;
+  border-bottom: 3px solid black;
+  padding: 0 10px 0 0;
+}
+.left,
+.right {
+  display: flex;
+  align-items: center;
+}
+.container span {
+  font-size: 40px;
+  font-family: "LINESeedKR-Bd";
+  position: relative;
+  top: 5px;
+}
+.container img {
+  height: 40px;
+}

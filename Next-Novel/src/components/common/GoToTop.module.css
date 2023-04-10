@@ -1,0 +1,14 @@
+.gotop {
+  font-size: 36px;
+  text-align: center;
+  margin : 30px auto;
+  cursor: pointer;
+  width: 150px;
+}
+
+.hr {
+  width: 150px;
+  height: 4px;
+  background-color: black;
+  margin: 150px auto -5px;
+}
