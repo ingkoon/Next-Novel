@@ -1,0 +1,376 @@
+.container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  /* border: 1px solid blue; */
+}
+.canvas {
+  width: 608px;
+  height: 380px;
+  border: 3px solid black;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: white;
+}
+.tools {
+  width: 80px;
+  height: 400px;
+  margin-left: 30px;
+  /* background-color: gainsboro; */
+  display: flex;
+  flex-direction: column;
+}
+.tools > div {
+  flex: 1;
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tools > div:hover {
+  cursor: pointer;
+}
+.tool1,
+.tool2 {
+  transition: all 0.3s ease;
+}
+.tool1:hover,
+.tool2:hover {
+  transform: scale(1.15);
+  transition: all 0.3s ease;
+}
+.tool1.selected,
+.tool2.selected {
+  transform: scale(1.15);
+}
+.tool3 {
+  position: relative;
+}
+.setColor {
+  top: 50%;
+  left: -330px;
+  transform: translate(0, -50%);
+  width: 300px;
+  /* height: 50px; */
+  position: absolute;
+  background-color: orange;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  background-color: rgb(255, 255, 255);
+  border: 3px solid black;
+  padding: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.setColor:after {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-width: 10px 0 10px 15px;
+  border-color: transparent white;
+  display: block;
+  width: 0;
+  z-index: 1;
+  right: -14px;
+  top: 55px;
+}
+.setColor:before {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-width: 12px 0 12px 17px;
+  border-color: transparent #000000;
+  display: block;
+  width: 0;
+  z-index: 0;
+  right: -18px;
+  top: 53px;
+}
+.tool4 {
+  position: relative;
+}
+.setWidth {
+  top: 50%;
+  left: -320px;
+  transform: translate(0, -50%);
+  width: 300px;
+  height: 50px;
+  position: absolute;
+  background-color: white;
+  border: 3px solid black;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.setWidth:after {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-width: 10px 0 10px 15px;
+  border-color: transparent white;
+  display: block;
+  width: 0;
+  z-index: 1;
+  right: -14px;
+  top: 15px;
+}
+.setWidth:before {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-width: 12px 0 12px 17px;
+  border-color: transparent #000000;
+  display: block;
+  width: 0;
+  z-index: 0;
+  right: -18px;
+  top: 13px;
+}
+.setWidth > input {
+  width: 100%;
+  height: 28px; /* thumbHeight + (2 x thumbBorderWidth)*/
+  -webkit-appearance: none; /*remove the line*/
+  outline: none;
+  /*background-color:cyan;*/
+  border: 0; /*for firefox on android*/
+  padding: 0 8px; /*for IE*/
+  box-sizing: border-box;
+}
+
+/*chrome and opera*/
+.setWidth > input::-webkit-slider-runnable-track {
+  background: #ccc; /*trackColor*/
+  height: 4px; /*trackHeight*/
+  border-radius: 4px; /*trackHeight*/
+  transition: 0.3s;
+}
+
+.setWidth > input:hover::-webkit-slider-runnable-track,
+.setWidth > input:focus::-webkit-slider-runnable-track {
+  background: #777; /*activeTrackColor*/
+}
+
+.setWidth > input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: darkOrange; /*thumbColor*/
+  width: 28px; /* thumbHeight + (2 x thumbBorderWidth)*/
+  height: 28px; /* thumbHeight + (2 x thumbBorderWidth)*/
+  border-radius: 50%;
+  margin-top: -12px; /* -[thumbHeight + (2 x thumbBorderWidth) - trackHeight]/2*/
+  cursor: pointer;
+  border: 4px solid #fff; /*border-width should be equal to thumbBorderWidth if you want same border width across all browsers and border-color should match the background*/
+  transition: 0.3s;
+}
+
+.setWidth > input:hover::-webkit-slider-thumb,
+.setWidth > input:focus::-webkit-slider-thumb {
+  background: darkOrange; /*activeThumbColor*/
+}
+
+/*firefox*/
+.setWidth > input::-moz-focus-outer {
+  border: 0;
+}
+
+.setWidth > input::-moz-range-track {
+  background: #ccc; /*trackColor*/
+  height: 4px; /*trackHeight*/
+  border-radius: 4px; /*trackHeight*/
+  /*background isn't animatable, so can't use transition*/
+}
+
+.setWidth > input:hover::-moz-range-track,
+.setWidth > input:focus::-moz-range-track {
+  background: #777; /*activeTrackColor*/
+}
+
+.setWidth > input::-moz-range-thumb {
+  background: darkOrange; /*thumbColor*/
+  width: 20px; /*thumbHeight*/
+  height: 20px; /*thumbHeight*/
+  border-radius: 50%;
+  cursor: pointer;
+  border: 4px solid #fff; /*border-width = thumbBorderWidth, border-color should match the background*/
+}
+
+.setWidth > input:hover::-moz-range-thumb,
+.setWidth > input:focus::-moz-range-thumb {
+  background: darkOrange; /*activeThumbColor*/
+}
+
+.setWidth > input::-moz-range-progress {
+  background: darkOrange; /*thumbColor*/
+  border-radius: 4px; /*trackHeight*/
+  height: 4px; /*trackHeight*/
+}
+
+.setWidth > input:hover::-moz-range-progress,
+.setWidth > input:focus::-moz-range-progress {
+  background: darkOrange; /*activeThumbColor*/
+}
+
+/*edge and IE*/
+.setWidth > input::-ms-track {
+  background: #ccc; /*trackColor*/
+  height: 4px; /*trackHeight*/
+  border-radius: 4px; /*trackHeight*/
+  border: none;
+  color: transparent;
+}
+
+.setWidth > input:hover::-ms-track,
+.setWidth > input:focus::-ms-track {
+  background: #777; /*activeTrackColor*/
+}
+
+.setWidth > input::-ms-thumb {
+  background: darkOrange; /*thumbColor*/
+  width: 20px; /*thumbHeight*/
+  height: 20px; /*thumbHeight*/
+  border-radius: 50%;
+  border: none;
+  margin: 0 4px 0; /*0 thumbBorderWidth 0*/
+  box-shadow: 0 0 0 4px #fff; /*0 0 0 thumbBorderWidth #fff, box-shadow color should match the background*/
+  /*cursor:pointer; doesn't work*/
+}
+
+.setWidth > input:hover::-ms-thumb,
+.setWidth > input:focus::-ms-thumb {
+  background: darkOrange; /*activeThumbColor*/
+}
+
+.setWidth > input::-ms-tooltip {
+  display: none; /*tooltip makes thumb sliding lagy*/
+}
+
+.setWidth > input::-ms-fill-lower {
+  background: darkOrange; /*thumbColor*/
+  border-radius: 4px; /*trackHeight*/
+}
+
+.setWidth > input:hover::-ms-fill-lower,
+.setWidth > input:focus::-ms-fill-lower {
+  background: darkOrange; /*activeThumbColor*/
+}
+.openLoadButton {
+  position: absolute;
+  bottom: -30px;
+  right: 110px;
+  background-color: white;
+  border: 3px solid black;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.openLoadButton:hover {
+  cursor: pointer;
+}
+.load {
+  position: absolute;
+  top: 7.5px;
+  right: 110px;
+  background-color: white;
+  border: 3px solid black;
+  width: 284px;
+  height: 380px;
+  box-shadow: -4px 2px 2px rgba(0, 0, 0, 0.15);
+}
+.tap {
+  height: 10%;
+  background-color: #f66f00;
+  display: flex;
+  padding: 0 10px;
+  justify-content: space-between;
+  border-bottom: 3px solid black;
+  box-sizing: border-box;
+}
+.tap > span {
+  font-size: 24px;
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  color: white;
+}
+.tap > button {
+  font-size: 24px;
+  background-color: transparent;
+  border: none;
+  color: white;
+}
+.tap > button:hover {
+  cursor: pointer;
+}
+.paintings {
+  padding: 5px 10px;
+  height: 90%;
+  box-sizing: border-box;
+}
+.scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  overflow-y: scroll;
+}
+.scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 8px;
+}
+
+.scroll > img {
+  width: 90%;
+  aspect-ratio: 608 / 380;
+  border: 3px solid #000000;
+  margin: 10px;
+}
+
+.scroll > img:hover {
+  cursor: pointer;
+}
+
+.load {
+  -webkit-animation: slide-in-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    both;
+  animation: slide-in-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+/* ----------------------------------------------
+ * Generated by Animista on 2023-4-4 16:52:29
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation slide-in-right
+ * ----------------------------------------
+ */
+@-webkit-keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(50px);
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(50px);
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

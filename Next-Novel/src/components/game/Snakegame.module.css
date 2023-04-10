@@ -1,0 +1,207 @@
+
+.grid {
+  width: 400px;
+  height: 400px;
+  border: 1px solid #fffefc;
+  margin : 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #090909;
+}
+
+.arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.arrow img {
+  width: 40px;
+}
+
+.leftright {
+  display: flex;
+}
+
+.arrowup {
+  transform: rotate(90deg);
+  margin-bottom : 10px;
+}
+
+.arrowdown {
+  transform: rotate(-90deg);
+  margin-top : 10px;
+}
+
+.arrowright { 
+  transform: rotate(180deg);
+  margin-left: 20px;
+}
+
+.arrowleft {
+  margin-right : 20px
+}
+
+#grid div {
+  width: 20px;
+  height: 20px;
+}
+.grid div {
+  width: 20px;
+  height: 20px;
+}
+
+.snake {
+  background-color: #fffefc;
+}
+.apple {
+  background-color: #F66F00;
+  border-radius: 20px;
+}
+
+.rightpart {
+  font-size: 25px;
+  margin-left: 20px;
+  color : white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.play, .playAgain {
+  border : 1px solid black;
+  text-align: center;
+  margin : 5px;
+  padding : 5px;
+  color : white
+}
+
+.loadingmodal {
+  display: flex;
+  flex-direction: column;
+}
+
+.gamepart {
+  display: flex;
+}
+
+.text {
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.text span {
+  margin : 0 10px;
+  color: white;
+}
+
+.gameover, .start {
+  color : white;
+  position: absolute;
+  top: 265px;
+  font-size: 50px;
+}
+
+.gameover { 
+  left: 165px;
+}
+
+.start {
+  left: 220px;
+  visibility: visible;
+}
+
+.gameovertxt, .starttxt {
+  position: relative;
+  transform: skew(var(--skew)) scale(var(--scale));
+
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.gameovertxt::before, .gameover::after, .starttxt::before, .starttxt::after {
+  content: attr(data-txt);
+  position : absolute;
+  width: 100%;
+  transition: clip-path 50ms ease-in;
+  background-color: #090909;
+}
+
+.gameovertxt::before, .starttxt::before {
+  left : 5px;
+  text-shadow: 2px -2px #3a96d4;
+  clip-path: polygon(
+    0 var(--t1), 100% var(--t1), 100% var(--b1), 0 var(--b1)
+  );
+
+}
+
+.gameover::after, .starttxt::after {
+  left : -5px;
+  text-shadow: -2px 2px #cc2a1f;
+  clip-path: polygon(
+    0 var(--t2), 100% var(--t2), 100% var(--b2), 0 var(--b2)
+  );
+}
+
+@keyframes anime_textup { 0% { top: 0; } 20% { top: -0.2rem; } 40% { top: 0 } 60% { top: 0 } 80% { top: 0 } 100% { top: 0 } }
+ 
+.text span {
+    position: relative;
+    animation: anime_textup 1.5s infinite;
+}
+
+.text span:nth-of-type(1) {
+    animation-delay: .1s;
+}
+
+.text span:nth-of-type(2) {
+    animation-delay: .2s;
+}
+
+.text span:nth-of-type(3) {
+    animation-delay: .3s;
+}
+
+.text span:nth-of-type(4) {
+    animation-delay: .4s;
+}
+
+.text span:nth-of-type(5) {
+    animation-delay: .5s;
+}
+.text span:nth-of-type(6) {
+    animation-delay: .6s;
+}
+.text span:nth-of-type(7) {
+    animation-delay: .7s;
+}
+.text span:nth-of-type(8) {
+    animation-delay: .8s;
+}
+
+@keyframes loading-text {
+  0% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  20% {
+    transform: translateY(-60%);
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

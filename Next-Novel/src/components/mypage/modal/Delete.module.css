@@ -1,0 +1,55 @@
+.circle_left {
+  position: absolute;
+  left: 50px;
+  top: 50px;
+  width: 256px;
+  height: 256px;
+}
+
+.circle_right {
+  position : absolute;
+  right: 50px;
+  bottom: 50px;
+  width: 256px;
+  height: 256px;
+}
+
+.deletemodal {
+  font-family: 'LINESeedKR-Bd';
+}
+
+.title {
+  font-size: 48px;
+  padding : 20px;
+}
+
+.subtitle {
+  font-size: 32px;
+  text-align: center;
+  margin : 10% 0;
+}
+
+.button button {
+  font-family: 'LINESeedKR-Bd';
+  width: 130px;
+  height: 40px;
+  border: 2px solid black;
+  font-size: 20px;
+  background-color: white;
+  margin : 0 10px;
+  cursor: pointer;
+}
+
+.button button:hover{
+  background-color: black;
+  color: white;
+}
+
+.button {
+  text-align: center;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+}

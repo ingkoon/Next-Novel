@@ -1,0 +1,47 @@
+.genre {
+  font-size: 40px;
+  display: flex;
+  max-width: 1410px;
+  margin: 20px auto;
+}
+
+.clicked {
+  background-color: black;
+  color: white;
+}
+
+.genre button {
+  font-family: "gothic";
+  border: 3px solid black;
+  width: 100px;
+  height: 50px;
+  border-radius: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  margin: 0 1%;
+  transition: background-color 0.3s ease;
+}
+
+.genre button:hover {
+  background-color: #f66f00;
+  color : #fffefc;
+}
+
+@media (max-width: 1439px) {
+  .genre {
+    width: 940px;
+  }
+}
+@media (max-width: 960px) {
+  .genre {
+    width: 470px;
+  }
+
+  .genre > div {
+    display: none;
+  }
+
+  .genre > button {
+    font-size: 18px;
+  }
+}
