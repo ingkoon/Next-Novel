@@ -7,10 +7,10 @@ import Login from "../login/Login";
 export default function BeforeStartWrite({ step, setStep }) {
   const [loginIsOpen, setLoginIsOpen] = useState(false);
   const start = () => {
-    if (!localStorage.getItem("access_token")) {
-      setLoginIsOpen(true);
-      return;
-    }
+    // if (!localStorage.getItem("access_token")) {
+    //   setLoginIsOpen(true);
+    //   return;
+    // }
     setStep(1);
   };
   const closemodal = () => {
@@ -21,13 +21,13 @@ export default function BeforeStartWrite({ step, setStep }) {
   useEffect(() => {
     const startTypingAnimation = () => {
       const instance = new window.TypeIt(typeitRef.current, {
-        strings: ['내가 그리고','AI가 써주는 소설을','만들어볼까요?'],
+        strings: ["내가 그리고", "AI가 써주는 소설을", "만들어볼까요?"],
         speed: 20,
         loop: false,
       });
 
       instance.go();
-    }
+    };
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -53,7 +53,6 @@ export default function BeforeStartWrite({ step, setStep }) {
       }
     };
   }, []);
-
 
   return (
     <div>
