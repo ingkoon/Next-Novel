@@ -24,20 +24,20 @@ export default function AfterStartWrite() {
         <CurrentStepIcon />
       </div>
       <div className={style.component}>
-        {step <= 5 && (
-          <>
-            <img
-              src={process.env.PUBLIC_URL + "/img/circles_left.svg"}
-              className={style.circle_left}
-              alt="circle_left"
-            />
-            <img
-              src={process.env.PUBLIC_URL + "/img/circles_right.svg"}
-              className={style.circle_right}
-              alt="circle_right"
-            />
-          </>
-        )}
+        <img
+          src={process.env.PUBLIC_URL + "/img/circles_left.svg"}
+          className={`${style.circle_left} ${
+            step <= 5 ? style.show : style.hide
+          }`}
+          alt="circle_left"
+        />
+        <img
+          src={process.env.PUBLIC_URL + "/img/circles_right.svg"}
+          className={`${style.circle_right} ${
+            step <= 5 ? style.show : style.hide
+          }`}
+          alt="circle_right"
+        />
 
         {step === 1 && <WriteStep1 genre={genre} setGenre={setGenre} />}
         {step === 2 && <WriteStep2 genreName={genreName[genre]} />}

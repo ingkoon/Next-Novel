@@ -12,10 +12,10 @@ export default function BeforeStartWrite() {
   });
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const start = () => {
-    if (!localStorage.getItem("access_token")) {
-      setModalIsOpen(true);
-      return;
-    }
+    // if (!localStorage.getItem("access_token")) {
+    //   setModalIsOpen(true);
+    //   return;
+    // }
     setStep(1);
   };
 
@@ -29,7 +29,7 @@ export default function BeforeStartWrite() {
         subintro2="stajio"
         img="pen"
       />
-      <div className={style.before_start_write_content}>
+      <div className={style.content}>
         <img
           src={process.env.PUBLIC_URL + "/img/orange_path.svg"}
           className={style.orange_path}
@@ -40,7 +40,7 @@ export default function BeforeStartWrite() {
           className={style.circle_left}
           alt="circle_left"
         />
-        <div className={style.before_start_write_box}>
+        <div className={style.box}>
           <span />
           <span />
           <span />
@@ -49,7 +49,7 @@ export default function BeforeStartWrite() {
           <span />
           <span />
           <span />
-          <div className={style.before_start_write_box_content}>
+          <div className={style.box_content}>
             <img
               src={process.env.PUBLIC_URL + "/img/NN_LOGO.svg"}
               className={style.NN_LOGO}

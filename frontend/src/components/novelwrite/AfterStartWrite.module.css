@@ -7,17 +7,22 @@
 .component {
   position: relative;
 }
-.circle_left {
+.circle_left.show {
   position: absolute;
   z-index: -1;
   left: 70px;
   height: 200px;
 }
 
-.circle_right {
+.circle_right.show {
   position: absolute;
   z-index: -1;
   right: 70px;
   height: 200px;
   top: 300px;
+}
+
+.circle_left.hide,
+.circle_right.hide {
+  display: none;
 }
