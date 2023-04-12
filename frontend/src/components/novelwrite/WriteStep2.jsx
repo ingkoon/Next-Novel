@@ -7,8 +7,8 @@ import useNovelWrite from "../../hooks/useNovelWrite";
 import { useNovelContext } from "../../context/NovelContext";
 import LoadingGameModal from "../common/LoadingGameModal";
 
-export default function WriteStep2({ setStep, step, genreName }) {
-  const { novel, setNovel } = useNovelContext();
+export default function WriteStep2({ genreName }) {
+  const { novel, setNovel, setStep } = useNovelContext();
   const { startNovel } = useNovelWrite();
   const [imageSrcs, setImageSrcs] = useState(
     Array.from({ length: 6 }, () => undefined)
@@ -75,7 +75,7 @@ export default function WriteStep2({ setStep, step, genreName }) {
           selected={selected}
         />
       </div>
-      <Bottom step={step} name="제출" button={button} isShaking={isShaking} />
+      <Bottom name="제출" button={button} isShaking={isShaking} />
     </div>
   );
 }

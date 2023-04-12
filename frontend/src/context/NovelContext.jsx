@@ -14,9 +14,10 @@ export function NovelContextProvider({ children }) {
     selectedQuestion: undefined,
     cover: undefined,
   });
+  const [step, setStep] = useState(0);
 
   return (
-    <NovelContext.Provider value={{ novel, setNovel }}>
+    <NovelContext.Provider value={{ novel, setNovel, step, setStep }}>
       {children}
     </NovelContext.Provider>
   );

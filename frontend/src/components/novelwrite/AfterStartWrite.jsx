@@ -9,74 +9,44 @@ import WriteStep4b from "./WriteStep4b";
 import WriteStep5a from "./WriteStep5a";
 import WriteStep5b from "./WriteStep5b";
 import style from "./AfterStartWrite.module.css";
-import { NovelContextProvider } from "../../context/NovelContext";
+import { useNovelContext } from "../../context/NovelContext";
 
-export default function AfterStartWrite({ step, setStep }) {
+export default function AfterStartWrite() {
+  const { step } = useNovelContext();
   const [count, setCount] = useState(0);
   const [genre, setGenre] = useState(1);
   const genreName = ["", "romance", "fantasy", "mystery", "sf", "free"];
 
   return (
-    <NovelContextProvider>
-      <div>
-        <div className={style.current_step}>
-          <CurrentStepTitle step={step} />
-          <CurrentStepIcon step={step} />
-        </div>
-        <div className={style.component}>
-          {step <= 5 && (
-            <>
-              <img
-                src={process.env.PUBLIC_URL + "/img/circles_left.svg"}
-                className={style.circle_left}
-                alt="circle_left"
-              />
-              <img
-                src={process.env.PUBLIC_URL + "/img/circles_right.svg"}
-                className={style.circle_right}
-                alt="circle_right"
-              />
-            </>
-          )}
-
-          {step === 1 && (
-            <WriteStep1
-              setStep={setStep}
-              genre={genre}
-              setGenre={setGenre}
-              step={step}
-            />
-          )}
-          {step === 2 && (
-            <WriteStep2
-              setStep={setStep}
-              step={step}
-              genreName={genreName[genre]}
-            />
-          )}
-          {step === 3 && (
-            <WriteStep3
-              setStep={setStep}
-              count={count}
-              setCount={setCount}
-              step={step}
-            />
-          )}
-          {step === 4 && (
-            <WriteStep4a setStep={setStep} count={count} step={step} />
-          )}
-          {step === 4.5 && (
-            <WriteStep4b
-              setStep={setStep}
-              count={count}
-              setCount={setCount}
-              step={step}
-            />
-          )}
-          {step === 5 && <WriteStep5a setStep={setStep} step={step} />}
-          {step === 5.5 && <WriteStep5b step={step} />}
-        </div>
+    <div>
+      <div className={style.current_step}>
+        <CurrentStepTitle />
+        <CurrentStepIcon />
       </div>
-    </NovelContextProvider>
+      <div className={style.component}>
+        {step <= 5 && (
+          <>
+            <img
+              src={process.env.PUBLIC_URL + "/img/circles_left.svg"}
+              className={style.circle_left}
+              alt="circle_left"
+            />
+            <img
+              src={process.env.PUBLIC_URL + "/img/circles_right.svg"}
+              className={style.circle_right}
+              alt="circle_right"
+            />
+          </>
+        )}
+
+        {step === 1 && <WriteStep1 genre={genre} setGenre={setGenre} />}
+        {step === 2 && <WriteStep2 genreName={genreName[genre]} />}
+        {step === 3 && <WriteStep3 count={count} setCount={setCount} />}
+        {step === 4 && <WriteStep4a count={count} />}
+        {step === 4.5 && <WriteStep4b count={count} setCount={setCount} />}
+        {step === 5 && <WriteStep5a />}
+        {step === 5.5 && <WriteStep5b />}
+      </div>
+    </div>
   );
 }

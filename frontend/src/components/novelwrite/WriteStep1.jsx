@@ -2,8 +2,10 @@ import React from "react";
 import style from "./WriteStep1.module.css";
 import GenreCard from "./GenreCard";
 import Bottom from "./Bottom";
+import { useNovelContext } from "../../context/NovelContext";
 
-export default function WriteStep1({ setStep, genre, setGenre, step }) {
+export default function WriteStep1({ genre, setGenre }) {
+  const { setStep } = useNovelContext();
   const genreInfos = [
     {
       name: "로맨스",
@@ -37,7 +39,7 @@ export default function WriteStep1({ setStep, genre, setGenre, step }) {
           />
         ))}
       </div>
-      <Bottom step={step} name="다음" button={button} />
+      <Bottom name="다음" button={button} />
     </div>
   );
 }

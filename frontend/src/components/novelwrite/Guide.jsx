@@ -1,7 +1,9 @@
 import React from "react";
 import style from "./Guide.module.css";
+import { useNovelContext } from "../../context/NovelContext";
 
-export default function Guide({ step, count, isShaking }) {
+export default function Guide({ count, isShaking }) {
+  const { step } = useNovelContext();
   const desc = [
     "",
     "소설의 장르를 선택하세요",

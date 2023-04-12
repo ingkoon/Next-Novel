@@ -8,8 +8,8 @@ import useNovelWrite from "../../hooks/useNovelWrite";
 import LoadingModal from "../common/LoadingModal";
 import { useQueryClient } from "@tanstack/react-query";
 
-export default function WriteStep4a({ setStep, count, step }) {
-  const { novel, setNovel } = useNovelContext();
+export default function WriteStep4a({ count }) {
+  const { novel, setNovel, setStep } = useNovelContext();
   const { continueNovel } = useNovelWrite();
   const queryClient = useQueryClient();
   const [imageSrcs, setImageSrcs] = useState(
@@ -76,7 +76,7 @@ export default function WriteStep4a({ setStep, count, step }) {
           selected={selected}
         />
       </div>
-      <Bottom step={step} name="제출" button={button} isShaking={isShaking} />
+      <Bottom name="제출" button={button} isShaking={isShaking} />
     </div>
   );
 }

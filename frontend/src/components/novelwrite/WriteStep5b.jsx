@@ -6,7 +6,7 @@ import LoadingModal from "../common/LoadingModal";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import { useNavigate } from "react-router-dom";
 
-export default function WriteStep5b({ step }) {
+export default function WriteStep5b() {
   const { novel } = useNovelContext();
   const [input, setInput] = useState({});
   const [isShaking, setIsShaking] = useState(false);
@@ -127,7 +127,7 @@ export default function WriteStep5b({ step }) {
           })}
         </div>
         <div className={style.guide}>
-          <Guide step={step} isShaking={isShaking} />
+          <Guide isShaking={isShaking} />
         </div>
         <div className={style.end}>
           <div>

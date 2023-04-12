@@ -5,7 +5,7 @@ import SelectOption from "./SelectOption";
 import StoryInProgress from "./StoryInProgress";
 import style from "./WriteStep4b.module.css";
 
-export default function WriteStep4b({ setStep, count, setCount, step }) {
+export default function WriteStep4b({ count, setCount }) {
   const [whatInProgress, setWhatInProgress] = useState("story");
 
   const button = () =>
@@ -19,10 +19,9 @@ export default function WriteStep4b({ setStep, count, setCount, step }) {
         {whatInProgress === "story" && <StoryInProgress />}
         {whatInProgress === "painting" && <PaintingInProgress />}
 
-        <SelectOption setStep={setStep} count={count} setCount={setCount} />
+        <SelectOption count={count} setCount={setCount} />
       </div>
       <Bottom
-        step={step}
         name={whatInProgress === "story" ? "그림보기" : "글보기"}
         count={count}
         button={button}

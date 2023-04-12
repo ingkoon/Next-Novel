@@ -6,12 +6,12 @@ import { useNovelContext } from "../../context/NovelContext";
 import LoadingModal from "../common/LoadingModal";
 import useNovelWrite from "../../hooks/useNovelWrite";
 
-export default function WriteStep5a({ setStep, step }) {
+export default function WriteStep5a() {
   const [imageSrcs, setImageSrcs] = useState(
     Array.from({ length: 1 }, () => undefined)
   );
   const selected = 0;
-  const { novel, setNovel } = useNovelContext();
+  const { novel, setNovel, setStep } = useNovelContext();
   const { makeCoverRequest } = useNovelWrite();
 
   const button = () => {
@@ -112,7 +112,7 @@ export default function WriteStep5a({ setStep, step }) {
           </div>
         </div>
       </div>
-      <Bottom step={step} name="제출" button={button} isShaking={isShaking} />
+      <Bottom name="제출" button={button} isShaking={isShaking} />
     </div>
   );
 }

@@ -3,8 +3,10 @@ import TitleBar from "../common/TitleBar";
 import style from "./BeforeStartWrite.module.css";
 import Modal from "react-modal";
 import Login from "../login/Login";
+import { useNovelContext } from "../../context/NovelContext";
 
-export default function BeforeStartWrite({ step, setStep }) {
+export default function BeforeStartWrite() {
+  const { setStep } = useNovelContext();
   const [loginIsOpen, setLoginIsOpen] = useState(false);
   const start = () => {
     // if (!localStorage.getItem("access_token")) {
@@ -109,7 +111,7 @@ export default function BeforeStartWrite({ step, setStep }) {
               className={style.NN_LOGO}
               alt="NN_LOGO"
             />
-            <div ref={typeitRef} className={style.typing}></div>
+            <div ref={typeitRef} className={style.typing} />
             <button onClick={start}>시작하기</button>
           </div>
         </div>
