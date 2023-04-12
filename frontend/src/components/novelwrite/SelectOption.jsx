@@ -4,8 +4,8 @@ import { useNovelContext } from "../../context/NovelContext";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import LoadingModal from "../common/LoadingModal";
 
-export default function SelectOption({ count, setCount }) {
-  const { novel, setNovel, setStep } = useNovelContext();
+export default function SelectOption() {
+  const { novel, setNovel, setStep, count, setCount } = useNovelContext();
   const {
     getQuestions: { isFetching, refetch, data },
   } = useNovelWrite();

@@ -13,7 +13,6 @@ import { useNovelContext } from "../../context/NovelContext";
 
 export default function AfterStartWrite() {
   const { step } = useNovelContext();
-  const [count, setCount] = useState(0);
   const [genre, setGenre] = useState(1);
   const genreName = ["", "romance", "fantasy", "mystery", "sf", "free"];
 
@@ -41,9 +40,9 @@ export default function AfterStartWrite() {
 
         {step === 1 && <WriteStep1 genre={genre} setGenre={setGenre} />}
         {step === 2 && <WriteStep2 genreName={genreName[genre]} />}
-        {step === 3 && <WriteStep3 count={count} setCount={setCount} />}
-        {step === 4 && <WriteStep4a count={count} />}
-        {step === 4.5 && <WriteStep4b count={count} setCount={setCount} />}
+        {step === 3 && <WriteStep3 />}
+        {step === 4 && <WriteStep4a />}
+        {step === 4.5 && <WriteStep4b />}
         {step === 5 && <WriteStep5a />}
         {step === 5.5 && <WriteStep5b />}
       </div>

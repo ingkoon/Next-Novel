@@ -5,7 +5,7 @@ import SelectOption from "./SelectOption";
 import StoryInProgress from "./StoryInProgress";
 import style from "./WriteStep3.module.css";
 
-export default function WriteStep3({ count, setCount }) {
+export default function WriteStep3() {
   const [whatInProgress, setWhatInProgress] = useState("story");
 
   const button = () =>
@@ -19,11 +19,10 @@ export default function WriteStep3({ count, setCount }) {
         {whatInProgress === "story" && <StoryInProgress />}
         {whatInProgress === "painting" && <PaintingInProgress />}
 
-        <SelectOption count={count} setCount={setCount} />
+        <SelectOption />
       </div>
       <Bottom
         name={whatInProgress === "story" ? "그림보기" : "글보기"}
-        count={count}
         button={button}
       />
     </div>

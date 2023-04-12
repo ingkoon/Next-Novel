@@ -15,9 +15,12 @@ export function NovelContextProvider({ children }) {
     cover: undefined,
   });
   const [step, setStep] = useState(0);
+  const [count, setCount] = useState(0);
 
   return (
-    <NovelContext.Provider value={{ novel, setNovel, step, setStep }}>
+    <NovelContext.Provider
+      value={{ novel, setNovel, step, setStep, count, setCount }}
+    >
       {children}
     </NovelContext.Provider>
   );

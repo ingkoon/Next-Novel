@@ -4,8 +4,8 @@ import Modal from "react-modal";
 import StoryInProgress from "./StoryInProgress";
 import { useNovelContext } from "../../context/NovelContext";
 
-export default function Question({ count }) {
-  const { novel, setNovel } = useNovelContext();
+export default function Question() {
+  const { novel, setNovel, count } = useNovelContext();
   const questions = novel.questions;
   const [selected, setSelected] = useState(0);
   const [IsOpen, setIsOpen] = useState(false);

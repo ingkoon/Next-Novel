@@ -8,7 +8,7 @@ import useNovelWrite from "../../hooks/useNovelWrite";
 import LoadingModal from "../common/LoadingModal";
 import { useQueryClient } from "@tanstack/react-query";
 
-export default function WriteStep4a({ count }) {
+export default function WriteStep4a() {
   const { novel, setNovel, setStep } = useNovelContext();
   const { continueNovel } = useNovelWrite();
   const queryClient = useQueryClient();
@@ -69,7 +69,7 @@ export default function WriteStep4a({ count }) {
     <div className={style.container}>
       <LoadingModal state={continueNovel.isLoading} />
       <div className={style.component}>
-        <Question count={count} />
+        <Question />
         <Canvas2
           imageSrcs={imageSrcs}
           setImageSrcs={setImageSrcs}
