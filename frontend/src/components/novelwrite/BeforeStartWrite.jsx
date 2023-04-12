@@ -1,50 +1,27 @@
 import React, { useState } from "react";
 import TitleBar from "../common/TitleBar";
 import style from "./BeforeStartWrite.module.css";
-import Modal from "react-modal";
-import Login from "../login/Login";
 import { useNovelContext } from "../../context/NovelContext";
 import useTypeit from "../../hooks/useTypeit";
+import LoginModal from "../common/LoginModal";
 
 export default function BeforeStartWrite() {
   const { setStep } = useNovelContext();
   const [typeitRef] = useTypeit({
     content: ["내가 그리고", "AI가 써주는 소설을", "만들어볼까요?"],
   });
-  const [loginIsOpen, setLoginIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const start = () => {
-    // if (!localStorage.getItem("access_token")) {
-    //   setLoginIsOpen(true);
-    //   return;
-    // }
+    if (!localStorage.getItem("access_token")) {
+      setModalIsOpen(true);
+      return;
+    }
     setStep(1);
-  };
-  const closemodal = () => {
-    setLoginIsOpen(false);
   };
 
   return (
     <div>
-      <Modal
-        closeTimeoutMS={200}
-        isOpen={loginIsOpen}
-        onRequestClose={() => setLoginIsOpen(false)}
-        style={{
-          overlay: {
-            zIndex: "100",
-          },
-          content: {
-            width: "400px",
-            height: "500px",
-            margin: "auto",
-            padding: "0",
-            borderRadius: "20px",
-            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.5)",
-          },
-        }}
-      >
-        <Login closemodal={closemodal} />
-      </Modal>
+      <LoginModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
       <TitleBar
         name="작업실"
         intro="디테일이 생명입니다."
