@@ -6,6 +6,7 @@ export default function Canvas3({ imageSrcs, setImageSrcs, selected }) {
   const [getCtx, setGetCtx] = useState(null); //canvas
   const [rect, setRect] = useState(); //터치용
   const [painting, setPainting] = useState(false); //그림을 그리고 있는지 아닌지
+  const [hasPaintBefore, setHasPaintBefore] = useState(false); //그림을 그렸던 적이 한번이라도 있는가
   const [mouseX, setmouseX] = useState(); //캔버스 내 마우스 좌표
   const [mouseY, setmouseY] = useState(); //캔버스 내 마우스 좌표
   const [lasttouchX, setLastTouchX] = useState(); //캔버스 내 터치 좌표
@@ -75,8 +76,8 @@ export default function Canvas3({ imageSrcs, setImageSrcs, selected }) {
   }, [selected]); //n번째 캔버스 선택시
 
   useEffect(() => {
-    if (!painting) {
-      //그림그리는상태가 아니고, 마우스에서 손이 떨어졌을 때
+    if (!painting && hasPaintBefore) {
+      //그림그리는상태가 아니고, 그렸던 적이 있다!
       const canvas = canvasRef.current;
       const dataURL = canvas.toDataURL();
       setImageSrcs(
@@ -116,6 +117,7 @@ export default function Canvas3({ imageSrcs, setImageSrcs, selected }) {
       //그리는 행위 중
       getCtx.lineTo(mouseX, mouseY);
       getCtx.stroke();
+      setHasPaintBefore(true);
     }
   };
 
