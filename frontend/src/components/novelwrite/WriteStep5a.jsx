@@ -5,6 +5,7 @@ import style from "./WriteStep5a.module.css";
 import { useNovelContext } from "../../context/NovelContext";
 import LoadingModal from "../common/LoadingModal";
 import useNovelWrite from "../../hooks/useNovelWrite";
+import useCheckReady from "../../hooks/useCheckReady";
 
 export default function WriteStep5a() {
   const [imageSrcs, setImageSrcs] = useState(
@@ -13,25 +14,21 @@ export default function WriteStep5a() {
   const selected = 0;
   const { novel, setNovel, setStep } = useNovelContext();
   const { makeCoverRequest } = useNovelWrite();
+  const { isShaking, checkReady } = useCheckReady({
+    imageSrcs: imageSrcs,
+    novelCover: novel.cover,
+  });
 
   const button = () => {
     //표지 유효성 검사 코드
-    if (!novel.cover) {
-      setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 800); // 0.8초 후 클래스 제거
-      return;
-    }
+    if (!checkReady("novelCover")) return;
+
     setStep(5.5);
   };
   const makeCover = () => {
     //그림 유효성 검사
-    for (let imageSrc of imageSrcs) {
-      if (!imageSrc) {
-        setIsShaking(true);
-        setTimeout(() => setIsShaking(false), 800); // 0.8초 후 클래스 제거
-        return;
-      }
-    }
+    if (!checkReady("imageSrcs")) return;
+
     //api에서 커버 생성하기
     const byteStrings = imageSrcs.map((dataUrl) =>
       window.atob(dataUrl.split(",")[1])
@@ -65,7 +62,6 @@ export default function WriteStep5a() {
       },
     });
   };
-  const [isShaking, setIsShaking] = useState(false);
 
   return (
     <div className={style.container}>

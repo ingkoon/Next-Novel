@@ -6,6 +6,7 @@ import style from "./WriteStep2.module.css";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import { useNovelContext } from "../../context/NovelContext";
 import LoadingGameModal from "../common/LoadingGameModal";
+import useCheckReady from "../../hooks/useCheckReady";
 
 export default function WriteStep2() {
   const { novel, setNovel, setStep } = useNovelContext();
@@ -14,17 +15,13 @@ export default function WriteStep2() {
     Array.from({ length: 6 }, () => undefined)
   );
   const [selected, setSelected] = useState(0);
-  const [isShaking, setIsShaking] = useState(false);
+  const { isShaking, checkReady } = useCheckReady({
+    imageSrcs: imageSrcs,
+  });
 
   const button = () => {
     //그림 유효성 검사
-    for (let imageSrc of imageSrcs) {
-      if (!imageSrc) {
-        setIsShaking(true);
-        setTimeout(() => setIsShaking(false), 800); // 0.8초 후 클래스 제거
-        return;
-      }
-    }
+    if (!checkReady("imageSrcs")) return;
 
     const byteStrings = imageSrcs.map((dataUrl) =>
       window.atob(dataUrl.split(",")[1])

@@ -7,6 +7,7 @@ import { useNovelContext } from "../../context/NovelContext";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import LoadingModal from "../common/LoadingModal";
 import { useQueryClient } from "@tanstack/react-query";
+import useCheckReady from "../../hooks/useCheckReady";
 
 export default function WriteStep4a() {
   const { novel, setNovel, setStep } = useNovelContext();
@@ -15,18 +16,15 @@ export default function WriteStep4a() {
   const [imageSrcs, setImageSrcs] = useState(
     Array.from({ length: 1 }, () => undefined)
   );
-  const [isShaking, setIsShaking] = useState(false);
+  const { isShaking, checkReady } = useCheckReady({
+    imageSrcs: imageSrcs,
+  });
   const selected = 0;
   // const button = () => setStep(4.5);
   const button = () => {
     //그림 유효성 검사
-    for (let imageSrc of imageSrcs) {
-      if (!imageSrc) {
-        setIsShaking(true);
-        setTimeout(() => setIsShaking(false), 800); // 0.8초 후 클래스 제거
-        return;
-      }
-    }
+    if (!checkReady("imageSrcs")) return;
+
     const byteStrings = imageSrcs.map((dataUrl) =>
       window.atob(dataUrl.split(",")[1])
     );
