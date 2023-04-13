@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import CurrentStepIcon from "./CurrentStepIcon";
 import CurrentStepTitle from "./CurrentStepTitle";
 import WriteStep1 from "./WriteStep1";
@@ -13,8 +13,6 @@ import { useNovelContext } from "../../context/NovelContext";
 
 export default function AfterStartWrite() {
   const { step } = useNovelContext();
-  const [genre, setGenre] = useState(1);
-  const genreName = ["", "romance", "fantasy", "mystery", "sf", "free"];
 
   return (
     <div>
@@ -38,8 +36,8 @@ export default function AfterStartWrite() {
           alt="circle_right"
         />
 
-        {step === 1 && <WriteStep1 genre={genre} setGenre={setGenre} />}
-        {step === 2 && <WriteStep2 genreName={genreName[genre]} />}
+        {step === 1 && <WriteStep1 />}
+        {step === 2 && <WriteStep2 />}
         {step === 3 && <WriteStep3 />}
         {step === 4 && <WriteStep4a />}
         {step === 4.5 && <WriteStep4b />}

@@ -7,7 +7,7 @@ import useNovelWrite from "../../hooks/useNovelWrite";
 import { useNovelContext } from "../../context/NovelContext";
 import LoadingGameModal from "../common/LoadingGameModal";
 
-export default function WriteStep2({ genreName }) {
+export default function WriteStep2() {
   const { novel, setNovel, setStep } = useNovelContext();
   const { startNovel } = useNovelWrite();
   const [imageSrcs, setImageSrcs] = useState(
@@ -46,7 +46,7 @@ export default function WriteStep2({ genreName }) {
     // console.log(files);
     const formData = new FormData();
     files.forEach((file) => formData.append("images", file));
-    formData.append("genre", genreName);
+    formData.append("genre", novel.genre);
     startNovel.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
