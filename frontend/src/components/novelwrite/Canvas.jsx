@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useReducer } from "react";
 import style from "./Canvas.module.css";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import useCanvasPaintingTool from "../../hooks/useCanvasPaintingTool";
+import useFileToDataurl from "../../hooks/useFileToDataurl";
 
 export default function Canvas({
   imageSrcs,
@@ -42,32 +43,8 @@ export default function Canvas({
   const {
     getPaintings: { refetch, data },
   } = useNovelWrite();
-  const [paintings, setPaintings] = useState();
-  useEffect(() => {
-    if (data) {
-      Promise.all(
-        data.map((image) => {
-          return fetch(image.image)
-            .then((response) => response.blob())
-            .then((blob) => {
-              // Blob을 Data URL 형식으로 변환합니다.
-              return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = () => {
-                  // 변환된 Data URL을 resolve 함수를 호출하여 반환합니다.
-                  resolve(reader.result);
-                };
-              });
-            });
-        })
-      ).then((results) => {
-        // 모든 reader.result 값을 배열로 출력합니다.
-        console.log(results);
-        setPaintings(results);
-      });
-    }
-  }, [data]);
+
+  const { paintings } = useFileToDataurl([data]);
   const [loadState, setLoadState] = useState(false);
   const loadToCanvas = (choose) => {
     const dataURL = paintings[choose];
@@ -365,7 +342,7 @@ export default function Canvas({
           />
         </div>
       </div>
-      {canvasType === "BIG" && (
+      {canvasType === "big" && (
         <>
           <div
             className={style.openLoadButton}
