@@ -12,9 +12,7 @@ export default function WriteStep5b() {
   const [input, setInput] = useState({});
   const { finNovel } = useNovelWrite();
   const navigate = useNavigate();
-  const { isShaking, checkReady } = useCheckReady({
-    input: input,
-  });
+  const { isShaking, checkReady } = useCheckReady();
 
   const buttons = [
     {
@@ -37,7 +35,7 @@ export default function WriteStep5b() {
   };
 
   const button = () => {
-    if (!checkReady("input")) return;
+    if (!checkReady({ order: "input", input: input })) return;
 
     const formData = new FormData();
     formData.append("novel_id", novel.id);

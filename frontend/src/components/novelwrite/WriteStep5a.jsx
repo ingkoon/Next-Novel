@@ -15,21 +15,18 @@ export default function WriteStep5a() {
   const selected = 0;
   const { novel, setNovel, setStep } = useNovelContext();
   const { makeCoverRequest } = useNovelWrite();
-  const { isShaking, checkReady } = useCheckReady({
-    imageSrcs: imageSrcs,
-    novelCover: novel.cover,
-  });
+  const { isShaking, checkReady } = useCheckReady();
   const { dataurlToFile } = useDataurlToFile();
 
   const button = () => {
     //표지 유효성 검사 코드
-    if (!checkReady("novelCover")) return;
+    if (!checkReady({ order: "novelCover", novelCover: novel.cover })) return;
 
     setStep(5.5);
   };
   const makeCover = () => {
     //그림 유효성 검사
-    if (!checkReady("imageSrcs")) return;
+    if (!checkReady({ order: "imageSrcs", imageSrcs: imageSrcs })) return;
 
     const files = dataurlToFile(imageSrcs);
 

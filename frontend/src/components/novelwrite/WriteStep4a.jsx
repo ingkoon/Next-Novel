@@ -17,15 +17,13 @@ export default function WriteStep4a() {
   const [imageSrcs, setImageSrcs] = useState(
     Array.from({ length: 1 }, () => undefined)
   );
-  const { isShaking, checkReady } = useCheckReady({
-    imageSrcs: imageSrcs,
-  });
+  const { isShaking, checkReady } = useCheckReady();
   const { dataurlToFile } = useDataurlToFile();
   const selected = 0;
   // const button = () => setStep(4.5);
   const button = () => {
     //그림 유효성 검사
-    if (!checkReady("imageSrcs")) return;
+    if (!checkReady({ order: "imageSrcs", imageSrcs: imageSrcs })) return;
 
     const files = dataurlToFile(imageSrcs);
 

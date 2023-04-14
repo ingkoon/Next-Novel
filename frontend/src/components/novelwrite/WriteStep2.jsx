@@ -16,14 +16,12 @@ export default function WriteStep2() {
     Array.from({ length: 6 }, () => undefined)
   );
   const [selected, setSelected] = useState(0);
-  const { isShaking, checkReady } = useCheckReady({
-    imageSrcs: imageSrcs,
-  });
+  const { isShaking, checkReady } = useCheckReady();
   const { dataurlToFile } = useDataurlToFile();
 
   const button = () => {
     //그림 유효성 검사
-    if (!checkReady("imageSrcs")) return;
+    if (!checkReady({ order: "imageSrcs", imageSrcs: imageSrcs })) return;
 
     const files = dataurlToFile(imageSrcs);
 

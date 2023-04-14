@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-export default function useCheckReady({ imageSrcs, novelCover, input }) {
+export default function useCheckReady() {
   const [isShaking, setIsShaking] = useState(false);
 
-  function checkReady(order) {
+  function checkReady({ order, imageSrcs, novelCover, input }) {
     if (order === "imageSrcs") {
       for (let imageSrc of imageSrcs) {
         if (!imageSrc) {
