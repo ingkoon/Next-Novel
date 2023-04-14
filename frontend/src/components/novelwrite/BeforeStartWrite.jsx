@@ -7,7 +7,7 @@ import LoginModal from "../common/LoginModal";
 
 export default function BeforeStartWrite() {
   const { setStep } = useNovelContext();
-  const [typeitRef] = useTypeit({
+  const { typeitRef } = useTypeit({
     content: ["내가 그리고", "AI가 써주는 소설을", "만들어볼까요?"],
   });
   const [modalIsOpen, setModalIsOpen] = useState(false);

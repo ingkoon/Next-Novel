@@ -7,6 +7,7 @@ import useNovelWrite from "../../hooks/useNovelWrite";
 import { useNovelContext } from "../../context/NovelContext";
 import LoadingGameModal from "../common/LoadingGameModal";
 import useCheckReady from "../../hooks/useCheckReady";
+import useDataurlToFile from "../../hooks/useDataurlToFile";
 
 export default function WriteStep2() {
   const { novel, setNovel, setStep } = useNovelContext();
@@ -18,29 +19,14 @@ export default function WriteStep2() {
   const { isShaking, checkReady } = useCheckReady({
     imageSrcs: imageSrcs,
   });
+  const { dataurlToFile } = useDataurlToFile();
 
   const button = () => {
     //그림 유효성 검사
     if (!checkReady("imageSrcs")) return;
 
-    const byteStrings = imageSrcs.map((dataUrl) =>
-      window.atob(dataUrl.split(",")[1])
-    );
-    const arrays = byteStrings.map((byteString) => {
-      let array = [];
-      for (let i = 0; i < byteString.length; i++) {
-        array.push(byteString.charCodeAt(i));
-      }
-      return array;
-    });
-    const myBlobs = arrays.map(
-      (array) => new Blob([new Uint8Array(array)], { type: "image/png" })
-    );
-    const files = myBlobs.map(
-      (myBlob, index) =>
-        new File([myBlob], "".concat("material", index, ".png"))
-    );
-    // console.log(files);
+    const files = dataurlToFile(imageSrcs);
+
     const formData = new FormData();
     files.forEach((file) => formData.append("images", file));
     formData.append("genre", novel.genre);

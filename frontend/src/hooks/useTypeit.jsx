@@ -39,5 +39,5 @@ export default function useTypeit({ content }) {
     };
   }, []);
 
-  return [typeitRef];
+  return { typeitRef };
 }

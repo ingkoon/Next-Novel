@@ -6,6 +6,7 @@ import { useNovelContext } from "../../context/NovelContext";
 import LoadingModal from "../common/LoadingModal";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import useCheckReady from "../../hooks/useCheckReady";
+import useDataurlToFile from "../../hooks/useDataurlToFile";
 
 export default function WriteStep5a() {
   const [imageSrcs, setImageSrcs] = useState(
@@ -18,6 +19,7 @@ export default function WriteStep5a() {
     imageSrcs: imageSrcs,
     novelCover: novel.cover,
   });
+  const { dataurlToFile } = useDataurlToFile();
 
   const button = () => {
     //표지 유효성 검사 코드
@@ -29,25 +31,8 @@ export default function WriteStep5a() {
     //그림 유효성 검사
     if (!checkReady("imageSrcs")) return;
 
-    //api에서 커버 생성하기
-    const byteStrings = imageSrcs.map((dataUrl) =>
-      window.atob(dataUrl.split(",")[1])
-    );
-    const arrays = byteStrings.map((byteString) => {
-      let array = [];
-      for (let i = 0; i < byteString.length; i++) {
-        array.push(byteString.charCodeAt(i));
-      }
-      return array;
-    });
-    const myBlobs = arrays.map(
-      (array) => new Blob([new Uint8Array(array)], { type: "image/png" })
-    );
-    const files = myBlobs.map(
-      (myBlob, index) =>
-        new File([myBlob], "".concat("material", index, ".png"))
-    );
-    // console.log(files);
+    const files = dataurlToFile(imageSrcs);
+
     const formData = new FormData();
     formData.append("novel_id", novel.id);
     formData.append("image", files[0]);

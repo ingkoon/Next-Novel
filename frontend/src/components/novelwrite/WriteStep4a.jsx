@@ -8,6 +8,7 @@ import useNovelWrite from "../../hooks/useNovelWrite";
 import LoadingModal from "../common/LoadingModal";
 import { useQueryClient } from "@tanstack/react-query";
 import useCheckReady from "../../hooks/useCheckReady";
+import useDataurlToFile from "../../hooks/useDataurlToFile";
 
 export default function WriteStep4a() {
   const { novel, setNovel, setStep } = useNovelContext();
@@ -19,30 +20,15 @@ export default function WriteStep4a() {
   const { isShaking, checkReady } = useCheckReady({
     imageSrcs: imageSrcs,
   });
+  const { dataurlToFile } = useDataurlToFile();
   const selected = 0;
   // const button = () => setStep(4.5);
   const button = () => {
     //그림 유효성 검사
     if (!checkReady("imageSrcs")) return;
 
-    const byteStrings = imageSrcs.map((dataUrl) =>
-      window.atob(dataUrl.split(",")[1])
-    );
-    const arrays = byteStrings.map((byteString) => {
-      let array = [];
-      for (let i = 0; i < byteString.length; i++) {
-        array.push(byteString.charCodeAt(i));
-      }
-      return array;
-    });
-    const myBlobs = arrays.map(
-      (array) => new Blob([new Uint8Array(array)], { type: "image/png" })
-    );
-    const files = myBlobs.map(
-      (myBlob, index) =>
-        new File([myBlob], "".concat("material", index, ".png"))
-    );
-    // console.log(files);
+    const files = dataurlToFile(imageSrcs);
+
     const formData = new FormData();
     formData.append("step", novel.step);
     formData.append("novel_id", novel.id);
