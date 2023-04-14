@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Bottom from "./Bottom";
-import Canvas1 from "./Canvas1";
+import Canvas from "./Canvas";
 import Preview from "./Preview";
 import style from "./WriteStep2.module.css";
 import useNovelWrite from "../../hooks/useNovelWrite";
@@ -66,10 +66,13 @@ export default function WriteStep2() {
       <LoadingGameModal state={startNovel.isLoading} />
       <div className={style.component}>
         <Preview imageSrcs={imageSrcs} setSelected={setSelected} />
-        <Canvas1
+        <Canvas
           imageSrcs={imageSrcs}
           setImageSrcs={setImageSrcs}
           selected={selected}
+          canvasWidth={608}
+          canvasHeight={380}
+          canvasType={"big"}
         />
       </div>
       <Bottom name="제출" button={button} isShaking={isShaking} />

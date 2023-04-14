@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Bottom from "./Bottom";
-import Canvas3 from "./Canvas3";
+import Canvas from "./Canvas";
 import style from "./WriteStep5a.module.css";
 import { useNovelContext } from "../../context/NovelContext";
 import LoadingModal from "../common/LoadingModal";
@@ -70,10 +70,13 @@ export default function WriteStep5a() {
         <div className={style.left}>
           <div className={style.input}>
             <div className={style.canvas}>
-              <Canvas3
+              <Canvas
                 imageSrcs={imageSrcs}
                 setImageSrcs={setImageSrcs}
                 selected={selected}
+                canvasWidth={343}
+                canvasHeight={390}
+                canvasType={"small"}
               />
             </div>
           </div>

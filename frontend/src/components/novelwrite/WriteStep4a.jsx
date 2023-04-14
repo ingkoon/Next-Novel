@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Bottom from "./Bottom";
-import Canvas2 from "./Canvas2";
+import Canvas from "./Canvas";
 import Question from "./Question";
 import style from "./WriteStep4a.module.css";
 import { useNovelContext } from "../../context/NovelContext";
@@ -68,10 +68,13 @@ export default function WriteStep4a() {
       <LoadingModal state={continueNovel.isLoading} />
       <div className={style.component}>
         <Question />
-        <Canvas2
+        <Canvas
           imageSrcs={imageSrcs}
           setImageSrcs={setImageSrcs}
           selected={selected}
+          canvasWidth={608}
+          canvasHeight={380}
+          canvasType={"big"}
         />
       </div>
       <Bottom name="제출" button={button} isShaking={isShaking} />

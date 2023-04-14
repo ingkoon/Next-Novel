@@ -1,8 +1,15 @@
 import React, { useEffect, useRef, useState, useReducer } from "react";
-import style from "./Canvas2.module.css";
+import style from "./Canvas.module.css";
 import useNovelWrite from "../../hooks/useNovelWrite";
 
-export default function Canvas2({ imageSrcs, setImageSrcs, selected }) {
+export default function Canvas({
+  imageSrcs,
+  setImageSrcs,
+  selected,
+  canvasWidth,
+  canvasHeight,
+  canvasType,
+}) {
   const canvasRef = useRef(null); //canvas
   const [getCtx, setGetCtx] = useState(null); //canvas
   const [rect, setRect] = useState(); //터치용
@@ -12,9 +19,6 @@ export default function Canvas2({ imageSrcs, setImageSrcs, selected }) {
   const [mouseY, setmouseY] = useState(); //캔버스 내 마우스 좌표
   const [lasttouchX, setLastTouchX] = useState(); //캔버스 내 터치 좌표
   const [lasttouchY, setLastTouchY] = useState(); //캔버스 내 터치 좌표
-  const canvasWidth = 608;
-  const canvasHeight = 380;
-
   const [widthState, setWidthState] = useState(2.5); //펜 굵기 초기값
   const [colorState, setColorState] = useState("#000000"); //펜 색 초기값
   const [openSetWidthState, setOpenSetWidthState] = useState(false); //펜 굵기 설정 탭 on/off
@@ -269,7 +273,7 @@ export default function Canvas2({ imageSrcs, setImageSrcs, selected }) {
 
   return (
     <div className={style.container}>
-      <div className={style.canvas}>
+      <div className={`${style.canvas} ${style[canvasType]}`}>
         <canvas
           ref={canvasRef}
           onMouseDown={() => setPainting(true)}
@@ -401,37 +405,44 @@ export default function Canvas2({ imageSrcs, setImageSrcs, selected }) {
           />
         </div>
       </div>
-      <div
-        className={style.openLoadButton}
-        onClick={() => {
-          setLoadState((prev) => !prev);
-          refetch();
-        }}
-      >
-        <img src={process.env.PUBLIC_URL + `/icon/history.svg`} alt="history" />
-      </div>
-      {loadState && (
-        <div className={style.load}>
-          <div className={style.tap}>
-            <span>그림 불러오기</span>
-            <button onClick={() => setLoadState(false)}>X</button>
+      {canvasType === "BIG" && (
+        <>
+          <div
+            className={style.openLoadButton}
+            onClick={() => {
+              setLoadState((prev) => !prev);
+              refetch();
+            }}
+          >
+            <img
+              src={process.env.PUBLIC_URL + `/icon/history.svg`}
+              alt="history"
+            />
           </div>
-          <div className={style.paintings}>
-            <div className={style.scroll}>
-              {data?.map((image, index) => (
-                <img
-                  src={image.image}
-                  alt=""
-                  key={index}
-                  onClick={() => {
-                    loadToCanvas(index);
-                    setLoadState(false);
-                  }}
-                />
-              ))}
+          {loadState && (
+            <div className={style.load}>
+              <div className={style.tap}>
+                <span>그림 불러오기</span>
+                <button onClick={() => setLoadState(false)}>X</button>
+              </div>
+              <div className={style.paintings}>
+                <div className={style.scroll}>
+                  {data?.map((image, index) => (
+                    <img
+                      src={image.image}
+                      alt=""
+                      key={index}
+                      onClick={() => {
+                        loadToCanvas(index);
+                        setLoadState(false);
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          )}
+        </>
       )}
     </div>
   );
