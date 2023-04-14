@@ -22,12 +22,9 @@ export default function WriteStep2() {
   const button = () => {
     //그림 유효성 검사
     if (!checkReady({ order: "imageSrcs", imageSrcs: imageSrcs })) return;
-
     const files = dataurlToFile(imageSrcs);
+    const formData = appendFormData(files);
 
-    const formData = new FormData();
-    files.forEach((file) => formData.append("images", file));
-    formData.append("genre", novel.genre);
     startNovel.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
@@ -43,6 +40,14 @@ export default function WriteStep2() {
         setStep(3);
       },
     });
+  };
+
+  const appendFormData = (files) => {
+    const formData = new FormData();
+    files.forEach((file) => formData.append("images", file));
+    formData.append("genre", novel.genre);
+
+    return formData;
   };
 
   return (

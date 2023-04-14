@@ -36,17 +36,22 @@ export default function WriteStep5b() {
 
   const button = () => {
     if (!checkReady({ order: "input", input: input })) return;
+    const formData = appendFormData();
 
-    const formData = new FormData();
-    formData.append("novel_id", novel.id);
-    formData.append("title", input.title);
-    formData.append("introduction", input.desc);
     finNovel.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
         navigate(`/library/${novel.id}/intro`, { state: { id: novel.id } });
       },
     });
+  };
+  const appendFormData = () => {
+    const formData = new FormData();
+    formData.append("novel_id", novel.id);
+    formData.append("title", input.title);
+    formData.append("introduction", input.desc);
+
+    return formData;
   };
 
   return (

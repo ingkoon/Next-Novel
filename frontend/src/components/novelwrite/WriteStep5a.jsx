@@ -27,12 +27,9 @@ export default function WriteStep5a() {
   const makeCover = () => {
     //그림 유효성 검사
     if (!checkReady({ order: "imageSrcs", imageSrcs: imageSrcs })) return;
-
     const files = dataurlToFile(imageSrcs);
+    const formData = appendFormData(files);
 
-    const formData = new FormData();
-    formData.append("novel_id", novel.id);
-    formData.append("image", files[0]);
     makeCoverRequest.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
@@ -43,6 +40,13 @@ export default function WriteStep5a() {
         });
       },
     });
+  };
+  const appendFormData = (files) => {
+    const formData = new FormData();
+    formData.append("novel_id", novel.id);
+    formData.append("image", files[0]);
+
+    return formData;
   };
 
   return (

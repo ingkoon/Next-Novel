@@ -24,14 +24,9 @@ export default function WriteStep4a() {
   const button = () => {
     //그림 유효성 검사
     if (!checkReady({ order: "imageSrcs", imageSrcs: imageSrcs })) return;
-
     const files = dataurlToFile(imageSrcs);
+    const formData = appendFormData(files);
 
-    const formData = new FormData();
-    formData.append("step", novel.step);
-    formData.append("novel_id", novel.id);
-    formData.append("query", novel.selectedQuestion);
-    formData.append("image", files[0]);
     continueNovel.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
@@ -45,6 +40,15 @@ export default function WriteStep4a() {
         setStep(4.5);
       },
     });
+  };
+  const appendFormData = (files) => {
+    const formData = new FormData();
+    formData.append("step", novel.step);
+    formData.append("novel_id", novel.id);
+    formData.append("query", novel.selectedQuestion);
+    formData.append("image", files[0]);
+
+    return formData;
   };
 
   return (
