@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import style from "./Canvas.module.css";
 import useNovelWrite from "../../hooks/useNovelWrite";
-import useCanvasPaintingTool from "../../hooks/useCanvasPaintingTool";
 import useCanvasIsPainting from "../../hooks/useCanvasIsPainting";
 import useCanvasSaveAndLoad from "../../hooks/useCanvasSaveAndLoad";
+import Tools from "./Tools";
 
 export default function Canvas({
   imageSrcs,
@@ -23,24 +23,6 @@ export default function Canvas({
   } = useNovelWrite();
 
   const {
-    onPencil,
-    onEraser,
-    openSetWidth,
-    setWidth,
-    openSetColor,
-    setColor,
-    colors,
-    widthState,
-    colorState,
-    penSelected,
-    eraserSelected,
-    setPenSelected,
-    setEraserSelected,
-    openSetWidthState,
-    openSetColorState,
-  } = useCanvasPaintingTool([getCtx]);
-
-  const {
     drawFn,
     touchStart,
     touch,
@@ -48,7 +30,7 @@ export default function Canvas({
     painting,
     hasPaintBefore,
     setPainting,
-  } = useCanvasIsPainting([getCtx, widthState, rect]);
+  } = useCanvasIsPainting([getCtx, rect]);
 
   const { loadToCanvas, goBack, initCanvas } = useCanvasSaveAndLoad([
     getCtx,
@@ -71,8 +53,8 @@ export default function Canvas({
     setRect(canvas.getBoundingClientRect());
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
-    ctx.lineWidth = widthState;
-    ctx.strokeStyle = colorState;
+    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = "#000000";
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
     setGetCtx(ctx);
@@ -103,116 +85,7 @@ export default function Canvas({
           }}
         />
       </div>
-      <div className={style.tools}>
-        <div className={`${style.tool1} ${penSelected ? style.selected : ""}`}>
-          <img
-            src={process.env.PUBLIC_URL + `/icon/pen.svg`}
-            alt="pen"
-            onClick={() => {
-              onPencil();
-              setPenSelected(true);
-              setEraserSelected(false);
-            }}
-          />
-        </div>
-        <div
-          className={`${style.tool2} ${eraserSelected ? style.selected : ""}`}
-        >
-          <img
-            src={process.env.PUBLIC_URL + `/icon/eraser.svg`}
-            alt="eraser"
-            onClick={() => {
-              onEraser();
-              setPenSelected(false);
-              setEraserSelected(true);
-            }}
-          />
-        </div>
-        <div className={style.tool3}>
-          <div
-            style={{
-              width: "50px",
-              height: "30px",
-              backgroundColor: `${colorState}`,
-              border: "3px solid black",
-            }}
-            onClick={openSetColor}
-          />
-          {openSetColorState && (
-            <div className={style.setColor}>
-              {colors.map((color, index) => (
-                <div
-                  key={index}
-                  style={{
-                    backgroundColor: color,
-                    width: "30px",
-                    height: "30px",
-                    borderRadius: "50%",
-                    margin: "5px",
-                  }}
-                  data-color={color}
-                  onClick={(event) => {
-                    setColor(event);
-                    openSetColor();
-                  }}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-        <div className={style.tool4}>
-          <div
-            style={{
-              width: "50px",
-              height: "30px",
-              backgroundColor: "white",
-              border: "3px solid black",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onClick={openSetWidth}
-          >
-            <div
-              style={{
-                width: `${widthState}px`,
-                height: `${widthState}px`,
-                backgroundColor: "black",
-                borderRadius: "50%",
-              }}
-            />
-          </div>
-          {openSetWidthState && (
-            <div className={style.setWidth}>
-              <input
-                type="range"
-                min="1"
-                max="20"
-                defaultValue={widthState}
-                step="0.1"
-                onMouseUp={(event) => {
-                  setWidth(event);
-                  openSetWidth();
-                }}
-              />
-            </div>
-          )}
-        </div>
-        <div className={style.tool5}>
-          <img
-            src={process.env.PUBLIC_URL + `/icon/back.svg`}
-            alt="back"
-            onClick={goBack}
-          />
-        </div>
-        <div className={style.tool6}>
-          <img
-            src={process.env.PUBLIC_URL + `/icon/clear.svg`}
-            alt="clear"
-            onClick={initCanvas}
-          />
-        </div>
-      </div>
+      <Tools getCtx={getCtx} goBack={goBack} initCanvas={initCanvas} />
       {canvasType === "big" && (
         <>
           <div

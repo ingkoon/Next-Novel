@@ -1,12 +1,13 @@
 import { useState } from "react";
 
-export default function useCanvasIsPainting([getCtx, widthState, rect]) {
+export default function useCanvasIsPainting([getCtx, rect]) {
   const [painting, setPainting] = useState(false); //그림을 그리고 있는지 아닌지
   const [hasPaintBefore, setHasPaintBefore] = useState(false); //그림을 그렸던 적이 한번이라도 있는가
   const [mouseX, setmouseX] = useState(); //캔버스 내 마우스 좌표
   const [mouseY, setmouseY] = useState(); //캔버스 내 마우스 좌표
   const [lasttouchX, setLastTouchX] = useState(); //캔버스 내 터치 좌표
   const [lasttouchY, setLastTouchY] = useState(); //캔버스 내 터치 좌표
+  const tempWidthState = 2.5; //터치 임시용
 
   const drawFn = (e) => {
     //마우스가 캔버스 위에 올라가있을때
@@ -38,7 +39,7 @@ export default function useCanvasIsPainting([getCtx, widthState, rect]) {
     getCtx.arc(
       e.touches[0].pageX - rect.left,
       e.touches[0].pageY - rect.top,
-      widthState / 2,
+      tempWidthState / 2,
       0,
       2 * Math.PI
     );
