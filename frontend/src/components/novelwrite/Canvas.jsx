@@ -4,6 +4,7 @@ import useNovelWrite from "../../hooks/useNovelWrite";
 import useCanvasIsPainting from "../../hooks/useCanvasIsPainting";
 import useCanvasSaveAndLoad from "../../hooks/useCanvasSaveAndLoad";
 import Tools from "./Tools";
+import LoadPaintings from "./LoadPaintings";
 
 export default function Canvas({
   imageSrcs,
@@ -16,7 +17,6 @@ export default function Canvas({
   const canvasRef = useRef(null); //canvas
   const [getCtx, setGetCtx] = useState(null); //canvas
   const [rect, setRect] = useState(); //터치용
-  const [loadState, setLoadState] = useState(false); //그림 불러오기 창
 
   const {
     getPaintings: { refetch, data },
@@ -87,43 +87,11 @@ export default function Canvas({
       </div>
       <Tools getCtx={getCtx} goBack={goBack} initCanvas={initCanvas} />
       {canvasType === "big" && (
-        <>
-          <div
-            className={style.openLoadButton}
-            onClick={() => {
-              setLoadState((prev) => !prev);
-              refetch();
-            }}
-          >
-            <img
-              src={process.env.PUBLIC_URL + `/icon/history.svg`}
-              alt="history"
-            />
-          </div>
-          {loadState && (
-            <div className={style.load}>
-              <div className={style.tap}>
-                <span>그림 불러오기</span>
-                <button onClick={() => setLoadState(false)}>X</button>
-              </div>
-              <div className={style.paintings}>
-                <div className={style.scroll}>
-                  {data?.map((image, index) => (
-                    <img
-                      src={image.image}
-                      alt=""
-                      key={index}
-                      onClick={() => {
-                        loadToCanvas(index);
-                        setLoadState(false);
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-        </>
+        <LoadPaintings
+          loadToCanvas={loadToCanvas}
+          refetch={refetch}
+          data={data}
+        />
       )}
     </div>
   );
