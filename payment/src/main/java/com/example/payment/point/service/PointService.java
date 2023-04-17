@@ -1,0 +1,54 @@
+package com.example.payment.point.service;
+
+import com.example.payment.point.domain.Point;
+import com.example.payment.point.domain.dto.request.PointCreateRequest;
+import com.example.payment.point.domain.dto.request.PointDeleteRequest;
+import com.example.payment.point.domain.dto.request.PointReadRequest;
+import com.example.payment.point.domain.dto.request.PointUpdateRequest;
+import com.example.payment.point.domain.dto.response.PointFindResponse;
+import com.example.payment.point.repository.PointRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.NoSuchElementException;
+
+@Slf4j
+@Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+public class PointService {
+    private final PointRepository pointRepository;
+
+    @Transactional
+    public void createPoint(PointCreateRequest request){
+        Point point = request.toEntity();
+        pointRepository.save(point);
+    }
+
+    public PointFindResponse readPoint(PointReadRequest request){
+        Point point = findPoint(request.getMemberId());
+
+        return new PointFindResponse()
+                .fromEntity(point);
+    }
+
+    @Transactional
+    public void updatePoint(PointUpdateRequest request){
+        Point point = findPoint(request.getMemberId());
+        point.updatePoint(request.getPoint());
+    }
+
+    @Transactional
+    public void delete(PointDeleteRequest request){
+        Point point = findPoint(request.getMemberId());
+        pointRepository.delete(point);
+    }
+
+    public Point findPoint(Long memberId){
+        return pointRepository
+                .findByMemberId(memberId)
+                .orElseThrow(NoSuchElementException::new);
+    }
+}

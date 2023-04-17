@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/member")
 public class MemberController {
-
     private final MemberService memberService;
-
     @GetMapping
     public ResponseEntity<Void> findMember(@PathVariable("memberId") long memberId){
         Member member = memberService.findMember(memberId);
         return ResponseEntity.ok().build();
     }
 }
+/*
+repository
+service
+controller
+ */
