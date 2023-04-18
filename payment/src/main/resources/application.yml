@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 logging:
   level:
     web: debug
@@ -11,6 +11,9 @@ spring:
 
 ---
 spring:
+  application:
+    name: next-novel-payments
+
   config:
     activate:
       on-profile: dev
@@ -33,6 +36,15 @@ spring:
 boot-pay:
   rest-api-key: ***REMOVED***
   private-key: D6+wqdBeprLC6I2LwR42iG/YHMIHjwaynDkkjSmLHYo=
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone : http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
 
 ---
 spring:

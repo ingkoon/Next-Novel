@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class Point {
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "point_id")
     private Long id;
@@ -21,12 +20,10 @@ public class Point {
     @NotNull
     private Long point = 0L;
     private LocalDateTime updatedAt = LocalDateTime.now();
-
     @Builder
     public Point(Long memberId){
         this.memberId = memberId;
     }
-
     public void updatePoint(Long point){
         this.point = point;
     }

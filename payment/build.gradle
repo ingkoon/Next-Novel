@@ -20,6 +20,10 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:8.0.31'
 	implementation 'io.github.bootpay:backend:+'
 
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.1.5'
+
+
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'com.h2database:h2:2.1.214'
 
