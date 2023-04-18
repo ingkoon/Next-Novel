@@ -1,0 +1,66 @@
+server:
+  port: 8082
+logging:
+  level:
+    web: debug
+    sql: debug
+
+spring:
+  profiles:
+    active: dev
+
+---
+spring:
+  application:
+    name: next-novel-member
+
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/member?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: root
+
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    hibernate:
+      ddl-auto: create-drop
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone : http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: stage
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/member?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: root
+
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    hibernate:
+      ddl-auto: create
