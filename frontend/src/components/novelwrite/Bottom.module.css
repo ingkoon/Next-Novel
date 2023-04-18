@@ -3,29 +3,30 @@
   align-items: center;
   position: relative;
   flex-basis: 15%;
-  background-color: greenyellow;
+  /* background-color: greenyellow; */
   flex-shrink: 0;
 }
 .guide {
   position: absolute;
-  left: 150px;
+  margin: 10px 0;
 }
 .middle {
   position: relative;
   margin: 0 auto;
-  width: 350px;
   /* border: 1px solid red; */
   text-align: center;
 }
 .middle > img {
   width: 100%;
-  height: 100%;
+  height: 46px;
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 0;
+  transform: translate(0, -50%);
   z-index: -1;
 }
 .button {
+  margin: 15px 0;
   width: 126px;
   height: 46px;
   background-color: #090909;
@@ -52,7 +53,5 @@
     position: static;
     display: flex;
     justify-content: center;
-    /* margin: 0 auto;
-    width: 350px; */
   }
 }

@@ -12,11 +12,11 @@
   align-items: center;
 }
 .container span {
-  font-size: 40px;
+  font-size: 36px;
   font-family: "LINESeedKR-Bd";
   position: relative;
-  top: 5px;
+  top: 4px;
 }
 .container img {
-  height: 40px;
+  height: 36px;
 }

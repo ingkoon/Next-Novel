@@ -1,5 +1,4 @@
 .container {
-  background-color: burlywood;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -9,5 +8,5 @@
   justify-content: space-evenly;
   flex-wrap: wrap;
   flex-basis: 85%;
-  background-color: coral;
+  align-items: center;
 }

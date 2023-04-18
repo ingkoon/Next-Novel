@@ -4,6 +4,7 @@
   align-items: center;
   width: 440px;
   height: 90px;
+  margin-left: 100px;
 }
 .component {
   position: relative;
