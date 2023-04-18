@@ -15,7 +15,7 @@ export default function AfterStartWrite() {
   const { step } = useNovelContext();
 
   return (
-    <div>
+    <div className={style.container}>
       <div className={style.current_step}>
         <CurrentStepTitle />
         <CurrentStepIcon />

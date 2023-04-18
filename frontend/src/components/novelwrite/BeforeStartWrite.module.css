@@ -8,9 +8,10 @@
 .orange_path {
   position: absolute;
   z-index: -2;
-  top: 230px;
+  top: 50%;
+  transform: translate(0, -50%);
   height: 90px;
-  max-width: 100vw;
+  width: 100vw;
   overflow: hidden;
 }
 .circle_left {
@@ -155,6 +156,7 @@
 @media (max-width: 1024px) {
   .box {
     width: 80%;
+    max-width: 650px;
   }
   .circle_left,
   .circle_right,

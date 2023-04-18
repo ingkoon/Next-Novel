@@ -1,11 +1,16 @@
+.container {
+  background-color: burlywood;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 .component {
   display: flex;
-  flex-direction: row;
-  height: 400px;
   align-items: center;
   justify-content: space-between;
-  padding: 0 150px;
-  /* border: 1px solid red; */
+  flex-wrap: wrap;
+  flex-basis: 85%;
+  background-color: coral;
 }
 .component > * {
   font-family: "LINESeedKR-Bd";
