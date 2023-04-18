@@ -1,0 +1,19 @@
+server:
+  port: 8761
+logging:
+  level:
+    web: debug
+    sql: debug
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: "optional:configserver:"
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
