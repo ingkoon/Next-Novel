@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
 import style from "./Question.module.css";
-import Modal from "react-modal";
-import StoryInProgress from "./StoryInProgress";
 import { useNovelContext } from "../../context/NovelContext";
+import StoryInProgressModal from "../common/StoryInProgressModal";
 
-export default function Question({ count }) {
-  const { novel, setNovel } = useNovelContext();
+export default function Question() {
+  const { novel, setNovel, count } = useNovelContext();
   const questions = novel.questions;
   const [selected, setSelected] = useState(0);
-  const [IsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const closemodal = () => {
-    setIsOpen(false);
-  };
   const handleSelected = () => {
     setSelected((selected + 1) % 3);
   };
@@ -36,26 +32,14 @@ export default function Question({ count }) {
         </div>
       </div>
       <div className={style.button}>
-        <button onClick={() => setIsOpen(true)}>지금까지의 스토리 보기</button>
+        <button onClick={() => setModalIsOpen(true)}>
+          지금까지의 스토리 보기
+        </button>
       </div>
-      <Modal
-        isOpen={IsOpen}
-        onRequestClose={() => setIsOpen(false)}
-        style={{
-          overlay: {},
-          content: {
-            width: "608px",
-            height: "380px",
-            margin: "auto",
-            padding: "0",
-            borderRadius: "20px",
-            border: "none",
-            background: "none",
-          },
-        }}
-      >
-        <StoryInProgress closemodal={closemodal} />
-      </Modal>
+      <StoryInProgressModal
+        modalIsOpen={modalIsOpen}
+        setModalIsOpen={setModalIsOpen}
+      />
     </div>
   );
 }

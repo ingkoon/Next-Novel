@@ -1,21 +1,19 @@
-import React from "react"
-import ReactDOM from "react-dom/client"
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import "./index.css"
-import App from "./App"
-import Home from "./pages/Home"
-import NotFound from "./pages/NotFound"
-// import ProtectedRoute from "./pages/ProtectedRoute";
-import Novels from "./pages/Novels"
-import NovelIntro from "./pages/NovelIntro"
-import NovelRead from "./pages/NovelRead"
-import NovelSearch from "./pages/NovelSearch"
-import MyPage from "./pages/MyPage"
-import NovelWrite from "./pages/NovelWrite"
-import Landing from "./pages/Landing"
-import OnlyLogin from "./components/login/OnlyLogin"
-import Modal from "react-modal"
-
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
+import App from "./App";
+import NotFound from "./pages/NotFound";
+import Novels from "./pages/Novels";
+import NovelIntro from "./pages/NovelIntro";
+import NovelRead from "./pages/NovelRead";
+import NovelSearch from "./pages/NovelSearch";
+import MyPage from "./pages/MyPage";
+import NovelWrite from "./pages/NovelWrite";
+import Landing from "./pages/Landing";
+import OnlyLogin from "./components/login/OnlyLogin";
+import Modal from "react-modal";
+import { NovelContextProvider } from "./context/NovelContext";
 
 const router = createBrowserRouter([
   {
@@ -25,8 +23,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, path: "/", element: <Landing /> },
       {
-        path : "/login",
-        element : <OnlyLogin/>
+        path: "/login",
+        element: <OnlyLogin />,
       },
       {
         path: "/library",
@@ -34,12 +32,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/library/:id/intro",
-        // path: "/library/intro",
         element: <NovelIntro />,
       },
       {
         path: "/library/:id/read",
-        // path: "/library/read",
         element: <NovelRead />,
       },
       {
@@ -48,39 +44,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/mypage",
-        element: (
-          // <ProtectedRoute>
-          <MyPage />
-          // </ProtectedRoute>
-        ),
+        element: <MyPage />,
       },
       {
         path: "/laboratory",
         element: (
-          // <ProtectedRoute>
-          <NovelWrite />
-          // </ProtectedRoute>
+          <NovelContextProvider>
+            <NovelWrite />
+          </NovelContextProvider>
         ),
       },
-      // {
-      //   path: "/landing",
-      //   element: (
-      //     // <ProtectedRoute>
-      //     <Landing />
-      //     // </ProtectedRoute>
-      //   ),
-      // },
     ],
   },
-])
+]);
 
-const root = ReactDOM.createRoot(document.getElementById("root"))
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
 
-    <RouterProvider router={router} />
+  <RouterProvider router={router} />
 
   // </React.StrictMode>
-)
+);
 
-Modal.setAppElement("#root")
+Modal.setAppElement("#root");

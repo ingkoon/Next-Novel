@@ -1,7 +1,9 @@
 import React from "react";
 import style from "./CurrentStepIcon.module.css";
+import { useNovelContext } from "../../context/NovelContext";
 
-export default function CurrentStepIcon({ step }) {
+export default function CurrentStepIcon() {
+  const { step } = useNovelContext();
   const flooredStep = Math.floor(step);
   const logoSrc = process.env.PUBLIC_URL + "/icon/logo.svg";
   const logoWhiteSrc = process.env.PUBLIC_URL + "/icon/logo_white.svg";

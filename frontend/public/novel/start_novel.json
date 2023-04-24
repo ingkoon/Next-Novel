@@ -1,0 +1,17 @@
+{
+  "genre": "모험",
+  "id": "12345678",
+  "step": 1,
+  "materials": [
+    { "image": "/novel/material1.png", "caption": "빨간 옷을 입은 소년" },
+    {
+      "image": "/novel/material2.png",
+      "caption": "담배를 물고 있는 노란머리 남자"
+    },
+    { "image": "/novel/material3.png", "caption": "웃고 있는 주황머리 여자" },
+    { "image": "/novel/material4.png", "caption": "웃고 있는 초록머리 남자" },
+    { "image": "/novel/material5.png", "caption": "분홍색 모자를 쓴 동물" },
+    { "image": "/novel/material6.png", "caption": "코가 긴 갈색모자를 쓴 남자" }
+  ],
+  "story": "부-명성-힘... 한때 이 세상의 모든 것을 손에 넣은 사나이. 「해적왕 골드 로저」\n그가 죽음을 앞두고 남긴 한마디는⋯ 전세계 사람들을 바다로 향하게 만들었다.\n내 보물 말이냐? 원한다면 주도록 하지. 잘 찾아봐. 이 세상의 모든 것을 거기에 두고 왔으니까.\n세상은 대해적시대를 맞는다.\n\n사람이 언제 죽는다고 생각하나?\n심장이 총알에 뚫었을 때?\n아니\n불치병에 걸렸을 때?\n아니\n맹독 버섯 수프를 먹었을 때?\n아니..\n사람들에게서....\n잊혀졌을 때다..!"
+}

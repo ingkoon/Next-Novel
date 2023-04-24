@@ -1,19 +1,7 @@
-.container {
-  display: flex;
-  align-items: center;
-  /* border: 1px solid blue; */
-}
-.canvas {
-  width: 343.2px;
-  height: 390px;
-  border: 3px solid black;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  background-color: white;
-}
 .tools {
   width: 80px;
   height: 400px;
-  margin-left: 30px;
+  margin-left: 10px;
   /* background-color: gainsboro; */
   display: flex;
   flex-direction: column;

@@ -1,11 +1,16 @@
+.container {
+  background-color: burlywood;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 .component {
   display: flex;
-  flex-direction: row;
-  height: 400px;
   align-items: center;
   justify-content: space-between;
-  padding: 0 150px;
-  /* border: 1px solid red; */
+  flex-wrap: wrap;
+  flex-basis: 85%;
+  background-color: coral;
 }
 .component > * {
   font-family: "LINESeedKR-Bd";
@@ -116,7 +121,7 @@
   align-items: center;
 }
 .frame {
-  width: 343.2px;
+  width: 343px;
   height: 390px;
   background: #f66f00;
   border: 3px solid #000000;

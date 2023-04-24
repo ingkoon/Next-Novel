@@ -1,12 +1,16 @@
 import React from "react";
 import style from "./GenreCard.module.css";
+import { useNovelContext } from "../../context/NovelContext";
 
-export default function GenreCard({ genreInfo, genre, setGenre }) {
-  const { name, desc, value } = genreInfo;
+export default function GenreCard({ genreInfo }) {
+  const { novel, setNovel } = useNovelContext();
+  const { name, engName, desc, value } = genreInfo;
   return (
     <div
-      className={`${style.container} ${genre === value ? style.selected : ""}`}
-      onClick={() => setGenre(value)}
+      className={`${style.container} ${
+        novel.genre === engName ? style.selected : ""
+      }`}
+      onClick={() => setNovel({ ...novel, genre: engName })}
     >
       <div className={style.image}>
         <img
@@ -18,7 +22,7 @@ export default function GenreCard({ genreInfo, genre, setGenre }) {
         <span>&lt; {name} /&gt;</span>
         <img
           src={
-            genre === value
+            novel.genre === engName
               ? process.env.PUBLIC_URL + `/img/genre_icon_yellow${value}.svg`
               : process.env.PUBLIC_URL + `/img/genre_icon${value}.svg`
           }
