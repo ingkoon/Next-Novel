@@ -1,59 +1,35 @@
 import React, { useState } from "react";
 import Bottom from "./Bottom";
-import Canvas3 from "./Canvas3";
+import Canvas from "./Canvas";
 import style from "./WriteStep5a.module.css";
 import { useNovelContext } from "../../context/NovelContext";
 import LoadingModal from "../common/LoadingModal";
 import useNovelWrite from "../../hooks/useNovelWrite";
+import useCheckReady from "../../hooks/useCheckReady";
+import useDataurlToFile from "../../hooks/useDataurlToFile";
 
-export default function WriteStep5a({ setStep, step }) {
+export default function WriteStep5a() {
   const [imageSrcs, setImageSrcs] = useState(
     Array.from({ length: 1 }, () => undefined)
   );
   const selected = 0;
-  const { novel, setNovel } = useNovelContext();
+  const { novel, setNovel, setStep } = useNovelContext();
   const { makeCoverRequest } = useNovelWrite();
+  const { isShaking, checkReady } = useCheckReady();
+  const { dataurlToFile } = useDataurlToFile();
 
   const button = () => {
     //표지 유효성 검사 코드
-    if (!novel.cover) {
-      setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 800); // 0.8초 후 클래스 제거
-      return;
-    }
+    if (!checkReady({ order: "novelCover", novelCover: novel.cover })) return;
+
     setStep(5.5);
   };
   const makeCover = () => {
     //그림 유효성 검사
-    for (let imageSrc of imageSrcs) {
-      if (!imageSrc) {
-        setIsShaking(true);
-        setTimeout(() => setIsShaking(false), 800); // 0.8초 후 클래스 제거
-        return;
-      }
-    }
-    //api에서 커버 생성하기
-    const byteStrings = imageSrcs.map((dataUrl) =>
-      window.atob(dataUrl.split(",")[1])
-    );
-    const arrays = byteStrings.map((byteString) => {
-      let array = [];
-      for (let i = 0; i < byteString.length; i++) {
-        array.push(byteString.charCodeAt(i));
-      }
-      return array;
-    });
-    const myBlobs = arrays.map(
-      (array) => new Blob([new Uint8Array(array)], { type: "image/png" })
-    );
-    const files = myBlobs.map(
-      (myBlob, index) =>
-        new File([myBlob], "".concat("material", index, ".png"))
-    );
-    // console.log(files);
-    const formData = new FormData();
-    formData.append("novel_id", novel.id);
-    formData.append("image", files[0]);
+    if (!checkReady({ order: "imageSrcs", imageSrcs: imageSrcs })) return;
+    const files = dataurlToFile(imageSrcs);
+    const formData = appendFormData(files);
+
     makeCoverRequest.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
@@ -65,7 +41,13 @@ export default function WriteStep5a({ setStep, step }) {
       },
     });
   };
-  const [isShaking, setIsShaking] = useState(false);
+  const appendFormData = (files) => {
+    const formData = new FormData();
+    formData.append("novel_id", novel.id);
+    formData.append("image", files[0]);
+
+    return formData;
+  };
 
   return (
     <div className={style.container}>
@@ -74,10 +56,13 @@ export default function WriteStep5a({ setStep, step }) {
         <div className={style.left}>
           <div className={style.input}>
             <div className={style.canvas}>
-              <Canvas3
+              <Canvas
                 imageSrcs={imageSrcs}
                 setImageSrcs={setImageSrcs}
                 selected={selected}
+                canvasWidth={343}
+                canvasHeight={390}
+                canvasType={"small"}
               />
             </div>
           </div>
@@ -112,7 +97,7 @@ export default function WriteStep5a({ setStep, step }) {
           </div>
         </div>
       </div>
-      <Bottom step={step} name="제출" button={button} isShaking={isShaking} />
+      <Bottom name="제출" button={button} isShaking={isShaking} />
     </div>
   );
 }

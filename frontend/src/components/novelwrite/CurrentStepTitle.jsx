@@ -1,7 +1,9 @@
 import React from "react";
 import style from "./CurrentStepTitle.module.css";
+import { useNovelContext } from "../../context/NovelContext";
 
-export default function CurrentStepTitle({ step }) {
+export default function CurrentStepTitle() {
+  const { step } = useNovelContext();
   const title = [
     "",
     "장르",
@@ -19,7 +21,7 @@ export default function CurrentStepTitle({ step }) {
           src={process.env.PUBLIC_URL + `/icon/vector_step${flooredStep}.svg`}
           className={style.vector_step}
           alt="vector_step"
-        ></img>
+        />
       </div>
       <div className={style.right}>
         <span>{title[flooredStep]}</span>

@@ -4,7 +4,7 @@ export const NovelContext = createContext();
 
 export function NovelContextProvider({ children }) {
   const [novel, setNovel] = useState({
-    genre: undefined,
+    genre: "romance",
     id: undefined,
     step: undefined,
     materials: undefined,
@@ -14,9 +14,13 @@ export function NovelContextProvider({ children }) {
     selectedQuestion: undefined,
     cover: undefined,
   });
+  const [step, setStep] = useState(0);
+  const [count, setCount] = useState(0);
 
   return (
-    <NovelContext.Provider value={{ novel, setNovel }}>
+    <NovelContext.Provider
+      value={{ novel, setNovel, step, setStep, count, setCount }}
+    >
       {children}
     </NovelContext.Provider>
   );

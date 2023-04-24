@@ -5,13 +5,14 @@ import { useNovelContext } from "../../context/NovelContext";
 import LoadingModal from "../common/LoadingModal";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import { useNavigate } from "react-router-dom";
+import useCheckReady from "../../hooks/useCheckReady";
 
-export default function WriteStep5b({ step }) {
+export default function WriteStep5b() {
   const { novel } = useNovelContext();
   const [input, setInput] = useState({});
-  const [isShaking, setIsShaking] = useState(false);
   const { finNovel } = useNovelWrite();
   const navigate = useNavigate();
+  const { isShaking, checkReady } = useCheckReady();
 
   const buttons = [
     {
@@ -34,21 +35,23 @@ export default function WriteStep5b({ step }) {
   };
 
   const button = () => {
-    if (!input.title || !input.desc) {
-      setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 800); // 0.8초 후 클래스 제거
-      return;
-    }
-    const formData = new FormData();
-    formData.append("novel_id", novel.id);
-    formData.append("title", input.title);
-    formData.append("introduction", input.desc);
+    if (!checkReady({ order: "input", input: input })) return;
+    const formData = appendFormData();
+
     finNovel.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
         navigate(`/library/${novel.id}/intro`, { state: { id: novel.id } });
       },
     });
+  };
+  const appendFormData = () => {
+    const formData = new FormData();
+    formData.append("novel_id", novel.id);
+    formData.append("title", input.title);
+    formData.append("introduction", input.desc);
+
+    return formData;
   };
 
   return (
@@ -127,7 +130,7 @@ export default function WriteStep5b({ step }) {
           })}
         </div>
         <div className={style.guide}>
-          <Guide step={step} isShaking={isShaking} />
+          <Guide isShaking={isShaking} />
         </div>
         <div className={style.end}>
           <div>

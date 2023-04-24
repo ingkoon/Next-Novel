@@ -1,8 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 .component {
   display: flex;
-  flex-direction: row;
-  height: 400px;
-  align-items: center;
   justify-content: space-evenly;
-  padding: 0 100px;
+  flex-basis: 85%;
+  background-color: coral;
+  align-items: center;
+  flex-wrap: wrap;
+}
+@media (max-width: 1024px) {
+  .component {
+    flex-direction: column;
+  }
 }

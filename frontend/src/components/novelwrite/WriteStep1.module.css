@@ -1,8 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 .component {
   display: flex;
-  justify-content: space-between;
-  padding: 0 100px;
+  justify-content: space-evenly;
   flex-wrap: wrap;
-  height: 400px;
+  flex-basis: 85%;
   align-items: center;
+  gap: 20px;
 }
