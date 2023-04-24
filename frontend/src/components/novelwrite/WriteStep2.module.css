@@ -1,5 +1,4 @@
 .container {
-  background-color: burlywood;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -7,8 +6,13 @@
 .component {
   display: flex;
   justify-content: space-evenly;
-  flex-wrap: wrap;
   flex-basis: 85%;
   background-color: coral;
   align-items: center;
+  flex-wrap: wrap;
+}
+@media (max-width: 1024px) {
+  .component {
+    flex-direction: column;
+  }
 }

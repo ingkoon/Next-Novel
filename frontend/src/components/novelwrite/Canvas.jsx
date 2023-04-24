@@ -10,13 +10,13 @@ export default function Canvas({
   imageSrcs,
   setImageSrcs,
   selected,
-  canvasWidth,
-  canvasHeight,
   canvasType,
 }) {
   const canvasRef = useRef(null); //canvas
   const [getCtx, setGetCtx] = useState(null); //canvas
   const [rect, setRect] = useState(); //터치용
+  const [canvasWidth, setCanvasWidth] = useState(0);
+  const [canvasHeight, setCanvasHeight] = useState(0);
 
   const {
     getPaintings: { refetch, data },
@@ -46,9 +46,16 @@ export default function Canvas({
   ]);
 
   useEffect(() => {
+    setCanvasWidth(canvasRef.current.clientWidth);
+  }, [canvasRef]);
+  useEffect(() => {
+    setCanvasHeight(canvasRef.current.clientHeight);
+  }, [canvasRef]);
+
+  useEffect(() => {
     const canvas = canvasRef.current;
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
+    // canvas.width = canvasWidth;
+    // canvas.height = canvasHeight;
     const ctx = canvas.getContext("2d");
     setRect(canvas.getBoundingClientRect());
     ctx.lineJoin = "round";
@@ -63,28 +70,27 @@ export default function Canvas({
 
   return (
     <div className={style.container}>
-      <div className={`${style.canvas} ${style[canvasType]}`}>
-        <canvas
-          ref={canvasRef}
-          onMouseDown={() => setPainting(true)}
-          onMouseUp={() => {
-            setPainting(false);
-          }}
-          onMouseMove={(e) => drawFn(e)}
-          onMouseLeave={() => {
-            setPainting(false);
-          }}
-          onTouchStart={(e) => {
-            touchStart(e);
-          }}
-          onTouchMove={(e) => {
-            touch(e);
-          }}
-          onTouchEnd={(e) => {
-            touchEnd(e);
-          }}
-        />
-      </div>
+      <canvas
+        className={`${style.canvas} ${style[canvasType]}`}
+        ref={canvasRef}
+        onMouseDown={() => setPainting(true)}
+        onMouseUp={() => {
+          setPainting(false);
+        }}
+        onMouseMove={(e) => drawFn(e)}
+        onMouseLeave={() => {
+          setPainting(false);
+        }}
+        onTouchStart={(e) => {
+          touchStart(e);
+        }}
+        onTouchMove={(e) => {
+          touch(e);
+        }}
+        onTouchEnd={(e) => {
+          touchEnd(e);
+        }}
+      />
       <Tools getCtx={getCtx} goBack={goBack} initCanvas={initCanvas} />
       {canvasType === "big" && (
         <LoadPaintings

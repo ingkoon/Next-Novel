@@ -9,4 +9,5 @@
   flex-wrap: wrap;
   flex-basis: 85%;
   align-items: center;
+  gap: 20px;
 }

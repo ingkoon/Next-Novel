@@ -59,8 +59,6 @@ export default function WriteStep2() {
           imageSrcs={imageSrcs}
           setImageSrcs={setImageSrcs}
           selected={selected}
-          canvasWidth={608}
-          canvasHeight={380}
           canvasType={"big"}
         />
       </div>
