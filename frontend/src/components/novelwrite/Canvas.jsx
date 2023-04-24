@@ -15,8 +15,8 @@ export default function Canvas({
   const canvasRef = useRef(null); //canvas
   const [getCtx, setGetCtx] = useState(null); //canvas
   const [rect, setRect] = useState(); //터치용
-  const [canvasWidth, setCanvasWidth] = useState(0);
-  const [canvasHeight, setCanvasHeight] = useState(0);
+  const canvasWidth = canvasType === "big" ? 600 : 340;
+  const canvasHeight = canvasType === "big" ? 380 : 390;
 
   const {
     getPaintings: { refetch, data },
@@ -46,16 +46,9 @@ export default function Canvas({
   ]);
 
   useEffect(() => {
-    setCanvasWidth(canvasRef.current.clientWidth);
-  }, [canvasRef]);
-  useEffect(() => {
-    setCanvasHeight(canvasRef.current.clientHeight);
-  }, [canvasRef]);
-
-  useEffect(() => {
     const canvas = canvasRef.current;
-    // canvas.width = canvasWidth;
-    // canvas.height = canvasHeight;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
     const ctx = canvas.getContext("2d");
     setRect(canvas.getBoundingClientRect());
     ctx.lineJoin = "round";
