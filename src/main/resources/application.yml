@@ -1,0 +1,32 @@
+server:
+  port: 8000
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  application:
+    name: eureka-api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user
+          uri: http://localhost:8011/
+          predicates:
+            - Path=/user
+        - id: novel
+          uri: http://localhost:8012/
+          predicates:
+            - Path=/novel
+        - id: ai
+          uri: http://localhost:8013/
+          predicates:
+            - Path=/ai
+        - id: payment
+          uri: http://localhost:8014/
+          predicates:
+            - Path=/payment
