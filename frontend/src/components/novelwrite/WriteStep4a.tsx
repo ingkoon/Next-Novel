@@ -31,10 +31,13 @@ export default function WriteStep4a() {
       onSuccess: (res) => {
         console.log(res);
         //context 제어
+        const originalNewMaterials = novel.newMaterials
+          ? novel.newMaterials
+          : [];
         setNovel({
           ...novel,
           story: novel.story + "\n\n" + res.data.story,
-          newMaterials: [...novel.newMaterials, res.data.newMaterial],
+          newMaterials: [...originalNewMaterials, res.data.newMaterial],
         });
         queryClient.removeQueries({ queryKey: ["questions"] });
         setStep(4.5);
@@ -43,9 +46,9 @@ export default function WriteStep4a() {
   };
   const appendFormData = (files: File[]) => {
     const formData = new FormData();
-    formData.append("step", novel.step);
-    formData.append("novel_id", novel.id);
-    formData.append("query", novel.selectedQuestion);
+    formData.append("step", novel.step! + "");
+    formData.append("novel_id", novel.id!);
+    formData.append("query", novel.selectedQuestion! + "");
     formData.append("image", files[0]);
 
     return formData;

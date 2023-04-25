@@ -11,14 +11,14 @@ type Question = {
 
 type Novel = {
   genre: string;
-  id: string | undefined;
-  step: number | undefined;
-  materials: Material[] | undefined;
-  newMaterials: Material[] | undefined;
-  story: string | undefined;
-  questions: Question[] | undefined;
-  selectedQuestion: number | undefined;
-  cover: string | undefined;
+  id?: string;
+  step?: number;
+  materials?: Material[];
+  newMaterials?: Material[];
+  story?: string;
+  questions?: Question[];
+  selectedQuestion?: number;
+  cover?: string;
 };
 
 type NovelContextType = {
@@ -33,14 +33,6 @@ type NovelContextType = {
 export const NovelContext = createContext<NovelContextType>({
   novel: {
     genre: "romance",
-    id: undefined,
-    step: undefined,
-    materials: undefined,
-    newMaterials: undefined,
-    story: undefined,
-    questions: undefined,
-    selectedQuestion: undefined,
-    cover: undefined,
   },
   setNovel: () => {},
   step: 1,
@@ -56,14 +48,6 @@ export function NovelContextProvider({
 }) {
   const [novel, setNovel] = useState<Novel>({
     genre: "romance",
-    id: undefined,
-    step: undefined,
-    materials: undefined,
-    newMaterials: undefined,
-    story: undefined,
-    questions: undefined,
-    selectedQuestion: undefined,
-    cover: undefined,
   });
   const [step, setStep] = useState<number>(1);
   const [count, setCount] = useState<number>(0);
