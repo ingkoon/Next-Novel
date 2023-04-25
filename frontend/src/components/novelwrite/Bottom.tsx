@@ -2,7 +2,12 @@ import React from "react";
 import Guide from "./Guide";
 import style from "./Bottom.module.css";
 
-export default function Bottom({ name, button, isShaking }) {
+type BottomProps = {
+  name: String,
+  button: () => void,
+  isShaking?: Boolean,
+};
+export default function Bottom({ name, button, isShaking }: BottomProps) {
   return (
     <div className={style.bottom}>
       <div className={style.guide}>

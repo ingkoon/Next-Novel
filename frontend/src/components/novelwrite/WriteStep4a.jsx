@@ -41,7 +41,7 @@ export default function WriteStep4a() {
       },
     });
   };
-  const appendFormData = (files) => {
+  const appendFormData = (files: File[]) => {
     const formData = new FormData();
     formData.append("step", novel.step);
     formData.append("novel_id", novel.id);
@@ -60,8 +60,6 @@ export default function WriteStep4a() {
           imageSrcs={imageSrcs}
           setImageSrcs={setImageSrcs}
           selected={selected}
-          canvasWidth={608}
-          canvasHeight={380}
           canvasType={"big"}
         />
       </div>

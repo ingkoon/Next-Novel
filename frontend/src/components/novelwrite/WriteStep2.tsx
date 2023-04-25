@@ -42,7 +42,7 @@ export default function WriteStep2() {
     });
   };
 
-  const appendFormData = (files) => {
+  const appendFormData = (files: File[]) => {
     const formData = new FormData();
     files.forEach((file) => formData.append("images", file));
     formData.append("genre", novel.genre);

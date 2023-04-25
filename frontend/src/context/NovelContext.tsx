@@ -8,20 +8,17 @@ type Question = {
   index: number;
   query: string;
 };
-type Cover = {
-  image:string,
-}
 
 type Novel = {
   genre: string;
-  id: number | undefined;
+  id: string | undefined;
   step: number | undefined;
   materials: Material[] | undefined;
   newMaterials: Material[] | undefined;
   story: string | undefined;
   questions: Question[] | undefined;
   selectedQuestion: number | undefined;
-  cover: Cover | undefined;
+  cover: string | undefined;
 };
 
 type NovelContextType = {
@@ -46,7 +43,7 @@ export const NovelContext = createContext<NovelContextType>({
     cover: undefined,
   },
   setNovel: () => {},
-  step: 0,
+  step: 1,
   setStep: () => {},
   count: 0,
   setCount: () => {},
@@ -68,7 +65,7 @@ export function NovelContextProvider({
     selectedQuestion: undefined,
     cover: undefined,
   });
-  const [step, setStep] = useState<number>(0);
+  const [step, setStep] = useState<number>(1);
   const [count, setCount] = useState<number>(0);
 
   return (

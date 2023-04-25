@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import TitleBar from "../common/TitleBar";
 import style from "./BeforeStartWrite.module.css";
-import { useNovelContext } from "../../context/NovelContext";
 import useTypeit from "../../hooks/useTypeit";
 import LoginModal from "../common/LoginModal";
 
-export default function BeforeStartWrite() {
-  const { setStep } = useNovelContext();
+type BeforeStartWriteType = {
+  setOrder: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export default function BeforeStartWrite({ setOrder }: BeforeStartWriteType) {
   const { typeitRef } = useTypeit({
     content: ["내가 그리고", "AI가 써주는 소설을", "만들어볼까요?"],
   });
@@ -16,7 +18,7 @@ export default function BeforeStartWrite() {
     //   setModalIsOpen(true);
     //   return;
     // }
-    setStep(1);
+    setOrder("after");
   };
 
   return (

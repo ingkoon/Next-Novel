@@ -1,10 +1,26 @@
 import { useState } from "react";
 
+type CheckReadyProps = {
+  order: string;
+  imageSrcs?: (string | undefined)[];
+  novelCover?: String;
+  input?: Input;
+};
+type Input = {
+  title: String;
+  desc: string;
+};
 export default function useCheckReady() {
   const [isShaking, setIsShaking] = useState(false);
 
-  function checkReady({ order, imageSrcs, novelCover, input }) {
+  function checkReady({
+    order,
+    imageSrcs,
+    novelCover,
+    input,
+  }: CheckReadyProps) {
     if (order === "imageSrcs") {
+      if (!imageSrcs) return;
       for (let imageSrc of imageSrcs) {
         if (!imageSrc) {
           shake();
@@ -17,6 +33,7 @@ export default function useCheckReady() {
         return false;
       }
     } else if (order === "input") {
+      if (!input) return;
       if (!input.title || !input.desc) {
         shake();
         return false;

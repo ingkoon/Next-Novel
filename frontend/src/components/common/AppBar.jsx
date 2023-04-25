@@ -22,7 +22,9 @@ export default function AppBar() {
       <div className={style.name}>
         <span style={{ float: "left" }}>&gt;_NextNovel &#183; &nbsp;</span>
         {/* <span>{user.access_token === "" ? 'visitor' : 'member'}</span> */}
-        <span>{!localStorage.getItem('access_token') ? 'visitor' : 'member'}</span>
+        <span>
+          {!localStorage.getItem("access_token") ? "visitor" : "member"}
+        </span>
       </div>
       <div className={style.logo}>
         <Link to="/">
@@ -63,21 +65,25 @@ export default function AppBar() {
         </Link>
 
         {/* {user.access_token === '' */}
-        {!localStorage.getItem("access_token")
-          ? <div className={style.loginimg} onClick={() => setLoginIsOpen(true)}>
-              <img
-                src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"}
-                className={style.banner_login}
-                alt="idcard"
-              />
-              <div className={style.arrow_box}>로그인</div>
-            </div> 
-          : <Link to="/mypage">
-              <img src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"} className={style.banner_mypage} alt='idcard'></img>
-              <div className={style.arrow_box}>내정보</div>
-            </Link>
-          }
-   
+        {!localStorage.getItem("access_token") ? (
+          <div className={style.loginimg} onClick={() => setLoginIsOpen(true)}>
+            <img
+              src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"}
+              className={style.banner_login}
+              alt="idcard"
+            />
+            <div className={style.arrow_box}>로그인</div>
+          </div>
+        ) : (
+          <Link to="/mypage">
+            <img
+              src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"}
+              className={style.banner_mypage}
+              alt="idcard"
+            />
+            <div className={style.arrow_box}>내정보</div>
+          </Link>
+        )}
       </div>
 
       <Modal

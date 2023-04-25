@@ -3,6 +3,8 @@ import style from "./SelectOption.module.css";
 import { useNovelContext } from "../../context/NovelContext";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import LoadingModal from "../common/LoadingModal";
+import { v4 as uuid } from "uuid";
+import { useNavigate } from "react-router-dom";
 
 export default function SelectOption() {
   const { novel, setNovel, setStep, count, setCount } = useNovelContext();
@@ -10,6 +12,7 @@ export default function SelectOption() {
     getQuestions: { isFetching, refetch, data },
   } = useNovelWrite();
   const { endNovel } = useNovelWrite();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (data) {
@@ -52,7 +55,7 @@ export default function SelectOption() {
       icon: "/icon/trashcan.svg",
       click1: "처음부터",
       click3: "모든 진행사항을\n초기화합니다",
-      event: () => setStep(0),
+      event: () => navigate("/laboratory", { state: uuid() }),
     },
   ];
   return (
