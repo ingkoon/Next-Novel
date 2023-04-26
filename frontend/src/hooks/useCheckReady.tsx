@@ -3,11 +3,11 @@ import { useState } from "react";
 type CheckReadyProps = {
   order: string;
   imageSrcs?: (string | undefined)[];
-  novelCover?: String;
+  novelCover?: string;
   input?: Input;
 };
 type Input = {
-  title: String;
+  title: string;
   desc: string;
 };
 export default function useCheckReady() {
@@ -34,7 +34,7 @@ export default function useCheckReady() {
       }
     } else if (order === "input") {
       if (!input) return;
-      if (!input.title || !input.desc) {
+      if (input.title.length === 0 || input.desc.length === 0) {
         shake();
         return false;
       }

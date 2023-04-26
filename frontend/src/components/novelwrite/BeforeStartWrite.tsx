@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import TitleBar from "../common/TitleBar";
 import style from "./BeforeStartWrite.module.css";
-import useTypeit from "../../hooks/useTypeit";
 import LoginModal from "../common/LoginModal";
+import TypeIt from "typeit-react";
 
 type BeforeStartWriteType = {
   setOrder: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function BeforeStartWrite({ setOrder }: BeforeStartWriteType) {
-  const { typeitRef } = useTypeit({
-    content: ["내가 그리고", "AI가 써주는 소설을", "만들어볼까요?"],
-  });
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const start = () => {
     // if (!localStorage.getItem("access_token")) {
@@ -57,7 +54,14 @@ export default function BeforeStartWrite({ setOrder }: BeforeStartWriteType) {
               className={style.NN_LOGO}
               alt="NN_LOGO"
             />
-            <div ref={typeitRef} className={style.typing} />
+            {/* <div ref={typeitRef} className={style.typing} /> */}
+            <TypeIt
+              options={{
+                strings: ["내가 그리고", "AI가 써주는 소설을", "만들어볼까요?"],
+                speed: 20,
+                waitUntilVisible: true,
+              }}
+            />
             <button onClick={start}>시작하기</button>
           </div>
         </div>

@@ -3,11 +3,15 @@ import Guide from "./Guide";
 import style from "./Bottom.module.css";
 
 type BottomProps = {
-  name: String,
-  button: () => void,
-  isShaking?: Boolean,
+  name: string;
+  button: () => void;
+  isShaking?: boolean;
 };
-export default function Bottom({ name, button, isShaking }: BottomProps) {
+export default function Bottom({
+  name,
+  button,
+  isShaking = false,
+}: BottomProps) {
   return (
     <div className={style.bottom}>
       <div className={style.guide}>

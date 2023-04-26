@@ -6,15 +6,21 @@ import useCanvasSaveAndLoad from "../../hooks/useCanvasSaveAndLoad";
 import Tools from "./Tools";
 import LoadPaintings from "./LoadPaintings";
 
+type CanvasProps = {
+  imageSrcs: (string | undefined)[];
+  setImageSrcs: React.Dispatch<React.SetStateAction<(string | undefined)[]>>;
+  selected: number;
+  canvasType: string;
+};
 export default function Canvas({
   imageSrcs,
   setImageSrcs,
   selected,
   canvasType,
-}) {
-  const canvasRef = useRef(null); //canvas
-  const [getCtx, setGetCtx] = useState(null); //canvas
-  const [rect, setRect] = useState(); //터치용
+}: CanvasProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null); //canvas
+  const [getCtx, setGetCtx] = useState<CanvasRenderingContext2D>(); //canvas
+  const [rect, setRect] = useState<DOMRect>(); //터치용
   const canvasWidth = canvasType === "big" ? 600 : 340;
   const canvasHeight = canvasType === "big" ? 380 : 390;
 
@@ -30,10 +36,10 @@ export default function Canvas({
     painting,
     hasPaintBefore,
     setPainting,
-  } = useCanvasIsPainting([getCtx, rect]);
+  } = useCanvasIsPainting({ getCtx: getCtx!, rect: rect! });
 
-  const { loadToCanvas, goBack, initCanvas } = useCanvasSaveAndLoad([
-    getCtx,
+  const { loadToCanvas, goBack, initCanvas } = useCanvasSaveAndLoad({
+    getCtx: getCtx!,
     canvasWidth,
     canvasHeight,
     imageSrcs,
@@ -43,14 +49,17 @@ export default function Canvas({
     hasPaintBefore,
     data,
     canvasRef,
-  ]);
+  });
 
   useEffect(() => {
+    if (!canvasRef.current) return;
     const canvas = canvasRef.current;
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
     const ctx = canvas.getContext("2d");
-    setRect(canvas.getBoundingClientRect());
+    if (!ctx) return;
+
+    setRect(canvas.getBoundingClientRect()); //터치용
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     ctx.lineWidth = 2.5;
@@ -84,7 +93,9 @@ export default function Canvas({
           touchEnd(e);
         }}
       />
-      <Tools getCtx={getCtx} goBack={goBack} initCanvas={initCanvas} />
+      {getCtx && (
+        <Tools getCtx={getCtx} goBack={goBack} initCanvas={initCanvas} />
+      )}
       {canvasType === "big" && (
         <LoadPaintings
           loadToCanvas={loadToCanvas}

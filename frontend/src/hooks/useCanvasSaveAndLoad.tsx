@@ -1,7 +1,22 @@
 import { useEffect, useReducer } from "react";
 import useFileToDataurl from "./useFileToDataurl";
 
-export default function useCanvasSaveAndLoad([
+type CanvasSaveAndLoadProps = {
+  getCtx: CanvasRenderingContext2D;
+  canvasWidth: number;
+  canvasHeight: number;
+  imageSrcs: (string | undefined)[];
+  setImageSrcs: React.Dispatch<React.SetStateAction<(string | undefined)[]>>;
+  selected: number;
+  painting: boolean;
+  hasPaintBefore: boolean;
+  data: DataType[];
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+};
+type DataType = {
+  image: string;
+};
+export default function useCanvasSaveAndLoad({
   getCtx,
   canvasWidth,
   canvasHeight,
@@ -12,9 +27,9 @@ export default function useCanvasSaveAndLoad([
   hasPaintBefore,
   data,
   canvasRef,
-]) {
+}: CanvasSaveAndLoadProps) {
   const [store, dispatch] = useReducer(reducer, [imageSrcs[selected]]); //뒤로가기 저장소
-  const { paintings } = useFileToDataurl([data]); //백엔드에서 불러올 그림
+  const { paintings } = useFileToDataurl({ data }); //백엔드에서 불러올 그림
 
   function reducer(state, action) {
     //저장소 간리
@@ -48,7 +63,7 @@ export default function useCanvasSaveAndLoad([
     if (!painting && hasPaintBefore) {
       //그림그리는상태가 아니고, 그렸던 적이 있다!
       const canvas = canvasRef.current;
-      const dataURL = canvas.toDataURL();
+      const dataURL = canvas!.toDataURL();
       setImageSrcs(
         imageSrcs.map((imageSrc, index) =>
           index === selected ? dataURL : imageSrc
@@ -93,8 +108,8 @@ export default function useCanvasSaveAndLoad([
     dispatch({ type: "init" }); //저장소 초기화
   };
 
-  const loadToCanvas = (choose) => {
-    const dataURL = paintings[choose];
+  const loadToCanvas = (choose: number) => {
+    const dataURL = paintings![choose];
 
     const img = new Image();
     img.src = dataURL;

@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import style from "./LoadPaintings.module.css";
+import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from "@tanstack/react-query";
 
-export default function LoadPaintings({ loadToCanvas, refetch, data }) {
+type LoadPaintingsProps = {
+  loadToCanvas: (index:number) => void;
+  refetch: <TPageData>(options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined) => Promise<QueryObserverResult<any, unknown>>
+  data: DataType[];
+}
+type DataType = {
+  image: string;
+}
+export default function LoadPaintings({ loadToCanvas, refetch, data }:LoadPaintingsProps) {
   const [loadState, setLoadState] = useState(false); //그림 불러오기 창
 
   return (

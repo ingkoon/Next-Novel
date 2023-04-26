@@ -30,14 +30,14 @@ export default function SelectOption() {
       click3: "이대로 소설을\n마무리합니다",
       event: () => {
         const formData = new FormData();
-        formData.append("step", novel.step + 1);
-        formData.append("novel_id", novel.id);
+        formData.append("step", novel.step! + 1 + "");
+        formData.append("novel_id", novel.id!);
         endNovel.mutate(formData, {
           onSuccess: () => {
             setStep(5);
           },
         });
-        setNovel((novel) => ({ ...novel, step: novel.step + 1 }));
+        setNovel((novel) => ({ ...novel, step: novel.step! + 1 }));
       },
     },
     {
@@ -47,7 +47,7 @@ export default function SelectOption() {
       event: () => {
         if (count === 5) return;
         //아래 두 코드는 비동기로 실행되기때문에 getQuestions이 실행될때 novel.step+1로 두었는데...
-        setNovel((novel) => ({ ...novel, step: novel.step + 1 }));
+        setNovel((novel) => ({ ...novel, step: novel.step! + 1 }));
         refetch();
       },
     },

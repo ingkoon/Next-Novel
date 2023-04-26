@@ -2,7 +2,16 @@ import React from "react";
 import style from "./GenreCard.module.css";
 import { useNovelContext } from "../../context/NovelContext";
 
-export default function GenreCard({ genreInfo }) {
+type GenreCardProps = {
+  genreInfo: GenreInfoType;
+};
+type GenreInfoType = {
+  name: string;
+  engName: string;
+  desc: string[];
+  value: number;
+};
+export default function GenreCard({ genreInfo }: GenreCardProps) {
   const { novel, setNovel } = useNovelContext();
   const { name, engName, desc, value } = genreInfo;
   return (

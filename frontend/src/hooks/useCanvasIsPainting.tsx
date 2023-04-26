@@ -1,18 +1,23 @@
 import { useState } from "react";
 
-export default function useCanvasIsPainting([getCtx, rect]) {
+type CanvasIsPaintingProps = {
+  getCtx: CanvasRenderingContext2D;
+  rect: DOMRect;
+};
+export default function useCanvasIsPainting({
+  getCtx,
+  rect,
+}: CanvasIsPaintingProps) {
   const [painting, setPainting] = useState(false); //그림을 그리고 있는지 아닌지
   const [hasPaintBefore, setHasPaintBefore] = useState(false); //그림을 그렸던 적이 한번이라도 있는가
-  const [mouseX, setmouseX] = useState(); //캔버스 내 마우스 좌표
-  const [mouseY, setmouseY] = useState(); //캔버스 내 마우스 좌표
-  const [lasttouchX, setLastTouchX] = useState(); //캔버스 내 터치 좌표
-  const [lasttouchY, setLastTouchY] = useState(); //캔버스 내 터치 좌표
+  const [lasttouchX, setLastTouchX] = useState<number>(0); //캔버스 내 터치 좌표
+  const [lasttouchY, setLastTouchY] = useState<number>(0); //캔버스 내 터치 좌표
   const tempWidthState = 2.5; //터치 임시용
 
-  const drawFn = (e) => {
+  const drawFn = (e: React.MouseEvent<HTMLCanvasElement>) => {
     //마우스가 캔버스 위에 올라가있을때
-    setmouseX(e.nativeEvent.offsetX);
-    setmouseY(e.nativeEvent.offsetY);
+    const mouseX = e.nativeEvent.offsetX;
+    const mouseY = e.nativeEvent.offsetY;
 
     if (!painting) {
       //그리는 행위 중이 아님
@@ -26,7 +31,7 @@ export default function useCanvasIsPainting([getCtx, rect]) {
     }
   };
 
-  const touchStart = (e) => {
+  const touchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
     getCtx.beginPath();
     setPainting(true);
     setLastTouchX(e.touches[0].pageX - rect.left);
@@ -46,7 +51,7 @@ export default function useCanvasIsPainting([getCtx, rect]) {
     getCtx.stroke();
   };
 
-  const touch = (e) => {
+  const touch = (e: React.TouchEvent<HTMLCanvasElement>) => {
     if (painting) {
       getCtx.moveTo(lasttouchX, lasttouchY);
       let x = e.touches[0].pageX - rect.left;
@@ -60,7 +65,7 @@ export default function useCanvasIsPainting([getCtx, rect]) {
     }
   };
 
-  const touchEnd = (e) => {
+  const touchEnd = (e: React.TouchEvent<HTMLCanvasElement>) => {
     setPainting(false);
   };
 

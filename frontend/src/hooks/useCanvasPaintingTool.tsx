@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-export default function useCanvasPaintingTool([getCtx]) {
+type CanvasPaintingToolProps = {
+  getCtx: CanvasRenderingContext2D;
+};
+export default function useCanvasPaintingTool({
+  getCtx,
+}: CanvasPaintingToolProps) {
   const [widthState, setWidthState] = useState(2.5); //펜 굵기 초기값
   const [colorState, setColorState] = useState("#000000"); //펜 색 초기값
   const [openSetWidthState, setOpenSetWidthState] = useState(false); //펜 굵기 설정 탭 on/off
@@ -44,21 +49,21 @@ export default function useCanvasPaintingTool([getCtx]) {
     setOpenSetWidthState((prev) => !prev);
     setOpenSetColorState(false);
   };
-  const setWidth = (event) => {
+  const setWidth = (event: React.MouseEvent<HTMLInputElement>) => {
     //펜 굵기 설정하기
-    setWidthState(event.target.value);
-    getCtx.lineWidth = event.target.value;
+    setWidthState(parseInt(event.currentTarget.value));
+    getCtx.lineWidth = parseInt(event.currentTarget.value);
   };
   const openSetColor = () => {
     //펜 색 설정 탭 열기
     setOpenSetColorState((prev) => !prev);
     setOpenSetWidthState(false);
   };
-  const setColor = (event) => {
+  const setColor = (event: React.MouseEvent<HTMLDivElement>) => {
     //펜 색 설정하기
-    setColorState(event.target.dataset.color);
+    setColorState(event.currentTarget.dataset.color!);
     if (penSelected) {
-      getCtx.strokeStyle = event.target.dataset.color;
+      getCtx.strokeStyle = event.currentTarget.dataset.color!;
     }
   };
 

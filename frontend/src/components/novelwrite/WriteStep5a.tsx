@@ -9,7 +9,7 @@ import useCheckReady from "../../hooks/useCheckReady";
 import useDataurlToFile from "../../hooks/useDataurlToFile";
 
 export default function WriteStep5a() {
-  const [imageSrcs, setImageSrcs] = useState(
+  const [imageSrcs, setImageSrcs] = useState<(string | undefined)[]>(
     Array.from({ length: 1 }, () => undefined)
   );
   const selected = 0;
@@ -41,9 +41,9 @@ export default function WriteStep5a() {
       },
     });
   };
-  const appendFormData = (files) => {
+  const appendFormData = (files: File[]) => {
     const formData = new FormData();
-    formData.append("novel_id", novel.id);
+    formData.append("novel_id", novel.id!);
     formData.append("image", files[0]);
 
     return formData;
@@ -60,8 +60,6 @@ export default function WriteStep5a() {
                 imageSrcs={imageSrcs}
                 setImageSrcs={setImageSrcs}
                 selected={selected}
-                canvasWidth={343}
-                canvasHeight={390}
                 canvasType={"small"}
               />
             </div>

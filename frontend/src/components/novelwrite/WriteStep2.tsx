@@ -12,7 +12,7 @@ import useDataurlToFile from "../../hooks/useDataurlToFile";
 export default function WriteStep2() {
   const { novel, setNovel, setStep } = useNovelContext();
   const { startNovel } = useNovelWrite();
-  const [imageSrcs, setImageSrcs] = useState(
+  const [imageSrcs, setImageSrcs] = useState<(string | undefined)[]>(
     Array.from({ length: 6 }, () => undefined)
   );
   const [selected, setSelected] = useState(0);

@@ -2,7 +2,12 @@ import React from "react";
 import style from "./Tools.module.css";
 import useCanvasPaintingTool from "../../hooks/useCanvasPaintingTool";
 
-export default function Tools({ getCtx, goBack, initCanvas }) {
+type ToolsProps = {
+  getCtx: CanvasRenderingContext2D;
+  goBack: () => void;
+  initCanvas: () => void;
+};
+export default function Tools({ getCtx, goBack, initCanvas }: ToolsProps) {
   const {
     onPencil,
     onEraser,
@@ -19,7 +24,7 @@ export default function Tools({ getCtx, goBack, initCanvas }) {
     setEraserSelected,
     openSetWidthState,
     openSetColorState,
-  } = useCanvasPaintingTool([getCtx]);
+  } = useCanvasPaintingTool({ getCtx });
 
   return (
     <div className={style.tools}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import Guide from "./Guide";
 import style from "./WriteStep5b.module.css";
 import { useNovelContext } from "../../context/NovelContext";
@@ -7,9 +7,14 @@ import useNovelWrite from "../../hooks/useNovelWrite";
 import { useNavigate } from "react-router-dom";
 import useCheckReady from "../../hooks/useCheckReady";
 
+type Input = {
+  title: string;
+  desc: string;
+};
+
 export default function WriteStep5b() {
   const { novel } = useNovelContext();
-  const [input, setInput] = useState({});
+  const [input, setInput] = useState<Input>({ title: "", desc: "" });
   const { finNovel } = useNovelWrite();
   const navigate = useNavigate();
   const { isShaking, checkReady } = useCheckReady();
@@ -29,7 +34,7 @@ export default function WriteStep5b() {
     },
   ];
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInput((input) => ({ ...input, [name]: value }));
   };
@@ -47,7 +52,7 @@ export default function WriteStep5b() {
   };
   const appendFormData = () => {
     const formData = new FormData();
-    formData.append("novel_id", novel.id);
+    formData.append("novel_id", novel.id!);
     formData.append("title", input.title);
     formData.append("introduction", input.desc);
 
@@ -60,7 +65,7 @@ export default function WriteStep5b() {
       <div className={style.left}>
         <div className={style.cover}>
           <img
-            src={process.env.REACT_APP_IMAGE_API + novel.cover}
+            src={process.env.REACT_APP_IMAGE_API + novel.cover!}
             alt="cover"
           />
         </div>
@@ -106,7 +111,7 @@ export default function WriteStep5b() {
                       <input
                         type="text"
                         name="title"
-                        value={input.title ?? ""}
+                        value={input.title}
                         placeholder="제목"
                         required
                         onChange={handleChange}
@@ -116,7 +121,7 @@ export default function WriteStep5b() {
                       <input
                         type="text"
                         name="desc"
-                        value={input.desc ?? ""}
+                        value={input.desc}
                         placeholder="한줄 소개글"
                         required
                         onChange={handleChange}

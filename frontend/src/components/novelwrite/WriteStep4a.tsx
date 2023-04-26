@@ -14,7 +14,7 @@ export default function WriteStep4a() {
   const { novel, setNovel, setStep } = useNovelContext();
   const { continueNovel } = useNovelWrite();
   const queryClient = useQueryClient();
-  const [imageSrcs, setImageSrcs] = useState(
+  const [imageSrcs, setImageSrcs] = useState<(string | undefined)[]>(
     Array.from({ length: 1 }, () => undefined)
   );
   const { isShaking, checkReady } = useCheckReady();

@@ -2,8 +2,8 @@
   display: flex;
   align-items: center;
   position: relative;
-  width: 720px;
-  justify-content: space-around;
+  /* width: 720px;
+  justify-content: space-around; */
   border: 1px solid blue;
 }
 .canvas.big {
