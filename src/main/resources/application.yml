@@ -30,3 +30,7 @@ spring:
           uri: http://localhost:8014/
           predicates:
             - Path=/payment
+        - id: jukebox
+          uri: http://localhost:8015/
+          predicates:
+            - Path=/jukebox
