@@ -10,4 +10,4 @@ eureka:
 
 spring:
   application:
-    name: service-payment
+    name: service_payment
