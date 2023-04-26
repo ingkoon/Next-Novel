@@ -1,13 +1,33 @@
 server:
-    port: 8012
-
-eureka:
-    client:
-        register-with-eureka: true
-        fetch-registry: true
-        service-url:
-            defaultZone: http://localhost:8761/eureka
+  port: 8012
 
 spring:
-    application:
-        name: service_novel
+  application:
+    name: boardService
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/novel?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: ***REMOVED***
+  #    url: jdbc:mysql://i8a703.p.ssafy.io:3306/project1db?serverTimezone=UTC&characterEncoding=UTF-8
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+  redis:
+    host: ***REMOVED***
+    port: 6379
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
