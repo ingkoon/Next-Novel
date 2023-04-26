@@ -10,4 +10,4 @@ eureka:
 
 spring:
     application:
-        name: service-novel
+        name: service_novel

@@ -1,4 +1,4 @@
-package com.example.servicenovel;
+package com.a509.service_novel;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,4 +1,4 @@
-package com.example.servicenovel;
+package com.a509.service_novel;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
