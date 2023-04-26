@@ -34,12 +34,12 @@ public class NovelService {
 	public void insertNovel(NovelDetailDto novelDetailDto) throws Exception{
 
 		List<NovelContentDto> novelContentDtos = novelDetailDto.getContents();
-
+		System.out.println("start save content");
 		for(NovelContentDto novelContentDto : novelContentDtos){
 			NovelContent novelContent = novelContentDto.toEntity();
 			novelContentRepogitory.save(novelContent);
 		}
-
+		System.out.println("end save content");
 		Novel novel = novelDetailDto.toEntityNovel();
 		novelRepogitory.save(novel);
 	}

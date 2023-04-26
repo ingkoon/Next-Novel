@@ -1,9 +1,9 @@
 server:
-  port: 8011
+  port: 8012
 
 spring:
   application:
-    name: boardService
+    name: service_board
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/novel?serverTimezone=UTC&characterEncoding=UTF-8

@@ -25,6 +25,7 @@ public class NovelController {
 	@PostMapping("/")
 	public ResponseEntity<?> insertNovel(@RequestBody NovelDetailDto novelDetailDto){
 		try{
+			System.out.println(novelDetailDto);
 			novelService.insertNovel(novelDetailDto);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}

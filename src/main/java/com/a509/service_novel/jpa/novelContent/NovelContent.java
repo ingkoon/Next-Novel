@@ -31,7 +31,6 @@ public class NovelContent {
 	private String query;
 	private String image;
 	private String caption;
-	private int authorId;
 
 	public NovelContentDto toDto() {
 		return NovelContentDto.builder()
