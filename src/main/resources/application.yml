@@ -10,4 +10,4 @@ eureka:
 
 spring:
   application:
-    name: service-user
+    name: service_user
