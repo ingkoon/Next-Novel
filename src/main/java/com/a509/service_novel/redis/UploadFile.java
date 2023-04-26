@@ -1,4 +1,4 @@
-package com.example.novel.redis;
+package com.a509.service_novel.redis;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

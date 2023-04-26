@@ -1,8 +1,8 @@
-package com.example.novel.dto;
+package com.a509.service_novel.dto;
 
 import org.springframework.data.redis.core.RedisHash;
 
-import com.example.novel.jpa.novelContent.NovelContent;
+import com.a509.service_novel.jpa.novelContent.NovelContent;
 
 import lombok.Builder;
 import lombok.Data;

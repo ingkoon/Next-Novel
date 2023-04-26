@@ -1,6 +1,4 @@
-package com.example.novel.dto;
-
-import com.example.novel.jpa.novel.Novel;
+package com.a509.service_novel.dto;
 
 import lombok.Builder;
 import lombok.Data;

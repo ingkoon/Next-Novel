@@ -1,4 +1,4 @@
-package com.example.novel.jpa.novel;
+package com.a509.service_novel.jpa.novel;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,8 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.example.novel.dto.NovelDetailDto;
-import com.example.novel.dto.NovelListDto;
+import com.a509.service_novel.dto.NovelDetailDto;
+import com.a509.service_novel.dto.NovelListDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

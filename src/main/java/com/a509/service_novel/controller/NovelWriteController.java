@@ -1,4 +1,4 @@
-package com.example.novel.controller;
+package com.a509.service_novel.controller;
 
 import java.io.IOException;
 import java.io.OutputStream;

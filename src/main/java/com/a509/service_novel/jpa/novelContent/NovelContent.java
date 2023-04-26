@@ -1,4 +1,4 @@
-package com.example.novel.jpa.novelContent;
+package com.a509.service_novel.jpa.novelContent;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,9 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.redis.core.RedisHash;
-
-import com.example.novel.dto.NovelContentDto;
+import com.a509.service_novel.dto.NovelContentDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

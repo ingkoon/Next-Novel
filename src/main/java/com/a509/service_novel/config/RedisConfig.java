@@ -1,4 +1,4 @@
-package com.example.novel.config;
+package com.a509.service_novel.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

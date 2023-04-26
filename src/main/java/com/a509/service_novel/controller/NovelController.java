@@ -1,4 +1,4 @@
-package com.example.novel.controller;
+package com.a509.service_novel.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.novel.dto.NovelDetailDto;
-import com.example.novel.service.NovelService;
+import com.a509.service_novel.dto.NovelDetailDto;
+import com.a509.service_novel.service.NovelService;
 
 import lombok.RequiredArgsConstructor;
 

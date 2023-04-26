@@ -1,4 +1,4 @@
-package com.example.novel.jpa.novelContent;
+package com.a509.service_novel.jpa.novelContent;
 
 import java.util.List;
 

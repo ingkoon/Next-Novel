@@ -1,15 +1,12 @@
-package com.example.novel.service;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.a509.service_novel.service;
 
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.novel.dto.NovelCommentDto;
-import com.example.novel.jpa.novelComment.NovelComment;
-import com.example.novel.jpa.novelComment.NovelCommentRepogitory;
+import com.a509.service_novel.dto.NovelCommentDto;
+import com.a509.service_novel.jpa.novelComment.NovelComment;
+import com.a509.service_novel.jpa.novelComment.NovelCommentRepogitory;
 
 import lombok.RequiredArgsConstructor;
 

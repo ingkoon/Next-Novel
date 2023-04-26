@@ -1,4 +1,4 @@
-package com.example.novel.service;
+package com.a509.service_novel.service;
 
 import javax.transaction.Transactional;
 
@@ -9,19 +9,17 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.example.novel.dto.NovelCommentDto;
-import com.example.novel.dto.NovelContentDto;
-import com.example.novel.dto.NovelDetailDto;
-import com.example.novel.dto.NovelListDto;
-import com.example.novel.jpa.novel.Novel;
-import com.example.novel.jpa.novel.NovelRepogitory;
-import com.example.novel.jpa.novelComment.NovelComment;
-import com.example.novel.jpa.novelComment.NovelCommentRepogitory;
-import com.example.novel.jpa.novelContent.NovelContent;
-import com.example.novel.jpa.novelContent.NovelContentRepogitory;
-import com.example.novel.redis.UploadFile;
+import com.a509.service_novel.dto.NovelContentDto;
+import com.a509.service_novel.dto.NovelDetailDto;
+import com.a509.service_novel.jpa.novel.Novel;
+import com.a509.service_novel.jpa.novelComment.NovelComment;
+import com.a509.service_novel.jpa.novelComment.NovelCommentRepogitory;
+import com.a509.service_novel.jpa.novelContent.NovelContent;
+import com.a509.service_novel.jpa.novelContent.NovelContentRepogitory;
+import com.a509.service_novel.dto.NovelCommentDto;
+import com.a509.service_novel.dto.NovelListDto;
+import com.a509.service_novel.jpa.novel.NovelRepogitory;
 
 import lombok.RequiredArgsConstructor;
 

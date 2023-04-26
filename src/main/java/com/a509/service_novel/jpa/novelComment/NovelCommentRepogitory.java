@@ -1,4 +1,4 @@
-package com.example.novel.jpa.novelComment;
+package com.a509.service_novel.jpa.novelComment;
 
 import java.util.List;
 import java.util.Optional;

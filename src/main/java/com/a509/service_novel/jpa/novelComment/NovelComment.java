@@ -1,4 +1,4 @@
-package com.example.novel.jpa.novelComment;
+package com.a509.service_novel.jpa.novelComment;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.example.novel.dto.NovelCommentDto;
+import com.a509.service_novel.dto.NovelCommentDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

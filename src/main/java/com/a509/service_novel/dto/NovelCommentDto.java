@@ -1,10 +1,6 @@
-package com.example.novel.dto;
+package com.a509.service_novel.dto;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import com.example.novel.jpa.novelComment.NovelComment;
+import com.a509.service_novel.jpa.novelComment.NovelComment;
 
 import lombok.Builder;
 import lombok.Data;
