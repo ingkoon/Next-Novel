@@ -10,4 +10,4 @@ eureka:
 
 spring:
   application:
-    name: service-ai
+    name: service_ai

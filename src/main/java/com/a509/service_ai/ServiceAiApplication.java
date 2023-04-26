@@ -1,4 +1,4 @@
-package com.example.serviceai;
+package com.a509.service_ai;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
