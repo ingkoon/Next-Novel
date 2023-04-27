@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { writecomment } from "../api/novelread";
-import { requestDatatype } from "../components/novelread/Book";
 import axios, { AxiosRequestConfig } from "axios";
 
 export default function useCommentWrite() {

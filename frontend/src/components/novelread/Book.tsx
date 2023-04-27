@@ -11,6 +11,42 @@ import { useNavigate } from "react-router-dom";
 import { novelall } from "../../api/novelread";
 import useCommentWrite from "../../hooks/useCommentWrite";
 
+type Params = {
+  id: string;
+};
+
+type Ninfo = {
+  cover_img: string;
+  id: number;
+  introduction: string;
+  original_cover_img: string;
+  title: string;
+}
+
+type Ncaption = {
+  caption: string;
+  created_at: string;
+  id: number;
+  image: string,
+  novel_content: number;
+}
+
+type Ndtl = {
+  chosen_query: string;
+  content: string;
+  id: number;
+  images: Ncaption[];
+  novel: number;
+  query1: string;
+  query2: string;
+  query3: string;
+  step: number;
+}
+
+type Ncontent = {
+  novel_detail: Ndtl[];
+}
+
 interface ExtendedHTMLElement extends HTMLElement {
   pageNum: number;
 };
@@ -19,19 +55,15 @@ type InputProps = {
   comm ?: string;
 };
 
-export type requestDatatype = {
-      novel_id : string | undefined,
-      comm : string
-    }
-
 export default function Book() {
-  const { id } = useParams();
+  const { id } = useParams<Params>();
+  // const iid:number = parseInt(id!);
   const [novelid, setNovelid] = useState(id);
-  const [novelinfo, setNovelinfo] = useState("");
-  const [novelContent, setNovelContent] = useState("");
-  const [lastPage, setLastPage] = useState();
+  const [novelinfo, setNovelinfo] = useState<Ninfo>();
+  const [novelContent, setNovelContent] = useState<Ncontent>({novel_detail: []});
+  const [lastPage, setLastPage] = useState<Ncontent>({novel_detail: []});
   const [rerender, setRerender] = useState("");
-  const page_ref = useRef();
+  const page_ref = useRef<HTMLDivElement>(null);
 
   const [create, setCreate] = useState("");
   const [input, setInput] = useState<InputProps>({});
@@ -42,7 +74,13 @@ export default function Book() {
     try {
       const data = await novelall(novelid);
       console.log(data);
-      setNovelinfo(data.data);
+      setNovelinfo({
+        cover_img: data.data.novel.cover_img,
+        id: data.data.novel.id,
+        introduction: data.data.novel.introduction,
+        original_cover_img: data.data.novel.original_cover_img,
+        title: data.data.novel.title,
+      });
       setNovelContent(
         data.data.novel_detail.slice(0, data.data.novel_detail.length - 1)
       );
@@ -159,26 +197,37 @@ export default function Book() {
       return;
     }
 
-    
-    const requestData : requestDatatype =  {
-      novel_id: novelid,
-      comm: input.comm,
-    };
-
-    console.log("requestData 불러오기:" + requestData);
-    if(requestData && typeof requestData === 'object'){
-
-      submitComment.mutate(requestData, {
-        onSuccess: (res) => {
-          console.log(res, 1111111111111111111111111111);
-          navigate(`/library/${novelid}/intro`, { state: { id: novelid } });
-        },
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-      });
-    }
+    const formData = appendFormData();
+    submitComment.mutate(formData, {
+      onSuccess: (res) => {
+        console.log(res);
+        navigate(`/library/${novelid}/intro`, { state: { id: novelid } });
+      },
+    });
   };
+    
+  //   const requestData : requestDatatype =  {
+  //     novel_id: novelid,
+  //     comm: input.comm,
+  //   };
+
+  //   console.log("requestData 불러오기:" + requestData);
+  //   if(requestData && typeof requestData === 'object'){
+
+  //     submitComment.mutate(requestData, {
+  //       onSuccess: (res) => {
+  //         console.log(res, 1111111111111111111111111111);
+  //         navigate(`/library/${novelid}/intro`, { state: { id: novelid } });
+  //       },
+  //     });
+  //   }
+  // };
+
+  const appendFormData = () => {
+    const formData = new FormData();
+    formData.append('novel_id', novelid);
+
+  }
   const closemodal = () => {
     setLoginIsOpen(false);
   };
@@ -216,20 +265,20 @@ export default function Book() {
                       src={
                         novelinfo &&
                         process.env.REACT_APP_IMAGE_API +
-                          novelinfo.novel.cover_img
+                          novelinfo.cover_img
                       }
                       alt="coverimg"
                     />
                   </div>
                   <div className={style.bookfooter}>
                     <span className={style.ex}>"&nbsp;</span>
-                    <span>{novelinfo && novelinfo.novel.introduction}</span>
+                    <span>{novelinfo && novelinfo.introduction}</span>
                     <span className={style.ex}>&nbsp;"</span>
                   </div>
                   <div className={style.fbar} />
                 </div>
               </div>
-              {novelContent.map((item, index) => {
+              {novelContent.novel_detail.map((item, index) => {
                 return (
                   <>
                     <div className={style.page} ref={page_ref}>
@@ -244,7 +293,7 @@ export default function Book() {
               })}
 
               <div className={style.page}>
-                <span className={style.text}>{lastPage[0].content}</span>
+                <span className={style.text}>{lastPage?.novel_detail[0]?.content}</span>
               </div>
               <div className={style.page}>
                 <div className={style.ogcover}>
@@ -252,7 +301,7 @@ export default function Book() {
                     src={
                       novelinfo &&
                       process.env.REACT_APP_IMAGE_API +
-                        novelinfo.novel.original_cover_img
+                        novelinfo.original_cover_img
                     }
                     alt="ogcover"
                   />
@@ -277,7 +326,7 @@ export default function Book() {
                   />
                   <div
                     className={style.link}
-                    onClick={() => navigateToIntro(novelid)}
+                    onClick={() => navigateToIntro(novelinfo.id)}
                   >
                     <h2>돌아가기</h2>
                   </div>
@@ -294,7 +343,7 @@ export default function Book() {
                       className={style.comment}
                       type="text"
                       name="comm"
-                      value={input.comm ?? ""}
+                      value={input.comm?.trim() ?? ""}
                       placeholder="          어떠셨나요?"
                       required
                       onChange={handleChange}

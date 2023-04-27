@@ -1,23 +1,30 @@
-import style from "./login.module.css"
+import style from "./login.module.css";
 
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
-export default function Login() {
+interface LoginProps {
+  closemodal: () => void;
+}
 
+export default function Login({ closemodal }: LoginProps) {
   function kakaoLogin() {
-    const { Kakao } = window
+    const { Kakao } = window;
     Kakao.Auth.authorize({
       redirectUri: process.env.REACT_APP_KAKAO_API,
       // prompts : "login" //항상 로그인을 하게 만드는거임.
-    })
+    });
   }
-
 
   return (
     <div
       className={style.loginmodal}
       style={{
-        // backgroundImage: `url('${process.env.PUBLIC_URL}/img/login_bg.jpg')`, 
-        backgroundImage: `url('${process.env.PUBLIC_URL}/img/login_bg.jpg')`, 
+        // backgroundImage: `url('${process.env.PUBLIC_URL}/img/login_bg.jpg')`,
+        backgroundImage: `url('${process.env.PUBLIC_URL}/img/login_bg.jpg')`,
       }}
     >
       <div className={style.topborder}>
@@ -29,7 +36,10 @@ export default function Login() {
 
         <div className={style.main}>
           <div className={style.loginlogo}>
-            <img src={process.env.PUBLIC_URL + "/img/NN_LOGO_text.svg"} />
+            <img
+              src={process.env.PUBLIC_URL + "/img/NN_LOGO_text.svg"}
+              alt="logowtext"
+            />
           </div>
 
           <div className={style.title}>
@@ -45,6 +55,7 @@ export default function Login() {
             onClick={kakaoLogin}
             className={style.kakao}
             src={process.env.PUBLIC_URL + "/img/kakao_login.png"}
+            alt="kakaobtn"
           />
         </div>
         <div className={style.leftborder} />
@@ -56,5 +67,5 @@ export default function Login() {
 
       <span className={style.welcome}>WELCOME</span>
     </div>
-  )
+  );
 }
