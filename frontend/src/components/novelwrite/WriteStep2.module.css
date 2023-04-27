@@ -7,12 +7,13 @@
   display: flex;
   justify-content: space-evenly;
   flex-basis: 85%;
-  background-color: coral;
+  /* background-color: coral; */
   align-items: center;
-  flex-wrap: wrap;
+  /* gap: 50px; */
 }
 @media (max-width: 1024px) {
   .component {
     flex-direction: column;
+    gap: 20px;
   }
 }

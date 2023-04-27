@@ -22,7 +22,7 @@ export default function PaintingInProgress() {
           ))}
         </div>
         <div className={style.answer}>
-          {newMaterials.map((newMaterial, index) => (
+          {newMaterials?.map((newMaterial, index) => (
             <div key={index}>
               <div />
               <img

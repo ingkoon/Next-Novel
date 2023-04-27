@@ -12,8 +12,18 @@ export default function PreviewCanvas({
   index,
 }: PreviewCanvasProps) {
   return (
-    <div className={style.container} onClick={() => setSelected(index)}>
-      {imageSrc && <img className={style.img} src={imageSrc} alt="img" />}
-    </div>
+    <>
+      {imageSrc && (
+        <img
+          className={style.img}
+          src={imageSrc}
+          alt="img"
+          onClick={() => setSelected(index)}
+        />
+      )}
+      {!imageSrc && (
+        <span className={style.img} onClick={() => setSelected(index)} />
+      )}
+    </>
   );
 }
