@@ -19,20 +19,27 @@ import java.time.LocalDateTime;
 public class User {
 
     @Id
+    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
     private String provider;
     private String providerId;
+    @Column(nullable = false)
     private String role;
 
+    @Column(nullable = false)
     private String nickname;
     private String profileImage;
 
     @CreationTimestamp
+    @Column(nullable = false)
     private LocalDateTime createdAt;
     @UpdateTimestamp
+    @Column(nullable = false)
     private LocalDateTime updatedAt;
 
 }
