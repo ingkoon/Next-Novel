@@ -18,6 +18,7 @@ public class Order {
     @Id @Column(name = "order_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long userId;
     private int price;
     @OneToMany
     private List<OrderItem> orderItems = new ArrayList<>();

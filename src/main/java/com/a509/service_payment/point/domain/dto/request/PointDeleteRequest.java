@@ -4,6 +4,5 @@ import lombok.Getter;
 
 @Getter
 public class PointDeleteRequest {
-
-    private Long memberId;
+    private Long userId;
 }
