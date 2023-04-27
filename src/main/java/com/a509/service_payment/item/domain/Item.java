@@ -1,5 +1,6 @@
 package com.a509.service_payment.item.domain;
 
+import com.a509.service_payment.item.enums.ItemName;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,17 +14,12 @@ public class Item {
     @Id @Column(name="item_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String name;
-
+    @Enumerated(value = EnumType.STRING)
+    private ItemName name;
     private int price;
-
-    private int stock;
-
     @Builder
-    public Item(String name, int price, int stock){
+    public Item(ItemName name, int price){
         this.name = name;
         this.price = price;
-        this.stock = stock;
     }
 }

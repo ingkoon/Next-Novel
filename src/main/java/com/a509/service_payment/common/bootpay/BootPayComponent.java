@@ -24,16 +24,19 @@ public class BootPayComponent {
     /*
     결제 토큰 발급
     */
-    public HashMap<String, Object> connectBootPay() throws Exception{
+    public HashMap<String, Object> connectBootPay() {
         Bootpay bootpay = new Bootpay(restApiKey, privateKey);
-
-        HashMap<String, Object> res = bootpay.getAccessToken();
-
-        if(res.get("error_code") == null) { //success
-            log.info("goGetToken success: " + res);
-            return res;
+        HashMap<String, Object> res;
+        try{
+            res = bootpay.getAccessToken();
+            if(res.get("error_code") != null) { //success
+                log.info("goGetToken success: " + res);
+                return res;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        throw new NoTokenException();
+        return res;
     }
     public HashMap<String, Object> validateOrder(String receiptId) throws Exception{
         HashMap<String, Object> token = bootpay.getAccessToken();
@@ -50,8 +53,13 @@ public class BootPayComponent {
     /*
     결제 검증 로직
     */
-    public HashMap<String, Object> confirmOrder(String receiptId) throws Exception {
-        return bootpay.confirm(receiptId);
+    public HashMap<String, Object> confirmOrder(String receiptId)  {
+        try{
+            return bootpay.confirm(receiptId);
+        }
+        catch (Exception e){
+            throw new NoTokenException();
+        }
     }
 
     /*
