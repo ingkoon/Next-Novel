@@ -1,0 +1,43 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        connection:
+          charSet: UTF-8
+        format_sql: true
+
+  server:
+    servlet:
+      multipart:
+        maxFileSize: 10MB
+        maxRequestSize: 50MB
+
+  profiles:
+    include:
+      - aws
+      - credentials
+      - azure
+
+
+logging.level:
+  org.hibernate.SQL: debug
+  org.hibernate.type: trace
+
+boot-pay:
+  rest-api-key: ***REMOVED***
+  private-key: D6+wqdBeprLC6I2LwR42iG/YHMIHjwaynDkkjSmLHYo=

@@ -19,14 +19,14 @@ public class Order {
     @Id @Column(name = "order_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
+    private Long memberId;
     private Long price;
     @OneToMany
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @Builder
     public Order(Long userId, Long price) {
-        this.userId = userId;
+        this.memberId = userId;
         this.price = price;
     }
 }

@@ -39,6 +39,7 @@ public class BootPayComponent {
         return res;
     }
     public HashMap<String, Object> validateOrder(String receiptId) throws Exception{
+        Bootpay bootpay = new Bootpay(restApiKey, privateKey);
         HashMap<String, Object> token = bootpay.getAccessToken();
 
         if(token.get("error_code")!=null)

@@ -28,26 +28,26 @@ public class PointService {
     }
 
     public PointFindResponse readPoint(PointReadRequest request){
-        Point point = findPoint(request.getUserId());
+        Point point = findPoint(request.getMemberId());
         return new PointFindResponse()
                 .fromEntity(point);
     }
 
     @Transactional
     public void updatePoint(PointUpdateRequest request){
-        Point point = findPoint(request.getUserId());
+        Point point = findPoint(request.getMemberId());
         point.updatePoint(request.getPoint());
     }
 
     @Transactional
     public void delete(PointDeleteRequest request){
-        Point point = findPoint(request.getUserId());
+        Point point = findPoint(request.getMemberId());
         pointRepository.delete(point);
     }
 
     public Point findPoint(Long memberId){
         return pointRepository
-                .findByUserId(memberId)
+                .findByMemberId(memberId)
                 .orElseThrow(NoSuchElementException::new);
     }
 }

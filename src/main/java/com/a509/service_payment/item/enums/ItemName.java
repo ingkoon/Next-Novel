@@ -1,20 +1,20 @@
 package com.a509.service_payment.item.enums;
 
 public enum ItemName {
-    FIFTY("fifty", 50),
-    HUNDRED("hundred", 100),
-    FIVE_HUNDRED("five_hundred", 500),
-    THOUSAND("thousand", 1000);
+    FIFTY("fifty", 500),
+    HUNDRED("hundred", 1000),
+    FIVE_HUNDRED("five_hundred", 5000),
+    THOUSAND("thousand", 10000);
 
-    private String code;
+    private String key;
     private int value;
 
-    ItemName(String code, int value) {
-        this.code = code;
+    ItemName(String key, int value) {
+        this.key = key;
         this.value = value;
     }
-    public String getCode() {
-        return code;
+    public String getKey() {
+        return key;
     }
     public int getValue() {
         return value;

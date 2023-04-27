@@ -1,6 +1,7 @@
 package com.a509.service_payment.order.controller;
 
-import com.a509.service_payment.order.dto.TokenResponse;
+import com.a509.service_payment.order.dto.CreateRequestDto;
+import com.a509.service_payment.order.dto.TokenResponseDto;
 import com.a509.service_payment.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     private final OrderService orderService;
     @GetMapping
-    public ResponseEntity<TokenResponse> publishToken() throws Exception {
-        TokenResponse token = orderService.getTokenByBootPay();
+    public ResponseEntity<TokenResponseDto> publishToken() throws Exception {
+        TokenResponseDto token = orderService.getTokenByBootPay();
         log.info("response entity value is : " + token.getToken());
         return ResponseEntity.ok().body(token);
     }
@@ -27,7 +28,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createOrder(){
+    public ResponseEntity<Void> createOrder(@RequestBody CreateRequestDto requestDto){
+        orderService.createOrder(requestDto);
         return ResponseEntity.ok().build();
     }
 }
