@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 public class PointFindResponse {
-    private Long userId;
+    private Long memberId;
     private Long point;
 
     public PointFindResponse fromEntity(Point point){
         return PointFindResponse.builder()
-                .userId(point.getUserId())
+                .memberId(point.getMemberId())
                 .point(point.getPoint())
                 .build();
     }

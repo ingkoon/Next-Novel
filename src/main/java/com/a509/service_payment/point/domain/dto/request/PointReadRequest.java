@@ -4,6 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class PointReadRequest {
-    private Long userId;
+    private Long memberId;
 
 }
