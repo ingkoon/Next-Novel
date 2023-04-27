@@ -1,5 +1,6 @@
 package com.a509.service_payment.orderitem.domain;
 
+import com.a509.service_payment.item.domain.Item;
 import com.a509.service_payment.order.domain.Order;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,13 +18,17 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Item item;
     private String name;
-    private String cost;
+    private Long price;
 
     @Builder
-    public OrderItem(String name, Order order, String cost){
+    public OrderItem(String name, Order order, Item item, Long price){
         this.name = name;
+        this.item = item;
         this.order = order;
-        this.cost = cost;
+        this.price = price;
     }
 }
