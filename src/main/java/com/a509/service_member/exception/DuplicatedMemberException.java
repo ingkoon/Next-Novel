@@ -1,4 +1,4 @@
-package com.a509.service_user.exception;
+package com.a509.service_member.exception;
 
 public class DuplicatedMemberException extends RuntimeException {
     public DuplicatedMemberException() {

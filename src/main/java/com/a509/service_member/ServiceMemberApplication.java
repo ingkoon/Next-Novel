@@ -1,4 +1,4 @@
-package com.a509.service_user;
+package com.a509.service_member;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 @EnableEurekaClient
-public class ServiceUserApplication {
+public class ServiceMemberApplication {
 
 	@Bean
 	public BCryptPasswordEncoder encodePwd() {
@@ -16,7 +16,7 @@ public class ServiceUserApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(ServiceUserApplication.class, args);
+		SpringApplication.run(ServiceMemberApplication.class, args);
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.a509.service_user.jpa.user;
+package com.a509.service_member.jpa.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,12 +11,12 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user")
+@Table(name = "member")
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class User {
+public class Member {
 
     @Id
     @Column(nullable = false)
