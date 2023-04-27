@@ -16,6 +16,11 @@ type CanvasSaveAndLoadProps = {
 type DataType = {
   image: string;
 };
+type State = (string | undefined)[];
+type Action =
+  | { type: "increment"; dataURL: string }
+  | { type: "decrement" }
+  | { type: "init" };
 export default function useCanvasSaveAndLoad({
   getCtx,
   canvasWidth,
@@ -31,7 +36,7 @@ export default function useCanvasSaveAndLoad({
   const [store, dispatch] = useReducer(reducer, [imageSrcs[selected]]); //뒤로가기 저장소
   const { paintings } = useFileToDataurl({ data }); //백엔드에서 불러올 그림
 
-  function reducer(state, action) {
+  function reducer(state: State, action: Action): State {
     //저장소 간리
     switch (action.type) {
       case "increment": //그리기
@@ -52,7 +57,7 @@ export default function useCanvasSaveAndLoad({
     } //현재 캔버스 초기화
 
     const img = new Image();
-    img.src = imageSrcs[selected];
+    img.src = imageSrcs[selected] || "";
     img.onload = () => getCtx.drawImage(img, 0, 0); //캔버스 불러오기
 
     dispatch({ type: "init" }); //저장소 초기화
@@ -86,7 +91,7 @@ export default function useCanvasSaveAndLoad({
     getCtx.fillRect(0, 0, canvasWidth, canvasHeight);
 
     const img = new Image();
-    img.src = dataURL;
+    img.src = dataURL || "";
     img.onload = () => getCtx.drawImage(img, 0, 0); //이전 이미지 불러오기
 
     setImageSrcs(
