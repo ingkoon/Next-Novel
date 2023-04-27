@@ -5,8 +5,8 @@ import com.a509.service_payment.item.domain.Item;
 import com.a509.service_payment.item.exception.NoSuchItemException;
 import com.a509.service_payment.item.repostiory.ItemRepository;
 import com.a509.service_payment.order.domain.Order;
-import com.a509.service_payment.order.dto.ConfirmRequest;
-import com.a509.service_payment.order.dto.TokenResponse;
+import com.a509.service_payment.order.dto.CreateRequestDto;
+import com.a509.service_payment.order.dto.TokenResponseDto;
 import com.a509.service_payment.order.repository.OrderRepository;
 import com.a509.service_payment.orderitem.domain.OrderItem;
 import com.a509.service_payment.orderitem.repository.OrderItemRepository;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
-import java.util.NoSuchElementException;
 
 @Slf4j
 @Service
@@ -36,18 +35,18 @@ public class OrderService {
         orderRepository.findById(orderId);
     }
 
-    public TokenResponse getTokenByBootPay(){
+    public TokenResponseDto getTokenByBootPay() {
         HashMap<String, Object> hashMap = bootPayComponent.connectBootPay();
         String token = hashMap.get("access_token").toString();
         log.info("token value is : " + token);
-        return new TokenResponse()
+        return new TokenResponseDto()
                 .fromEntity(token);
     }
 
     @Transactional
-    public void confirmOrder(ConfirmRequest request) {
+    public void createOrder(CreateRequestDto request) {
         Point point =  pointRepository
-                .findByUserId(request.getUserId())
+                .findByMemberId(request.getMemberId())
                 .orElseThrow(NoSuchPointException::new);
         point.updatePoint(request.getPrice());
 
@@ -62,9 +61,12 @@ public class OrderService {
                 .builder()
                 .order(order)
                 .item(item)
-                .name(request.getItemName().getCode())
+                .name(request.getItemName().getKey())
                 .price(request.getPrice())
                 .build();
         orderItemRepository.save(orderItem);
     }
+
+
+
 }

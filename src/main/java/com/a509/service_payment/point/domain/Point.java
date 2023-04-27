@@ -16,13 +16,13 @@ public class Point {
     @Column(name = "point_id")
     private Long id;
     @NotNull
-    private Long userId;
+    private Long memberId;
     @NotNull
     private Long point = 0L;
     private LocalDateTime updatedAt = LocalDateTime.now();
     @Builder
-    public Point(Long userId){
-        this.userId = userId;
+    public Point(Long memberId){
+        this.memberId = memberId;
     }
     public void updatePoint(Long point){
         this.point = point;

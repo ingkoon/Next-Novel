@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @Getter
 public class PointCreateRequest {
-    private Long userId;
+    private Long memberId;
 
     public Point toEntity(){
         return Point.builder()
-                .userId(userId)
+                .memberId(memberId)
                 .build();
     }
 }
