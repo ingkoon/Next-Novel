@@ -9,11 +9,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TokenResponse {
+public class TokenResponseDto {
     private String token;
-
-    public TokenResponse fromEntity (String token){
-        return TokenResponse
+    public TokenResponseDto fromEntity (String token){
+        return TokenResponseDto
                 .builder()
                 .token(token)
                 .build();
