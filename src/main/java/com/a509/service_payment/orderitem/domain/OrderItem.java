@@ -5,11 +5,11 @@ import com.a509.service_payment.order.domain.Order;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Table(name = "order_item")
 @NoArgsConstructor
 public class OrderItem {
     @Column(name = "order_item_id")
@@ -23,7 +23,6 @@ public class OrderItem {
     private Item item;
     private String name;
     private Long price;
-
     @Builder
     public OrderItem(String name, Order order, Item item, Long price){
         this.name = name;
