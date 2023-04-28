@@ -1,10 +1,10 @@
 package com.a509.service_payment.point.controller;
 
-import com.a509.service_payment.point.domain.dto.request.PointCreateRequest;
-import com.a509.service_payment.point.domain.dto.request.PointDeleteRequest;
-import com.a509.service_payment.point.domain.dto.request.PointReadRequest;
-import com.a509.service_payment.point.domain.dto.request.PointUpdateRequest;
-import com.a509.service_payment.point.domain.dto.response.PointFindResponse;
+import com.a509.service_payment.point.domain.dto.request.PointCreateRequestDto;
+import com.a509.service_payment.point.domain.dto.request.PointDeleteRequestDto;
+import com.a509.service_payment.point.domain.dto.request.PointReadRequestDto;
+import com.a509.service_payment.point.domain.dto.request.PointUpdateRequestDto;
+import com.a509.service_payment.point.domain.dto.response.PointFindResponseDto;
 import com.a509.service_payment.point.service.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class PointController {
     private final PointService pointService;
 
     @PostMapping
-    public ResponseEntity<Void> createPoint(@RequestBody PointCreateRequest request){
+    public ResponseEntity<Void> createPoint(@RequestBody PointCreateRequestDto request){
         pointService.createPoint(request);
         return ResponseEntity
                 .ok()
@@ -25,15 +25,15 @@ public class PointController {
     }
 
     @GetMapping()
-    public ResponseEntity<PointFindResponse> readPoint(PointReadRequest request){
-        PointFindResponse response = pointService.readPoint(request);
+    public ResponseEntity<PointFindResponseDto> readPoint(PointReadRequestDto request){
+        PointFindResponseDto response = pointService.readPoint(request);
         return ResponseEntity
                 .ok()
                 .body(response);
     }
 
     @PutMapping
-    public ResponseEntity<Void> updatePoint(PointUpdateRequest request){
+    public ResponseEntity<Void> updatePoint(PointUpdateRequestDto request){
         pointService.updatePoint(request);
         return ResponseEntity
                 .ok()
@@ -41,7 +41,7 @@ public class PointController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deletePoint(PointDeleteRequest request){
+    public ResponseEntity<Void> deletePoint(PointDeleteRequestDto request){
         pointService.delete(request);
         return ResponseEntity
                 .ok()

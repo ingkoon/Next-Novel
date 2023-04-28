@@ -1,11 +1,11 @@
 package com.a509.service_payment.point.service;
 
 import com.a509.service_payment.point.domain.Point;
-import com.a509.service_payment.point.domain.dto.request.PointCreateRequest;
-import com.a509.service_payment.point.domain.dto.request.PointDeleteRequest;
-import com.a509.service_payment.point.domain.dto.request.PointReadRequest;
-import com.a509.service_payment.point.domain.dto.request.PointUpdateRequest;
-import com.a509.service_payment.point.domain.dto.response.PointFindResponse;
+import com.a509.service_payment.point.domain.dto.request.PointCreateRequestDto;
+import com.a509.service_payment.point.domain.dto.request.PointDeleteRequestDto;
+import com.a509.service_payment.point.domain.dto.request.PointReadRequestDto;
+import com.a509.service_payment.point.domain.dto.request.PointUpdateRequestDto;
+import com.a509.service_payment.point.domain.dto.response.PointFindResponseDto;
 import com.a509.service_payment.point.repository.PointRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,25 +22,25 @@ import java.util.NoSuchElementException;
 public class PointService {
     private final PointRepository pointRepository;
     @Transactional
-    public void createPoint(PointCreateRequest request){
+    public void createPoint(PointCreateRequestDto request){
         Point point = request.toEntity();
         pointRepository.save(point);
     }
 
-    public PointFindResponse readPoint(PointReadRequest request){
+    public PointFindResponseDto readPoint(PointReadRequestDto request){
         Point point = findPoint(request.getMemberId());
-        return new PointFindResponse()
+        return new PointFindResponseDto()
                 .fromEntity(point);
     }
 
     @Transactional
-    public void updatePoint(PointUpdateRequest request){
+    public void updatePoint(PointUpdateRequestDto request){
         Point point = findPoint(request.getMemberId());
         point.updatePoint(request.getPoint());
     }
 
     @Transactional
-    public void delete(PointDeleteRequest request){
+    public void delete(PointDeleteRequestDto request){
         Point point = findPoint(request.getMemberId());
         pointRepository.delete(point);
     }
