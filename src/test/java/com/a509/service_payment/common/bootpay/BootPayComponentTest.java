@@ -1,16 +1,12 @@
 package com.a509.service_payment.common.bootpay;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.swing.*;
 import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Map;
 
 @SpringBootTest
 class BootPayComponentTest {
@@ -27,6 +23,9 @@ class BootPayComponentTest {
     void validateOrder() throws Exception {
         HashMap<String, Object> map = bootPayComponent.validateOrder("644a307d966b740020754edc");
         System.out.println(map);
+        for (Map.Entry<String, Object> entrySet : map.entrySet()) {
+            System.out.println(entrySet.getKey() + " : " + entrySet.getValue());
+        }
     }
 
     @Test

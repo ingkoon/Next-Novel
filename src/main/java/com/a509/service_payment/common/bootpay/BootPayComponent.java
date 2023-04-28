@@ -6,6 +6,7 @@ import kr.co.bootpay.Bootpay;
 import kr.co.bootpay.model.request.Cancel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,6 @@ public class BootPayComponent {
     private String restApiKey;
     @Value("${boot-pay.private-key}")
     private String privateKey;
-    private final Bootpay bootpay = new Bootpay(restApiKey, privateKey);
 
     /*
     결제 토큰 발급
@@ -29,14 +29,15 @@ public class BootPayComponent {
         HashMap<String, Object> res;
         try{
             res = bootpay.getAccessToken();
-            if(res.get("error_code") != null) { //success
+            log.info(res.toString());
+            if(res.get("access_token") != null) { //success
                 log.info("goGetToken success: " + res);
                 return res;
             }
+            throw new NoTokenException();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new NoTokenException();
         }
-        return res;
     }
     public HashMap<String, Object> validateOrder(String receiptId) throws Exception{
         Bootpay bootpay = new Bootpay(restApiKey, privateKey);
@@ -55,11 +56,17 @@ public class BootPayComponent {
     결제 검증 로직
     */
     public HashMap<String, Object> confirmOrder(String receiptId)  {
+        Bootpay bootpay = new Bootpay(restApiKey, privateKey);
         try{
-            return bootpay.confirm(receiptId);
+            String accessToken = (String) bootpay.getAccessToken().get("access_token");
+            log.info("=====receiptId : " + receiptId + "=====");
+            bootpay.setToken(accessToken);
+            log.info("=====bootpay token : " + bootpay.token + "======");
+            return bootpay
+                    .confirm(receiptId);
         }
         catch (Exception e){
-            throw new NoTokenException();
+            throw new NoTokenException(e.getMessage());
         }
     }
 
@@ -67,6 +74,7 @@ public class BootPayComponent {
     결제 취소
      */
     public HashMap<String, Object> cancelOrder(String receiptId) throws Exception{
+        Bootpay bootpay = new Bootpay(restApiKey, privateKey);
         Cancel cancel = new Cancel();
         cancel.receiptId = receiptId;
         cancel.cancelUsername = "관리자";
