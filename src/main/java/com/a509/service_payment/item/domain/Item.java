@@ -1,6 +1,6 @@
 package com.a509.service_payment.item.domain;
 
-import com.a509.service_payment.item.enums.ItemName;
+import com.a509.service_payment.item.enums.Items;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +15,9 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(value = EnumType.STRING)
-    private ItemName name;
-    private int price;
+    private Items name;
     @Builder
-    public Item(ItemName name, int price){
+    public Item(Items name){
         this.name = name;
-        this.price = price;
     }
 }
