@@ -14,10 +14,10 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user
+        - id: member
           uri: http://localhost:8011/
           predicates:
-            - Path=/user
+            - Path=/member
         - id: novel
           uri: http://localhost:8012/
           predicates:
