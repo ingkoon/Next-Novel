@@ -72,27 +72,29 @@ export default function Canvas({
 
   return (
     <div className={style.container}>
-      <canvas
-        className={`${style.canvas} ${style[canvasType]}`}
-        ref={canvasRef}
-        onMouseDown={() => setPainting(true)}
-        onMouseUp={() => {
-          setPainting(false);
-        }}
-        onMouseMove={(e) => drawFn(e)}
-        onMouseLeave={() => {
-          setPainting(false);
-        }}
-        onTouchStart={(e) => {
-          touchStart(e);
-        }}
-        onTouchMove={(e) => {
-          touch(e);
-        }}
-        onTouchEnd={(e) => {
-          touchEnd(e);
-        }}
-      />
+      <div className={style.canvasBox}>
+        <canvas
+          className={`${style.canvas} ${style[canvasType]}`}
+          ref={canvasRef}
+          onMouseDown={() => setPainting(true)}
+          onMouseUp={() => {
+            setPainting(false);
+          }}
+          onMouseMove={(e) => drawFn(e)}
+          onMouseLeave={() => {
+            setPainting(false);
+          }}
+          onTouchStart={(e) => {
+            touchStart(e);
+          }}
+          onTouchMove={(e) => {
+            touch(e);
+          }}
+          onTouchEnd={(e) => {
+            touchEnd(e);
+          }}
+        />
+      </div>
       {getCtx && (
         <Tools getCtx={getCtx} goBack={goBack} initCanvas={initCanvas} />
       )}

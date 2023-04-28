@@ -1,8 +1,7 @@
 .tools {
-  width: 80px;
+  width: 20%;
   height: 400px;
-  margin-left: 10px;
-  /* background-color: gainsboro; */
+  /* background-color: goldenrod; */
   display: flex;
   flex-direction: column;
 }
@@ -28,6 +27,10 @@
 .tool1.selected,
 .tool2.selected {
   transform: scale(1.15);
+}
+.tool1 > img,
+.tool2 > img {
+  height: 80%;
 }
 .tool3 {
   position: relative;
@@ -237,4 +240,20 @@
 .setWidth > input:hover::-ms-fill-lower,
 .setWidth > input:focus::-ms-fill-lower {
   background: darkOrange; /*activeThumbColor*/
+}
+.tool5 > img,
+.tool6 > img {
+  height: 70%;
+}
+
+@media (max-width: 1024px) {
+  .tools {
+    width: 100%;
+    flex-direction: row;
+    height: 50px;
+  }
+  .tools > div > img {
+    width: 90%;
+    height: 90%;
+  }
 }
