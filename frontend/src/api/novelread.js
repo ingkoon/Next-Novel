@@ -10,10 +10,14 @@ export async function novelall(id) {
 }
 
 // 소감평작성
-export async function writecomment(id, comment) {
-  console.log("넘어오나요" + id);
-  const res = await tokeninstance.post(`novel/${id}/comment/`, {
-    content: comment,
-  });
+export async function writecomment(formData) {
+  // console.log("넘어오나요" + formData);
+  // const res = await tokeninstance.post(`novel/${id}/comment/`, {
+  //   content: comment,
+  // });
+  // return res;
+
+  const id = formData.get("novel_id");
+  const res = await tokeninstance.post(`novel/${id}/comment/`, formData);
   return res;
 }
