@@ -3,6 +3,6 @@ package com.a509.service_payment.point.domain.dto.request;
 import lombok.Getter;
 
 @Getter
-public class PointDeleteRequest {
+public class PointDeleteRequestDto {
     private Long memberId;
 }
