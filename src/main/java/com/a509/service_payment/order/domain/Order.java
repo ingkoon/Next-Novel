@@ -21,12 +21,14 @@ public class Order {
     private Long id;
     private Long memberId;
     private Long price;
+    private String receiptId;
     @OneToMany
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @Builder
-    public Order(Long userId, Long price) {
+    public Order(Long userId, Long price, String receiptId) {
         this.memberId = userId;
         this.price = price;
+        this.receiptId = receiptId;
     }
 }
