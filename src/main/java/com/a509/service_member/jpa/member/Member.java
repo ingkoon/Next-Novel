@@ -44,13 +44,15 @@ public class Member implements UserDetails {
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+    @Column(nullable = false)
+    private String state;   // ACTIVE, RESIGNED
 
     @Column
     private String provider;
     @Column
     private String providerId;
     @Column
-    private String role;
+    private String role;    // ROLE_USER, ROLE_ADMIN
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

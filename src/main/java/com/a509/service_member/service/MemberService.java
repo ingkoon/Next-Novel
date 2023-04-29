@@ -40,6 +40,7 @@ public class MemberService {
         }
 
         Member member = memberSignupDto.toEntityMember();
+        member.setState("ACTIVE");
         member.setRole("ROLE_USER");
         String rawPassword = member.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
@@ -49,6 +50,7 @@ public class MemberService {
 
     public MemberTokenResponse login(MemberLoginDto memberLoginDto) {
         Member member = memberRepository.findByEmail(memberLoginDto.getEmail()).orElseThrow(NoSuchElementException::new);
+        if (member.getState().equals("RESIGNED")) throw new NoSuchElementException("탈퇴한 사용자입니다.");
 
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
