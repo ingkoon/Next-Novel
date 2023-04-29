@@ -8,10 +8,10 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class MemberTokenResponse {
+    private String nickname;
     private String grantType;
     private String accessToken;
     private String refreshToken;
     private Long refreshTokenExpirationTime;
-    private String nickname;
 }
 

@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenProvider {
 
+    private static final String NAME_KEY = "name";
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분
@@ -37,7 +38,7 @@ public class JwtTokenProvider {
     }
 
     // 유저 정보를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
-    public MemberTokenResponse generateToken(Authentication authentication) {
+    public MemberTokenResponse generateToken(Authentication authentication, Member member) {
         // 권한 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -47,19 +48,23 @@ public class JwtTokenProvider {
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         String accessToken = Jwts.builder()
+                .signWith(key, SignatureAlgorithm.HS256)
+                .setHeaderParam("typ","JWT")
                 .setSubject(authentication.getName())
+                .claim(NAME_KEY, member.getNickname())
                 .claim(AUTHORITIES_KEY, authorities)
                 .setExpiration(accessTokenExpiresIn)
-                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS256)
+                .setHeaderParam("typ","JWT")
+                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                 .compact();
 
         return MemberTokenResponse.builder()
+                .nickname(member.getNickname())
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)

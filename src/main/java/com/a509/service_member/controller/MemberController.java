@@ -31,9 +31,7 @@ public class MemberController {
 
     @PostMapping("/member/login")
     public ResponseEntity<MemberTokenResponse> login(@RequestBody @Validated MemberLoginDto memberLoginDto) {
-        System.out.println("11111111111111111111111");
         MemberTokenResponse memberTokenResponse = memberService.login(memberLoginDto);
-        System.out.println("22222222222222222222222");
         return ResponseEntity.ok(memberTokenResponse);
     }
 

@@ -17,15 +17,11 @@ public class MemberSignupDto {
     @NotBlank(message = "닉네임은 필수 입력값입니다.")
     private String nickname;
     private String profileImage;
-    private String provider;
-    private String providerId;
 
     public Member toEntityMember() {
         return Member.builder()
                 .email(email)
                 .password(password)
-                .provider(provider)
-                .providerId(providerId)
                 .nickname(nickname)
                 .profileImage(profileImage)
                 .build();

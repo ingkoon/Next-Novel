@@ -17,10 +17,6 @@ public class MemberLoginDto {
     private String password;
 
     public UsernamePasswordAuthenticationToken toAuthentication() {
-        System.out.println(email);
-        System.out.println(password);
-        System.out.println(getEmail());
-        System.out.println(getPassword());
         return new UsernamePasswordAuthenticationToken(email, password);
     }
 
