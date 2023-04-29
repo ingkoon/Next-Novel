@@ -6,9 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "member")
@@ -16,23 +23,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class Member {
+public class Member implements UserDetails {
 
     @Id
-    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private int id;
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
     private String password;
-    private String provider;
-    private String providerId;
-    @Column(nullable = false)
-    private String role;
 
     @Column(nullable = false)
     private String nickname;
+    @Column
     private String profileImage;
 
     @CreationTimestamp
@@ -42,4 +46,45 @@ public class Member {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    @Column
+    private String provider;
+    @Column
+    private String providerId;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    @Column
+    private List<String> roles = new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

@@ -14,13 +14,11 @@ public class MemberSignupDto {
     private String email;
     @NotBlank(message = "비밀번호는 필수 입력값입니다.")
     private String password;
-    private String provider;
-    private String providerId;
-    private String role;
-
     @NotBlank(message = "닉네임은 필수 입력값입니다.")
     private String nickname;
     private String profileImage;
+    private String provider;
+    private String providerId;
 
     public Member toEntityMember() {
         return Member.builder()
@@ -28,7 +26,6 @@ public class MemberSignupDto {
                 .password(password)
                 .provider(provider)
                 .providerId(providerId)
-                .role(role)
                 .nickname(nickname)
                 .profileImage(profileImage)
                 .build();

@@ -8,6 +8,7 @@ import com.a509.service_member.jpa.member.Member;
 import com.a509.service_member.jpa.member.MemberRepository;
 import com.a509.service_member.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,9 +17,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -39,7 +42,7 @@ public class MemberService {
         }
 
         Member member = memberSignupDto.toEntityMember();
-        member.setRole("ROLE_USER");
+        member.setRoles(Collections.singletonList("ROLE_USER"));
         String rawPassword = member.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         member.setPassword(encPassword);
