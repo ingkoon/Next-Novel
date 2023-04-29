@@ -1,20 +1,20 @@
 package com.a509.service_payment.order.dto;
 
-import com.a509.service_payment.item.enums.ItemName;
+import com.a509.service_payment.item.enums.Items;
 import com.a509.service_payment.order.domain.Order;
 import lombok.Getter;
 
 @Getter
 public class CreateRequestDto {
     private Long memberId;
-    private ItemName itemName;
-    private Long price;
+    private Items items;
     private String receiptId;
 
     public Order toOrderEntity(){
         return Order.builder()
                 .userId(memberId)
-                .price(price)
+                .price(items.getValue())
+                .receiptId(receiptId)
                 .build();
     }
 }

@@ -37,6 +37,7 @@ public class OrderService {
 
     public TokenResponseDto getTokenByBootPay() {
         HashMap<String, Object> hashMap = bootPayComponent.connectBootPay();
+        log.info(hashMap.toString());
         String token = hashMap.get("access_token").toString();
         log.info("token value is : " + token);
         return new TokenResponseDto()
@@ -44,29 +45,30 @@ public class OrderService {
     }
 
     @Transactional
-    public void createOrder(CreateRequestDto request) {
+    public void createOrder(CreateRequestDto requestDto) {
         Point point =  pointRepository
-                .findByMemberId(request.getMemberId())
+                .findByMemberId(requestDto.getMemberId())
                 .orElseThrow(NoSuchPointException::new);
-        point.updatePoint(request.getPrice());
+        log.info("=====success get point information=====");
 
-        bootPayComponent.confirmOrder(request.getReceiptId());
+        point.updatePoint(requestDto.getItems().getValue());
 
-        Order order = request.toOrderEntity();
+        bootPayComponent.confirmOrder(requestDto.getReceiptId());
+        log.info("=====success confirm order=====");
+
+        Order order = requestDto.toOrderEntity();
         orderRepository.save(order);
-
-        Item item = itemRepository.findByName(request.getItemName()).orElseThrow(NoSuchItemException::new);
-
+        log.info("=====success create order=====");
+        Item item = itemRepository.findByName(requestDto.getItems()).orElseThrow(NoSuchItemException::new);
+        log.info("=====success get item=====");
         OrderItem orderItem = OrderItem
                 .builder()
                 .order(order)
                 .item(item)
-                .name(request.getItemName().getKey())
-                .price(request.getPrice())
+                .name(requestDto.getItems().getKey())
+                .price(requestDto.getItems().getValue())
                 .build();
         orderItemRepository.save(orderItem);
+        log.info("=====success to save orderItem=====");
     }
-
-
-
 }

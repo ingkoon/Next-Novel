@@ -4,7 +4,7 @@ import com.a509.service_payment.point.domain.Point;
 import lombok.Getter;
 
 @Getter
-public class PointCreateRequest {
+public class PointCreateRequestDto {
     private Long memberId;
 
     public Point toEntity(){
