@@ -25,6 +25,6 @@ public class Point {
         this.memberId = memberId;
     }
     public void updatePoint(Long point){
-        this.point = point;
+        this.point += point;
     }
 }

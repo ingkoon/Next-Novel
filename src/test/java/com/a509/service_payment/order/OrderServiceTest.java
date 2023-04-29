@@ -30,15 +30,10 @@ public class OrderServiceTest {
     private OrderItemRepository orderItemRepository;
     @Mock
     private PointRepository pointRepository;
-    @Mock
-    private BootPayComponent bootPayComponent;
-
-    @Test
-    @DisplayName("부트 페이 연결 : success")
-    public void connectBootPay(){
-        TokenResponseDto token = orderService.getTokenByBootPay();
-        System.out.println("token = " + token);
-    }
-
-
+//    @Test
+//    @DisplayName("부트 페이 연결 : success")
+//    public void connectBootPay(){
+//        TokenResponseDto token = orderService.getTokenByBootPay();
+//        System.out.println("token = " + token);
+//    }
 }

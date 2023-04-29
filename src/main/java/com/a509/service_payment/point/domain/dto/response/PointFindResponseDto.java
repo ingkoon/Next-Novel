@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Builder
-public class PointFindResponse {
+public class PointFindResponseDto {
     private Long memberId;
     private Long point;
 
-    public PointFindResponse fromEntity(Point point){
-        return PointFindResponse.builder()
+    public PointFindResponseDto fromEntity(Point point){
+        return PointFindResponseDto.builder()
                 .memberId(point.getMemberId())
                 .point(point.getPoint())
                 .build();
