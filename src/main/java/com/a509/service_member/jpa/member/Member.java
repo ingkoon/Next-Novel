@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "member")
@@ -50,17 +49,14 @@ public class Member implements UserDetails {
     private String provider;
     @Column
     private String providerId;
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
     @Column
-    private List<String> roles = new ArrayList<>();
+    private String role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(this.role));
+        return authorities;
     }
 
     @Override

@@ -28,8 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/member/**").permitAll()
-                .antMatchers("/api/v1/user/**").permitAll()//.access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-                .antMatchers("/api/v1/admin/**").permitAll()//.access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/api/v1/user/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+                .antMatchers("/api/v1/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
