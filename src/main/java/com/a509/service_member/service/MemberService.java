@@ -3,6 +3,8 @@ package com.a509.service_member.service;
 import com.a509.service_member.dto.request.MemberLoginDto;
 import com.a509.service_member.dto.request.MemberSignupDto;
 import com.a509.service_member.dto.response.MemberTokenResponse;
+import com.a509.service_member.enums.MemberRole;
+import com.a509.service_member.enums.MemberState;
 import com.a509.service_member.exception.DuplicatedMemberException;
 import com.a509.service_member.jpa.member.Member;
 import com.a509.service_member.jpa.member.MemberRepository;
@@ -16,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
@@ -40,14 +43,13 @@ public class MemberService {
         }
 
         Member member = memberSignupDto.toEntityMember();
-        member.setState("ACTIVE");
-        member.setRole("ROLE_USER");
-        String rawPassword = member.getPassword();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        member.setPassword(encPassword);
+        member.setState(MemberState.ACTIVE.name());
+        member.setRole(MemberRole.ROLE_USER.name());
+        member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
         memberRepository.save(member);
     }
 
+    @Transactional
     public MemberTokenResponse login(MemberLoginDto memberLoginDto) {
         Member member = memberRepository.findByEmail(memberLoginDto.getEmail()).orElseThrow(NoSuchElementException::new);
         if (member.getState().equals("RESIGNED")) throw new NoSuchElementException("탈퇴한 사용자입니다.");
