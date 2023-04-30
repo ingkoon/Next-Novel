@@ -21,6 +21,7 @@ public class BootPayComponent {
     @Value("${boot-pay.private-key}")
     private String privateKey;
 
+
     /*
     결제 토큰 발급
     */
@@ -59,7 +60,7 @@ public class BootPayComponent {
         Bootpay bootpay = new Bootpay(restApiKey, privateKey);
         try{
             String accessToken = (String) bootpay.getAccessToken().get("access_token");
-            log.info("=====receiptId : " + receiptId + "=====");
+            log.info("=====receiptId : " + receiptId + "accessToken"+ accessToken + "=====");
             bootpay.setToken(accessToken);
             log.info("=====bootpay token : " + bootpay.token + "======");
             return bootpay

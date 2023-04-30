@@ -7,6 +7,7 @@ import com.a509.service_payment.item.repostiory.ItemRepository;
 import com.a509.service_payment.order.domain.Order;
 import com.a509.service_payment.order.dto.CreateRequestDto;
 import com.a509.service_payment.order.dto.TokenResponseDto;
+import com.a509.service_payment.order.dto.response.OrderResponseDto;
 import com.a509.service_payment.order.repository.OrderRepository;
 import com.a509.service_payment.orderitem.domain.OrderItem;
 import com.a509.service_payment.orderitem.repository.OrderItemRepository;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -31,10 +34,30 @@ public class OrderService {
     private final PointRepository pointRepository;
     private final BootPayComponent bootPayComponent;
 
-    public void findByOrder(Long orderId) {
-        orderRepository.findById(orderId);
+    /*
+    주문 내역 리스트를 가져온다.
+     */
+    public List<OrderResponseDto> findOrders(Long memberId){
+        List<Order> orderList = orderRepository.findAllByMemberId(memberId);
+        log.info("===== list size : " + orderList.size() + "=====");
+        return orderList
+                .stream()
+                .map(OrderResponseDto::new)
+                .collect(Collectors.toList());
     }
 
+    /*
+    주문 내역 리스트를 가져온다.
+     */
+    public OrderResponseDto findOrder(Long orderId){
+        Order order = orderRepository.findById(orderId).orElseThrow(NoSuchItemException::new);
+        return new OrderResponseDto()
+                .fromEntity(order);
+    }
+
+    /*
+    BootPay로부터 인증받은 토큰을 가져온다.
+    */
     public TokenResponseDto getTokenByBootPay() {
         HashMap<String, Object> hashMap = bootPayComponent.connectBootPay();
         log.info(hashMap.toString());
@@ -44,6 +67,10 @@ public class OrderService {
                 .fromEntity(token);
     }
 
+    /*
+    PG 결제 페이지의 정보를 검증 후 이를 기반으로
+    결제 정보를 DB에 저장한다.
+     */
     @Transactional
     public void createOrder(CreateRequestDto requestDto) {
         Point point =  pointRepository
@@ -71,4 +98,8 @@ public class OrderService {
         orderItemRepository.save(orderItem);
         log.info("=====success to save orderItem=====");
     }
+
+    /*
+    결제 내역 Id를 바탕으로 결제 정보를 취소한다.
+     */
 }
