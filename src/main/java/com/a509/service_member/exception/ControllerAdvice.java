@@ -14,6 +14,14 @@ public class ControllerAdvice {
     private static final Logger log = LoggerFactory.getLogger(ControllerAdvice.class);
 
     @ExceptionHandler({
+            InvalidedAccessTokenException.class
+    }) public ResponseEntity<ErrorResponse> handleInvalidException(final RuntimeException e) {
+        ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+        log.info(e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler({
             NoSuchMemberException.class
     }) public ResponseEntity<ErrorResponse> handleNoSuchElementException(final RuntimeException e) {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage());

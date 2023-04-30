@@ -35,6 +35,11 @@ public class MemberController {
         return ResponseEntity.ok(memberTokenResponse);
     }
 
+    @GetMapping(value = "/member/logout")
+    public ResponseEntity<Void> logout(@RequestHeader("Authorization") final String token) {
+        memberService.logout(token);
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/user")
     public String userTest() {
