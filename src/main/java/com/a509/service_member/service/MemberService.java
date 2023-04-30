@@ -2,6 +2,7 @@ package com.a509.service_member.service;
 
 import com.a509.service_member.dto.request.MemberLoginDto;
 import com.a509.service_member.dto.request.MemberSignupDto;
+import com.a509.service_member.dto.request.MemberUpdateDto;
 import com.a509.service_member.dto.response.MemberTokenResponse;
 import com.a509.service_member.dto.response.MypageResponse;
 import com.a509.service_member.enums.MemberRole;
@@ -9,6 +10,7 @@ import com.a509.service_member.enums.MemberState;
 import com.a509.service_member.exception.DuplicatedMemberException;
 import com.a509.service_member.exception.InvalidedAccessTokenException;
 import com.a509.service_member.exception.NoSuchMemberException;
+import com.a509.service_member.jpa.FileUploader;
 import com.a509.service_member.jpa.member.Member;
 import com.a509.service_member.jpa.member.MemberRepository;
 import com.a509.service_member.jwt.JwtTokenProvider;
@@ -20,6 +22,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -36,6 +39,7 @@ public class MemberService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final StringRedisTemplate stringRedisTemplate;
+    private final FileUploader fileUploader;
 
     public void signUp(MemberSignupDto memberSignupDto) {
         if (memberRepository.existsByEmail(memberSignupDto.getEmail())) {
@@ -124,5 +128,27 @@ public class MemberService {
                     .build();
         }
         return mypageResponse;
+    }
+
+    @Transactional
+    public void update(String token, MemberUpdateDto memberUpdateDto) {
+//    public void update(String token, MemberUpdateDto memberUpdateDto, MultipartFile multipartFile) {
+        Member member = memberRepository.findByEmail(jwtTokenProvider.getMember(token)).orElseThrow(NoSuchMemberException::new);
+
+        if ("".equals(memberUpdateDto.getNickname()) || " ".equals(memberUpdateDto.getNickname())) {    // 닉네임 공백 체크
+            throw new NoSuchMemberException("닉네임은 필수 입력 사항입니다.");
+        }
+        if (!member.getNickname().equals(memberUpdateDto.getNickname()) &&
+                memberRepository.existsByNickname(memberUpdateDto.getNickname())) { // 닉네임 중복체크
+            throw new DuplicatedMemberException("중복된 닉네임입니다.");
+        }
+        member.setNickname(memberUpdateDto.getNickname());
+
+        if (!"".equals(memberUpdateDto.getPassword()) && member.getProvider() == null) {
+            member.setPassword(bCryptPasswordEncoder.encode(memberUpdateDto.getPassword()));
+        }
+
+//        String imgUrl = fileUploader.upload(multipartFile, "member");
+//        member.setProfileImage(imgUrl);
     }
 }

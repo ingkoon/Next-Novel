@@ -32,3 +32,5 @@ spring:
 
 jwt:
   secret: ***REMOVED***
+file:
+  dir: KANG
