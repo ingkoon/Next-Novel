@@ -26,6 +26,12 @@
     height: 200px;
   }
   .scroll {
+    overflow-y: auto;
+    overflow-x: scroll;
     display: flex;
+  }
+  .scroll::-webkit-scrollbar {
+    height: 8px;
+    background-color: transparent;
   }
 }

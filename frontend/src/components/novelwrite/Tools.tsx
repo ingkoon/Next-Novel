@@ -53,8 +53,10 @@ export default function Tools({ getCtx, goBack, initCanvas }: ToolsProps) {
       <div className={style.tool3}>
         <div
           style={{
-            width: "50px",
-            height: "30px",
+            maxWidth: "50px",
+            maxHeight: "30px",
+            width: "65%",
+            height: "55%",
             backgroundColor: `${colorState}`,
             border: "3px solid black",
           }}
@@ -85,8 +87,10 @@ export default function Tools({ getCtx, goBack, initCanvas }: ToolsProps) {
       <div className={style.tool4}>
         <div
           style={{
-            width: "50px",
-            height: "30px",
+            maxWidth: "50px",
+            maxHeight: "30px",
+            width: "65%",
+            height: "55%",
             backgroundColor: "white",
             border: "3px solid black",
             display: "flex",

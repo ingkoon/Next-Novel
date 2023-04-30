@@ -7,6 +7,7 @@
   /* border: 1px solid blue; */
 }
 .canvasBox {
+  position: relative;
   width: 80%;
   /* background-color: aquamarine; */
   overflow-x: scroll;
