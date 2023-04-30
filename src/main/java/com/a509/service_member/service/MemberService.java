@@ -3,10 +3,12 @@ package com.a509.service_member.service;
 import com.a509.service_member.dto.request.MemberLoginDto;
 import com.a509.service_member.dto.request.MemberSignupDto;
 import com.a509.service_member.dto.response.MemberTokenResponse;
+import com.a509.service_member.dto.response.MypageResponse;
 import com.a509.service_member.enums.MemberRole;
 import com.a509.service_member.enums.MemberState;
 import com.a509.service_member.exception.DuplicatedMemberException;
 import com.a509.service_member.exception.InvalidedAccessTokenException;
+import com.a509.service_member.exception.NoSuchMemberException;
 import com.a509.service_member.jpa.member.Member;
 import com.a509.service_member.jpa.member.MemberRepository;
 import com.a509.service_member.jwt.JwtTokenProvider;
@@ -20,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
@@ -91,5 +94,35 @@ public class MemberService {
         // 4. 해당 Access Token 유효시간 가지고 와서 BlackList 로 저장하기
         Long expiration = jwtTokenProvider.getExpiration(accessToken);
         stringRedisTemplate.opsForValue().set(accessToken, "logout", expiration, TimeUnit.MILLISECONDS);
+    }
+
+    public MypageResponse findMypage(String token, String nickname) {
+        Member member = memberRepository.findByNickname(nickname).orElseThrow(NoSuchMemberException::new);
+        System.out.println(member);
+
+        String email = jwtTokenProvider.getMember(token);
+        memberRepository.findByEmail(email).orElseThrow(NoSuchMemberException::new);
+
+        MypageResponse mypageResponse;
+        if (memberRepository.existsByEmailAndNickname(email, nickname)) {
+            mypageResponse = MypageResponse.builder()
+                    .email(member.getEmail())
+                    .nickname(member.getNickname())
+                    .profileImage(member.getProfileImage())
+                    .createdAt(member.getCreatedAt())
+                    .updatedAt(member.getUpdatedAt())
+                    .provider(member.getProvider())
+                    // 작성한 소설
+                    // 좋아요를 누른 소설
+                    .build();
+        } else {
+            mypageResponse = MypageResponse.builder()
+                    .nickname(member.getNickname())
+                    .profileImage(member.getProfileImage())
+                    // 작성한 소설
+                    // 좋아요를 누른 소설
+                    .build();
+        }
+        return mypageResponse;
     }
 }

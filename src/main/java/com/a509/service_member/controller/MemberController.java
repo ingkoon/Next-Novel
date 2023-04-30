@@ -3,6 +3,7 @@ package com.a509.service_member.controller;
 import com.a509.service_member.dto.request.MemberLoginDto;
 import com.a509.service_member.dto.request.MemberSignupDto;
 import com.a509.service_member.dto.response.MemberTokenResponse;
+import com.a509.service_member.dto.response.MypageResponse;
 import com.a509.service_member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +36,18 @@ public class MemberController {
         return ResponseEntity.ok(memberTokenResponse);
     }
 
-    @GetMapping(value = "/member/logout")
+    @GetMapping("/member/logout")
     public ResponseEntity<Void> logout(@RequestHeader("Authorization") final String token) {
         memberService.logout(token);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/member/{member-nickname}")
+    public ResponseEntity<MypageResponse> findMypage(
+            @RequestHeader("Authorization") final String token,
+            @PathVariable("member-nickname") final String nickname) {
+        MypageResponse response = memberService.findMypage(token, nickname);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/user")

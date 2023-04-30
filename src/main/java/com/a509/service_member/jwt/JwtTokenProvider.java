@@ -119,4 +119,20 @@ public class JwtTokenProvider {
         Long now = new Date().getTime();
         return (expiration.getTime() - now);
     }
+
+    public String getMember(String accessToken) {
+        checkLength(accessToken);
+        String token = accessToken.substring(7);
+
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    public void checkLength(String token){
+        if(token.length() < 7) throw new JwtException("올바르지 않은 토큰 유형입니다.");
+    }
 }
