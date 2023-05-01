@@ -14,12 +14,13 @@ import lombok.NoArgsConstructor;
 public class PointCreateResponseDto {
 
     Long pointId;
-    String message = "포인트가 정상적으로 저장되었습니다.";
+    String message;
 
     public PointCreateResponseDto fromEntity(Point point){
         return PointCreateResponseDto
                 .builder()
                 .pointId(point.getId())
+                .message("포인트가 정상적으로 저장되었습니다.")
                 .build();
     }
 }

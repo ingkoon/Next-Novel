@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class PointDeleteResponseDto {
     String message = "포인트가 정상적으로 삭제되었습니다.";
-
 }
