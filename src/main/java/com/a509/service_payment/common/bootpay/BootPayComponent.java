@@ -2,6 +2,7 @@ package com.a509.service_payment.common.bootpay;
 
 import com.a509.service_payment.common.bootpay.exception.InvalidReceiptException;
 import com.a509.service_payment.common.bootpay.exception.NoTokenException;
+import com.a509.service_payment.item.exception.NoSuchItemException;
 import kr.co.bootpay.Bootpay;
 import kr.co.bootpay.model.request.Cancel;
 import lombok.RequiredArgsConstructor;
@@ -63,8 +64,12 @@ public class BootPayComponent {
             log.info("=====receiptId : " + receiptId + "accessToken"+ accessToken + "=====");
             bootpay.setToken(accessToken);
             log.info("=====bootpay token : " + bootpay.token + "======");
-            return bootpay
-                    .confirm(receiptId);
+
+            HashMap<String, Object> result = bootpay.confirm(receiptId);
+            if((int)result.get("http_status") == 400) throw new InvalidReceiptException();
+            log.info(result.toString());
+            return result;
+
         }
         catch (Exception e){
             throw new NoTokenException(e.getMessage());

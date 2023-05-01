@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findAllByMemberId(Long memberId);
+    Boolean existsByReceiptId(String receiptId);
+
 }

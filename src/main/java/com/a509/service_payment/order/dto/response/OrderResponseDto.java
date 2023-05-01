@@ -26,5 +26,4 @@ public class OrderResponseDto {
                 .receiptId(order.getReceiptId())
                 .build();
     }
-
 }
