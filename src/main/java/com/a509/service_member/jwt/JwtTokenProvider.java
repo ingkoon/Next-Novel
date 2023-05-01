@@ -1,6 +1,6 @@
 package com.a509.service_member.jwt;
 
-import com.a509.service_member.dto.response.MemberTokenResponse;
+import com.a509.service_member.dto.response.MemberTokenResponseDto;
 import com.a509.service_member.jpa.member.Member;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -38,7 +38,7 @@ public class JwtTokenProvider {
     }
 
     // 유저 정보를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
-    public MemberTokenResponse generateToken(Authentication authentication, Member member) {
+    public MemberTokenResponseDto generateToken(Authentication authentication, Member member) {
         long now = (new Date()).getTime();
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
@@ -58,7 +58,7 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                 .compact();
 
-        return MemberTokenResponse.builder()
+        return MemberTokenResponseDto.builder()
                 .nickname(member.getNickname())
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)

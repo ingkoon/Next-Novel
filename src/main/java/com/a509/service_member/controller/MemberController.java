@@ -1,10 +1,10 @@
 package com.a509.service_member.controller;
 
-import com.a509.service_member.dto.request.MemberLoginDto;
-import com.a509.service_member.dto.request.MemberSignupDto;
-import com.a509.service_member.dto.request.MemberUpdateDto;
-import com.a509.service_member.dto.response.MemberTokenResponse;
-import com.a509.service_member.dto.response.MypageResponse;
+import com.a509.service_member.dto.request.MemberLoginRequestDto;
+import com.a509.service_member.dto.request.MemberSignupRequestDto;
+import com.a509.service_member.dto.request.MemberUpdateRequestDto;
+import com.a509.service_member.dto.response.MemberTokenResponseDto;
+import com.a509.service_member.dto.response.MemberMyPageResponseDto;
 import com.a509.service_member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,15 +27,15 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Void> signUp(@RequestBody @Validated MemberSignupDto memberSignupDto) {
-        memberService.signUp(memberSignupDto);
+    public ResponseEntity<Void> signUp(@RequestBody @Validated MemberSignupRequestDto memberSignupRequestDto) {
+        memberService.signUp(memberSignupRequestDto);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<MemberTokenResponse> login(@RequestBody @Validated MemberLoginDto memberLoginDto) {
-        MemberTokenResponse memberTokenResponse = memberService.login(memberLoginDto);
-        return ResponseEntity.ok(memberTokenResponse);
+    public ResponseEntity<MemberTokenResponseDto> login(@RequestBody @Validated MemberLoginRequestDto memberLoginRequestDto) {
+        MemberTokenResponseDto response = memberService.login(memberLoginRequestDto);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/logout")
@@ -45,10 +45,10 @@ public class MemberController {
     }
 
     @GetMapping("/{member-nickname}")
-    public ResponseEntity<MypageResponse> findMypage(
+    public ResponseEntity<MemberMyPageResponseDto> findMyPage(
             @RequestHeader("Authorization") final String token,
             @PathVariable("member-nickname") final String nickname) {
-        MypageResponse response = memberService.findMypage(token, nickname);
+        MemberMyPageResponseDto response = memberService.findMyPage(token, nickname);
         return ResponseEntity.ok(response);
     }
 
@@ -56,8 +56,8 @@ public class MemberController {
     public ResponseEntity<Void> update(
             @RequestHeader("Authorization") final String token,
             @RequestPart("multipartFile") MultipartFile multipartFile,
-            @RequestPart("request") @Validated MemberUpdateDto memberUpdateDto) {
-        memberService.update(token, memberUpdateDto, multipartFile);
+            @RequestPart("request") @Validated MemberUpdateRequestDto memberUpdateRequestDto) {
+        memberService.update(token, memberUpdateRequestDto, multipartFile);
         return ResponseEntity.ok().build();
     }
 

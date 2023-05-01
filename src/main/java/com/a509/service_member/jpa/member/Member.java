@@ -1,9 +1,6 @@
 package com.a509.service_member.jpa.member;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,48 +8,40 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-@Table(name = "member")
 @Data
+@Entity
+@Getter
 @NoArgsConstructor
-@Builder
-@AllArgsConstructor
 public class Member implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private int id;
-    @Column(nullable = false)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
+    private Long id;
+    @NotNull
     private String email;
-    @Column(nullable = false)
+    @NotNull
     private String password;
 
-    @Column(nullable = false)
+    @NotNull
     private String nickname;
-    @Column
     private String profileImage;
 
+    private String provider;
+    private String providerId;
+
+    private String state;   // ACTIVE, RESIGNED
+    private String role;    // ROLE_USER, ROLE_ADMIN
+
     @CreationTimestamp
-    @Column(nullable = false)
     private LocalDateTime createdAt;
     @UpdateTimestamp
-    @Column(nullable = false)
     private LocalDateTime updatedAt;
-    @Column(nullable = false)
-    private String state;   // ACTIVE, RESIGNED
-
-    @Column
-    private String provider;
-    @Column
-    private String providerId;
-    @Column
-    private String role;    // ROLE_USER, ROLE_ADMIN
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -86,5 +75,17 @@ public class Member implements UserDetails {
         return true;
     }
 
-
+    @Builder
+    public Member(String email, String password, String nickname, String profileImage, String provider, String providerId, String state, String role, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.profileImage = profileImage;
+        this.provider = provider;
+        this.providerId = providerId;
+        this.state = state;
+        this.role = role;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }
