@@ -27,6 +27,19 @@ public class PointRepositoryTest {
     }
 
     @Test
+    @DisplayName("포인트 정보 갱신: Fail")
+    public void updatePointFail(){
+        Optional<Point> point = pointRepository.findById(3L);
+        if(point.isPresent()){
+            Point realPoint = point.get();
+            realPoint.updatePoint(5000L);
+            System.out.println("realPoint = " + realPoint.getPoint());
+            return;
+        }
+        System.out.println("update failed");
+    }
+
+    @Test
     @DisplayName("포인트 정보 갱신: Success")
     public void updatePoint(){
         Optional<Point> point = pointRepository.findById(1L);
