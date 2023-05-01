@@ -1,16 +1,21 @@
 .container {
+  /* background-color: burlywood; */
   display: flex;
-  flex-direction: row;
-  height: 480px;
+  flex-direction: column;
+  height: 100%;
+}
+.component {
+  display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 150px;
-  /* border: 1px solid red; */
+  flex-basis: 95%;
+  background-color: coral;
+  flex-wrap: wrap;
 }
 .left {
   width: 450px;
   height: 100%;
-  /* border: 1px solid blue; */
+  border: 1px solid palegreen;
   position: relative;
 }
 .cover,
@@ -49,7 +54,7 @@
 .back4 {
   position: absolute;
   left: 11px;
-  bottom: 0.5px;
+  top: 450px;
   width: 2px;
   height: 30px;
   background-color: black;
@@ -59,7 +64,7 @@
 .right {
   width: 750px;
   height: 100%;
-  /* border: 1px solid blue; */
+  border: 1px solid blue;
   position: relative;
   display: flex;
   align-items: center;
@@ -88,7 +93,7 @@
 .input * {
   font-family: "LINESeedKR-Bd";
 }
-.component {
+.elementBox {
   /* border: 1px solid blue; */
   flex: 1;
   position: relative;

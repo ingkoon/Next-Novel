@@ -1,5 +1,5 @@
 .container {
-  background-color: burlywood;
+  /* background-color: burlywood; */
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -8,7 +8,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
   flex-basis: 85%;
   background-color: coral;
 }
@@ -18,28 +17,18 @@
 .left {
   width: 40%;
   height: 100%;
-  /* border: 1px solid yellow; */
   display: flex;
-}
-.input {
-  height: 100%;
   /* border: 1px solid green; */
-  flex: 1;
-}
-.canvas {
-  height: 100%;
-  /* border: 1px solid brown; */
-  display: flex;
   justify-content: center;
   align-items: center;
 }
 .middle {
-  width: 20%;
   height: 100%;
   /* border: 1px solid green; */
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 40px 0;
 }
 .toggle {
   width: 150px;
@@ -106,22 +95,13 @@
   height: 100%;
   /* border: 1px solid blue; */
   display: flex;
-}
-.result {
-  height: 100%;
-  /* border: 1px solid purple; */
-  flex: 1;
-  position: relative;
-}
-.img {
-  height: 100%;
-  /* border: 1px solid brown; */
-  display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 .frame {
-  width: 343px;
+  flex-shrink: 0;
+  width: 340px;
   height: 390px;
   background: #f66f00;
   border: 3px solid #000000;
@@ -138,9 +118,21 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
-.space {
-  width: 100px;
-  height: 100%;
-  /* border: 1px solid red; */
+@media (max-width: 1024px) {
+  .component {
+    flex-direction: column;
+  }
+  .left,
+  .right {
+    width: 80%;
+  }
+}
+@media (max-width: 480px) {
+  .left,
+  .right {
+    width: 95%;
+  }
+  .frame {
+    transform: scale(0.9);
+  }
 }

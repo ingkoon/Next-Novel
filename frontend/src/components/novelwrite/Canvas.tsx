@@ -71,7 +71,7 @@ export default function Canvas({
   }, []); //맨 처음 컴포넌트 설정
 
   return (
-    <div className={style.container}>
+    <div className={`${style.container} ${style[canvasType]}`}>
       <div className={style.canvasContainer}>
         <div className={style.canvasBox}>
           <canvas

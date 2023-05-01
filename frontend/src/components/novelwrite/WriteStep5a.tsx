@@ -54,17 +54,12 @@ export default function WriteStep5a() {
       <LoadingModal state={makeCoverRequest.isLoading} />
       <div className={style.component}>
         <div className={style.left}>
-          <div className={style.input}>
-            <div className={style.canvas}>
-              <Canvas
-                imageSrcs={imageSrcs}
-                setImageSrcs={setImageSrcs}
-                selected={selected}
-                canvasType={"small"}
-              />
-            </div>
-          </div>
-          <div className={style.space} />
+          <Canvas
+            imageSrcs={imageSrcs}
+            setImageSrcs={setImageSrcs}
+            selected={selected}
+            canvasType={"small"}
+          />
         </div>
         <div className={style.middle}>
           <button className={style.toggle} onClick={makeCover}>
@@ -72,26 +67,21 @@ export default function WriteStep5a() {
           </button>
         </div>
         <div className={style.right}>
-          {/* <div className={style.space} /> */}
-          <div className={style.result}>
-            <div className={style.img}>
-              <div className={style.frame}>
-                {novel.cover && (
-                  <img
-                    src={process.env.REACT_APP_IMAGE_API + novel.cover}
-                    className={style.cover}
-                    alt="cover"
-                  />
-                )}
-                {!novel.cover && (
-                  <img
-                    src={process.env.PUBLIC_URL + "/icon/cover_wait.svg"}
-                    className={style.cover_wait}
-                    alt="cover_wait"
-                  />
-                )}
-              </div>
-            </div>
+          <div className={style.frame}>
+            {novel.cover && (
+              <img
+                src={process.env.REACT_APP_IMAGE_API + novel.cover}
+                className={style.cover}
+                alt="cover"
+              />
+            )}
+            {!novel.cover && (
+              <img
+                src={process.env.PUBLIC_URL + "/icon/cover_wait.svg"}
+                className={style.cover_wait}
+                alt="cover_wait"
+              />
+            )}
           </div>
         </div>
       </div>

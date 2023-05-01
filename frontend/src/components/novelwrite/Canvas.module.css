@@ -5,6 +5,9 @@
   justify-content: space-around;
   /* border: 1px solid blue; */
 }
+.container.small {
+  width: 100%;
+}
 .canvasContainer {
   width: 80%;
   position: relative;
@@ -47,6 +50,8 @@
   }
   .canvasContainer {
     width: 100%;
+  }
+  .canvasContainer.big {
     margin-bottom: 50px;
   }
   .loadPaintingsBox {
