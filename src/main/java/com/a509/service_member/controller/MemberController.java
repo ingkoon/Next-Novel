@@ -60,4 +60,11 @@ public class MemberController {
         memberService.update(token, memberUpdateDto, multipartFile);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/delete")
+    public ResponseEntity<Void> delete(@RequestHeader("Authorization") final String token) {
+        memberService.delete(token);
+        memberService.logout(token);
+        return ResponseEntity.ok().build();
+    }
 }

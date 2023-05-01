@@ -151,4 +151,10 @@ public class MemberService {
         String imgUrl = fileUploader.upload(multipartFile, "member");
         member.setProfileImage(imgUrl);
     }
+
+    @Transactional
+    public void delete(String token) {
+        Member member = memberRepository.findByEmail(jwtTokenProvider.getMember(token)).orElseThrow(NoSuchMemberException::new);
+        member.setState(MemberState.RESIGNED.name());
+    }
 }
