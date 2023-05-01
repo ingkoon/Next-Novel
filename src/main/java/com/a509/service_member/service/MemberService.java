@@ -131,24 +131,24 @@ public class MemberService {
     }
 
     @Transactional
-    public void update(String token, MemberUpdateDto memberUpdateDto) {
-//    public void update(String token, MemberUpdateDto memberUpdateDto, MultipartFile multipartFile) {
+    public void update(String token, MemberUpdateDto memberUpdateDto, MultipartFile multipartFile) {
         Member member = memberRepository.findByEmail(jwtTokenProvider.getMember(token)).orElseThrow(NoSuchMemberException::new);
 
-        if ("".equals(memberUpdateDto.getNickname()) || " ".equals(memberUpdateDto.getNickname())) {    // 닉네임 공백 체크
+        String nickname = memberUpdateDto.getNickname().trim();
+        if ("".equals(nickname)) {    // 닉네임 공백 체크
             throw new NoSuchMemberException("닉네임은 필수 입력 사항입니다.");
         }
-        if (!member.getNickname().equals(memberUpdateDto.getNickname()) &&
-                memberRepository.existsByNickname(memberUpdateDto.getNickname())) { // 닉네임 중복체크
+        if (!member.getNickname().equals(nickname) &&
+                memberRepository.existsByNickname(nickname)) { // 닉네임 중복체크
             throw new DuplicatedMemberException("중복된 닉네임입니다.");
         }
-        member.setNickname(memberUpdateDto.getNickname());
+        member.setNickname(nickname);
 
         if (!"".equals(memberUpdateDto.getPassword()) && member.getProvider() == null) {
             member.setPassword(bCryptPasswordEncoder.encode(memberUpdateDto.getPassword()));
         }
 
-//        String imgUrl = fileUploader.upload(multipartFile, "member");
-//        member.setProfileImage(imgUrl);
+        String imgUrl = fileUploader.upload(multipartFile, "member");
+        member.setProfileImage(imgUrl);
     }
 }

@@ -24,15 +24,10 @@ public class FileUploader {
 
     public String upload(MultipartFile uploadFile, String domain) {
         // 파일경로/ + nanotime + 유니크한 스트링 + 원본파일이름
-//        String uploadPath = "C:/Users/SSAFY/Desktop/o/img";
 
         String path = uploadPath + File.separator + System.nanoTime() + domain + StringUtils.cleanPath(uploadFile.getOriginalFilename());
         Path copyOfLocation = Paths.get(path);
-        System.out.println(uploadPath);
-        System.out.println(File.separator);
-        System.out.println(System.nanoTime());
-        System.out.println(domain);
-        System.out.println(StringUtils.cleanPath(uploadFile.getOriginalFilename()));
+        System.out.println("path : "+path);
 
         try {
             // inputStream을 가져와서
@@ -47,26 +42,4 @@ public class FileUploader {
         return path;
     }
 
-    public String upload(MultipartFile uploadFile, Long hobbyId, LocalDate date) {
-        String today = date.toString();
-        String path = new StringBuilder().append(uploadPath)
-                .append(File.separator)
-                .append(hobbyId)
-                .append(File.separator)
-                .append(today)
-                .append(File.separator)
-                .append(System.nanoTime())
-                .append(today)
-                .append(StringUtils.cleanPath(uploadFile.getOriginalFilename()))
-                .toString();
-        Path copyOfLocation = Paths.get(path);
-        try {
-            Files.createDirectories(copyOfLocation);
-            Files.copy(uploadFile.getInputStream(), copyOfLocation, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new FileStorageException();
-        }
-        return path;
-    }
 }

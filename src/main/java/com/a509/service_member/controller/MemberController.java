@@ -55,11 +55,9 @@ public class MemberController {
     @PutMapping
     public ResponseEntity<Void> update(
             @RequestHeader("Authorization") final String token,
-//            @RequestPart("multipartFile") MultipartFile multipartFile,
-            @RequestBody @Validated MemberUpdateDto memberUpdateDto) {
-        memberService.update(token, memberUpdateDto);
-//        memberService.update(token, memberUpdateDto, multipartFile);
+            @RequestPart("multipartFile") MultipartFile multipartFile,
+            @RequestPart("request") @Validated MemberUpdateDto memberUpdateDto) {
+        memberService.update(token, memberUpdateDto, multipartFile);
         return ResponseEntity.ok().build();
     }
-
 }
