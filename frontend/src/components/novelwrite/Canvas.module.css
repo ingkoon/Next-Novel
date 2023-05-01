@@ -1,14 +1,15 @@
 .container {
   display: flex;
   align-items: center;
-  position: relative;
   width: 60%;
   justify-content: space-around;
   /* border: 1px solid blue; */
 }
-.canvasBox {
-  position: relative;
+.canvasContainer {
   width: 80%;
+  position: relative;
+}
+.canvasBox {
   /* background-color: aquamarine; */
   overflow-x: scroll;
   text-align: center;
@@ -33,13 +34,24 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   background-color: white;
 }
+.loadPaintingsBox {
+  width: 100%;
+  /* border: 1px solid black; */
+  position: absolute;
+}
 
 @media (max-width: 1024px) {
   .container {
     width: 100%;
     flex-direction: column;
   }
-  .canvasBox {
+  .canvasContainer {
     width: 100%;
+    margin-bottom: 50px;
+  }
+  .loadPaintingsBox {
+    max-width: 600px;
+    left: 50%;
+    transform: translate(-50%, 0);
   }
 }
