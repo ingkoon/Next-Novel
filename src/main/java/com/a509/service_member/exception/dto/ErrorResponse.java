@@ -1,10 +1,15 @@
 package com.a509.service_member.exception.dto;
 
+import com.a509.service_member.exception.enums.ErrorCode;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class ErrorResponse {
     private String code;
     private String message;
@@ -20,6 +25,10 @@ public class ErrorResponse {
         this.status = code.getStatus();
         this.message = code.getMessage();
         this.detail = code.getDetail();
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public String getMessage() {

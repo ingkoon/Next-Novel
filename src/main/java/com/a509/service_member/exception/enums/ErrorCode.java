@@ -1,4 +1,4 @@
-package com.a509.service_member.exception.dto;
+package com.a509.service_member.exception.enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ErrorCode implements EnumModel{
-    // COMMON
     BAD_REQUEST(400, "BAD REQUEST", "잘못된 요청입니다."),
     INVALID(400, "INVALID", "유효하지 않은 데이터입니다."),
     INVALID_TOKEN(400 , "INVALID_TOKEN", "유효하지 않은 토큰 정보입니다."),
@@ -22,10 +21,14 @@ public enum ErrorCode implements EnumModel{
     private String message;
     private String detail;
 
-    ErrorCode(int status, String code, String message) {
+    ErrorCode(int status, String code, String message){
         this.status = status;
-        this.message = message;
         this.code = code;
+        this.message = message;
+    }
+
+    public void updateDetail(String detail){
+        this.detail = detail;
     }
 
     @Override

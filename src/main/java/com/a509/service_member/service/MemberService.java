@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -41,7 +40,7 @@ public class MemberService {
     private final FileUploader fileUploader;
 
     public Member findMember(String email) {
-        return memberRepository.findByEmail(email).orElseThrow(NoSuchElementException::new);
+        return memberRepository.findByEmail(email).orElseThrow(NoSuchMemberException::new);
     }
 
     public void signUp(MemberSignupRequestDto memberSignupRequestDto) {
@@ -68,7 +67,7 @@ public class MemberService {
     @Transactional
     public MemberTokenResponseDto login(MemberLoginRequestDto memberLoginRequestDto) {
         Member member = findMember(memberLoginRequestDto.getEmail());
-        if (member.getState().equals(MemberState.RESIGNED.name())) throw new NoSuchElementException("탈퇴한 사용자입니다.");
+        if (member.getState().equals(MemberState.RESIGNED.name())) throw new NoSuchMemberException("탈퇴한 사용자입니다.");
 
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
