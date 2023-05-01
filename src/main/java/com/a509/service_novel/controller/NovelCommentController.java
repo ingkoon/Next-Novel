@@ -22,7 +22,7 @@ public class NovelCommentController {
 
 	private final NovelCommentService novelCommentService;
 
-	@PostMapping("/")
+	@PostMapping()
 	public ResponseEntity<?> insertNovelComment(@RequestBody NovelCommentDto novelCommentDto) {
 		try {
 			novelCommentService.insertNovelComment(novelCommentDto);
@@ -33,7 +33,7 @@ public class NovelCommentController {
 		}
 	}
 
-	@PutMapping("/")
+	@PutMapping()
 	public ResponseEntity<?> updateNovelComment(@RequestBody NovelCommentDto novelCommentDto){
 		try{
 			novelCommentService.updateNovelComment(novelCommentDto);

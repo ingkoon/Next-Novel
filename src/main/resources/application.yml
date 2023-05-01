@@ -1,3 +1,4 @@
+
 server:
   port: 8012
 
@@ -17,10 +18,13 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
   servlet:
     multipart:
       enabled: true
+      max-request-size: 30MB
       max-file-size: 10MB
+
   redis:
     host: ***REMOVED***
     port: 6379

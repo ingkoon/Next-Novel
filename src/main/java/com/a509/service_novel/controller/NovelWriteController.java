@@ -3,6 +3,7 @@ package com.a509.service_novel.controller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +29,13 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.a509.service_novel.dto.Dialog;
 import com.a509.service_novel.dto.NovelDetailDto;
 import com.a509.service_novel.dto.NovelWriteStartDto;
-import com.a509.service_novel.jpa.novelContent.NovelContent;
+import com.a509.service_novel.redis.Dialog;
 import com.a509.service_novel.redis.DialogHistory;
+import com.a509.service_novel.redis.DialogHistoryRepository;
 import com.a509.service_novel.service.NovelWriteService;
+// import com.a509.service_novel.service.NovelWriteService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +47,7 @@ import lombok.extern.slf4j.Slf4j;
 public class NovelWriteController {
 
 	private final NovelWriteService novelWriteService;
+	private final DialogHistoryRepository dialogHistoryRepository;
 
 	WebClient webClient = WebClient.builder()
 		.exchangeStrategies(ExchangeStrategies.builder()
@@ -55,7 +59,7 @@ public class NovelWriteController {
 		.build();
 
 	@PostMapping("/start")
-	public ResponseEntity<?> NovelStart(@RequestParam("images") MultipartFile[] images, @RequestParam("genre") int genreIdx, @RequestParam("author_id") int authorId) throws IOException {
+	public ResponseEntity<?> NovelStart(@RequestParam("images") MultipartFile[] images, @RequestParam("genre") int genreIdx, @RequestParam("authorId") int authorId) throws IOException {
 		MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 
 		for (MultipartFile image : images) {
@@ -74,17 +78,19 @@ public class NovelWriteController {
 		body.add("genre",genres[genreIdx]);
 
 		//String 응답 받는 코드
-		Map<String, Object> responseBody = webClient.post()
+		Map<String,Object>responseBody = webClient.post()
 			.uri("/novel/start")
 			.contentType(MediaType.MULTIPART_FORM_DATA)
 			.body(BodyInserters.fromMultipartData(body))
 			.retrieve()
-			.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+			.bodyToMono(new ParameterizedTypeReference<Map<String,Object>>() {})
 			.block();
+
 		log.info("complete start");
-		Object dialogHistoryObject = (Object)responseBody.get("dialog_history");
+		List<Object> dialogHistoryObject = (List<Object>)responseBody.get("dialog_history");
 		List<String> captions = (List<String>)responseBody.get("caption");
 		String koreanAnswer = (String)responseBody.get("korean_answer");
+		log.info(dialogHistoryObject.toString());
 		//-----------------------start complete--------------------------------------------------
 
 		//----------------------question start---------------------------
@@ -96,7 +102,7 @@ public class NovelWriteController {
 			.contentType(MediaType.MULTIPART_FORM_DATA)
 			.body(BodyInserters.fromMultipartData(body))
 			.retrieve()
-			.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+			.bodyToMono(new ParameterizedTypeReference<Map<String,Object>>() {})
 			.block();
 
 		log.info("complete question");
@@ -128,22 +134,28 @@ public class NovelWriteController {
 
 
 	@PostMapping("/sequence")
-	public ResponseEntity<?> NovelStep4(@RequestBody @RequestParam("image") MultipartFile image,@RequestParam("previousQuestion") String previousQuestion ,@RequestParam("authorId") int authorId) throws IOException {
+	public ResponseEntity<?> NovelStep4(@RequestParam("image") MultipartFile image
+										,@RequestParam("previousQuestion") String previousQuestion
+										,@RequestParam("authorId") int authorId) throws IOException {
 
 
 		try {
 			MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-
-			ByteArrayResource resource = new ByteArrayResource(image.getBytes());
+			ByteArrayResource resource = new ByteArrayResource(image.getBytes()) {
+				@Override
+				public String getFilename() {
+					return image.getOriginalFilename();
+				}
+			};
 			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.IMAGE_PNG);
-
-			Object dialogHistory = novelWriteService.getDialogHistory(authorId);
+			headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+			List<Object> dialogHistory = novelWriteService.getDialogHistory(authorId);
 
 			body.add("image", new HttpEntity<>(resource, headers));
-			body.add("previous_question", previousQuestion);
-			body.add("dialog_history", dialogHistory);
-
+			body.add("previous_question",previousQuestion);
+			body.add("dialog_history",dialogHistory);
+			log.info(dialogHistory.toString());
+			log.info(previousQuestion);
 			Map<String, Object> responseBody = webClient.post()
 				.uri("/novel/sequence")
 				.contentType(MediaType.MULTIPART_FORM_DATA)
@@ -153,9 +165,13 @@ public class NovelWriteController {
 				})
 				.block();
 
-			Object dialogHistoryObject = (Object)responseBody.get("dialog_history");
-			List<String> captions = (List<String>)responseBody.get("caption");
+			log.info("sequence complete");
+			List<Object> dialogHistoryObject = (List<Object>)responseBody.get("dialog_history");
+			String caption = (String)responseBody.get("caption");
+			List<String> captions = new ArrayList<>();
+			captions.add(caption);
 			String koreanAnswer = (String)responseBody.get("korean_answer");
+			log.info("sequence complete");
 			///---------------------sequence complete-----------------------------
 
 
@@ -174,7 +190,8 @@ public class NovelWriteController {
 				})
 				.block();
 
-			dialogHistoryObject = (Object)responseBody.get("dialog_history");
+			log.info("question complete");
+			dialogHistoryObject = (List<Object>)responseBody.get("dialog_history");
 			String query1 = (String)responseBody.get("query1");
 			String query2 = (String)responseBody.get("query2");
 			String query3 = (String)responseBody.get("query3");
@@ -195,16 +212,15 @@ public class NovelWriteController {
 		catch (Exception e){
 			return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 	}
 	@PostMapping("/end")
-	public ResponseEntity<?> NovelEnd(@RequestBody NovelDetailDto novelDetailDto){
+	public ResponseEntity<?> NovelEnd(@RequestBody Map<String, Integer> response){
 
 		try {
-
+			int authorId = response.get("authorId");
 			MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 
-			Object dialogHistory = novelWriteService.getDialogHistory(novelDetailDto.getAuthorId());
+			List<Object> dialogHistory = novelWriteService.getDialogHistory(authorId);
 			body.add("dialog_history",dialogHistory);
 
 			Map<String, Object> responseBody = webClient.post()
@@ -216,8 +232,9 @@ public class NovelWriteController {
 				.block();
 
 			String koreanAnswer = (String)responseBody.get("korean_answer");
-
-			return new ResponseEntity<>(koreanAnswer,HttpStatus.OK);
+			NovelWriteStartDto novelWriteStartDto = new NovelWriteStartDto();
+			novelWriteStartDto.setKorean_answer(koreanAnswer);
+			return new ResponseEntity<>(novelWriteStartDto,HttpStatus.OK);
 
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -225,8 +242,22 @@ public class NovelWriteController {
 	}
 
 	@PostMapping("/image")
-	public ResponseEntity<?> NovelImage(@RequestParam("image") MultipartFile image){
+	public ResponseEntity<?> NovelImage(@RequestParam("image") MultipartFile image) throws IOException {
 		MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+
+		ByteArrayResource resource = new ByteArrayResource(image.getBytes()) {
+			@Override
+			public String getFilename() {
+				return image.getOriginalFilename();
+			}
+		};
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+		HttpEntity<ByteArrayResource> httpEntity = new HttpEntity<>(resource, headers);
+
+
+		body.add("image", httpEntity);
 		byte[] imgBytes = webClient.post()
 			.uri("/novel/image")
 			.contentType(MediaType.MULTIPART_FORM_DATA)
@@ -235,10 +266,11 @@ public class NovelWriteController {
 			.bodyToMono(byte[].class)
 			.block();
 
-		InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(imgBytes));
+		InputStreamResource resources = new InputStreamResource(new ByteArrayInputStream(imgBytes));
 
 		return ResponseEntity.ok()
 			.contentType(MediaType.IMAGE_PNG)
-			.body(resource);
+			.body(resources);
 	}
+
 }

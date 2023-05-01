@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.a509.service_novel.dto.NovelContentDto;
 import com.a509.service_novel.dto.NovelDetailDto;
@@ -30,18 +31,58 @@ public class NovelService {
 	private final NovelRepogitory novelRepogitory;
 	private final NovelContentRepogitory novelContentRepogitory;
 	private final NovelCommentRepogitory novelCommentRepogitory;
+
+	private final NovelImageComponent novelImageComponent;
+
+	private final String path = "C:\\Users\\SSAFY\\Desktop\\imagelocation";
+	// private final String path = "/home/ubuntu/NovelService/images";
 	@Transactional
-	public void insertNovel(NovelDetailDto novelDetailDto) throws Exception{
+	public void insertNovel(NovelDetailDto novelDetailDto
+		,MultipartFile[] startImages
+		,MultipartFile[] contentImages
+		,MultipartFile[] coverImages
+		,String UID) throws Exception{
 
 		List<NovelContentDto> novelContentDtos = novelDetailDto.getContents();
 		System.out.println("start save content");
-		for(NovelContentDto novelContentDto : novelContentDtos){
+
+		Novel novel = novelDetailDto.toEntityNovel();
+		novelRepogitory.save(novel);
+
+
+		//content 저장
+		for(int i = 0; i < novelContentDtos.size(); i++){
+
+			NovelContentDto novelContentDto = novelContentDtos.get(i);
+
+			String imageName = UID+"_"+contentImages[i].getOriginalFilename();
 			NovelContent novelContent = novelContentDto.toEntity();
+			novelContent.setImage(imageName);
+			novelContent.setNovelId(novel.getId());
+
+			System.out.println(novelContent);
+			novelImageComponent.save(contentImages[i],UID);
 			novelContentRepogitory.save(novelContent);
 		}
 		System.out.println("end save content");
-		Novel novel = novelDetailDto.toEntityNovel();
-		novelRepogitory.save(novel);
+
+		//시작 이미지 저장
+		novel.setStartImage1(UID+"_"+startImages[0].getOriginalFilename());
+		novel.setStartImage2(UID+"_"+startImages[1].getOriginalFilename());
+		novel.setStartImage3(UID+"_"+startImages[2].getOriginalFilename());
+		novel.setStartImage4(UID+"_"+startImages[3].getOriginalFilename());
+
+		novelImageComponent.save(startImages[0],UID);
+		novelImageComponent.save(startImages[1],UID);
+		novelImageComponent.save(startImages[2],UID);
+		novelImageComponent.save(startImages[3],UID);
+
+		//cover
+		novel.setCoverImg(UID+"_"+coverImages[0].getOriginalFilename());
+		novel.setOriginCoverImg(UID+"_"+coverImages[1].getOriginalFilename());
+
+		novelImageComponent.save(coverImages[0],UID);
+		novelImageComponent.save(coverImages[1],UID);
 	}
 
 	@Transactional
@@ -49,35 +90,44 @@ public class NovelService {
 
 		///소설 찾기
 		Novel novel = novelRepogitory.getById(id);
+		System.out.println("found novel");
+		System.out.println(novel);
 		//소설의 내용 찾기
 		List<NovelContent> contents = novelContentRepogitory.findByNovelId(id);
-		List<NovelContentDto> contentsDto = new ArrayList<>();
+		System.out.println("found contents");
+		System.out.println(contents);
+		List<NovelContentDto> novelContentDtos = new ArrayList<>();
 
 		///소설 댓글 찾기
 		Optional<List<NovelComment>> optionalComments = novelCommentRepogitory.findByNovelId(id);
-		List<NovelComment> comments = null;
+		List<NovelComment> comments = new ArrayList<>();
+		List<NovelCommentDto> commentDtos = new ArrayList<>();
 
 		if (optionalComments.isPresent()) {
 			comments = optionalComments.get();
+			System.out.println("found comment");
+			System.out.println(comments);
 		}
 
-		List<NovelCommentDto> commentDtos = new ArrayList<>();
-
+		//소설 내용 저장
 		for(NovelContent content : contents){
-			NovelContentDto novelContent = content.toDto();
-			contentsDto.add(novelContent);
-		}
 
+			NovelContentDto novelContentDto = content.toDto();
+
+			System.out.println("novel is ");
+			System.out.println(novelContentDto);
+			novelContentDtos.add(novelContentDto);
+		}
 		for(NovelComment comment: comments){
 			NovelCommentDto novelCommentDto = comment.toDto();
 			commentDtos.add(novelCommentDto);
 		}
 
-
 		//찾은 소설 dto전환
 		NovelDetailDto novelDetailDto = novel.toDto();
+
 		//novelDto에 저장
-		novelDetailDto.setContents(contentsDto);
+		novelDetailDto.setContents(novelContentDtos);
 		//찾은 코멘트 dto 저장
 		novelDetailDto.setComment(commentDtos);
 

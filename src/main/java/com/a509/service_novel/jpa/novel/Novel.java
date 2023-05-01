@@ -44,8 +44,6 @@ public class Novel {
 		return NovelDetailDto.builder()
 			.id(id)
 			.title(title)
-			.originCoverImg(originCoverImg)
-			.coverImg(coverImg)
 			.introduction(introduction)
 			.createdAt(createdAt)
 			.genre(genre)
@@ -57,6 +55,8 @@ public class Novel {
 			.startImage2(startImage2)
 			.startImage3(startImage3)
 			.startImage4(startImage4)
+			.originCoverImg(originCoverImg)
+			.coverImg(coverImg)
 			.build();
 	}
 

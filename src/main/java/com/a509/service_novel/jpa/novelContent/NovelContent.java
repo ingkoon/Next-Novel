@@ -27,7 +27,6 @@ public class NovelContent {
 	private int id;
 	private int novelId;
 	private String content;
-	private int step;
 	private String query;
 	private String image;
 	private String caption;
@@ -35,7 +34,6 @@ public class NovelContent {
 	public NovelContentDto toDto() {
 		return NovelContentDto.builder()
 			.content(content)
-			.step(step)
 			.query(query)
 			.image(image)
 			.caption(caption)

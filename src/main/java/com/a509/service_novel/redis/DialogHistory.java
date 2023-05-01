@@ -4,27 +4,21 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.Entity;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
-import com.a509.service_novel.dto.Dialog;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @RedisHash(value = "dialog_history", timeToLive = 3000)
-public class DialogHistory{
+public class DialogHistory implements Serializable{
 
 	@Id
-	private String id = UUID.randomUUID().toString();
-	@Indexed
-	private int authorId;
+	private int Id;
 
-	private Object dialogHistory;
+	private List<Dialog> dialog;
 
 }
+
+

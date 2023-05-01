@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.a509.service_novel.dto.testdto;
 
 @Repository
-public interface DialogHistoryRepository extends CrudRepository<DialogHistory,String> {
-	DialogHistory findByAuthorId(Integer authorId);
+public interface DialogHistoryRepository extends CrudRepository<DialogHistory,Integer> {
 }

@@ -1,5 +1,7 @@
 package com.a509.service_novel.dto;
 
+import org.springframework.core.io.Resource;
+
 import lombok.Builder;
 import lombok.Data;
 

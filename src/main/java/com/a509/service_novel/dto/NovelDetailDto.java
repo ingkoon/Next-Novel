@@ -16,8 +16,6 @@ public class NovelDetailDto {
 
 	private int id;
 	private String title;
-	private String originCoverImg;
-	private String coverImg;
 	private String introduction;
 	private String createdAt;
 	private int genre;
@@ -27,7 +25,8 @@ public class NovelDetailDto {
 	private int hitCount;
 	private int commentCount;
 	private int likeCount;
-
+	private String originCoverImg;
+	private String coverImg;
 	private String startImage1;
 	private String startImage2;
 	private String startImage3;
@@ -37,8 +36,6 @@ public class NovelDetailDto {
 	public Novel toEntityNovel() {
 		return Novel.builder()
 			.title(title)
-			.originCoverImg(originCoverImg)
-			.coverImg(coverImg)
 			.introduction(introduction)
 			.genre(genre)
 			.authorId(authorId)

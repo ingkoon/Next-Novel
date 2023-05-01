@@ -1,19 +1,19 @@
 package com.a509.service_novel.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.a509.service_novel.dto.Dialog;
+import com.a509.service_novel.redis.Dialog;
 import com.a509.service_novel.redis.DialogHistory;
 import com.a509.service_novel.redis.DialogHistoryRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import com.a509.service_novel.dto.testdto;
 
 @RequiredArgsConstructor
 @Service
@@ -27,22 +27,38 @@ public class NovelWriteService {
 
 	}
 
-	public void setDialogHistory(Object dialogHistory, int authorId) throws Exception{
+	public void setDialogHistory(List<Object> object, int authorId) throws Exception{
 
-		DialogHistory dialogEntity = new DialogHistory();
-		dialogEntity.setAuthorId(authorId);
-		dialogEntity.setDialogHistory(dialogHistory);
-		dialogHistoryRepository.save(dialogEntity);
-
+		DialogHistory dial = new DialogHistory();
+		dial.setDialog(new ArrayList<>());
+		for(Object o : object)
+		{
+			LinkedHashMap<String,String> tmp = (LinkedHashMap<String, String>)o;
+			Dialog d = new Dialog();
+			d.setRole(tmp.get("role"));
+			d.setContent(tmp.get("content"));
+			dial.getDialog().add(d);
+		}
+		dial.setId(authorId);
+		// System.out.println(dial);
+		// d.setDialog(dial);
+		dialogHistoryRepository.save(dial);
 	}
 
-	public void simplaSave(){
-		DialogHistory dialogHistory = new DialogHistory();
-		dialogHistoryRepository.save(dialogHistory);
-	}
+	public List<Object> getDialogHistory(int authorId) throws Exception{
 
-	public Object getDialogHistory(int authorId) throws Exception{
-		DialogHistory dialogHistory= dialogHistoryRepository.findByAuthorId(authorId);
-		return dialogHistory.getDialogHistory();
+		Optional<DialogHistory> options= dialogHistoryRepository.findById(authorId);
+		if(options.isPresent() == false)
+			throw new SQLException();
+
+		DialogHistory dialogHistory = options.get();
+		List<Object> res= new ArrayList<>();
+		List<Dialog> dialogs = dialogHistory.getDialog();
+		for(Dialog dial : dialogs){
+			// System.out.println(dial);
+			Object o = dial;
+			res.add(o);
+		}
+		return res;
 	}
 }
