@@ -8,14 +8,14 @@ logging:
 
 spring:
   profiles:
-    active: dev
+    active: service_payment
 
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://***REMOVED***:8761/eureka
 
 boot-pay:
   rest-api-key: ***REMOVED***
@@ -56,9 +56,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/novel?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://***REMOVED***:3306/novel?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
-    password: root
+    password: ***REMOVED***
 
   jpa:
     show-sql: false
