@@ -64,16 +64,18 @@ export default function WriteStep5b() {
       <LoadingModal state={finNovel.isLoading} />
       <div className={style.component}>
         <div className={style.left}>
-          <div className={style.cover}>
-            <img
-              src={process.env.REACT_APP_IMAGE_API + novel.cover!}
-              alt="cover"
-            />
+          <div className={style.book}>
+            <div className={style.cover}>
+              <img
+                src={process.env.REACT_APP_IMAGE_API + novel.cover!}
+                alt="cover"
+              />
+            </div>
+            <div className={style.back1} />
+            <div className={style.back2} />
+            <div className={style.back3} />
+            <div className={style.back4} />
           </div>
-          <div className={style.back1} />
-          <div className={style.back2} />
-          <div className={style.back3} />
-          <div className={style.back4} />
         </div>
         <div className={style.right}>
           <img

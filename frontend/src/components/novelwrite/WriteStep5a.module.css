@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: space-between;
   flex-basis: 85%;
-  background-color: coral;
+  /* background-color: coral; */
 }
 .component > * {
   font-family: "LINESeedKR-Bd";
