@@ -1,121 +1,82 @@
-.Appbar {
+.container {
   height: 56px;
-  width: 100%;
   background-color: #f66f00;
   font-size: 24px;
   color: white;
-  font-family: "gothic";
   display: flex;
   align-items: center;
-  font-family: 'LINESeedKR-Bd'
+  font-family: "LINESeedKR-Bd";
+  padding: 0 20px;
 }
 
+.status,
+.logo,
+.menu {
+  flex: 1;
+}
+.short {
+  display: none;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+}
 .logo a {
-  margin: 0;
   display: flex;
   align-items: center;
 }
 
 .menu {
-  margin-right: 20px;
-  float: right;
-}
-
-.name {
-  margin-left: 20px;
-  width: 33%;
-}
-
-.logo {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.menudiv {
-  width: 33%;
   display: flex;
   justify-content: space-evenly;
-
 }
 
-.menudiv a {
+.menu > * {
   display: flex;
   align-items: center;
-  position: relative;
 }
-
-.loginimg {
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
-.menudiv > img {
-  cursor: pointer;
-}
-
-.banner_book,
-.banner_search,
-.banner_pen,
-.banner_mypage,
-.banner_login {
-  width: 24px;
+.menuIcon {
   height: 24px;
+}
+.menuIcon:hover {
   cursor: pointer;
 }
-
-.arrow_box {
+.toggle {
   display: none;
-  position: absolute;
-  top : 50px;
-  width: 100px;
-  padding: 8px;
-  left: -160%;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  background: #fffefc;
-  color: black;
-  font-size: 14px;
-  z-index: 99;
-  text-align: center;
-  border: 2px solid black;
 }
-
-.arrow_box:after, .arrow_box:before {
-
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  margin-left: -10px;
-  border: solid transparent;
-  pointer-events: none;
-  content: ' ';
-  text-align: center;
+.arrowBox {
+  display: none;
 }
-.arrow_box:after {
-  border-color: rgba(136, 183, 213, 0);
-  border-bottom-color: #fffefc;
-  border-width: 10px;
-  margin-left: -10px;
+@media (max-width: 1024px) {
+  .full {
+    display: none;
+  }
+  .short {
+    display: block;
+  }
 }
-
-.arrow_box:before {
-  border-color: rgba(194, 225, 245, 0);
-  border-bottom-color: black;
-  border-width: 12px;
-  margin-left : -12px;
-}
-
-
-.banner_book:hover + .arrow_box,
-.banner_search:hover + .arrow_box,
-.banner_pen:hover + .arrow_box,
-.banner_mypage:hover + .arrow_box, 
-.banner_login:hover + .arrow_box {
-  display: block;
+@media (max-width: 480px) {
+  .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .status {
+    display: none;
+  }
+  .menu {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .menu.on {
+    display: block;
+  }
+  .menu.off {
+    display: none;
+  }
+  .toggle {
+    display: block;
+    position: absolute;
+    right: 20px;
+  }
 }
