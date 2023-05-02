@@ -1,6 +1,7 @@
 package com.a509.service_payment.point.domain;
 
 import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
 public class Point {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -13,7 +13,6 @@ import com.a509.service_payment.order.repository.OrderRepository;
 import com.a509.service_payment.orderitem.domain.OrderItem;
 import com.a509.service_payment.orderitem.repository.OrderItemRepository;
 import com.a509.service_payment.point.domain.Point;
-import com.a509.service_payment.point.exception.DuplicatedPointException;
 import com.a509.service_payment.point.exception.NoSuchPointException;
 import com.a509.service_payment.point.repository.PointRepository;
 import lombok.RequiredArgsConstructor;

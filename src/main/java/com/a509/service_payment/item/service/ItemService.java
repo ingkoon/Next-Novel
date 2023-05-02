@@ -1,7 +1,6 @@
 package com.a509.service_payment.item.service;
 
 import com.a509.service_payment.item.domain.Item;
-import com.a509.service_payment.item.dto.ItemRequestDto;
 import com.a509.service_payment.item.dto.ItemResponseDto;
 import com.a509.service_payment.item.exception.NoSuchItemException;
 import com.a509.service_payment.item.repostiory.ItemRepository;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j

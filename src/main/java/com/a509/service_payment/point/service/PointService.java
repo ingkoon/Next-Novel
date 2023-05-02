@@ -3,7 +3,6 @@ package com.a509.service_payment.point.service;
 import com.a509.service_payment.point.domain.Point;
 import com.a509.service_payment.point.domain.dto.request.PointCreateRequestDto;
 import com.a509.service_payment.point.domain.dto.request.PointDeleteRequestDto;
-import com.a509.service_payment.point.domain.dto.request.PointReadRequestDto;
 import com.a509.service_payment.point.domain.dto.request.PointUpdateRequestDto;
 import com.a509.service_payment.point.domain.dto.response.PointCreateResponseDto;
 import com.a509.service_payment.point.domain.dto.response.PointFindResponseDto;
@@ -31,6 +30,7 @@ public class PointService {
         if(pointRepository.existsByMemberId(request.getMemberId())) throw new DuplicatedPointException();
         Point point = request.toEntity();
         pointRepository.save(point);
+
         return new PointCreateResponseDto().fromEntity(point);
     }
 
@@ -44,8 +44,8 @@ public class PointService {
     /* feature method: 포인트 정보를 갱신한다. */
     @Transactional
     public void updatePoint(PointUpdateRequestDto request){
-        log.info("=====" + request.getMemberId()+"=======");
         Point point = findPoint(request.getMemberId());
+        log.info("=====" + point.getMemberId()+ "======");
         point.updatePoint(request.getPoint());
     }
 
