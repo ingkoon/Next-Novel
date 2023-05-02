@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-    name: service_board
+    name: novel_service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://***REMOVED***:3306/novel?serverTimezone=UTC&characterEncoding=UTF-8
