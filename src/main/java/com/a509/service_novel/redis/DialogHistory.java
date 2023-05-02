@@ -2,11 +2,9 @@ package com.a509.service_novel.redis;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.index.Indexed;
 
 import lombok.Data;
 
@@ -15,7 +13,7 @@ import lombok.Data;
 public class DialogHistory implements Serializable{
 
 	@Id
-	private int Id;
+	private int authroId;
 
 	private List<Dialog> dialog;
 

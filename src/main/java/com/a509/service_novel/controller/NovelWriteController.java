@@ -3,7 +3,6 @@ package com.a509.service_novel.controller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,11 +26,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.a509.service_novel.dto.NovelDetailDto;
-import com.a509.service_novel.dto.NovelWriteStartDto;
-import com.a509.service_novel.redis.Dialog;
-import com.a509.service_novel.redis.DialogHistory;
-import com.a509.service_novel.redis.DialogHistoryRepository;
+import com.a509.service_novel.dto.NovelWriteDto;
 import com.a509.service_novel.service.NovelWriteService;
 // import com.a509.service_novel.service.NovelWriteService;
 
@@ -47,16 +40,17 @@ import lombok.extern.slf4j.Slf4j;
 public class NovelWriteController {
 
 	private final NovelWriteService novelWriteService;
-	private final DialogHistoryRepository dialogHistoryRepository;
 
-	WebClient webClient = WebClient.builder()
+	private final WebClient webClient = WebClient.builder()
 		.exchangeStrategies(ExchangeStrategies.builder()
 			.codecs(configurer -> configurer
 				.defaultCodecs()
 				.maxInMemorySize(-1))
 			.build())
-		.baseUrl("http://j8a502.p.ssafy.io:8001")
+		.baseUrl("http://3.39.88.63:8001")
 		.build();
+
+	private final HttpHeaders headerImagePNG = new HttpHeaders();
 
 	@PostMapping("/start")
 	public ResponseEntity<?> NovelStart(@RequestParam("images") MultipartFile[] images, @RequestParam("genre") int genreIdx, @RequestParam("authorId") int authorId) throws IOException {
@@ -69,9 +63,8 @@ public class NovelWriteController {
 					return image.getOriginalFilename();
 				}
 			};
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.IMAGE_PNG);
-			body.add("images", new HttpEntity<>(resource, headers));
+			headerImagePNG.setContentType(MediaType.IMAGE_PNG);
+			body.add("images", new HttpEntity<>(resource, headerImagePNG));
 		}
 
 		String[] genres = new String[]{"romance","fantasy","sf","detective","free"};
@@ -117,15 +110,15 @@ public class NovelWriteController {
 		questions.add(query3);
 
 
-		NovelWriteStartDto novelWriteStartDto = new NovelWriteStartDto();
-		novelWriteStartDto.setCaptions(captions);
-		novelWriteStartDto.setKorean_answer(koreanAnswer);
-		novelWriteStartDto.setQuestions(questions);
+		NovelWriteDto novelWriteDto = new NovelWriteDto();
+		novelWriteDto.setCaptions(captions);
+		novelWriteDto.setKorean_answer(koreanAnswer);
+		novelWriteDto.setQuestions(questions);
 
 		log.info("start save in redis");
 		try{
 			novelWriteService.setDialogHistory(dialogHistoryObject,authorId);
-			return new ResponseEntity<>(novelWriteStartDto,HttpStatus.OK);
+			return new ResponseEntity<>(novelWriteDto,HttpStatus.OK);
 		}
 		catch (Exception e){
 			return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -147,11 +140,10 @@ public class NovelWriteController {
 					return image.getOriginalFilename();
 				}
 			};
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+			headerImagePNG.setContentType(MediaType.MULTIPART_FORM_DATA);
 			List<Object> dialogHistory = novelWriteService.getDialogHistory(authorId);
 
-			body.add("image", new HttpEntity<>(resource, headers));
+			body.add("image", new HttpEntity<>(resource, headerImagePNG));
 			body.add("previous_question",previousQuestion);
 			body.add("dialog_history",dialogHistory);
 			log.info(dialogHistory.toString());
@@ -201,13 +193,13 @@ public class NovelWriteController {
 			questions.add(query2);
 			questions.add(query3);
 
-			NovelWriteStartDto novelWriteStartDto = new NovelWriteStartDto();
-			novelWriteStartDto.setCaptions(captions);
-			novelWriteStartDto.setKorean_answer(koreanAnswer);
-			novelWriteStartDto.setQuestions(questions);
+			NovelWriteDto novelWriteDto = new NovelWriteDto();
+			novelWriteDto.setCaptions(captions);
+			novelWriteDto.setKorean_answer(koreanAnswer);
+			novelWriteDto.setQuestions(questions);
 
 			novelWriteService.setDialogHistory(dialogHistoryObject, authorId);
-			return new ResponseEntity<>(novelWriteStartDto, HttpStatus.OK);
+			return new ResponseEntity<>(novelWriteDto, HttpStatus.OK);
 		}
 		catch (Exception e){
 			return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -232,9 +224,9 @@ public class NovelWriteController {
 				.block();
 
 			String koreanAnswer = (String)responseBody.get("korean_answer");
-			NovelWriteStartDto novelWriteStartDto = new NovelWriteStartDto();
-			novelWriteStartDto.setKorean_answer(koreanAnswer);
-			return new ResponseEntity<>(novelWriteStartDto,HttpStatus.OK);
+			NovelWriteDto novelWriteDto = new NovelWriteDto();
+			novelWriteDto.setKorean_answer(koreanAnswer);
+			return new ResponseEntity<>(novelWriteDto,HttpStatus.OK);
 
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -272,5 +264,4 @@ public class NovelWriteController {
 			.contentType(MediaType.IMAGE_PNG)
 			.body(resources);
 	}
-
 }

@@ -22,24 +22,19 @@ public class NovelWriteService {
 
 	private final DialogHistoryRepository dialogHistoryRepository;
 
-	public void hello() {
-		DialogHistory dialogHistory = new DialogHistory();
-
-	}
-
-	public void setDialogHistory(List<Object> object, int authorId) throws Exception{
+	public void setDialogHistory(List<Object> objects, int authorId) throws Exception{
 
 		DialogHistory dial = new DialogHistory();
 		dial.setDialog(new ArrayList<>());
-		for(Object o : object)
+		for(Object object : objects)
 		{
-			LinkedHashMap<String,String> tmp = (LinkedHashMap<String, String>)o;
+			LinkedHashMap<String,String> tmp = (LinkedHashMap<String, String>)object;
 			Dialog d = new Dialog();
 			d.setRole(tmp.get("role"));
 			d.setContent(tmp.get("content"));
 			dial.getDialog().add(d);
 		}
-		dial.setId(authorId);
+		dial.setAuthroId(authorId);
 		// System.out.println(dial);
 		// d.setDialog(dial);
 		dialogHistoryRepository.save(dial);

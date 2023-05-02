@@ -84,16 +84,26 @@ public class NovelController {
 	@GetMapping()
 	public ResponseEntity<?> selectNovels(){
 		try{
-			List<NovelListDto> novelListDtos = novelService.selectNovelList();
-			for(NovelListDto novelListDto : novelListDtos){
-				novelListDto.setCoverImage(novelListDto.getCoverImage());
-			}
 			return ResponseEntity.ok(novelService.selectNovelList());
 		}
 		catch(Exception e){
 			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	@GetMapping("/id/{id}")
+	public ResponseEntity<?> selectNovelByAuthorId(@PathVariable("id") int authorId){
+		try{
+			List<NovelListDto> novelWritten = novelService.selectNovelsByAuthorId(authorId);
+			return ResponseEntity.ok(novelService.selectNovelsByAuthorId(authorId));
+		}
+		catch(Exception e){
+			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	@GetMapping("/id/")
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteNovel(@PathVariable("id") int id){
@@ -103,20 +113,6 @@ public class NovelController {
 		}
 		catch (Exception e){
 			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@GetMapping("/test")
-	public ResponseEntity<?> dkdkdkd(){
-		try{
-			MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-			Resource resource = novelImageComponent.findImage("C:\\Users\\SSAFY\\Desktop\\imagelocation/2023_05_01_13_18_56_image5.png");
-			System.out.println(resource.getFilename());
-			return ResponseEntity.ok().build();
-
-		}
-		catch (Exception e){
-			return new ResponseEntity<>(e.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

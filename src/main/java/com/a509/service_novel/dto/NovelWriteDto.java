@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class NovelWriteStartDto {
+public class NovelWriteDto {
 
 	private List<String> captions;
 	private String korean_answer;

@@ -33,9 +33,6 @@ public class NovelService {
 	private final NovelCommentRepogitory novelCommentRepogitory;
 
 	private final NovelImageComponent novelImageComponent;
-
-	private final String path = "C:\\Users\\SSAFY\\Desktop\\imagelocation";
-	// private final String path = "/home/ubuntu/NovelService/images";
 	@Transactional
 	public void insertNovel(NovelDetailDto novelDetailDto
 		,MultipartFile[] startImages
@@ -152,6 +149,22 @@ public class NovelService {
 		catch (NoSuchElementException e){
 			return null;
 		}
+	}
+
+	@Transactional
+	public List<NovelListDto> selectNovelsByAuthorId(int authorId) throws Exception{
+
+		Sort sortByCreatedAt = Sort.by("createdAt").ascending();
+
+		List<Novel> novels = novelRepogitory.findAllByAuthorIdOrderByCreatedAtDesc(authorId);
+		List<NovelListDto> novelDtos = new ArrayList<>();
+
+		for (Novel novel : novels) {
+			NovelListDto novelDto = novel.toListDto();
+			novelDtos.add(novelDto);
+		}
+
+		return novelDtos;
 	}
 
 	@Transactional

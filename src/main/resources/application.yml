@@ -7,7 +7,7 @@ spring:
     name: service_board
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/novel?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://***REMOVED***:3306/novel?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: ***REMOVED***
   #    url: jdbc:mysql://i8a703.p.ssafy.io:3306/project1db?serverTimezone=UTC&characterEncoding=UTF-8
@@ -34,4 +34,4 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://***REMOVED***:8761/eureka
