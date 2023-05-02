@@ -46,7 +46,8 @@ spring:
 
 ---
 spring:
-
+  application:
+    name: next-novel-payments
   config:
     activate:
       on-profile: service_payment
