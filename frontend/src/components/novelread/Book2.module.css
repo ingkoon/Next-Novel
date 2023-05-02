@@ -321,7 +321,7 @@ html {
 
 .text {
   line-height: 1.7;
-  font-size: 20px;
+  font-size: clamp(16px, 1.5vw, 20px);
   margin: 70px;
   white-space: pre-wrap;
 }

@@ -1,5 +1,4 @@
-// import style from "./Book.module.css";
-import style from "./Book2.module.css";
+import style from "./BookMobile.module.css";
 import Materials from "./Materials.jsx";
 import Qna from "./Qna.jsx";
 import Modal from "react-modal";
