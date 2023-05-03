@@ -54,8 +54,9 @@ public class NovelWriteController {
 	private final HttpHeaders headerImagePNG = new HttpHeaders();
 
 	@PostMapping("/start")
-	public ResponseEntity<?> NovelStart(@RequestParam("images") MultipartFile[] images, @RequestParam("genre") int genreIdx, @RequestParam("authorId") int authorId) throws IOException {
+	public ResponseEntity<?> NovelStart(@RequestParam("images") MultipartFile[] images, @RequestParam("genre") int genreIdx, @RequestParam("authorId") String authorIdString) throws IOException {
 		MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+		int authorId = Integer.parseInt(authorIdString);
 
 		for (MultipartFile image : images) {
 			ByteArrayResource resource = new ByteArrayResource(image.getBytes()) {
@@ -130,9 +131,9 @@ public class NovelWriteController {
 	@PostMapping("/sequence")
 	public ResponseEntity<?> NovelStep4(@RequestParam("image") MultipartFile image
 										,@RequestParam("previousQuestion") String previousQuestion
-										,@RequestParam("authorId") int authorId) throws IOException {
+										,@RequestParam("authorId") String authorIdString) throws IOException {
 
-
+		int authorId = Integer.parseInt(authorIdString);
 		try {
 			MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 			ByteArrayResource resource = new ByteArrayResource(image.getBytes()) {
@@ -207,10 +208,11 @@ public class NovelWriteController {
 		}
 	}
 	@PostMapping("/end")
-	public ResponseEntity<?> NovelEnd(@RequestBody Map<String, Integer> response){
+	public ResponseEntity<?> NovelEnd(@RequestBody Map<String, String> response){
 
 		try {
-			int authorId = response.get("authorId");
+			String authorIdString = response.get("authorId");
+			int authorId = Integer.parseInt(authorIdString);
 			MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 
 			List<Object> dialogHistory = novelWriteService.getDialogHistory(authorId);
