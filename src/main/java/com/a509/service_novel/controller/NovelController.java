@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,11 +44,10 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/novel")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class NovelController {
 
 	private final NovelService novelService;
-	private final NovelImageComponent novelImageComponent;
-
 	@GetMapping("/hello")
 	public String hello(){
 		return "hello";

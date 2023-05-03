@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/write")
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin("*")
 public class NovelWriteController {
 
 	private final NovelWriteService novelWriteService;
