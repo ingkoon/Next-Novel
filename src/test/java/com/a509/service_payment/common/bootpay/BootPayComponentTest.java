@@ -1,5 +1,6 @@
 package com.a509.service_payment.common.bootpay;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.HashMap;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @SpringBootTest
 class BootPayComponentTest {
-    @Autowired
-    private BootPayComponent bootPayComponent;
+
+    private final BootPayComponent bootPayComponent;
 
     @Test
     void connectBootPay() {
