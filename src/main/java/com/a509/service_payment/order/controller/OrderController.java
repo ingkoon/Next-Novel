@@ -1,7 +1,7 @@
 package com.a509.service_payment.order.controller;
 
 import com.a509.service_payment.order.dto.CreateRequestDto;
-import com.a509.service_payment.order.dto.TokenResponseDto;
+import com.a509.service_payment.order.dto.response.TokenResponseDto;
 import com.a509.service_payment.order.dto.response.OrderCreateResponseDto;
 import com.a509.service_payment.order.dto.response.OrderResponseDto;
 import com.a509.service_payment.order.service.OrderService;

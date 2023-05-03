@@ -5,8 +5,9 @@ import com.a509.service_payment.item.domain.Item;
 import com.a509.service_payment.item.exception.NoSuchItemException;
 import com.a509.service_payment.item.repostiory.ItemRepository;
 import com.a509.service_payment.order.domain.Order;
+import com.a509.service_payment.order.dto.CancelRequestDto;
 import com.a509.service_payment.order.dto.CreateRequestDto;
-import com.a509.service_payment.order.dto.TokenResponseDto;
+import com.a509.service_payment.order.dto.response.TokenResponseDto;
 import com.a509.service_payment.order.dto.response.OrderResponseDto;
 import com.a509.service_payment.order.exception.DuplicatedOrderException;
 import com.a509.service_payment.order.repository.OrderRepository;
@@ -105,5 +106,19 @@ public class OrderService {
                 .build();
         orderItemRepository.save(orderItem);
         log.info("=====success to save orderItem=====");
+    }
+
+    /*
+    feature method: cancelOrder
+    저장된 결제정보를 바탕으로 결제취소
+    기능을 수행한다.
+     */
+    @Transactional
+    public void cancelOrder(CancelRequestDto requestDto){
+        Order order = orderRepository.findById(requestDto.getOrderId()).orElseThrow(NoSuchItemException::new);
+        Point point = pointRepository.findByMemberId(order.getMemberId()).orElseThrow(NoSuchPointException::new);
+        bootPayComponent.cancelOrder(requestDto.getReceiptId());
+        orderRepository.delete(order);
+        point.updatePoint(-order.getPrice());
     }
 }
