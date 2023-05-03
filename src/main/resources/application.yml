@@ -10,7 +10,6 @@ eureka:
       defaultZone: http://***REMOVED***:8761/eureka
 
 spring:
-
   application:
     name: eureka_api_gateway
   cloud:
@@ -19,10 +18,9 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
-            #   - 'http://***REMOVED***'
-            #   - 'http://***REMOVED***:443'
-            #   - 'http://localhost:3000'
-                - '*'
+              - 'http://***REMOVED***'
+              - 'http://***REMOVED***:443'
+              - 'http://localhost:3000'
             allow-credentials: true
             allowedHeaders: '*'
             exposed-headers: '*'
@@ -44,7 +42,7 @@ spring:
         #   uri: http://localhost:8012/
           uri: http://***REMOVED***:8012/
           predicates:
-            - Path=/novel/**
+            - Path=/novel/**, /write/**, /comment/**
         - id: ai
         #   uri: http://localhost:8013/
           uri: http://***REMOVED***:8013/
