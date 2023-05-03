@@ -19,9 +19,10 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
-              - 'http://***REMOVED***'
-              - 'http://***REMOVED***:443'
-              - 'http://localhost:3000'
+            #   - 'http://***REMOVED***'
+            #   - 'http://***REMOVED***:443'
+            #   - 'http://localhost:3000'
+                - '*'
             allow-credentials: true
             allowedHeaders: '*'
             exposed-headers: '*'
@@ -37,8 +38,8 @@ spring:
           uri: http://***REMOVED***:8011/
           predicates:
             - Path=/member/**
-          filters:
-            - RewritePath=/member/(?<word>.*), /b/$\{word}
+        #   filters:
+        #     - RewritePath=/member/(?<word>.*), /b/$\{word}
         - id: novel
         #   uri: http://localhost:8012/
           uri: http://***REMOVED***:8012/
