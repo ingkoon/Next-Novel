@@ -1,4 +1,6 @@
 server:
+  servlet:
+    context-path: /payment
   port: 8014
 
 logging:
