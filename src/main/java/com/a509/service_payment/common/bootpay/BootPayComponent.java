@@ -2,12 +2,10 @@ package com.a509.service_payment.common.bootpay;
 
 import com.a509.service_payment.common.bootpay.exception.InvalidReceiptException;
 import com.a509.service_payment.common.bootpay.exception.NoTokenException;
-import com.a509.service_payment.item.exception.NoSuchItemException;
 import kr.co.bootpay.Bootpay;
 import kr.co.bootpay.model.request.Cancel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
