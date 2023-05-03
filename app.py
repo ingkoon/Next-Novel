@@ -18,6 +18,9 @@ import googletrans
 import json
 import time
 import multiprocessing
+import re
+
+
 
 translator = googletrans.Translator()
 app = FastAPI()
@@ -35,45 +38,56 @@ def replace_word(before):
     after = before.replace('a drawing of ', '').replace('an image of ', '').replace('a black and white drawing of ', '').replace(
         'an illustration of ', '').replace('photograph', '').replace('painting', '').replace('portrait', '').replace(
         'graphic', '').replace('snapshot', '').replace('sketch', '').replace('print', '').replace('photo', '').replace(
-        'cartoon', '').replace('that is drawn in ink', '').replace('that is drawn', '').replace('in ink', '')
+        'cartoon', '').replace('that is drawn in ink', '').replace('that is drawn', '').replace('in ink', '').replace("drawn in black ink on white paper","")\
+        .replace(".","").strip()
     return after
 
 
 @app.post('/novel/start')
 async def novel_start(images: List[UploadFile] = Form(...),
                        genre: str = Form(...)):
+    start = time.time()
     image_bytes = []
     for image in images:
         image_bytes.append(await image.read())
 
     # caption_string[] : 이미지 6개 캡셔닝한 결과(영어)
-    caption_string = []
+    caption_string_eng = []
     for i in image_bytes:
-        caption_string.append(inference_caption(i))
+        caption_string_eng.append(inference_caption(i))
 
     # en_string[] : caption_string[]에서 "그림" 단어 지우기
     en_string = []
-    for str in caption_string:
+    for str in caption_string_eng:
         en_string.append(replace_word(str))
     print(en_string)
+
+
+
+    ko_string = []
+    for eng_string in en_string:
+        kor_string = translator.translate(eng_string,dest="ko").text
+        ko_string.append(kor_string)
+    print(ko_string)
 
     # gpt에게 캡셔닝과 장르를 던져주고, 소설을 받음.
     # en_answer : 소설(영어)
     question = "Act as a StoryTeller. Write an endless novel story in the genre of {} in 5 sentences based on '{}','{}','{}','{}','{}','{}'.".format(
         genre, en_string[0], en_string[1], en_string[2], en_string[3], en_string[4], en_string[5])
-    start = time.time()
+
     en_answer,new_history = chatbot(question,[])
-    print(time.time()-start)
 
     # ko_string[] : 이미지 6개 캡셔닝한 결과(한글)
-    translate_before = ""
-    for i in range(len(en_string)):
-        translate_before += en_string[i] + "\n"
-    ko_string = [translate(translate_before).split("\n")[-i] for i in range(1, 7)][::-1]
-    print(ko_string)
+    # translate_before = ""
+    # for i in range(len(en_string)):
+    #     translate_before += en_string[i] + "\n"
+    # ko_string = [translate(translate_before).split("\n")[-i] for i in range(1, 7)][::-1]
+    # print(ko_string)
 
     # ko_answer : 소설(한글)
     ko_answer = translate(en_answer)
+
+    print(time.time()-start)
 
     return {"caption" : ko_string, "korean_answer" : ko_answer,"dialog_history" : new_history}
 
@@ -93,8 +107,23 @@ async def novel_question(dialog_history:str=Form(...)):
     ko_answer = translate(en_answer)
     query = ko_answer.split("\n")
 
-    tmp = [query[-i].split(". ")[-1].split("?")[0]+"?" for i in range(1,4)][::-1]
-    return {"query1" : tmp[0],"query2" : tmp[1],"query3" : tmp[2],"dialog_history" : new_history}
+    pattern = r'\d\)\s+(.+)'
+
+    query1, query2, query3 = [query[-i].split(". ")[-1].split("?")[0]+"?" for i in range(1,4)][::-1]
+
+    res = re.search(pattern,query1)
+    if res:
+        query1 = res.group(1)
+
+    res = re.search(pattern, query2)
+    if res:
+        query2 = res.group(1)
+
+    res = re.search(pattern, query3)
+    if res:
+        query3 = res.group(1)
+
+    return {"query1" : query1,"query2" : query2,"query3" : query3,"dialog_history" : new_history}
 
 
 @app.post('/novel/sequence')
