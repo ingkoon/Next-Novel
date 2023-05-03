@@ -1,4 +1,12 @@
-
+.container {
+  /* background-color: aquamarine; */
+  padding: 0 8%;
+}
+.line {
+  height: 5px;
+  background-color: black;
+  margin-bottom: 20px;
+}
 .mynoveltitle {
   position: relative;
   text-align: center;
@@ -25,7 +33,7 @@
 }
 
 .titlebar button {
-  width: 100px;
+  width: 80%;
   height: 50px;
   background-color: #f66f00;
   color: white;
@@ -42,6 +50,5 @@
   width: 90%;
   overflow: hidden;
   transition: height 0.35s ease;
-  padding: 0 5%;
   margin-bottom: 20px;
 }

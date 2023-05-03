@@ -62,7 +62,7 @@ export default function AppBar() {
           />
           <div className={style.arrowBox}>소설생성</div>
         </Link>
-        {!localStorage.getItem("access_token") ? (
+        {localStorage.getItem("access_token") ? (
           <div className={style.loginimg} onClick={() => setModalIsOpen(true)}>
             <img
               src={process.env.PUBLIC_URL + "/icon/banner/login.svg"}
