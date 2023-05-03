@@ -85,7 +85,11 @@ export default function AppBar() {
         )}
       </div>
       <div className={style.toggle} onClick={() => setToggle((prev) => !prev)}>
-        토글
+        <img
+          src={process.env.PUBLIC_URL + "/icon/banner/hamburger.svg"}
+          className={style.menuIcon}
+          alt="menu-icon"
+        />
       </div>
       <Modal
         closeTimeoutMS={200}

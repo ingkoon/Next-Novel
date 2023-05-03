@@ -34,18 +34,72 @@
 .menu > * {
   display: flex;
   align-items: center;
+  position: relative;
 }
 .menuIcon {
+  width: 24px;
   height: 24px;
 }
 .menuIcon:hover {
   cursor: pointer;
 }
+.menu * {
+  text-decoration: none;
+  color: white;
+}
 .toggle {
   display: none;
 }
-.arrowBox {
-  display: none;
+
+@media (min-width: 481px) {
+  .arrowBox {
+    display: none;
+    position: absolute;
+    top: 50px;
+    width: 100px;
+    padding: 8px;
+    left: -185%;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    background: #fffefc;
+    color: black;
+    font-size: 14px;
+    z-index: 99;
+    text-align: center;
+    border: 2px solid black;
+  }
+
+  .arrowBox:after,
+  .arrowBox:before {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -10px;
+    border: solid transparent;
+    pointer-events: none;
+    content: " ";
+    text-align: center;
+  }
+  .arrowBox:after {
+    border-color: rgba(136, 183, 213, 0);
+    border-bottom-color: #fffefc;
+    border-width: 10px;
+    margin-left: -10px;
+  }
+
+  .arrowBox:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-bottom-color: black;
+    border-width: 12px;
+    margin-left: -12px;
+  }
+
+  .menuIcon:hover + .arrowBox {
+    display: block;
+  }
 }
 @media (max-width: 1024px) {
   .full {
@@ -59,24 +113,46 @@
   .container {
     flex-direction: column;
     align-items: flex-start;
+    min-height: 56px;
+    height: auto;
   }
   .status {
     display: none;
   }
   .menu {
+    position: absolute;
+    top: 56px;
+    left: 0;
+    height: 150px;
     flex-direction: column;
-    align-items: center;
+    background: linear-gradient(#f66f00, #ff9243);
+    /* background-color: aqua; */
     width: 100%;
+    z-index: 1;
   }
   .menu.on {
-    display: block;
+    display: flex;
   }
   .menu.off {
     display: none;
   }
+  .menu > * {
+    justify-content: center;
+    gap: 10px;
+  }
+  .arrowBox {
+    display: inline;
+    padding-top: 2px;
+    font-size: 20px;
+  }
   .toggle {
-    display: block;
+    display: flex;
     position: absolute;
     right: 20px;
+    height: 56px;
+    align-items: center;
+  }
+  .toggle > img {
+    height: 60%;
   }
 }
