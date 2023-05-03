@@ -5,7 +5,6 @@ import com.a509.service_member.dto.request.MemberSignupRequestDto;
 import com.a509.service_member.dto.request.MemberUpdateRequestDto;
 import com.a509.service_member.dto.response.MemberTokenResponseDto;
 import com.a509.service_member.dto.response.MemberMyPageResponseDto;
-import com.a509.service_member.enums.MemberRole;
 import com.a509.service_member.enums.MemberState;
 import com.a509.service_member.exception.DuplicatedMemberException;
 import com.a509.service_member.exception.InvalidedAccessTokenException;
@@ -43,6 +42,7 @@ public class MemberService {
         return memberRepository.findByEmail(email).orElseThrow(NoSuchMemberException::new);
     }
 
+    @Transactional
     public void signUp(MemberSignupRequestDto memberSignupRequestDto) {
         if (memberRepository.existsByEmail(memberSignupRequestDto.getEmail())) {
             throw new DuplicatedMemberException();
@@ -58,8 +58,6 @@ public class MemberService {
                 .password(bCryptPasswordEncoder.encode(memberSignupRequestDto.getPassword()))
                 .nickname(memberSignupRequestDto.getNickname())
                 .profileImage(memberSignupRequestDto.getProfileImage())
-                .state(MemberState.ACTIVE.name())
-                .role(MemberRole.ROLE_USER.name())
                 .build();
         memberRepository.save(member);
     }

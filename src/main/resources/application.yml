@@ -33,6 +33,17 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 200MB
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ***REMOVED***
+            client-secret: ***REMOVED***
+            redirect-uri: http://localhost:8011/login/oauth2/code/google
+            scope:
+              - email
+              - profile
 
 jwt:
   secret: ***REMOVED***
