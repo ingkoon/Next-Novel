@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/comment")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class NovelCommentController {
 
 	private final NovelCommentService novelCommentService;

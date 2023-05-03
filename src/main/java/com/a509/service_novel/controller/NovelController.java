@@ -44,7 +44,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/novel")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class NovelController {
 
 	private final NovelService novelService;

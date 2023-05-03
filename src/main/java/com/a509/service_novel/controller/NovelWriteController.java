@@ -38,7 +38,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/write")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin("*")
 public class NovelWriteController {
 
 	private final NovelWriteService novelWriteService;
