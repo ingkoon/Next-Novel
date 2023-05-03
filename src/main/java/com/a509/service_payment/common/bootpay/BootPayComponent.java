@@ -79,14 +79,19 @@ public class BootPayComponent {
     /*
     결제 취소
      */
-    public HashMap<String, Object> cancelOrder(String receiptId) throws Exception{
+    public HashMap<String, Object> cancelOrder(String receiptId){
         Bootpay bootpay = new Bootpay(restApiKey, privateKey);
         Cancel cancel = new Cancel();
         cancel.receiptId = receiptId;
         cancel.cancelUsername = "관리자";
-        cancel.cancelMessage = "테스트 결제";
+        cancel.cancelMessage = "변심에 의한 주문 취소";
 
-        HashMap<String, Object> receiptCancel = bootpay.receiptCancel(cancel);
+        HashMap<String, Object> receiptCancel = null;
+        try {
+            receiptCancel = bootpay.receiptCancel(cancel);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         if(receiptCancel.get("error_code") != null)
             throw new InvalidReceiptException("결제 정보를 확인할 수 없습니다.");
         return receiptCancel;

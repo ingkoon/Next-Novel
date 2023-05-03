@@ -22,9 +22,8 @@ public class Order {
     private Long memberId;
     private Long price;
     private String receiptId;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
     private List<OrderItem> orderItems = new ArrayList<>();
-
     @Builder
     public Order(Long userId, Long price, String receiptId) {
         this.memberId = userId;
