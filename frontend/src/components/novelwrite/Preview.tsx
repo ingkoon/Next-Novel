@@ -2,7 +2,11 @@ import React from "react";
 import PreviewCanvas from "./PreviewCanvas";
 import style from "./Preview.module.css";
 
-export default function Preview({ imageSrcs, setSelected }) {
+type PreviewProps = {
+  imageSrcs: (string | undefined)[];
+  setSelected: React.Dispatch<React.SetStateAction<number>>;
+};
+export default function Preview({ imageSrcs, setSelected }: PreviewProps) {
   return (
     <div className={style.container}>
       <div className={style.scroll}>

@@ -14,7 +14,7 @@ export default function WriteStep4a() {
   const { novel, setNovel, setStep } = useNovelContext();
   const { continueNovel } = useNovelWrite();
   const queryClient = useQueryClient();
-  const [imageSrcs, setImageSrcs] = useState(
+  const [imageSrcs, setImageSrcs] = useState<(string | undefined)[]>(
     Array.from({ length: 1 }, () => undefined)
   );
   const { isShaking, checkReady } = useCheckReady();
@@ -31,21 +31,24 @@ export default function WriteStep4a() {
       onSuccess: (res) => {
         console.log(res);
         //context 제어
+        const originalNewMaterials = novel.newMaterials
+          ? novel.newMaterials
+          : [];
         setNovel({
           ...novel,
           story: novel.story + "\n\n" + res.data.story,
-          newMaterials: [...novel.newMaterials, res.data.newMaterial],
+          newMaterials: [...originalNewMaterials, res.data.newMaterial],
         });
         queryClient.removeQueries({ queryKey: ["questions"] });
         setStep(4.5);
       },
     });
   };
-  const appendFormData = (files) => {
+  const appendFormData = (files: File[]) => {
     const formData = new FormData();
-    formData.append("step", novel.step);
-    formData.append("novel_id", novel.id);
-    formData.append("query", novel.selectedQuestion);
+    formData.append("step", novel.step! + "");
+    formData.append("novel_id", novel.id!);
+    formData.append("query", novel.selectedQuestion! + "");
     formData.append("image", files[0]);
 
     return formData;
@@ -60,8 +63,6 @@ export default function WriteStep4a() {
           imageSrcs={imageSrcs}
           setImageSrcs={setImageSrcs}
           selected={selected}
-          canvasWidth={608}
-          canvasHeight={380}
           canvasType={"big"}
         />
       </div>

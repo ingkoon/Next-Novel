@@ -9,7 +9,7 @@ import useCheckReady from "../../hooks/useCheckReady";
 import useDataurlToFile from "../../hooks/useDataurlToFile";
 
 export default function WriteStep5a() {
-  const [imageSrcs, setImageSrcs] = useState(
+  const [imageSrcs, setImageSrcs] = useState<(string | undefined)[]>(
     Array.from({ length: 1 }, () => undefined)
   );
   const selected = 0;
@@ -41,9 +41,9 @@ export default function WriteStep5a() {
       },
     });
   };
-  const appendFormData = (files) => {
+  const appendFormData = (files: File[]) => {
     const formData = new FormData();
-    formData.append("novel_id", novel.id);
+    formData.append("novel_id", novel.id!);
     formData.append("image", files[0]);
 
     return formData;
@@ -54,19 +54,12 @@ export default function WriteStep5a() {
       <LoadingModal state={makeCoverRequest.isLoading} />
       <div className={style.component}>
         <div className={style.left}>
-          <div className={style.input}>
-            <div className={style.canvas}>
-              <Canvas
-                imageSrcs={imageSrcs}
-                setImageSrcs={setImageSrcs}
-                selected={selected}
-                canvasWidth={343}
-                canvasHeight={390}
-                canvasType={"small"}
-              />
-            </div>
-          </div>
-          <div className={style.space} />
+          <Canvas
+            imageSrcs={imageSrcs}
+            setImageSrcs={setImageSrcs}
+            selected={selected}
+            canvasType={"small"}
+          />
         </div>
         <div className={style.middle}>
           <button className={style.toggle} onClick={makeCover}>
@@ -74,26 +67,21 @@ export default function WriteStep5a() {
           </button>
         </div>
         <div className={style.right}>
-          {/* <div className={style.space} /> */}
-          <div className={style.result}>
-            <div className={style.img}>
-              <div className={style.frame}>
-                {novel.cover && (
-                  <img
-                    src={process.env.REACT_APP_IMAGE_API + novel.cover}
-                    className={style.cover}
-                    alt="cover"
-                  />
-                )}
-                {!novel.cover && (
-                  <img
-                    src={process.env.PUBLIC_URL + "/icon/cover_wait.svg"}
-                    className={style.cover_wait}
-                    alt="cover_wait"
-                  />
-                )}
-              </div>
-            </div>
+          <div className={style.frame}>
+            {novel.cover && (
+              <img
+                src={process.env.REACT_APP_IMAGE_API + novel.cover}
+                className={style.cover}
+                alt="cover"
+              />
+            )}
+            {!novel.cover && (
+              <img
+                src={process.env.PUBLIC_URL + "/icon/cover_wait.svg"}
+                className={style.cover_wait}
+                alt="cover_wait"
+              />
+            )}
           </div>
         </div>
       </div>

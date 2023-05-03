@@ -5,7 +5,7 @@ import StoryInProgressModal from "../common/StoryInProgressModal";
 
 export default function Question() {
   const { novel, setNovel, count } = useNovelContext();
-  const questions = novel.questions;
+  const questions = novel.questions!;
   const [selected, setSelected] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -14,6 +14,7 @@ export default function Question() {
   };
   useEffect(() => {
     setNovel({ ...novel, selectedQuestion: questions[selected].index });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
   return (

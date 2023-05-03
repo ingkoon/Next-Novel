@@ -163,7 +163,12 @@
   .orange_path {
     display: none;
   }
-  .typing {
-    font-size: 34px;
+  .box_content > span {
+    font-size: 38px;
+  }
+}
+@media (max-width: 480px) {
+  .box_content > span {
+    font-size: 30px;
   }
 }

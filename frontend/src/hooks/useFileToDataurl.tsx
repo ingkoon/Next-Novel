@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 
-export default function useFileToDataurl([data]) {
-  const [paintings, setPaintings] = useState();
+type FileToDataurlType = {
+  data: DataType[];
+};
+type DataType = {
+  image: string;
+};
+export default function useFileToDataurl({ data }: FileToDataurlType) {
+  const [paintings, setPaintings] = useState<string[]>();
 
   useEffect(() => {
     if (data) {
@@ -24,7 +30,8 @@ export default function useFileToDataurl([data]) {
       ).then((results) => {
         // 모든 reader.result 값을 배열로 출력합니다.
         console.log(results);
-        setPaintings(results);
+        const convertedResults = results.map((result) => result as string);
+        setPaintings(convertedResults);
       });
     }
   }, [data]);
