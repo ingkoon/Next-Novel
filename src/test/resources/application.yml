@@ -26,3 +26,9 @@ logging.level:
 boot-pay:
   rest-api-key: ***REMOVED***
   private-key: D6+wqdBeprLC6I2LwR42iG/YHMIHjwaynDkkjSmLHYo=
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://***REMOVED***:8761/eureka
