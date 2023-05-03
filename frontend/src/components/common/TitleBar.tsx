@@ -1,6 +1,14 @@
 import style from "./TitleBar.module.css";
 
-function TitleBar({ name, intro, subintro1, subintro2, img }) {
+type TitleBarProps = {
+  name: string;
+  intro: string;
+  subintro1: string;
+  subintro2: string;
+  img: string;
+};
+
+function TitleBar({ name, intro, subintro1, subintro2, img }: TitleBarProps) {
   return (
     <div className={style.titlebar}>
       <div className={style.titleBox}>
