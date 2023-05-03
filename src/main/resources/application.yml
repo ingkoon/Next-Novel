@@ -6,7 +6,8 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+    #   defaultZone: http://localhost:8761/eureka
+      defaultZone: http://***REMOVED***:8761/eureka
 
 spring:
   application:
@@ -15,22 +16,29 @@ spring:
     gateway:
       routes:
         - id: member
-          uri: http://localhost:8011/
+        #   uri: http://localhost:8011/
+          uri: http://***REMOVED***:8011/
           predicates:
-            - Path=/member
+            - Path=/member/**
+          filters:
+            - RewritePath=/member/(?<word>.*), /b/$\{word}
         - id: novel
-          uri: http://localhost:8012/
+        #   uri: http://localhost:8012/
+          uri: http://***REMOVED***:8012/
           predicates:
-            - Path=/novel
+            - Path=/novel/**
         - id: ai
-          uri: http://localhost:8013/
+        #   uri: http://localhost:8013/
+          uri: http://***REMOVED***:8013/
           predicates:
-            - Path=/ai
+            - Path=/ai/**
         - id: payment
-          uri: http://localhost:8014/
+        #   uri: http://localhost:8014/
+          uri: http://***REMOVED***:8014/
           predicates:
-            - Path=/payment
+            - Path=/payment/**
         - id: jukebox
-          uri: http://localhost:8015/
+        #   uri: http://localhost:8015/
+          uri: http://***REMOVED***:8015/
           predicates:
-            - Path=/jukebox
+            - Path=/jukebox/**
