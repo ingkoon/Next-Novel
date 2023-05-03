@@ -10,10 +10,27 @@ eureka:
       defaultZone: http://***REMOVED***:8761/eureka
 
 spring:
+
   application:
     name: eureka_api_gateway
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - 'http://***REMOVED***'
+              - 'http://***REMOVED***:443'
+              - 'http://localhost:3000'
+            allow-credentials: true
+            allowedHeaders: '*'
+            exposed-headers: '*'
+            allowedMethods:
+              - PUT
+              - GET
+              - POST
+              - DELETE
+              - OPTIONS
       routes:
         - id: member
         #   uri: http://localhost:8011/
