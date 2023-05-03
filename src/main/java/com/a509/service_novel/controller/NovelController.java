@@ -48,8 +48,8 @@ public class NovelController {
 
 	private final NovelService novelService;
 	@GetMapping("/hello")
-	public String hello(){
-		return "hello";
+	public ResponseEntity<?> hello(){
+		return new ResponseEntity<>("hello",HttpStatus.OK);
 	}
 
 	@PostMapping()
