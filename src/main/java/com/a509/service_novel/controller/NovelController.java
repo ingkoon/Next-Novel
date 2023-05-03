@@ -48,6 +48,11 @@ public class NovelController {
 	private final NovelService novelService;
 	private final NovelImageComponent novelImageComponent;
 
+	@GetMapping("/hello")
+	public String hello(){
+		return "hello";
+	}
+
 	@PostMapping()
 	public ResponseEntity<?> insertNovel(@RequestPart("start_images") MultipartFile[] startImages
 		,@RequestPart("content_images") MultipartFile[] contentImages
