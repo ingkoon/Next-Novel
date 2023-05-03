@@ -38,6 +38,9 @@
   display: none;
 }
 @media (max-width: 1024px) {
+  .container {
+    padding: 0 4%;
+  }
   .current_step {
     justify-content: center;
   }

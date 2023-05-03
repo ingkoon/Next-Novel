@@ -15,28 +15,37 @@ export default function useNovelWrite() {
 
   const getQuestions = useQuery(
     ["questions"],
-    () => fetchQuestions(novel.id, novel.step + 1),
+    () => fetchQuestions(novel.id, novel.step! + 1),
     {
       enabled: false,
       select: (data) => data.data,
     }
   );
 
-  const startNovel = useMutation((formData) => startNovelApi(formData), {});
+  const startNovel = useMutation(
+    (formData: FormData) => startNovelApi(formData),
+    {}
+  );
 
   const continueNovel = useMutation(
-    (formData) => continueNovelApi(formData),
+    (formData: FormData) => continueNovelApi(formData),
     {}
   );
 
-  const endNovel = useMutation((formData) => endNovelApi(formData), {});
+  const endNovel = useMutation(
+    (formData: FormData) => endNovelApi(formData),
+    {}
+  );
 
   const makeCoverRequest = useMutation(
-    (formData) => makeCoverRequestApi(formData),
+    (formData: FormData) => makeCoverRequestApi(formData),
     {}
   );
 
-  const finNovel = useMutation((formData) => finNovelApi(formData), {});
+  const finNovel = useMutation(
+    (formData: FormData) => finNovelApi(formData),
+    {}
+  );
 
   const getPaintings = useQuery(["paintings"], fetchPaintings, {
     enabled: false,

@@ -12,7 +12,7 @@ import useDataurlToFile from "../../hooks/useDataurlToFile";
 export default function WriteStep2() {
   const { novel, setNovel, setStep } = useNovelContext();
   const { startNovel } = useNovelWrite();
-  const [imageSrcs, setImageSrcs] = useState(
+  const [imageSrcs, setImageSrcs] = useState<(string | undefined)[]>(
     Array.from({ length: 6 }, () => undefined)
   );
   const [selected, setSelected] = useState(0);
@@ -42,10 +42,11 @@ export default function WriteStep2() {
     });
   };
 
-  const appendFormData = (files) => {
+  const appendFormData = (files: File[]) => {
     const formData = new FormData();
     files.forEach((file) => formData.append("images", file));
     formData.append("genre", novel.genre);
+    formData.append("authorId", "1234");
 
     return formData;
   };

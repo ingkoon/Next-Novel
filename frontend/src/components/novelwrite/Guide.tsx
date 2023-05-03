@@ -2,7 +2,10 @@ import React from "react";
 import style from "./Guide.module.css";
 import { useNovelContext } from "../../context/NovelContext";
 
-export default function Guide({ isShaking }) {
+type GuideProps = {
+  isShaking: boolean;
+};
+export default function Guide({ isShaking }: GuideProps) {
   const { step, count } = useNovelContext();
   const desc = [
     "",
