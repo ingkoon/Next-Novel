@@ -1,6 +1,6 @@
 import style from "./BookMobile.module.css";
-import Materials from "./Materials.jsx";
-import Qna from "./Qna.jsx";
+import Materials from "./Materials";
+import Qna from "./Qna";
 import Modal from "react-modal";
 import Login from "../login/Login";
 
@@ -111,28 +111,6 @@ export default function Book() {
     console.log();
     const pages = document.querySelectorAll(`.${style.page}`);
     console.log(pages.length);
-    for (let i = 0; i < pages.length; i++) {
-      const page = pages[i] as ExtendedHTMLElement;
-
-      console.log(i);
-      if (i % 2 === 0) {
-        page.style.zIndex = (pages.length - i).toString();
-      }
-      page.pageNum = i + 1;
-      page.addEventListener("click", function(this: ExtendedHTMLElement) {
-        if (this.pageNum % 2 === 0) {
-          this.classList.remove(style.flipped);
-          if (this.previousElementSibling) {
-            this.previousElementSibling.classList.remove(style.flipped);
-          }
-        } else {
-          this.classList.add(style.flipped);
-          if (this.nextElementSibling) {
-            this.nextElementSibling.classList.add(style.flipped);
-          }
-        }
-      });
-    }
     setRerender("hi");
   }, [flag]);
 
@@ -146,8 +124,6 @@ export default function Book() {
     const { name, value } = e.target;
     setInput((input) => ({ ...input, [name]: value }));
   };
-
-
 
   const [loginIsOpen, setLoginIsOpen] = useState(false);
 

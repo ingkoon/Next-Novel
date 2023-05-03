@@ -1,6 +1,28 @@
 import style from "./Qna.module.css";
 
-export default function Qna({ qna, index }) {
+type imageinfo = {
+  caption: string;
+  // created_at: string;
+  // id: number;
+  image: string;
+  // novel_content: number;
+};
+type qnainfo = {
+  chosen_query: string;
+  // content: string;
+  // id: number;
+  images: imageinfo[];
+  // query1: string;
+  // query2: string;
+  // query3: string;
+  // step: number;
+};
+interface QnaProps {
+  qna: qnainfo;
+  index: number;
+}
+
+export default function Qna({ qna, index }: QnaProps) {
   return (
     <div className={style.wrapper}>
       <div className={style.what}>

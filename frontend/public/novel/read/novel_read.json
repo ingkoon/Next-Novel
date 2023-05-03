@@ -45,20 +45,6 @@
           "id": 1074,
           "image": "/novel/material4.png",
           "novel_content": 379
-        },
-        {
-          "caption": "초록색 잎사귀가 달린 사과나무.",
-          "created_at": "2023-04-12T22:52:32.725312",
-          "id": 1075,
-          "image": "/novel/material5.png",
-          "novel_content": 379
-        },
-        {
-          "caption": "붉은색 보우타이를 한 주황색 곰.",
-          "created_at": "2023-04-12T22:52:32.727256",
-          "id": 1076,
-          "image": "/novel/material6.png",
-          "novel_content": 379
         }
       ],
       "novel": 163,

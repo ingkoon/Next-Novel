@@ -1,7 +1,7 @@
-// import style from "./Book.module.css";
-import style from "./Book2.module.css";
-import Materials from "./Materials.jsx";
-import Qna from "./Qna.jsx";
+import style from "./Book.module.css";
+// import style from "./Book2.module.css";
+import Materials from "./Materials";
+import Qna from "./Qna";
 import Modal from "react-modal";
 import Login from "../login/Login";
 
@@ -210,7 +210,7 @@ export default function Book() {
           <div className={style.pages}>
             <div className={style.page}>
               <div className={style.cover}>
-                <div className={style.coverimg}>
+                <div className={style.coverpic}>
                   <img
                     src={
                       novelinfo &&
@@ -247,14 +247,16 @@ export default function Book() {
             </div>
             <div className={style.page}>
               <div className={style.ogcover}>
-                <img
-                  src={
-                    novelinfo &&
-                    process.env.REACT_APP_IMAGE_API +
-                      novelinfo.original_cover_img
-                  }
-                  alt="ogcover"
-                />
+                <div className={style.backimgpart}>
+                  <img
+                    src={
+                      novelinfo &&
+                      process.env.REACT_APP_IMAGE_API +
+                        novelinfo.original_cover_img
+                    }
+                    alt="ogcover"
+                  />
+                </div>
                 <div className={style.tmi}>
                   P.S. 책 표지는 위 그림으로 만들어졌습니다.
                 </div>

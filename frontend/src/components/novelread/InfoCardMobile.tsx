@@ -1,4 +1,4 @@
-import style from "./InfoCard.module.css";
+import style from "./InfoCardMobile.module.css";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { novelall } from "../../api/novelread";

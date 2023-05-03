@@ -1,0 +1,22 @@
+.back {
+  position: relative;
+  top: 150%;
+  width: 100%;
+}
+
+.page {
+  background: pink;
+  border: 2px solid blue;
+}
+
+.coverimg {
+  width: 100%;
+}
+
+.coverimg img {
+  width: 50%;
+}
+
+.ogcover img {
+  width: 50%;
+}
