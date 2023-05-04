@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.a509.service_novel.dto.ImageDto;
 import com.a509.service_novel.dto.NovelContentDto;
 import com.a509.service_novel.dto.NovelDetailDto;
 import com.a509.service_novel.jpa.novel.Novel;
@@ -21,6 +22,8 @@ import com.a509.service_novel.jpa.novelContent.NovelContentRepogitory;
 import com.a509.service_novel.dto.NovelCommentDto;
 import com.a509.service_novel.dto.NovelListDto;
 import com.a509.service_novel.jpa.novel.NovelRepogitory;
+import com.a509.service_novel.jpa.novelImage.NovelImage;
+import com.a509.service_novel.jpa.novelImage.NovelImageRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +34,7 @@ public class NovelService {
 	private final NovelRepogitory novelRepogitory;
 	private final NovelContentRepogitory novelContentRepogitory;
 	private final NovelCommentRepogitory novelCommentRepogitory;
+	private final NovelImageRepository novelImageRepository;
 
 	private final NovelImageComponent novelImageComponent;
 	@Transactional
@@ -174,5 +178,34 @@ public class NovelService {
 			novelContentRepogitory.deleteByNovelId(id);
 		}
 		novelRepogitory.deleteById(id);
+	}
+
+	@Transactional
+	public void insertNovelImages(int authorId, MultipartFile[] startImages, MultipartFile[] contentImages) throws Exception{
+
+		for(MultipartFile image : startImages){
+
+			NovelImage novelImage = new NovelImage();
+			novelImage.setImageName(image.getOriginalFilename());
+			novelImage.setAuthorId(authorId);
+			novelImageRepository.save(novelImage);
+		}
+
+		for(MultipartFile image : contentImages){
+
+			NovelImage novelImage = new NovelImage();
+			novelImage.setImageName(image.getOriginalFilename());
+			novelImage.setAuthorId(authorId);
+			novelImageRepository.save(novelImage);
+		}
+	}
+
+	public List<ImageDto> selectAllNovelImage(int authorId) throws Exception{
+		List<NovelImage> novelImageList = novelImageRepository.findByAuthorId(authorId);
+		List<ImageDto> imageDtos = new ArrayList<>();
+		for(NovelImage image : novelImageList){
+			imageDtos.add(new ImageDto(image.getImageName()));
+		}
+		return imageDtos;
 	}
 }

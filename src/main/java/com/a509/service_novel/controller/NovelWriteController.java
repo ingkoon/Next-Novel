@@ -262,4 +262,5 @@ public class NovelWriteController {
 			.contentType(MediaType.IMAGE_PNG)
 			.body(resources);
 	}
+
 }

@@ -30,10 +30,12 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.a509.service_novel.dto.ImageDto;
 import com.a509.service_novel.dto.NovelContentDto;
 import com.a509.service_novel.dto.NovelImageDto;
 import com.a509.service_novel.dto.NovelListDto;
 import com.a509.service_novel.jpa.novel.Novel;
+import com.a509.service_novel.jpa.novelImage.NovelImage;
 import com.a509.service_novel.service.NovelImageComponent;
 
 import com.a509.service_novel.dto.NovelDetailDto;
@@ -47,9 +49,21 @@ import lombok.RequiredArgsConstructor;
 public class NovelController {
 
 	private final NovelService novelService;
+	private final NovelImageComponent novelImageComponent;
 	@GetMapping("/hello")
 	public ResponseEntity<?> hello(){
 		return new ResponseEntity<>("hello",HttpStatus.OK);
+	}
+
+	@PostMapping("/simple")
+	public ResponseEntity<?> hello2(@RequestPart("image") MultipartFile image){
+		try{
+			novelImageComponent.save(image,"uid");
+			return ResponseEntity.ok("hello");
+		}
+		catch (Exception e){
+			return new ResponseEntity<>(e.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@PostMapping()
@@ -62,6 +76,7 @@ public class NovelController {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
 			String UID = now.format(formatter);
 			novelService.insertNovel(novelDetailDto,startImages,contentImages,coverImages,UID);
+			novelService.insertNovelImages(novelDetailDto.getAuthorId(),startImages,contentImages);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch (Exception e){
@@ -107,7 +122,17 @@ public class NovelController {
 
 	}
 
-	@GetMapping("/id/")
+	@GetMapping("/image/{id}")
+	public ResponseEntity<?> selectAllNovelImage(@PathVariable("id") int authorId){
+
+		try{
+			List<ImageDto> images = novelService.selectAllNovelImage(authorId);
+			return new ResponseEntity<>(images,HttpStatus.OK);
+		}
+		catch (Exception e){
+			return new ResponseEntity<>(e.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteNovel(@PathVariable("id") int id){
