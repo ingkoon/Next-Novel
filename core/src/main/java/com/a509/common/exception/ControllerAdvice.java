@@ -3,6 +3,7 @@ package com.a509.common.exception;
 import com.a509.common.bootpay.exception.NoTokenException;
 import com.a509.common.exception.dto.ErrorResponse;
 import com.a509.common.exception.enums.ErrorCode;
+import com.a509.common.exception.item.NoSuchItemException;
 import com.a509.common.exception.order.DuplicatedOrderException;
 import com.a509.common.exception.order.NoSuchOrderException;
 import com.a509.common.exception.point.DuplicatedPointException;
@@ -22,6 +23,7 @@ public class ControllerAdvice {
             NoTokenException.class,
             NoSuchPointException.class,
             NoSuchOrderException.class,
+            NoSuchItemException.class,
     })
     public ResponseEntity<ErrorResponse> handleNoContentException(final RuntimeException e){
         ErrorCode errorCode = ErrorCode.NOT_FOUND;
