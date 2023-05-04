@@ -42,7 +42,7 @@ spring:
         #   uri: http://localhost:8012/
           uri: http://***REMOVED***:8012/
           predicates:
-            - Path=/novel/**, /write/**, /comment/**
+            - Path=/novel/**, /write/**, /comment/**, /img/**
         - id: ai
         #   uri: http://localhost:8013/
           uri: http://***REMOVED***:8013/
