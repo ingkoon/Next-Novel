@@ -28,7 +28,7 @@ public class Member{
     private String nickname;
     private String profileImage;
 
-    private String provider;
+    private String provider;    // null, google, kakao
     private String providerId;
 
     private String state;   // ACTIVE, RESIGNED

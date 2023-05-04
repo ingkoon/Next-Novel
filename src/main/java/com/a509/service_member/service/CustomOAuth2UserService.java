@@ -37,26 +37,30 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
         }
 
-        Optional<Member> oAuthMember = memberRepository.findByEmail(oAuth2UserInfo.getEmail());
-        System.out.println("11111111111111111111111111");
-        System.out.println(oAuthMember);
+        String provider = oAuth2UserInfo.getProvider();
+        String providerId = oAuth2UserInfo.getProviderId();
+        String email = provider + "_" + providerId;
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
         Member member = null;
-        if (oAuthMember == null) {
-            String provider = oAuth2UserInfo.getProvider(); // google
-            String providerId = oAuth2UserInfo.getProviderId();
-            String email = provider + "_" + providerId;
+        if (optionalMember.isEmpty()) {
             member = Member
                     .builder()
                     .email(email)
-                    .password(bCryptPasswordEncoder.encode("딘추"))
+                    .password(bCryptPasswordEncoder.encode(providerId))
                     .nickname(oAuth2UserInfo.getEmail())
+                    .profileImage(oAuth2UserInfo.getProfileImage())
+                    .provider(provider)
+                    .providerId(providerId)
                     .build();
             memberRepository.save(member);
-            System.out.println("222222222222222");
-            System.out.println(member);
         }
 
-        return new CustomUserDetails(member, oAuth2User.getAttributes());
+        System.out.println(new CustomUserDetails(optionalMember.orElse(member), oAuth2User.getAttributes()));
+        return new CustomUserDetails(optionalMember.orElse(member), oAuth2User.getAttributes());
     }
 
+//    @Override
+//    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+//        return super.loadUser(userRequest);
+//    }
 }

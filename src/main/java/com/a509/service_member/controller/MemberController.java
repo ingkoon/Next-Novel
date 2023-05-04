@@ -45,9 +45,18 @@ public class MemberController {
 
     @GetMapping("/oauth/google")
     public String google() {
-        String reqUrl = "https://accounts.google.com" + "/o/oauth2/v2/auth?client_id=" + googleClientId + "&redirect_uri=" + googleRedirecUrl
-                + "&response_type=code&scope=email%20profile%20openid&access_type=offline";
-        return reqUrl;
+        String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleClientId + "&redirect_uri=" + googleRedirecUrl
+                + "&response_type=code&scope=email%20profile&access_type=offline";
+//        + "&response_type=code&scope=email%20profile%20openid&access_type=offline";
+        String test1 = "https://accounts.google.com/o/oauth2/v2/auth?" +
+                "&scope=https://www.googleapis.com/auth/contacts.readonly&" +
+                "access_type=offline&" +
+                "include_granted_scopes=true&" +
+                "response_type=code&" +
+                "state=state_parameter_passthrough_value&" +
+                "redirect_uri="+googleRedirecUrl+"&" +
+                "client_id="+googleClientId;
+        return test1;
     }
 
 //    @GetMapping("/oauth/kakao/login")

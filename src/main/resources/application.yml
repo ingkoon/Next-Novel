@@ -6,27 +6,32 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://***REMOVED***:8761/eureka
+      defaultZone: http://localhost:8761/eureka
+#      defaultZone: http://***REMOVED***:8761/eureka
 
 spring:
   application:
     name: service_member
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://***REMOVED***:3306/novel?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
+    url: jdbc:mysql://localhost/member?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: nextnovel
     password: ***REMOVED***
+#    url: jdbc:mysql://***REMOVED***:3306/member?serverTimezone=Asia/Seoul&characterEncoding=UTF-8     // member schema 생성
+#    username: root
+#    password: ***REMOVED***
   jpa:
     database: mysql
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
         show_sql: true
   data:
     redis:
-      host: ***REMOVED***
+      host: localhost
+#      host: ***REMOVED***
       port: 6379
       password:
   servlet:
@@ -40,10 +45,11 @@ spring:
           google:
             client-id: ***REMOVED***
             client-secret: ***REMOVED***
-            redirect-uri: http://***REMOVED***:8011/login/oauth2/code/google
+            redirect-uri: http://localhost:8011/login/oauth2/code/google
             scope:
               - email
               - profile
+#            redirect-uri: http://***REMOVED***:8011/login/oauth2/code/google
 
 jwt:
   secret: ***REMOVED***
