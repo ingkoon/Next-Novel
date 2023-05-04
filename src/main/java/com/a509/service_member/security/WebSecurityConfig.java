@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 // JwtAuthenticationFilter 를 UsernamePasswordAuthenticationFilter 전에 적용시킨다.
-//                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, stringRedisTemplate), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, stringRedisTemplate), UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login()
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
