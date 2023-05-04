@@ -41,8 +41,8 @@ public class NovelDetailDto {
 			.introduction(introduction)
 			.genre(genre)
 			.authorId(authorId)
-			.startNovel(startContent)
-			.endNovel(endContent)
+			.startContent(startContent)
+			.endContent(endContent)
 			.build();
 	}
 }
