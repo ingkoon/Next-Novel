@@ -21,11 +21,11 @@ public class NovelImageComponent {
 	// private final String path = "/app/data";
 	@Transactional
 	public void save(MultipartFile file, String UID) throws Exception{
-		String currentPaht = Paths.get("").toAbsolutePath().toString();
-		System.out.println(currentPaht);
+		// String currentPaht = Paths.get("").toAbsolutePath().toString();
+		// System.out.println(currentPaht);
 
 		// 저장할 파일 경로를 만듭니다.
 
-		file.transferTo(new File(currentPaht+"\\app\\data\\"+UID+"_"+file.getOriginalFilename()));
+		file.transferTo(new File("\\app/data\\"+UID+"_"+file.getOriginalFilename()));
 	}
 }
