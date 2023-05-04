@@ -40,8 +40,9 @@ public class Novel {
 	private String startImage3;
 	private String startImage4;
 
-	private String startNovel;
-	private String endNovel;
+	private String startContent;
+	private String endContent;
+
 
 	public NovelDetailDto toDto(){
 		return NovelDetailDto.builder()
@@ -60,8 +61,8 @@ public class Novel {
 			.startImage4(startImage4)
 			.originCoverImg(originCoverImg)
 			.coverImg(coverImg)
-			.startNovel(startNovel)
-			.endNovel(endNovel)
+			.startContent(startContent)
+			.endContent(endContent)
 			.build();
 	}
 
