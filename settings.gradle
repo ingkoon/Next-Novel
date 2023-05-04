@@ -2,4 +2,5 @@ rootProject.name = 'service_payment'
 include 'point-service'
 include 'core'
 include 'order-service'
+include 'item-service'
 
