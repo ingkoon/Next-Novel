@@ -204,10 +204,9 @@ public class NovelWriteController {
 		}
 	}
 	@PostMapping("/end")
-	public ResponseEntity<?> NovelEnd(@RequestBody Map<String, String> response){
+	public ResponseEntity<?> NovelEnd(@RequestParam("authorId") String authorIdString){
 
 		try {
-			String authorIdString = response.get("authorId");
 			int authorId = Integer.parseInt(authorIdString);
 			MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 
