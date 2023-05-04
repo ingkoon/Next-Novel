@@ -18,10 +18,14 @@ export default function SelectOption() {
       click3: "이대로 소설을\n마무리합니다",
       event: () => {
         const formData = new FormData();
-        formData.append("step", novel.step! + 1 + "");
-        formData.append("novel_id", novel.id!);
+        formData.append("authorId", "1234");
         endNovel.mutate(formData, {
-          onSuccess: () => {
+          onSuccess: (res) => {
+            console.log(res);
+            setNovel({
+              ...novel,
+              story: novel.story + "\n\n" + res.data.korean_answer,
+            });
             setStep(5);
           },
         });

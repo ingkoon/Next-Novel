@@ -13,13 +13,11 @@ export async function startNovelApi(formData) {
 }
 
 export async function continueNovelApi(formData) {
-  // return tokeninstance.post(`novel/continue/`, formData, config);
-  return axios.get("/novel/continue_novel.json");
+  return instance.post(`/write/sequence`, formData, config);
 }
 
 export async function endNovelApi(formData) {
-  // return tokeninstance.post(`novel/end/`, formData);
-  return axios.get("/novel/end_novel.json");
+  return instance.post(`/write/end`, formData);
 }
 
 export async function makeCoverRequestApi(formData) {
