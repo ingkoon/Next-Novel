@@ -24,6 +24,7 @@ spring:
       enabled: true
       max-request-size: 30MB
       max-file-size: 10MB
+      location : uploads/
 
   redis:
     host: ***REMOVED***
