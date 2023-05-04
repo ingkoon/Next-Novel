@@ -24,7 +24,7 @@ export default function SelectOption() {
             console.log(res);
             setNovel({
               ...novel,
-              story: novel.story + "\n\n" + res.data.korean_answer,
+              endStory: res.data.korean_answer,
             });
             setStep(5);
           },

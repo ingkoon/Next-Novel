@@ -13,7 +13,7 @@ export default function Question() {
     setSelected((selected + 1) % 3);
   };
   useEffect(() => {
-    setNovel({ ...novel, selectedQuestion: selected });
+    setNovel({ ...novel, selectedQuestion: questions[selected] });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 

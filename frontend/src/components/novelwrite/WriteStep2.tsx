@@ -37,7 +37,7 @@ export default function WriteStep2() {
               image: imageSrcs[index],
             })
           ),
-          story: res.data.korean_answer,
+          startStory: res.data.korean_answer,
         });
         setStep(3);
       },

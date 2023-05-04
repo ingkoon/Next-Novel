@@ -52,9 +52,23 @@ export default function WriteStep5b() {
   };
   const appendFormData = () => {
     const formData = new FormData();
-    formData.append("novel_id", novel.id!);
-    formData.append("title", input.title);
-    formData.append("introduction", input.desc);
+    const novelJson = {
+      title: input.title,
+      introduction: input.desc,
+      genre: novel.genre + "",
+      authorId: 1234 + "",
+      contents: [
+        novel.newMaterials!.map((_, index) => ({
+          content: novel.continueStory![index],
+          query: "",
+          caption: novel.newMaterials![index],
+        })),
+      ],
+    };
+    formData.append("novel", JSON.stringify(novelJson));
+    formData.append("start_images", ""); //파일로 변환 필요, 아니면 그냥 dataurl 형식 말고 파일로 저장시킬까.
+    formData.append("content_images", "");
+    formData.append("cover_images", "");
 
     return formData;
   };

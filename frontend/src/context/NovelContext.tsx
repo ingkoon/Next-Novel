@@ -7,13 +7,15 @@ type Material = {
 
 type Novel = {
   genre: number;
-  id?: string;
-  step?: number;
+  id?: string; //삭제예정
+  step?: number; //삭제 예정
   materials?: Material[];
   newMaterials?: Material[];
-  story?: string;
+  startStory?: string;
+  continueStory?: string[];
+  endStory?: string;
   questions?: string[];
-  selectedQuestion?: number;
+  selectedQuestion?: string;
   cover?: string;
   oldCover?: string;
 };

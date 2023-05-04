@@ -35,7 +35,7 @@ export default function WriteStep4a() {
           : [];
         setNovel({
           ...novel,
-          story: novel.story + "\n\n" + res.data.korean_answer,
+          continueStory: [...novel.continueStory!, res.data.korean_answer],
           newMaterials: [
             ...originalNewMaterials,
             {
@@ -51,10 +51,7 @@ export default function WriteStep4a() {
   const appendFormData = (files: File[]) => {
     const formData = new FormData();
     formData.append("authorId", "1234");
-    formData.append(
-      "previousQuestion",
-      novel.questions![novel.selectedQuestion!]
-    );
+    formData.append("previousQuestion", novel.selectedQuestion!);
     formData.append("image", files[0]);
 
     return formData;
