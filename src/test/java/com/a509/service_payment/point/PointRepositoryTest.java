@@ -39,6 +39,7 @@ public class PointRepositoryTest {
         System.out.println("update failed");
     }
 
+
     @Test
     @DisplayName("포인트 정보 갱신: Success")
     public void updatePoint(){
