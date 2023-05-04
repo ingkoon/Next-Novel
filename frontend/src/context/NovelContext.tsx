@@ -10,7 +10,7 @@ type Question = {
 };
 
 type Novel = {
-  genre: string;
+  genre: number;
   id?: string;
   step?: number;
   materials?: Material[];
@@ -32,7 +32,7 @@ type NovelContextType = {
 
 export const NovelContext = createContext<NovelContextType>({
   novel: {
-    genre: "romance",
+    genre: 0,
   },
   setNovel: () => {},
   step: 1,
@@ -47,7 +47,7 @@ export function NovelContextProvider({
   children: React.ReactNode;
 }) {
   const [novel, setNovel] = useState<Novel>({
-    genre: "romance",
+    genre: 0,
   });
   const [step, setStep] = useState<number>(1);
   const [count, setCount] = useState<number>(0);

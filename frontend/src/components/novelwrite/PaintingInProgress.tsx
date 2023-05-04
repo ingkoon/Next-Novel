@@ -14,7 +14,7 @@ export default function PaintingInProgress() {
           {materials.map((material, index) => (
             <div key={index}>
               <img
-                src={process.env.REACT_APP_IMAGE_API + material.image}
+                src={material.image}
                 alt=""
               />
               <span>{material.caption}</span>
@@ -26,7 +26,7 @@ export default function PaintingInProgress() {
             <div key={index}>
               <div />
               <img
-                src={process.env.REACT_APP_IMAGE_API + newMaterial.image}
+                src={newMaterial.image}
                 alt=""
               />
               <span>{newMaterial.caption}</span>
