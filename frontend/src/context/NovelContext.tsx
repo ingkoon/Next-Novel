@@ -15,6 +15,7 @@ type Novel = {
   questions?: string[];
   selectedQuestion?: number;
   cover?: string;
+  oldCover?: string;
 };
 
 type NovelContextType = {

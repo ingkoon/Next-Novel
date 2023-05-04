@@ -66,10 +66,7 @@ export default function WriteStep5b() {
         <div className={style.left}>
           <div className={style.book}>
             <div className={style.cover}>
-              <img
-                src={process.env.REACT_APP_IMAGE_API + novel.cover!}
-                alt="cover"
-              />
+              <img src={novel.cover!} alt="cover" />
             </div>
             <div className={style.back1} />
             <div className={style.back2} />

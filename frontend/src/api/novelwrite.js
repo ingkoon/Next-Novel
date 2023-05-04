@@ -4,6 +4,11 @@ import axios from "axios";
 const config = {
   headers: { "Content-Type": "multipart/form-data" },
 };
+const config2 = {
+  headers: { "Content-Type": "multipart/form-data" },
+  responseType: "blob",
+};
+
 export async function fetchQuestions(formData) {
   return instance.post("/write/question/", formData);
 }
@@ -21,8 +26,7 @@ export async function endNovelApi(formData) {
 }
 
 export async function makeCoverRequestApi(formData) {
-  // return tokeninstance.post(`novel/cover-image/`, formData, config);
-  return axios.get("/novel/cover.json");
+  return instance.post(`/write/image`, formData, config2);
 }
 
 export async function finNovelApi(formData) {

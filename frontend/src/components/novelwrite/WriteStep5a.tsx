@@ -33,17 +33,22 @@ export default function WriteStep5a() {
     makeCoverRequest.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
-        //context 제어
-        setNovel({
-          ...novel,
-          cover: res.data.image,
-        });
+
+        let reader = new FileReader();
+        reader.readAsDataURL(res.data);
+        reader.onload = function() {
+          let dataUrl = reader.result!.toString();
+          setNovel({
+            ...novel,
+            cover: dataUrl,
+            oldCover: imageSrcs[0],
+          });
+        };
       },
     });
   };
   const appendFormData = (files: File[]) => {
     const formData = new FormData();
-    formData.append("novel_id", novel.id!);
     formData.append("image", files[0]);
 
     return formData;
@@ -69,11 +74,7 @@ export default function WriteStep5a() {
         <div className={style.right}>
           <div className={style.frame}>
             {novel.cover && (
-              <img
-                src={process.env.REACT_APP_IMAGE_API + novel.cover}
-                className={style.cover}
-                alt="cover"
-              />
+              <img src={novel.cover} className={style.cover} alt="cover" />
             )}
             {!novel.cover && (
               <img
