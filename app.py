@@ -72,8 +72,8 @@ async def novel_start(images: List[UploadFile] = Form(...),
 
     # gpt에게 캡셔닝과 장르를 던져주고, 소설을 받음.
     # en_answer : 소설(영어)
-    question = "Act as a StoryTeller. Write an endless novel story in the genre of {} in 5 sentences based on '{}','{}','{}','{}','{}','{}'.".format(
-        genre, en_string[0], en_string[1], en_string[2], en_string[3], en_string[4], en_string[5])
+    question = "Act as a StoryTeller. Write an endless novel story in the genre of {} in 5 sentences based on '{}','{}','{}','{}'.".format(
+        genre, en_string[0], en_string[1], en_string[2], en_string[3])
 
     en_answer,new_history = chatbot(question,[])
 
