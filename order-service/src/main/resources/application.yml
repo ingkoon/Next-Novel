@@ -1,0 +1,71 @@
+server:
+  port: 8015
+
+logging:
+  level:
+    web: debug
+    sql: debug
+
+spring:
+  profiles:
+    active: order
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://***REMOVED***:8761/eureka
+
+boot-pay:
+  rest-api-key: ***REMOVED***
+  private-key: D6+wqdBeprLC6I2LwR42iG/YHMIHjwaynDkkjSmLHYo=
+---
+spring:
+  application:
+    name: order_service
+
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/orders?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: root
+
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    hibernate:
+      ddl-auto: create
+
+---
+spring:
+  application:
+    name: order_service
+  config:
+    activate:
+      on-profile: service_payment
+
+  main:
+    allow-bean-definition-overriding: true
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://***REMOVED***:3306/orders?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: ***REMOVED***
+
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    hibernate:
+      ddl-auto: update
