@@ -8,20 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function SelectOption() {
   const { novel, setNovel, setStep, count, setCount } = useNovelContext();
-  const {
-    getQuestions: { isFetching, refetch, data },
-  } = useNovelWrite();
-  const { endNovel } = useNovelWrite();
+  const { endNovel, getQuestions } = useNovelWrite();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (data) {
-      setNovel({ ...novel, questions: data.queries });
-      setStep(4); //다음 페이지
-      setCount(count + 1); //이어하기 횟수
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
 
   const buttons = [
     {
@@ -46,9 +34,16 @@ export default function SelectOption() {
       click3: "이야기를\n더 진행합니다",
       event: () => {
         if (count === 5) return;
-        //아래 두 코드는 비동기로 실행되기때문에 getQuestions이 실행될때 novel.step+1로 두었는데...
-        setNovel((novel) => ({ ...novel, step: novel.step! + 1 }));
-        refetch();
+        const formData = new FormData();
+        formData.append("authorId", "1234");
+        getQuestions.mutate(formData, {
+          onSuccess: (res) => {
+            console.log(res);
+            setNovel({ ...novel, questions: res.data.questions });
+            setStep(4); //다음 페이지
+            setCount(count + 1); //이어하기 횟수
+          },
+        });
       },
     },
     {
@@ -60,7 +55,7 @@ export default function SelectOption() {
   ];
   return (
     <div className={style.container}>
-      <LoadingModal state={isFetching} />
+      <LoadingModal state={getQuestions.isLoading} />
       <LoadingModal state={endNovel.isLoading} />
       {buttons.map((button, index) => {
         return (

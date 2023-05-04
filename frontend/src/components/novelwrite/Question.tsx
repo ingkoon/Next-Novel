@@ -13,7 +13,7 @@ export default function Question() {
     setSelected((selected + 1) % 3);
   };
   useEffect(() => {
-    setNovel({ ...novel, selectedQuestion: questions[selected].index });
+    setNovel({ ...novel, selectedQuestion: selected });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
@@ -23,7 +23,7 @@ export default function Question() {
         <div className={style.Q}>Q.</div>
         <div className={style.count1}>{count}</div>
         <div className={style.count2}>/5</div>
-        <div className={style.question}>{questions[selected].query}</div>
+        <div className={style.question}>{questions[selected]}</div>
         <div className={style.dice}>
           <img
             src={process.env.PUBLIC_URL + `/icon/dice.svg`}

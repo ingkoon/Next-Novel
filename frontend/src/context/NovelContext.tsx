@@ -4,10 +4,6 @@ type Material = {
   caption: string;
   image: string;
 };
-type Question = {
-  index: number;
-  query: string;
-};
 
 type Novel = {
   genre: number;
@@ -16,7 +12,7 @@ type Novel = {
   materials?: Material[];
   newMaterials?: Material[];
   story?: string;
-  questions?: Question[];
+  questions?: string[];
   selectedQuestion?: number;
   cover?: string;
 };

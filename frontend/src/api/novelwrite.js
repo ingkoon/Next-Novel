@@ -4,13 +4,11 @@ import axios from "axios";
 const config = {
   headers: { "Content-Type": "multipart/form-data" },
 };
-export async function fetchQuestions(novelId, step) {
-  // return tokeninstance.get(`novel/${novelId}/step/${step}/`);
-  return axios.get("/novel/questions.json");
+export async function fetchQuestions(formData) {
+  return instance.post("/write/question/", formData);
 }
 
 export async function startNovelApi(formData) {
-  // return tokeninstance.post(`novel/start/`, formData, config);
   return instance.post("write/start/", formData, config);
 }
 

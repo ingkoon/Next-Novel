@@ -13,13 +13,9 @@ import { useNovelContext } from "../context/NovelContext";
 export default function useNovelWrite() {
   const { novel } = useNovelContext();
 
-  const getQuestions = useQuery(
-    ["questions"],
-    () => fetchQuestions(novel.id, novel.step! + 1),
-    {
-      enabled: false,
-      select: (data) => data.data,
-    }
+  const getQuestions = useMutation(
+    (formData: FormData) => fetchQuestions(formData),
+    {}
   );
 
   const startNovel = useMutation(
