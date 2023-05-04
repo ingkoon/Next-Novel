@@ -158,6 +158,10 @@ export default function Book() {
     setLoginIsOpen(false);
   };
 
+  // ///////////////////////////////////////////////////
+  // tsx code starts here
+  // ///////////////////////////////////////////////////
+
   return (
     <div className={style.back}>
       <Modal
@@ -195,6 +199,7 @@ export default function Book() {
                     alt="coverimg"
                   />
                 </div>
+                <div className={style.gap}></div>
                 <div className={style.bookfooter}>
                   <span className={style.ex}>"&nbsp;</span>
                   <span>{novelinfo.introduction}</span>
@@ -237,8 +242,8 @@ export default function Book() {
             </div>
             <div className={style.page}>
               <div className={style.lastpg}>
-                <div className={style.eng}>THE &nbsp;&nbsp;END.</div>
-                <div className={style.theend}>끝</div>
+                <div className={style.eng}>THE END.</div>
+                {/* <div className={style.theend}>끝</div> */}
                 <div className={style.ebar} />
               </div>
             </div>
@@ -269,7 +274,7 @@ export default function Book() {
                     type="text"
                     name="comm"
                     value={input.comm?.trim() ?? ""}
-                    placeholder="          어떠셨나요?"
+                    placeholder="         어떠셨나요?"
                     required
                     onChange={handleChange}
                   />
