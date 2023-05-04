@@ -54,9 +54,12 @@ public class NovelWriteController {
 	private final HttpHeaders headerImagePNG = new HttpHeaders();
 
 	@PostMapping("/start")
-	public ResponseEntity<?> NovelStart(@RequestParam("images") MultipartFile[] images, @RequestParam("genre") int genreIdx, @RequestParam("authorId") String authorIdString) throws IOException {
+	public ResponseEntity<?> NovelStart(@RequestParam("images") MultipartFile[] images
+		, @RequestParam("genre") String genreIdxString
+		, @RequestParam("authorId") String authorIdString) throws IOException {
 		MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 		int authorId = Integer.parseInt(authorIdString);
+		int genreIdx = Integer.parseInt(genreIdxString);
 
 		for (MultipartFile image : images) {
 			ByteArrayResource resource = new ByteArrayResource(image.getBytes()) {
