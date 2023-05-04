@@ -26,6 +26,6 @@ public class NovelImageComponent {
 
 		// 저장할 파일 경로를 만듭니다.
 
-		file.transferTo(new File("home\\data\\"+UID+"_"+file.getOriginalFilename()));
+		file.transferTo(new File("/home/data/"+UID+"_"+file.getOriginalFilename()));
 	}
 }
