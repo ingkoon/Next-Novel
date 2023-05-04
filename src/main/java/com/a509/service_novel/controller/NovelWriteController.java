@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -93,32 +94,9 @@ public class NovelWriteController {
 
 		//----------------------question start---------------------------
 
-		body = new LinkedMultiValueMap<>();
-		body.add("dialog_history",dialogHistoryObject);
-		responseBody = webClient.post()
-			.uri("/novel/question")
-			.contentType(MediaType.MULTIPART_FORM_DATA)
-			.body(BodyInserters.fromMultipartData(body))
-			.retrieve()
-			.bodyToMono(new ParameterizedTypeReference<Map<String,Object>>() {})
-			.block();
-
-		log.info("complete question");
-		dialogHistoryObject = (List<Object>)responseBody.get("dialog_history");
-		String query1 = (String)responseBody.get("query1");
-		String query2 = (String)responseBody.get("query2");
-		String query3 = (String)responseBody.get("query3");
-		List<String> questions = new ArrayList<>();
-
-		questions.add(query1);
-		questions.add(query2);
-		questions.add(query3);
-
-
 		NovelWriteDto novelWriteDto = new NovelWriteDto();
 		novelWriteDto.setCaptions(captions);
 		novelWriteDto.setKorean_answer(koreanAnswer);
-		novelWriteDto.setQuestions(questions);
 
 		log.info("start save in redis");
 		try{
@@ -130,6 +108,49 @@ public class NovelWriteController {
 		}
 	}
 
+	@PostMapping("/question")
+	public ResponseEntity<?> NovelStep3(@RequestParam("authorId") String authorIdString){
+
+		try{
+			MultiValueMap<String, Object> body;
+			body = new LinkedMultiValueMap<>();
+			int authorId = Integer.parseInt(authorIdString);
+
+			List<Object> dialogHistory = novelWriteService.getDialogHistory(authorId);
+			body.add("dialog_history",dialogHistory);
+			Map<String,Object> responseBody = webClient.post()
+				.uri("/novel/question")
+				.contentType(MediaType.MULTIPART_FORM_DATA)
+				.body(BodyInserters.fromMultipartData(body))
+				.retrieve()
+				.bodyToMono(new ParameterizedTypeReference<Map<String,Object>>() {})
+				.block();
+
+			dialogHistory = (List<Object>)responseBody.get("dialog_history");
+			String query1 = (String)responseBody.get("query1");
+			String query2 = (String)responseBody.get("query2");
+			String query3 = (String)responseBody.get("query3");
+			List<String> questions = new ArrayList<>();
+
+			questions.add(query1);
+			questions.add(query2);
+			questions.add(query3);
+
+
+			NovelWriteDto novelWriteDto = new NovelWriteDto();
+			novelWriteDto.setQuestions(questions);
+
+			log.info("start save in redis");
+
+			novelWriteService.setDialogHistory(dialogHistory,authorId);
+			return new ResponseEntity<>(novelWriteDto,HttpStatus.OK);
+
+		}
+		catch (Exception e){
+			return new ResponseEntity<>(e.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
 
 	@PostMapping("/sequence")
 	public ResponseEntity<?> NovelStep4(@RequestParam("image") MultipartFile image
@@ -171,37 +192,9 @@ public class NovelWriteController {
 			log.info("sequence complete");
 			///---------------------sequence complete-----------------------------
 
-
-
-
-
-			//----------------------question start---------------------------
-			body = new LinkedMultiValueMap<>();
-			body.add("dialog_history", dialogHistoryObject);
-			responseBody = webClient.post()
-				.uri("/novel/question")
-				.contentType(MediaType.MULTIPART_FORM_DATA)
-				.body(BodyInserters.fromMultipartData(body))
-				.retrieve()
-				.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
-				})
-				.block();
-
-			log.info("question complete");
-			dialogHistoryObject = (List<Object>)responseBody.get("dialog_history");
-			String query1 = (String)responseBody.get("query1");
-			String query2 = (String)responseBody.get("query2");
-			String query3 = (String)responseBody.get("query3");
-			List<String> questions = new ArrayList<>();
-
-			questions.add(query1);
-			questions.add(query2);
-			questions.add(query3);
-
 			NovelWriteDto novelWriteDto = new NovelWriteDto();
 			novelWriteDto.setCaptions(captions);
 			novelWriteDto.setKorean_answer(koreanAnswer);
-			novelWriteDto.setQuestions(questions);
 
 			novelWriteService.setDialogHistory(dialogHistoryObject, authorId);
 			return new ResponseEntity<>(novelWriteDto, HttpStatus.OK);
