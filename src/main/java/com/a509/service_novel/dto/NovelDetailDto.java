@@ -31,6 +31,8 @@ public class NovelDetailDto {
 	private String startImage2;
 	private String startImage3;
 	private String startImage4;
+	private String startNovel;
+	private String endNovel;
 
 
 	public Novel toEntityNovel() {
@@ -39,6 +41,8 @@ public class NovelDetailDto {
 			.introduction(introduction)
 			.genre(genre)
 			.authorId(authorId)
+			.startNovel(startNovel)
+			.endNovel(endNovel)
 			.build();
 	}
 }

@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class NovelImageComponent {
-	private final String path = "C:\\Users\\SSAFY\\Desktop\\imagelocation";
-	// private final String path = "/home/ubuntu/NovelService/images";
+	// private final String path = "C:\\Users\\SSAFY\\Desktop\\imagelocation";
+	private final String path = "/home/ubuntu/NextNovel/NovelService/images";
 	@Transactional
 	public void save(MultipartFile file, String UID) throws Exception{
 
