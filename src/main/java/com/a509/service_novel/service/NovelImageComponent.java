@@ -1,9 +1,12 @@
 package com.a509.service_novel.service;
 
 import java.io.File;
+import java.nio.file.Paths;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,11 +16,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class NovelImageComponent {
 	// private final String path = "C:\\Users\\SSAFY\\Desktop\\imagelocation";
-	private final String path = "/home/ubuntu/NextNovel/NovelService/images";
+	private final String path = "\\home\\ubuntu\\NextNovel\\NovelService\\images";
+	// private final String path = "/app/data";
 	@Transactional
 	public void save(MultipartFile file, String UID) throws Exception{
 
-		file.transferTo(new File(path+"/"+UID+"_"+file.getOriginalFilename()));
+		// 저장할 파일 경로를 만듭니다.
 
+		file.transferTo(new File(path+"/"+UID+"_"+file.getOriginalFilename()));
 	}
 }
