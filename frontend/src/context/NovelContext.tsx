@@ -4,21 +4,20 @@ type Material = {
   caption: string;
   image: string;
 };
-type Question = {
-  index: number;
-  query: string;
-};
 
 type Novel = {
-  genre: string;
-  id?: string;
-  step?: number;
-  materials?: Material[];
-  newMaterials?: Material[];
-  story?: string;
-  questions?: Question[];
-  selectedQuestion?: number;
-  cover?: string;
+  genre: number;
+  genreName: string;
+  materials: Material[];
+  newMaterials: Material[];
+  startStory: string;
+  continueStory: string[];
+  endStory: string;
+  questions: string[]; //의문
+  selectedQuestion: string; //의문
+  totalQuestions: string[];
+  cover: string;
+  oldCover: string;
 };
 
 type NovelContextType = {
@@ -32,7 +31,18 @@ type NovelContextType = {
 
 export const NovelContext = createContext<NovelContextType>({
   novel: {
-    genre: "romance",
+    genre: 0,
+    genreName: "로맨스",
+    materials: [],
+    newMaterials: [],
+    startStory: "",
+    continueStory: [],
+    endStory: "",
+    questions: [], //의문
+    selectedQuestion: "", //의문
+    totalQuestions: [],
+    cover: "",
+    oldCover: "",
   },
   setNovel: () => {},
   step: 1,
@@ -47,7 +57,18 @@ export function NovelContextProvider({
   children: React.ReactNode;
 }) {
   const [novel, setNovel] = useState<Novel>({
-    genre: "romance",
+    genre: 0,
+    genreName: "로맨스",
+    materials: [],
+    newMaterials: [],
+    startStory: "",
+    continueStory: [],
+    endStory: "",
+    questions: [], //의문
+    selectedQuestion: "", //의문
+    totalQuestions: [],
+    cover: "",
+    oldCover: "",
   });
   const [step, setStep] = useState<number>(1);
   const [count, setCount] = useState<number>(0);

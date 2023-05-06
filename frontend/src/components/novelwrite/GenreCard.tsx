@@ -17,9 +17,9 @@ export default function GenreCard({ genreInfo }: GenreCardProps) {
   return (
     <div
       className={`${style.container} ${
-        novel.genre === engName ? style.selected : ""
+        novel.genre === value ? style.selected : ""
       }`}
-      onClick={() => setNovel({ ...novel, genre: engName })}
+      onClick={() => setNovel({ ...novel, genre: value, genreName: name })}
     >
       <div className={style.image}>
         <img
@@ -31,7 +31,7 @@ export default function GenreCard({ genreInfo }: GenreCardProps) {
         <span>&lt; {name} /&gt;</span>
         <img
           src={
-            novel.genre === engName
+            novel.genre === value
               ? process.env.PUBLIC_URL + `/img/genre_icon_yellow${value}.svg`
               : process.env.PUBLIC_URL + `/img/genre_icon${value}.svg`
           }

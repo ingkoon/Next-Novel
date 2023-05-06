@@ -13,7 +13,7 @@ export default function WriteStep2() {
   const { novel, setNovel, setStep } = useNovelContext();
   const { startNovel } = useNovelWrite();
   const [imageSrcs, setImageSrcs] = useState<(string | undefined)[]>(
-    Array.from({ length: 6 }, () => undefined)
+    Array.from({ length: 4 }, () => undefined)
   );
   const [selected, setSelected] = useState(0);
   const { isShaking, checkReady } = useCheckReady();
@@ -31,11 +31,13 @@ export default function WriteStep2() {
         //context 제어
         setNovel({
           ...novel,
-          genre: res.data.genre,
-          id: res.data.id,
-          step: res.data.step,
-          materials: res.data.materials,
-          story: res.data.story,
+          materials: res.data.captions.map(
+            (caption: string, index: number) => ({
+              caption: caption,
+              image: imageSrcs[index],
+            })
+          ),
+          startStory: res.data.korean_answer,
         });
         setStep(3);
       },
@@ -45,7 +47,7 @@ export default function WriteStep2() {
   const appendFormData = (files: File[]) => {
     const formData = new FormData();
     files.forEach((file) => formData.append("images", file));
-    formData.append("genre", novel.genre);
+    formData.append("genre", novel.genre + "");
     formData.append("authorId", "1234");
 
     return formData;
