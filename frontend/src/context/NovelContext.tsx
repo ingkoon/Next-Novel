@@ -7,6 +7,7 @@ type Material = {
 
 type Novel = {
   genre: number;
+  genreName: string;
   materials: Material[];
   newMaterials: Material[];
   startStory: string;
@@ -31,6 +32,7 @@ type NovelContextType = {
 export const NovelContext = createContext<NovelContextType>({
   novel: {
     genre: 0,
+    genreName: "로맨스",
     materials: [],
     newMaterials: [],
     startStory: "",
@@ -56,6 +58,7 @@ export function NovelContextProvider({
 }) {
   const [novel, setNovel] = useState<Novel>({
     genre: 0,
+    genreName: "로맨스",
     materials: [],
     newMaterials: [],
     startStory: "",

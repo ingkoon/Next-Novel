@@ -19,7 +19,7 @@ export default function GenreCard({ genreInfo }: GenreCardProps) {
       className={`${style.container} ${
         novel.genre === value ? style.selected : ""
       }`}
-      onClick={() => setNovel({ ...novel, genre: value })}
+      onClick={() => setNovel({ ...novel, genre: value, genreName: name })}
     >
       <div className={style.image}>
         <img

@@ -6,6 +6,7 @@ import LoadingModal from "../common/LoadingModal";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import { useNavigate } from "react-router-dom";
 import useCheckReady from "../../hooks/useCheckReady";
+import useDataurlToFile from "../../hooks/useDataurlToFile";
 
 type Input = {
   title: string;
@@ -18,6 +19,7 @@ export default function WriteStep5b() {
   const { finNovel } = useNovelWrite();
   const navigate = useNavigate();
   const { isShaking, checkReady } = useCheckReady();
+  const { dataurlToFile } = useDataurlToFile();
 
   const buttons = [
     {
@@ -52,6 +54,11 @@ export default function WriteStep5b() {
   };
   const appendFormData = () => {
     const formData = new FormData();
+    const contentsVal = novel.newMaterials.map((_, index) => ({
+      content: novel.continueStory[index],
+      query: novel.totalQuestions[index],
+      caption: novel.newMaterials[index].caption,
+    }));
     const novelJson = {
       title: input.title,
       introduction: input.desc,
@@ -59,18 +66,28 @@ export default function WriteStep5b() {
       authorId: 1234 + "",
       startContent: novel.startStory,
       endContent: novel.endStory,
-      contents: [
-        novel.newMaterials.map((_, index) => ({
-          content: novel.continueStory[index],
-          query: "",
-          caption: novel.newMaterials[index].caption,
-        })),
-      ],
+      contents: contentsVal,
     };
-    formData.append("novel", JSON.stringify(novelJson));
-    formData.append("start_images", ""); //파일로 변환 필요, 아니면 그냥 dataurl 형식 말고 파일로 저장시킬까.
-    formData.append("content_images", "");
-    formData.append("cover_images", "");
+
+    formData.append(
+      "novel",
+      new Blob([JSON.stringify(novelJson)], { type: "application/json" })
+    );
+    //파일로 변환 필요, 아니면 그냥 dataurl 형식 말고 파일로 저장시킬까.
+
+    const start_images_files = dataurlToFile(
+      novel.materials.map((material) => material.image)
+    );
+    //이어하기가 없으면?
+    const content_images_files = dataurlToFile(
+      novel.newMaterials.map((newMaterial) => newMaterial.image)
+    );
+    const cover_images_files = dataurlToFile([novel.cover, novel.oldCover]);
+    start_images_files.forEach((file) => formData.append("start_images", file));
+    content_images_files.forEach((file) =>
+      formData.append("content_images", file)
+    );
+    cover_images_files.forEach((file) => formData.append("cover_images", file));
 
     return formData;
   };
@@ -143,7 +160,7 @@ export default function WriteStep5b() {
                           onChange={handleChange}
                         />
                       )}
-                      {index === 2 && <span>{novel.genre}</span>}
+                      {index === 2 && <span>{novel.genreName}</span>}
                     </div>
                   </div>
                 </div>

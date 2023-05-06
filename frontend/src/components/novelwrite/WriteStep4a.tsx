@@ -40,6 +40,7 @@ export default function WriteStep4a() {
               image: imageSrcs[0]!,
             },
           ],
+          totalQuestions: [...novel.totalQuestions, novel.selectedQuestion],
         });
         setStep(4.5);
       },

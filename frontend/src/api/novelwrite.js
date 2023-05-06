@@ -10,7 +10,7 @@ const config2 = {
 };
 
 export async function fetchQuestions(formData) {
-  return instance.post("/write/question/", formData);
+  return instance.post("write/question/", formData);
 }
 
 export async function startNovelApi(formData) {
@@ -18,20 +18,19 @@ export async function startNovelApi(formData) {
 }
 
 export async function continueNovelApi(formData) {
-  return instance.post(`/write/sequence`, formData, config);
+  return instance.post(`write/sequence/`, formData, config);
 }
 
 export async function endNovelApi(formData) {
-  return instance.post(`/write/end`, formData);
+  return instance.post(`write/end/`, formData);
 }
 
 export async function makeCoverRequestApi(formData) {
-  return instance.post(`/write/image`, formData, config2);
+  return instance.post(`write/image/`, formData, config2);
 }
 
 export async function finNovelApi(formData) {
-  // return tokeninstance.post(`novel/complete/`, formData);
-  return axios.get("/novel/fin_novel.json");
+  return instance.post(`novel/`, formData, config);
 }
 
 export async function fetchPaintings() {
