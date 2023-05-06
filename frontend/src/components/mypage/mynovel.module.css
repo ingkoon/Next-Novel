@@ -1,16 +1,27 @@
-
+.container {
+  /* background-color: aquamarine; */
+  padding: 0 8%;
+}
+.line {
+  height: 5px;
+  background-color: black;
+  margin-bottom: 20px;
+}
 .mynoveltitle {
   position: relative;
   text-align: center;
 }
 
 .logo {
-  height: 50px;
+  max-width: 48px;
+  width: 95%;
+  height: 95%;
 }
 .step {
   position: absolute;
-  left: 45%;
-  top: 10px;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -35%);
   font-size: 20px;
   color: white;
 }
@@ -25,8 +36,8 @@
 }
 
 .titlebar button {
-  width: 100px;
-  height: 50px;
+  width: 80%;
+  height: 40px;
   background-color: #f66f00;
   color: white;
   border: 0;
@@ -35,6 +46,7 @@
 
 .title {
   font-size: 28px;
+  padding: 5px;
 }
 
 .booklist {
@@ -42,6 +54,13 @@
   width: 90%;
   overflow: hidden;
   transition: height 0.35s ease;
-  padding: 0 5%;
   margin-bottom: 20px;
+}
+@media (max-width: 480px) {
+  .step {
+    font-size: 16px;
+  }
+  .title {
+    font-size: 24px;
+  }
 }
