@@ -4,34 +4,33 @@ import axios from "axios";
 const config = {
   headers: { "Content-Type": "multipart/form-data" },
 };
-export async function fetchQuestions(novelId, step) {
-  // return tokeninstance.get(`novel/${novelId}/step/${step}/`);
-  return axios.get("/novel/questions.json");
+const config2 = {
+  headers: { "Content-Type": "multipart/form-data" },
+  responseType: "blob",
+};
+
+export async function fetchQuestions(formData) {
+  return instance.post("write/question/", formData);
 }
 
 export async function startNovelApi(formData) {
-  // return tokeninstance.post(`novel/start/`, formData, config);
   return instance.post("write/start/", formData, config);
 }
 
 export async function continueNovelApi(formData) {
-  // return tokeninstance.post(`novel/continue/`, formData, config);
-  return axios.get("/novel/continue_novel.json");
+  return instance.post(`write/sequence/`, formData, config);
 }
 
 export async function endNovelApi(formData) {
-  // return tokeninstance.post(`novel/end/`, formData);
-  return axios.get("/novel/end_novel.json");
+  return instance.post(`write/end/`, formData);
 }
 
 export async function makeCoverRequestApi(formData) {
-  // return tokeninstance.post(`novel/cover-image/`, formData, config);
-  return axios.get("/novel/cover.json");
+  return instance.post(`write/image/`, formData, config2);
 }
 
 export async function finNovelApi(formData) {
-  // return tokeninstance.post(`novel/complete/`, formData);
-  return axios.get("/novel/fin_novel.json");
+  return instance.post(`novel/`, formData, config);
 }
 
 export async function fetchPaintings() {

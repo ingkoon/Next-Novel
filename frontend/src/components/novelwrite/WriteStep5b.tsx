@@ -6,6 +6,7 @@ import LoadingModal from "../common/LoadingModal";
 import useNovelWrite from "../../hooks/useNovelWrite";
 import { useNavigate } from "react-router-dom";
 import useCheckReady from "../../hooks/useCheckReady";
+import useDataurlToFile from "../../hooks/useDataurlToFile";
 
 type Input = {
   title: string;
@@ -18,6 +19,7 @@ export default function WriteStep5b() {
   const { finNovel } = useNovelWrite();
   const navigate = useNavigate();
   const { isShaking, checkReady } = useCheckReady();
+  const { dataurlToFile } = useDataurlToFile();
 
   const buttons = [
     {
@@ -46,15 +48,46 @@ export default function WriteStep5b() {
     finNovel.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
-        navigate(`/library/${novel.id}/intro`, { state: { id: novel.id } });
+        // navigate(`/library/${novel.id}/intro`, { state: { id: novel.id } });
       },
     });
   };
   const appendFormData = () => {
     const formData = new FormData();
-    formData.append("novel_id", novel.id!);
-    formData.append("title", input.title);
-    formData.append("introduction", input.desc);
+    const contentsVal = novel.newMaterials.map((_, index) => ({
+      content: novel.continueStory[index],
+      query: novel.totalQuestions[index],
+      caption: novel.newMaterials[index].caption,
+    }));
+    const novelJson = {
+      title: input.title,
+      introduction: input.desc,
+      genre: novel.genre + "",
+      authorId: 1234 + "",
+      startContent: novel.startStory,
+      endContent: novel.endStory,
+      contents: contentsVal,
+    };
+
+    formData.append(
+      "novel",
+      new Blob([JSON.stringify(novelJson)], { type: "application/json" })
+    );
+    //파일로 변환 필요, 아니면 그냥 dataurl 형식 말고 파일로 저장시킬까.
+
+    const start_images_files = dataurlToFile(
+      novel.materials.map((material) => material.image)
+    );
+    //이어하기가 없으면?
+    const content_images_files = dataurlToFile(
+      novel.newMaterials.map((newMaterial) => newMaterial.image)
+    );
+    const cover_images_files = dataurlToFile([novel.cover, novel.oldCover]);
+    start_images_files.forEach((file) => formData.append("start_images", file));
+    content_images_files.forEach((file) =>
+      formData.append("content_images", file)
+    );
+    cover_images_files.forEach((file) => formData.append("cover_images", file));
 
     return formData;
   };
@@ -66,10 +99,7 @@ export default function WriteStep5b() {
         <div className={style.left}>
           <div className={style.book}>
             <div className={style.cover}>
-              <img
-                src={process.env.REACT_APP_IMAGE_API + novel.cover!}
-                alt="cover"
-              />
+              <img src={novel.cover!} alt="cover" />
             </div>
             <div className={style.back1} />
             <div className={style.back2} />
@@ -130,7 +160,7 @@ export default function WriteStep5b() {
                           onChange={handleChange}
                         />
                       )}
-                      {index === 2 && <span>{novel.genre}</span>}
+                      {index === 2 && <span>{novel.genreName}</span>}
                     </div>
                   </div>
                 </div>
