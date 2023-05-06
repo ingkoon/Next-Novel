@@ -46,7 +46,7 @@ export default function WriteStep5b() {
     finNovel.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
-        navigate(`/library/${novel.id}/intro`, { state: { id: novel.id } });
+        // navigate(`/library/${novel.id}/intro`, { state: { id: novel.id } });
       },
     });
   };
@@ -57,11 +57,13 @@ export default function WriteStep5b() {
       introduction: input.desc,
       genre: novel.genre + "",
       authorId: 1234 + "",
+      startContent: novel.startStory,
+      endContent: novel.endStory,
       contents: [
-        novel.newMaterials!.map((_, index) => ({
-          content: novel.continueStory![index],
+        novel.newMaterials.map((_, index) => ({
+          content: novel.continueStory[index],
           query: "",
-          caption: novel.newMaterials![index],
+          caption: novel.newMaterials[index].caption,
         })),
       ],
     };

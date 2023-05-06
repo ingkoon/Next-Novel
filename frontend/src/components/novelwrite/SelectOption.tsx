@@ -29,7 +29,6 @@ export default function SelectOption() {
             setStep(5);
           },
         });
-        setNovel((novel) => ({ ...novel, step: novel.step! + 1 }));
       },
     },
     {

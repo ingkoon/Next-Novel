@@ -4,11 +4,7 @@ import { useNovelContext } from "../../context/NovelContext";
 
 export default function StoryInProgress() {
   const { novel } = useNovelContext();
-  const wholeStory = [
-    novel.startStory,
-    ...novel.continueStory!,
-    novel.endStory,
-  ];
+  const wholeStory = [novel.startStory, ...novel.continueStory, novel.endStory];
 
   return (
     <div className={style.container}>

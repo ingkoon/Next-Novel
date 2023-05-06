@@ -5,7 +5,6 @@ import StoryInProgressModal from "../common/StoryInProgressModal";
 
 export default function Question() {
   const { novel, setNovel, count } = useNovelContext();
-  const questions = novel.questions!;
   const [selected, setSelected] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -13,7 +12,7 @@ export default function Question() {
     setSelected((selected + 1) % 3);
   };
   useEffect(() => {
-    setNovel({ ...novel, selectedQuestion: questions[selected] });
+    setNovel({ ...novel, selectedQuestion: novel.questions[selected] });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
@@ -23,7 +22,7 @@ export default function Question() {
         <div className={style.Q}>Q.</div>
         <div className={style.count1}>{count}</div>
         <div className={style.count2}>/5</div>
-        <div className={style.question}>{questions[selected]}</div>
+        <div className={style.question}>{novel.questions[selected]}</div>
         <div className={style.dice}>
           <img
             src={process.env.PUBLIC_URL + `/icon/dice.svg`}

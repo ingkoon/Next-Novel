@@ -7,17 +7,16 @@ type Material = {
 
 type Novel = {
   genre: number;
-  id?: string; //삭제예정
-  step?: number; //삭제 예정
-  materials?: Material[];
-  newMaterials?: Material[];
-  startStory?: string;
-  continueStory?: string[];
-  endStory?: string;
-  questions?: string[];
-  selectedQuestion?: string;
-  cover?: string;
-  oldCover?: string;
+  materials: Material[];
+  newMaterials: Material[];
+  startStory: string;
+  continueStory: string[];
+  endStory: string;
+  questions: string[]; //의문
+  selectedQuestion: string; //의문
+  totalQuestions: string[];
+  cover: string;
+  oldCover: string;
 };
 
 type NovelContextType = {
@@ -32,6 +31,16 @@ type NovelContextType = {
 export const NovelContext = createContext<NovelContextType>({
   novel: {
     genre: 0,
+    materials: [],
+    newMaterials: [],
+    startStory: "",
+    continueStory: [],
+    endStory: "",
+    questions: [], //의문
+    selectedQuestion: "", //의문
+    totalQuestions: [],
+    cover: "",
+    oldCover: "",
   },
   setNovel: () => {},
   step: 1,
@@ -47,6 +56,16 @@ export function NovelContextProvider({
 }) {
   const [novel, setNovel] = useState<Novel>({
     genre: 0,
+    materials: [],
+    newMaterials: [],
+    startStory: "",
+    continueStory: [],
+    endStory: "",
+    questions: [], //의문
+    selectedQuestion: "", //의문
+    totalQuestions: [],
+    cover: "",
+    oldCover: "",
   });
   const [step, setStep] = useState<number>(1);
   const [count, setCount] = useState<number>(0);

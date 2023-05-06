@@ -41,7 +41,7 @@ export default function WriteStep5a() {
           setNovel({
             ...novel,
             cover: dataUrl,
-            oldCover: imageSrcs[0],
+            oldCover: imageSrcs[0]!,
           });
         };
       },
