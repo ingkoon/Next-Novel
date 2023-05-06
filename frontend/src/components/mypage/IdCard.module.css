@@ -8,8 +8,7 @@
 .mypage {
   display: flex;
   font-family: "LINESeedKR-Bd";
-  width: 1150px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .pic {
@@ -490,8 +489,20 @@
   }
 }
 
+@media (max-width: 1200px) {
+  .mypagewhole {
+    transform: scale(0.9);
+  }
+}
+
 @media (max-width: 1024px) {
+  .left,
   .right {
     display: none;
+  }
+}
+@media (max-width: 480px) {
+  .mypagewhole {
+    transform: scale(0.7);
   }
 }

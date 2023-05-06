@@ -13,12 +13,15 @@
 }
 
 .logo {
-  height: 50px;
+  max-width: 48px;
+  width: 95%;
+  height: 95%;
 }
 .step {
   position: absolute;
-  left: 45%;
-  top: 10px;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -35%);
   font-size: 20px;
   color: white;
 }
@@ -34,7 +37,7 @@
 
 .titlebar button {
   width: 80%;
-  height: 50px;
+  height: 40px;
   background-color: #f66f00;
   color: white;
   border: 0;
@@ -43,6 +46,7 @@
 
 .title {
   font-size: 28px;
+  padding: 5px;
 }
 
 .booklist {
@@ -51,4 +55,12 @@
   overflow: hidden;
   transition: height 0.35s ease;
   margin-bottom: 20px;
+}
+@media (max-width: 480px) {
+  .step {
+    font-size: 16px;
+  }
+  .title {
+    font-size: 24px;
+  }
 }
