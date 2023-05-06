@@ -1,5 +1,5 @@
 .update {
-  font-family: 'LINESeedKR-Bd';
+  font-family: "LINESeedKR-Bd";
   position: relative;
   width: 100%;
   height: 100%;
@@ -12,7 +12,8 @@
 
 .title {
   font-size: 64px;
-  padding : 20px; 
+  padding: 20px;
+  text-align: center;
 }
 
 .category {
@@ -28,8 +29,9 @@
 }
 
 .profile {
-  width: 110px;
-  height: 110px;
+  max-width: 110px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,9 +53,10 @@
 }
 
 .updatebtn button {
-  width: 130px;
+  max-width: 150px;
+  width: 35%;
   height: 40px;
-  font-family: 'LINESeedKR-Bd';
+  font-family: "LINESeedKR-Bd";
   font-size: 20px;
   background-color: white;
   cursor: pointer;
@@ -68,7 +71,7 @@
 }
 
 .circle_right {
-  position : absolute;
+  position: absolute;
   right: 50px;
   bottom: 50px;
   width: 256px;
@@ -85,15 +88,49 @@
 
 .nickname {
   align-self: center;
-  font-size: 24px;
 }
 
 .nickname input {
   font-size: 24px;
   height: 30px;
-  width: 80%;
+  width: 75%;
 }
 
 .icon {
   margin: 20px 0;
+}
+
+@media (max-width: 1024px) {
+  .title {
+    font-size: 48px;
+  }
+}
+@media (max-width: 768px) {
+  .title {
+    font-size: 36px;
+  }
+  .categoryName {
+    font-size: 24px;
+  }
+  .circle_left,
+  .circle_right {
+    display: none;
+  }
+  .regdate {
+    font-size: 20px;
+  }
+}
+@media (max-width: 480px) {
+  .title {
+    font-size: 24px;
+  }
+  .categoryName {
+    font-size: 16px;
+  }
+  .updatebtn button {
+    font-size: 16px;
+  }
+  .regdate {
+    font-size: 12px;
+  }
 }
