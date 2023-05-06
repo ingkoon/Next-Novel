@@ -66,7 +66,7 @@ public class NovelController {
 		}
 	}
 
-	@PostMapping()
+	@PostMapping(produces = "multipart/form-data")
 	public ResponseEntity<?> insertNovel(@RequestPart("start_images") MultipartFile[] startImages
 		,@RequestPart("content_images") MultipartFile[] contentImages
 		,@RequestPart("cover_images") MultipartFile[] coverImages
