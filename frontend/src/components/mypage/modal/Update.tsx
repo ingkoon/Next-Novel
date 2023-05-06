@@ -1,27 +1,33 @@
 import style from "./Update.module.css";
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext, ChangeEvent } from "react";
 import { patchuser, getuserinfo } from "../../../api/user";
 import { AuthContext } from "../../../context/AuthContext";
 
-export default function Update({ closemodal }) {
+type UpdateProps = {
+  closemodal: () => void;
+};
+export default function Update({ closemodal }: UpdateProps) {
   const [imgFile, setImgFile] = useState("");
   const [nickName, setNickName] = useState("");
-  const [profile, setProfile] = useState();
-  const imgRef = useRef();
-  const [userinfo, setUserinfo] = useState();
+  const [profile, setProfile] = useState<File | undefined>();
+  const imgRef = useRef<HTMLInputElement>(null);
+  const [userinfo, setUserinfo] = useState("");
   const { user, setUser } = useContext(AuthContext);
 
   // api 통신하기
   async function getuser() {
     try {
-      const data = await getuserinfo();
-      let tmp = data.data.created_at;
-      let year = tmp.substring(0, 4);
-      let month = tmp.substring(5, 7);
-      let day = tmp.substring(8, 10);
-      setNickName(data.data.nickname);
-      setImgFile(data.data.profile_image);
-      setUserinfo(year + "." + month + "." + day);
+      // const data = await getuserinfo();
+      // let tmp = data.data.created_at;
+      // let year = tmp.substring(0, 4);
+      // let month = tmp.substring(5, 7);
+      // let day = tmp.substring(8, 10);
+      // setNickName(data.data.nickname);
+      // setImgFile(data.data.profile_image);
+      // setUserinfo(year + "." + month + "." + day);
+      setNickName("서철원");
+      setImgFile("http://placehold.it/150X150");
+      setUserinfo("2023.04.05");
     } catch (e) {
       console.log(e);
     }
@@ -33,21 +39,26 @@ export default function Update({ closemodal }) {
   }, []);
 
   const saveImgFile = () => {
-    const file = imgRef.current.files[0];
-    setProfile(file);
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImgFile(reader.result);
-    };
+    const file = imgRef.current?.files?.[0];
+    
+    if (file) {
+      setProfile(file);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        setImgFile(result);
+      };
+    }
   };
 
   const changeprofile = () => {
-    const inputimg = document.querySelector("#profileimg");
-    inputimg.click();
+    document.getElementById("inputimg")!.click();
   };
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNickName(e.target.value);
   };
 
@@ -104,11 +115,7 @@ export default function Update({ closemodal }) {
           <input onChange={onChange} value={nickName} />
         </div>
         <label htmlFor="inputimg" className={style.profile}>
-          <img
-            src={imgFile ? imgFile : ""}
-            alt="updateprofile"
-            onClick={changeprofile}
-          />
+          <img src={imgFile} alt="updateprofile" onClick={changeprofile} />
         </label>
         <div className={style.regdate}>{userinfo}</div>
       </div>

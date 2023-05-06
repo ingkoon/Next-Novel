@@ -1,11 +1,14 @@
 import style from "./Member.module.css";
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-
 import Update from "./modal/Update";
 import Logout from "./modal/Logout";
 
-export default function Member({ updatemember }) {
+type MemberProps = {
+  updatemember: () => void;
+};
+
+export default function Member({ updatemember }: MemberProps) {
   const [updateIsOpen, setUpdateIsOpen] = useState(false);
   const [deleteIsOpen, setDeleteIsOpen] = useState(false);
 

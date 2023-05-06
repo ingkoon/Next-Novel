@@ -6,7 +6,7 @@ import { deletenovel } from "../../api/novel";
 import Modal from "react-modal";
 import Delete from "../mypage/modal/Delete";
 
-function Card({ props, updatelist }) {
+function Card({ props }) {
   const [isHovering, setIsHovering] = useState(false);
   const { user } = useContext(AuthContext);
 
@@ -31,7 +31,6 @@ function Card({ props, updatelist }) {
   };
 
   const closemodal = () => {
-    updatelist();
     setModal(false);
   };
   return (

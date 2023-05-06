@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { getuserinfo } from "../../api/user.js";
 export default function IdCard() {
-  const [userinfo, setUserinfo] = useState("");
+  const [userinfo, setUserinfo] = useState({ profile_image: "", nickname: "" });
   const [date, setDate] = useState("");
 
   // api 통신하기

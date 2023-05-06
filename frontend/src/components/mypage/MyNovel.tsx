@@ -4,26 +4,26 @@ import BookList from "./BookList";
 import Gototop from "../common/GoToTop";
 
 export default function MyNovel() {
-  const parentRef = useRef(null);
-  const childRef = useRef(null);
-  const parentRef2 = useRef(null);
-  const childRef2 = useRef(null);
+  const parentRef = useRef<HTMLDivElement | null>(null);
+  const childRef = useRef<HTMLDivElement | null>(null);
+  const parentRef2 = useRef<HTMLDivElement | null>(null);
+  const childRef2 = useRef<HTMLDivElement | null>(null);
 
   const [isCollapse, setIsCollapse] = React.useState(false);
 
   const handleButtonClick = React.useCallback(
-    (e) => {
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       const icon = document.querySelector("#tri1");
       e.stopPropagation();
       if (parentRef.current === null || childRef.current === null) {
         return;
       }
       if (parentRef.current.clientHeight > 0) {
-        icon.style.transform = "rotate(0deg)";
+        icon?.setAttribute("style", "transform: rotate(0deg)");
         parentRef.current.style.height = "0";
       } else {
         parentRef.current.style.height = `${childRef.current.clientHeight}px`;
-        icon.style.transform = "rotate(180deg)";
+        icon?.setAttribute("style", "transform: rotate(180deg)");
       }
       setIsCollapse(!isCollapse);
     },
@@ -31,18 +31,18 @@ export default function MyNovel() {
   );
 
   const handleButtonClick2 = React.useCallback(
-    (e) => {
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       const icon = document.querySelector("#tri2");
       e.stopPropagation();
       if (parentRef2.current === null || childRef2.current === null) {
         return;
       }
       if (parentRef2.current.clientHeight > 0) {
-        icon.style.transform = "rotate(0deg)";
+        icon?.setAttribute("style", "transform: rotate(0deg)");
         parentRef2.current.style.height = "0";
       } else {
         parentRef2.current.style.height = `${childRef2.current.clientHeight}px`;
-        icon.style.transform = "rotate(180deg)";
+        icon?.setAttribute("style", "transform: rotate(180deg)");
       }
       setIsCollapse(!isCollapse);
     },
@@ -53,10 +53,10 @@ export default function MyNovel() {
   const [likelen, setLikelen] = useState(0);
 
   const book = {
-    id: "",
+    id: 999,
     cover_img: "",
     introduction: "",
-    novel_stats: { hit_count: "", like_count: "", comment_count: "" },
+    novel_stats: { hit_count: 10, like_count: 10, comment_count: 10 },
     author: "",
     title: "",
   };
