@@ -1,4 +1,4 @@
-package com.a509.service_payment.point.domain.dto.request;
+package com.a509.common.dto.point.request;
 
 import lombok.Getter;
 

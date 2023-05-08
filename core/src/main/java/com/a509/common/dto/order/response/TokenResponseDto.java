@@ -1,4 +1,4 @@
-package com.a509.service_payment.order.dto.response;
+package com.a509.common.dto.order.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

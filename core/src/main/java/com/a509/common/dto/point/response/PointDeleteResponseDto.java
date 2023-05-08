@@ -1,7 +1,5 @@
-package com.a509.service_payment.point.domain.dto.response;
+package com.a509.common.dto.point.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
