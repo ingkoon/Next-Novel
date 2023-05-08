@@ -28,8 +28,7 @@ subprojects {
 		compileOnly 'org.projectlombok:lombok'
 		annotationProcessor 'org.projectlombok:lombok'
 
-		implementation 'org.springframework.kafka:spring-kafka:2.7.2'
-//		implementation("org.apache.kafka:kafka_2.13:3.4.0")
+		implementation 'org.springframework.kafka:spring-kafka'
 		implementation("org.apache.kafka:kafka-clients:3.4.0")
 
 		testImplementation ('org.springframework.boot:spring-boot-starter-test'){
