@@ -16,15 +16,13 @@ public class OrderItem {
     private Long id;
     private Long orderId;
     private Long itemId;
-    private String name;
     private Long price;
     private LocalDateTime createAt = LocalDateTime.now();
 
     @Builder
-    public OrderItem(Long orderId, Long itemId, String name, Long price) {
+    public OrderItem(Long orderId, Long itemId, Long price) {
         this.orderId = orderId;
         this.itemId = itemId;
-        this.name = name;
         this.price = price;
     }
 }
