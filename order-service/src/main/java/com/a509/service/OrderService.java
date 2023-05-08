@@ -1,17 +1,26 @@
 package com.a509.service;
 
 import com.a509.common.bootpay.BootPayComponent;
+import com.a509.common.dto.order.request.IsCheckOrderRequest;
+import com.a509.common.dto.orderitem.request.CreateOrderItemRequestDto;
+import com.a509.common.dto.point.request.PointUpdateRequestDto;
+
 import com.a509.common.exception.order.DuplicatedOrderException;
 import com.a509.common.exception.order.NoSuchOrderException;
+
 import com.a509.domain.Order;
 import com.a509.dto.CancelRequestDto;
 import com.a509.dto.CreateRequestDto;
 import com.a509.dto.response.OrderResponseDto;
 import com.a509.dto.response.TokenResponseDto;
 import com.a509.repository.OrderRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,12 +30,24 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class OrderService {
     private final OrderRepository orderRepository;
     private final BootPayComponent bootPayComponent;
-    private final KafkaTemplate<Long, CreateRequestDto> kafkaTemplate;
+    private final KafkaTemplate<String, PointUpdateRequestDto> updatePointTemplate;
+    private final KafkaTemplate<String, CreateOrderItemRequestDto> createOrderItemTemplate;
+
+//    @Autowired
+//    public OrderService(OrderRepository orderRepository,
+//                        BootPayComponent bootPayComponent,
+//                        @Qualifier("updatePointTemplate") KafkaTemplate<String, PointUpdateRequestDto> updatePointTemplate,
+//                        @Qualifier("createOrderItemTemplate") KafkaTemplate<String, CreateOrderItemRequestDto> createOrderItemTemplate) {
+//        this.orderRepository = orderRepository;
+//        this.bootPayComponent = bootPayComponent;
+//        this.updatePointTemplate = updatePointTemplate;
+//        this.createOrderItemTemplate = createOrderItemTemplate;
+//    }
 
     /*
     feature method: findOrders
@@ -79,8 +100,53 @@ public class OrderService {
 
         Order order = requestDto.toOrderEntity();
         orderRepository.save(order);
+    }
 
+    @Transactional
+    public void createOrderV2(CreateRequestDto requestDto){
+        if(orderRepository.existsByReceiptId(requestDto.getReceiptId()))
+            throw new DuplicatedOrderException();
+//        bootPayComponent.confirmOrder(requestDto.getReceiptId());
+        log.info("=====success confirm order=====");
 
+        Order order = requestDto.toOrderEntity();
+        orderRepository.save(order);
+
+        PointUpdateRequestDto pointUpdateRequestDto = PointUpdateRequestDto.builder()
+                .memberId(order.getMemberId())
+                .point(order.getPrice()).build();
+
+        updatePointTemplate.send("order_item", order.getMemberId().toString(), pointUpdateRequestDto);
+        CreateOrderItemRequestDto orderItemRequestDto =
+                CreateOrderItemRequestDto.builder()
+                        .orderId(order.getId())
+                        .itemId(requestDto.getItemId())
+                        .price(requestDto.getPrice())
+                        .build();
+
+        createOrderItemTemplate
+                .send("create_order_item", order.getId().toString(), orderItemRequestDto);
+    }
+    @Transactional
+    @KafkaListener(topics = "check_status")
+    public void isCheckOrder(@Payload IsCheckOrderRequest requestDto) {
+        Long id = requestDto.getOrderId();
+        Order order = orderRepository.findById(id).orElseThrow(NoSuchOrderException::new);
+        order.updateStatus(requestDto.getStatus());
+    }
+
+//    @Transactional
+//    @KafkaListener(topics = "get_item")
+//    public Long getItem(@Payload Long itemId){
+//        return itemId;
+//    }
+
+    @Transactional
+    @KafkaListener(topics = "cancel_order")
+    public void cancelOrderV2(@Payload Long orderId){
+        if(!orderRepository.existsById(orderId)) return;
+        Order order = orderRepository.findById(orderId).orElseThrow(NoSuchOrderException::new);
+        orderRepository.delete(order);
     }
 
     /*

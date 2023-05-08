@@ -55,6 +55,15 @@ public class OrderController {
                     .body(response);
         }
 
+    @PostMapping("/test")
+    public ResponseEntity<OrderCreateResponseDto> createOrderV2(@RequestBody CreateRequestDto requestDto){
+        orderService.createOrderV2(requestDto);
+        OrderCreateResponseDto response = new OrderCreateResponseDto();
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
+
         @DeleteMapping
         public ResponseEntity<CancelResponseDto> cancelOrder(@RequestBody CancelRequestDto requestDto){
             orderService.cancelOrder(requestDto);
