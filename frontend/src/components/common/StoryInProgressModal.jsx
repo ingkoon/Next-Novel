@@ -15,7 +15,8 @@ export default function LoadingModal({ modalIsOpen, setModalIsOpen }) {
         style={{
           overlay: {},
           content: {
-            width: "608px",
+            width: "80%",
+            maxWidth: "608px",
             height: "380px",
             margin: "auto",
             padding: "0",

@@ -13,7 +13,6 @@ import NovelWrite from "./pages/NovelWrite";
 import Landing from "./pages/Landing";
 import OnlyLogin from "./components/login/OnlyLogin";
 import Modal from "react-modal";
-import { NovelContextProvider } from "./context/NovelContext";
 
 const router = createBrowserRouter([
   {
@@ -48,11 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/laboratory",
-        element: (
-          <NovelContextProvider>
-            <NovelWrite />
-          </NovelContextProvider>
-        ),
+        element: <NovelWrite />,
       },
     ],
   },

@@ -1,5 +1,5 @@
 .container {
-  width: 608px;
+  max-width: 608px;
   height: 380px;
   border: 3px solid #000000;
   filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.25));

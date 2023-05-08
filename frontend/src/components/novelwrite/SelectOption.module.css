@@ -4,6 +4,7 @@
   /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
 .container * {
   font-family: "LINESeedKR-Bd";
@@ -111,4 +112,14 @@
   padding-top: 3px;
   color: rgba(9, 9, 9, 0.5);
   white-space: pre-wrap;
+}
+@media (max-width: 1024px) {
+  .container {
+    transform: scale(0.85);
+  }
+}
+@media (max-width: 480px) {
+  .container {
+    transform: scale(0.7);
+  }
 }

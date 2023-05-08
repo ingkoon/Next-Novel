@@ -1,7 +1,5 @@
 .openLoadButton {
-  position: absolute;
-  bottom: -30px;
-  right: 110px;
+  float: right;
   background-color: white;
   border: 3px solid black;
   width: 30px;
@@ -15,9 +13,9 @@
   cursor: pointer;
 }
 .load {
+  top: -407px;
+  right: 0;
   position: absolute;
-  top: 7.5px;
-  right: 110px;
   background-color: white;
   border: 3px solid black;
   width: 284px;

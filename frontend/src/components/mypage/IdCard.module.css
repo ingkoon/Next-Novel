@@ -1,14 +1,14 @@
 .mypagewhole {
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .mypage {
   display: flex;
   font-family: "LINESeedKR-Bd";
-  width: 1150px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .pic {
@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin : 15px 0;
+  margin: 15px 0;
 }
 
 .pictxt {
@@ -116,8 +116,9 @@
 
 .idcard {
   width: 450px;
-  -webkit-animation: swing-in-top-bck 0.6s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
-	animation: swing-in-top-bck 0.6s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+  -webkit-animation: swing-in-top-bck 0.6s
+    cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  animation: swing-in-top-bck 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
 .cardtop {
@@ -261,11 +262,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  background: linear-gradient(#F2CD3C, #FF9243);
+  background: linear-gradient(#f2cd3c, #ff9243);
 }
 
-
- @-webkit-keyframes flicker-in-1 {
+@-webkit-keyframes flicker-in-1 {
   0% {
     opacity: 0;
   }
@@ -459,32 +459,50 @@
 @-webkit-keyframes swing-in-top-bck {
   0% {
     -webkit-transform: rotateX(70deg);
-            transform: rotateX(70deg);
+    transform: rotateX(70deg);
     -webkit-transform-origin: top;
-            transform-origin: top;
+    transform-origin: top;
     opacity: 0;
   }
   100% {
     -webkit-transform: rotateX(0deg);
-            transform: rotateX(0deg);
+    transform: rotateX(0deg);
     -webkit-transform-origin: top;
-            transform-origin: top;
+    transform-origin: top;
     opacity: 1;
   }
 }
 @keyframes swing-in-top-bck {
   0% {
     -webkit-transform: rotateX(70deg);
-            transform: rotateX(70deg);
+    transform: rotateX(70deg);
     -webkit-transform-origin: top;
-            transform-origin: top;
+    transform-origin: top;
     opacity: 0;
   }
   100% {
     -webkit-transform: rotateX(0deg);
-            transform: rotateX(0deg);
+    transform: rotateX(0deg);
     -webkit-transform-origin: top;
-            transform-origin: top;
+    transform-origin: top;
     opacity: 1;
+  }
+}
+
+@media (max-width: 1200px) {
+  .mypagewhole {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 1024px) {
+  .left,
+  .right {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  .mypagewhole {
+    transform: scale(0.7);
   }
 }
