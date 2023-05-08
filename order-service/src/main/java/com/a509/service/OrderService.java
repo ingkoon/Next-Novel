@@ -11,12 +11,12 @@ import com.a509.dto.response.TokenResponseDto;
 import com.a509.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final BootPayComponent bootPayComponent;
+    private final KafkaTemplate<Long, CreateRequestDto> kafkaTemplate;
 
     /*
     feature method: findOrders
@@ -78,6 +79,8 @@ public class OrderService {
 
         Order order = requestDto.toOrderEntity();
         orderRepository.save(order);
+
+
     }
 
     /*
