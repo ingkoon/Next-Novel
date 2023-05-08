@@ -18,11 +18,13 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long memberId;
+    private Long price;
     private String receiptId;
 
     @Builder
     public Order(Long userId, Long price, String receiptId) {
         this.memberId = userId;
+        this.price = price;
         this.receiptId = receiptId;
     }
 }
