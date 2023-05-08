@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.a509.service_novel.dto.ImageDto;
+import com.a509.service_novel.dto.NovelInsertResponseDto;
 import com.a509.service_novel.dto.NovelListDto;
 import com.a509.service_novel.service.NovelImageComponent;
 
@@ -49,7 +50,7 @@ public class NovelController {
 		}
 	}
 
-	@PostMapping(produces = "multipart/form-data")
+	@PostMapping()
 	public ResponseEntity<?> insertNovel(@RequestPart("start_images") MultipartFile[] startImages
 		,@RequestPart("content_images") MultipartFile[] contentImages
 		,@RequestPart("cover_images") MultipartFile[] coverImages
@@ -59,10 +60,11 @@ public class NovelController {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
 			String UID = now.format(formatter);
 			int novelId = novelService.insertNovel(novelDetailDto,startImages,contentImages,coverImages,UID);
-			Map<String, Integer> simpleResponse = new HashMap<>();
-			simpleResponse.put("novelId",novelId);
 			novelService.insertNovelImages(novelDetailDto.getNickName(),startImages,contentImages);
-			return new ResponseEntity<>(simpleResponse, HttpStatus.OK);
+			System.out.println("endendendend");
+			NovelInsertResponseDto novelInsertResponseDto = new NovelInsertResponseDto();
+			novelInsertResponseDto.setNovelId(novelId);
+			return ResponseEntity.ok(novelInsertResponseDto);
 		}
 		catch (Exception e){
 			return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
