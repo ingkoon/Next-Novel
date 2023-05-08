@@ -43,6 +43,10 @@ spring:
     database: mysql
     hibernate:
       ddl-auto: create
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: order
 
 ---
 spring:

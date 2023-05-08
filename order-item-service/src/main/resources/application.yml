@@ -31,7 +31,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/orderItem?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/order_item?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password: root
 
@@ -57,7 +57,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://***REMOVED***:3306/orderItem?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://***REMOVED***:3306/order_item?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password: ***REMOVED***
 
