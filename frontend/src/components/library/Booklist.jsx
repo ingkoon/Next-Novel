@@ -17,8 +17,8 @@ export default function Booklist() {
       try {
         const data = await getnovels();
         console.log(data);
-        novellen = data.data.results.length;
-        setNovels(data.data.results);
+        novellen = data.data.length;
+        setNovels(data.data);
 
         let tmp = [];
         for (let i = 0; i < novellen; i++) {
@@ -41,8 +41,8 @@ export default function Booklist() {
   async function getgenreres(genre) {
     const data = await getgenre(genre);
     try {
-      novellen = data.data.results.length;
-      setNovels(data.data.results);
+      novellen = data.data.length;
+      setNovels(data.data);
 
       let tmp = [];
       for (let i = 0; i < novellen; i++) {

@@ -1,81 +1,115 @@
-.introBanner{
-    position: relative;
-    width: 100%;
-    height: 320px;
-    left: 0px;
-    background: #FFFEFC;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
+.introBanner {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  left: 0px;
+  background: #fffefc;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
 }
-.bookCircle{
-    position: absolute;
-    width: 480px;
-    height: 480px;
-    left: 300px;
-    border-radius: 100%;
-    background: #F66F00;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.booktemp{
-    width: 220px;
-    height: 280px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    /* z-index: 3; */
-    background: white;
+.bookCircle {
+  /* position: absolute; */
+  /* left: 300px; */
+  margin-left: 20%;
+  min-width: 480px;
+  height: 480px;
+  border-radius: 100%;
+  background: #f66f00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.bannerGrad{
-    position: absolute;
-    width: 100%;
-    height: 320px;
-    background: linear-gradient(180deg, rgba(242, 205, 60, 0) 0%, rgba(242, 205, 60, 0.6) 100%);
-    /* z-index: 1; */
+.booktemp {
+  width: 220px;
+  height: 280px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* z-index: 3; */
+  background: white;
 }
-.quote{
-    display: flex;
-    position: relative;
-    width: 500px;
-    height: 200px;
-    left: 730px;
-    animation: up-down 1.4s infinite ease-in-out alternate;
+
+.bannerGrad {
+  position: absolute;
+  width: 100%;
+  height: 320px;
+  background: linear-gradient(
+    180deg,
+    rgba(242, 205, 60, 0) 0%,
+    rgba(242, 205, 60, 0.6) 100%
+  );
+  /* z-index: 1; */
 }
-@keyframes up-down{
-    from{
-      transform: translatey(5px);
-    }
-    to{
-      transform: translatey(-5px);
-    }
+.quote {
+  /* left: 730px; */
+  margin-left: 2%;
+  display: flex;
+  position: relative;
+  width: 500px;
+  height: 200px;
+  animation: up-down 1.4s infinite ease-in-out alternate;
+}
+@keyframes up-down {
+  from {
+    transform: translatey(5px);
   }
+  to {
+    transform: translatey(-5px);
+  }
+}
 
-.quotetext{
-    position: absolute;
+.quotetext {
+  /* position: absolute;
+  top: 50px;
+  left: 50px; */
+  height: 100px;
+  font-size: 26px;
+  justify-content: center;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* z-index: 2; */
+}
+.newcard_quote1 {
+  position: absolute;
+  /* z-index: 2; */
+}
+.newcard_quote2 {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  /* z-index: 2; */
+}
+
+@media (max-width: 1024px) {
+  .bookCircle {
+    margin-left: 1%;
+  }
+}
+
+@media (max-width: 800px) {
+  .quote {
+    width: 90%;
     height: 100px;
-    font-size: 26px;
-    top: 50px;
-    left:50px;
-    justify-content: center;
-    width: 80%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    /* z-index: 2; */
-}
-.newcard_quote1{
     position: absolute;
-    /* z-index: 2; */
+    top: 60%;
+    left: 3%;
+  }
+  .newcard_quote1 {
+    width: 7%;
+  }
+  .newcard_quote2 {
+    width: 7%;
+  }
 }
-.newcard_quote2{
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    /* z-index: 2; */
+
+@media (max-width: 400px) {
+  .bookCircle {
+    margin-left: -17%;
+  }
 }

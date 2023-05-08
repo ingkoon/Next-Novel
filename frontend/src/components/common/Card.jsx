@@ -6,6 +6,21 @@ import { deletenovel } from "../../api/novel";
 import Modal from "react-modal";
 import Delete from "../mypage/modal/Delete";
 
+// type cardinfo = {
+//   id: number;
+//   title: string;
+//   introduction: string;
+//   author: string;
+//   coverImage: string;
+//   hitCount: number;
+//   commentCount: number;
+//   likeCount: number;
+// };
+
+// interface CardProps {
+//   props: cardinfo;
+// }
+
 function Card({ props }) {
   const [isHovering, setIsHovering] = useState(false);
   const { user } = useContext(AuthContext);
@@ -38,7 +53,7 @@ function Card({ props }) {
       <div className={style.card} onClick={(e) => navigateToPurchase(props.id)}>
         <div
           className={isHovering ? style.none : style.intro}
-          style={{ backgroundImage: `url(${props && props.cover_img})` }}
+          style={{ backgroundImage: `url(${props && props.coverImage})` }}
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
         >
@@ -58,7 +73,7 @@ function Card({ props }) {
         </div>
         <div
           className={isHovering ? style.intro : style.none}
-          style={{ backgroundImage: `url(${props && props.cover_img})` }}
+          style={{ backgroundImage: `url(${props && props.coverImage})` }}
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
         >
@@ -69,16 +84,14 @@ function Card({ props }) {
                 style={{ margin: "auto 5px" }}
                 alt="glasses"
               />
-              <span style={{ margin: "0 5px" }}>
-                {props && props.novel_stats.hit_count}
-              </span>
+              <span style={{ margin: "0 5px" }}>{props && props.hitCount}</span>
               <img
                 src={process.env.PUBLIC_URL + "/icon/heart.svg"}
                 style={{ margin: "auto 5px" }}
                 alt="heart"
               />
               <span style={{ margin: "0 5px" }}>
-                {props && props.novel_stats.like_count}
+                {props && props.likeCount}
               </span>
               <img
                 src={process.env.PUBLIC_URL + "/icon/comment.svg"}
@@ -86,7 +99,7 @@ function Card({ props }) {
                 alt="comment"
               />
               <span style={{ margin: "0 5px" }}>
-                {props && props.novel_stats.comment_count}
+                {props && props.commentCount}
               </span>
             </div>
             {props && user.nickname === props.author ? (

@@ -1,16 +1,6 @@
 import style from "./login.module.css";
 
-declare global {
-  interface Window {
-    Kakao: any;
-  }
-}
-
-interface LoginProps {
-  closemodal: () => void;
-}
-
-export default function Login({ closemodal }: LoginProps) {
+export default function Login() {
   function kakaoLogin() {
     const { Kakao } = window;
     Kakao.Auth.authorize({
@@ -36,10 +26,7 @@ export default function Login({ closemodal }: LoginProps) {
 
         <div className={style.main}>
           <div className={style.loginlogo}>
-            <img
-              src={process.env.PUBLIC_URL + "/img/NN_LOGO_text.svg"}
-              alt="logowtext"
-            />
+            <img src={process.env.PUBLIC_URL + "/img/NN_LOGO_text.svg"} />
           </div>
 
           <div className={style.title}>
@@ -55,7 +42,6 @@ export default function Login({ closemodal }: LoginProps) {
             onClick={kakaoLogin}
             className={style.kakao}
             src={process.env.PUBLIC_URL + "/img/kakao_login.png"}
-            alt="kakaobtn"
           />
         </div>
         <div className={style.leftborder} />

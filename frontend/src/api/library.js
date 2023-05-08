@@ -3,8 +3,9 @@ import axios from "axios";
 
 // 전체 소설 목록
 export async function getnovels() {
-  const res = await instance.get("novel/");
-  return res;
+  // const res = await instance.get("novel/");
+  // return res;
+  return axios.get("/novel/read/novel_list.json");
 }
 
 // 장르별 검색

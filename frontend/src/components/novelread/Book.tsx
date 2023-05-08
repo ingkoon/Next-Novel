@@ -203,7 +203,7 @@ export default function Book() {
           },
         }}
       >
-        <Login closemodal={closemodal} />
+        <Login />
       </Modal>
       {novelinfo && (
         <div className={style.book}>

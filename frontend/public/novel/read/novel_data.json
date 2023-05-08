@@ -1,0 +1,19 @@
+{
+  "id": 163,
+  "title": "Next Novel",
+  "introduction": "Six God 팀원 최고",
+  "createdAt": "2023-04-12T22:52:32.710301",
+  "genre": "fantasy",
+  "author": "딘",
+  "contents": [],
+  "comment": [],
+  "hitCount": 0,
+  "commentCount": 0,
+  "likeCount": 0,
+  "originCoverImg": "/novel/cover.png",
+  "coverImg": "/novel/cover.png",
+  "startImage1": "/novel/material1.png",
+  "startImage2": "/novel/material2.png",
+  "startImage3": "/novel/material3.png",
+  "startImage4": "/novel/material4.png"
+}
