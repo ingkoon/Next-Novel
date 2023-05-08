@@ -2,7 +2,9 @@ package com.a509.service_novel.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,8 +59,10 @@ public class NovelController {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
 			String UID = now.format(formatter);
 			int novelId = novelService.insertNovel(novelDetailDto,startImages,contentImages,coverImages,UID);
+			Map<String, Integer> simpleResponse = new HashMap<>();
+			simpleResponse.put("novelId",novelId);
 			novelService.insertNovelImages(novelDetailDto.getNickName(),startImages,contentImages);
-			return new ResponseEntity<>(novelId, HttpStatus.OK);
+			return new ResponseEntity<>(simpleResponse, HttpStatus.OK);
 		}
 		catch (Exception e){
 			return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);

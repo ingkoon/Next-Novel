@@ -132,7 +132,7 @@ public class NovelService {
 		//novelDto에 저장
 		novelDetailDto.setContents(novelContentDtos);
 		//찾은 코멘트 dto 저장
-		novelDetailDto.setComment(commentDtos);
+		novelDetailDto.setComments(commentDtos);
 
 		return novelDetailDto;
 	}
@@ -203,7 +203,7 @@ public class NovelService {
 	}
 
 	public List<ImageDto> selectAllNovelImage(String nickName) throws Exception{
-		List<NovelImage> novelImageList = novelImageRepository.findByAuthorId(nickName);
+		List<NovelImage> novelImageList = novelImageRepository.findByNickName(nickName);
 		List<ImageDto> imageDtos = new ArrayList<>();
 		for(NovelImage image : novelImageList){
 			imageDtos.add(new ImageDto(image.getImageName()));

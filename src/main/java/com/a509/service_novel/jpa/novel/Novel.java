@@ -74,7 +74,7 @@ public class Novel {
 			.title(title)
 			.introduction(introduction)
 			.nickName(nickName)
-			.coverImage(coverImg)
+			.coverImg(coverImg)
 			.hitCount(hitCount)
 			.commentCount(commentCount)
 			.likeCount(likeCount)
