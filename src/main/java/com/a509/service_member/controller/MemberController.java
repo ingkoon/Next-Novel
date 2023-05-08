@@ -45,6 +45,12 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/check/nickname")
+    public ResponseEntity<MessageResponseDto> checkNickname(@RequestBody MemberSignupCheckRequestDto memberSignupCheckRequestDto) {
+        MessageResponseDto response = memberService.checkNickname(memberSignupCheckRequestDto);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<MemberTokenResponseDto> login(@RequestBody @Validated MemberLoginRequestDto memberLoginRequestDto) {
         MemberTokenResponseDto response = memberService.login(memberLoginRequestDto);

@@ -81,6 +81,23 @@ public class MemberService {
         return message;
     }
 
+    public MessageResponseDto checkNickname(MemberSignupCheckRequestDto memberSignupCheckRequestDto) {
+        String res = "";
+        String msg = "";
+        if (memberRepository.existsByNickname(memberSignupCheckRequestDto.getNickname())) {
+            res = "success";
+            msg = "중복된 닉네임입니다.";
+        } else {
+            res = "fail";
+            msg = "사용 가능한 닉네임입니다.";
+        }
+        MessageResponseDto message = MessageResponseDto.builder()
+                .result(res)
+                .message(msg)
+                .build();
+        return message;
+    }
+
     @Transactional
     public MemberTokenResponseDto login(MemberLoginRequestDto memberLoginRequestDto) {
         Member member = findMember(memberLoginRequestDto.getEmail());
