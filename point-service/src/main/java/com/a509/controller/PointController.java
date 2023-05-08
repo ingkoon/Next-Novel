@@ -1,8 +1,8 @@
 package com.a509.controller;
 
+import com.a509.common.dto.point.request.PointUpdateRequestDto;
 import com.a509.domain.dto.request.PointCreateRequestDto;
 import com.a509.domain.dto.request.PointDeleteRequestDto;
-import com.a509.domain.dto.request.PointUpdateRequestDto;
 import com.a509.domain.dto.response.PointCreateResponseDto;
 import com.a509.domain.dto.response.PointDeleteResponseDto;
 import com.a509.domain.dto.response.PointFindResponseDto;
