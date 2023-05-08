@@ -12,7 +12,7 @@ import lombok.Data;
 public class Question {
 
 	@Id
-	private int authorId;
+	private String nickName;
 	private String query1;
 	private String query2;
 	private String query3;

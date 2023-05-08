@@ -26,14 +26,14 @@ public class NovelComment {
 
 	private String content;
 	private String createdAt;
-	private int authorId;
+	private String nickName;
 	private int novelId;
 
 	public NovelCommentDto toDto(){
 		return NovelCommentDto.builder()
 			.id(id)
 			.content(content)
-			.authorId(authorId)
+			.nickName(nickName)
 			.createdAt(createdAt)
 			.novelId(novelId)
 			.build();

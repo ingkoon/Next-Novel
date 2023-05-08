@@ -1,7 +1,5 @@
 package com.a509.service_novel.jpa.novelImage;
 
-import java.awt.*;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +23,7 @@ public class NovelImage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String imageName;
-	private int authorId;
+	private String nickName;
 
 
 	public ImageDto toDto(){

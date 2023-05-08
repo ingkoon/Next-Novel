@@ -158,11 +158,11 @@ public class NovelService {
 	}
 
 	@Transactional
-	public List<NovelListDto> selectNovelsByAuthorId(int authorId) throws Exception{
+	public List<NovelListDto> selectNovelsByAuthorId(String nickName) throws Exception{
 
 		Sort sortByCreatedAt = Sort.by("createdAt").ascending();
 
-		List<Novel> novels = novelRepogitory.findAllByAuthorIdOrderByCreatedAtDesc(authorId);
+		List<Novel> novels = novelRepogitory.findAllByNickNameOrderByCreatedAtDesc(nickName);
 		List<NovelListDto> novelDtos = new ArrayList<>();
 
 		for (Novel novel : novels) {
@@ -183,13 +183,13 @@ public class NovelService {
 	}
 
 	@Transactional
-	public void insertNovelImages(int authorId, MultipartFile[] startImages, MultipartFile[] contentImages) throws Exception{
+	public void insertNovelImages(String nickName, MultipartFile[] startImages, MultipartFile[] contentImages) throws Exception{
 
 		for(MultipartFile image : startImages){
 
 			NovelImage novelImage = new NovelImage();
 			novelImage.setImageName(image.getOriginalFilename());
-			novelImage.setAuthorId(authorId);
+			novelImage.setNickName(nickName);
 			novelImageRepository.save(novelImage);
 		}
 
@@ -197,13 +197,13 @@ public class NovelService {
 
 			NovelImage novelImage = new NovelImage();
 			novelImage.setImageName(image.getOriginalFilename());
-			novelImage.setAuthorId(authorId);
+			novelImage.setNickName(nickName);
 			novelImageRepository.save(novelImage);
 		}
 	}
 
-	public List<ImageDto> selectAllNovelImage(int authorId) throws Exception{
-		List<NovelImage> novelImageList = novelImageRepository.findByAuthorId(authorId);
+	public List<ImageDto> selectAllNovelImage(String nickName) throws Exception{
+		List<NovelImage> novelImageList = novelImageRepository.findByAuthorId(nickName);
 		List<ImageDto> imageDtos = new ArrayList<>();
 		for(NovelImage image : novelImageList){
 			imageDtos.add(new ImageDto(image.getImageName()));

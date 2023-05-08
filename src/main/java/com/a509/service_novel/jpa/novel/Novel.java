@@ -31,7 +31,7 @@ public class Novel {
 	private String createdAt;
 	private String engGenre;;
 	private String korGenre;
-	private int authorId;
+	private String nickName;
 	private int hitCount;
 	private int commentCount;
 	private int likeCount;
@@ -53,7 +53,7 @@ public class Novel {
 			.createdAt(createdAt)
 			.engGenre(engGenre)
 			.korGenre(korGenre)
-			.authorId(authorId)
+			.nickName(nickName)
 			.hitCount(hitCount)
 			.commentCount(commentCount)
 			.likeCount(likeCount)
@@ -73,7 +73,7 @@ public class Novel {
 			.id(id)
 			.title(title)
 			.introduction(introduction)
-			.authorId(authorId)
+			.nickName(nickName)
 			.coverImage(coverImg)
 			.hitCount(hitCount)
 			.commentCount(commentCount)

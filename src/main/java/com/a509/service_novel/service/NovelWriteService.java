@@ -25,7 +25,7 @@ public class NovelWriteService {
 	private final DialogHistoryRepository dialogHistoryRepository;
 	private final QuestionRepository questionRepository;
 
-	public void setDialogHistory(List<Object> objects, int authorId) throws Exception{
+	public void setDialogHistory(List<Object> objects, String nickName) throws Exception{
 
 		DialogHistory dial = new DialogHistory();
 		dial.setDialog(new ArrayList<>());
@@ -37,15 +37,15 @@ public class NovelWriteService {
 			d.setContent(tmp.get("content"));
 			dial.getDialog().add(d);
 		}
-		dial.setAuthroId(authorId);
+		dial.setNickName(nickName);
 		// System.out.println(dial);
 		// d.setDialog(dial);
 		dialogHistoryRepository.save(dial);
 	}
 
-	public List<Object> getDialogHistory(int authorId) throws Exception{
+	public List<Object> getDialogHistory(String nickName) throws Exception{
 
-		Optional<DialogHistory> options= dialogHistoryRepository.findById(authorId);
+		Optional<DialogHistory> options= dialogHistoryRepository.findById(nickName);
 		if(options.isPresent() == false)
 			throw new SQLException();
 
@@ -60,10 +60,10 @@ public class NovelWriteService {
 		return res;
 	}
 
-	public void setQuestion(List<String> questions, int authorId){
+	public void setQuestion(List<String> questions, String nickName){
 		Question question = new Question();
 
-		question.setAuthorId(authorId);
+		question.setNickName(nickName);
 		question.setQuery1(questions.get(0));
 		question.setQuery2(questions.get(1));
 		question.setQuery3(questions.get(2));
@@ -71,9 +71,9 @@ public class NovelWriteService {
 		questionRepository.save(question);
 	}
 
-	public Question getQuestion(int authorId) throws Exception{
+	public Question getQuestion(String nickName) throws Exception{
 
-		Optional<Question> optional  = questionRepository.findById(authorId);
+		Optional<Question> optional  = questionRepository.findById(nickName);
 		if(optional.isPresent()){
 			return optional.get();
 		}

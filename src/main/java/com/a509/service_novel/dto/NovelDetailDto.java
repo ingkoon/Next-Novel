@@ -20,7 +20,7 @@ public class NovelDetailDto {
 	private String createdAt;
 	private String engGenre;;
 	private String korGenre;
-	private int authorId;
+	private String nickName;
 	private List<NovelContentDto> contents;
 	private List<NovelCommentDto> comment;
 	private int hitCount;
@@ -42,7 +42,7 @@ public class NovelDetailDto {
 			.introduction(introduction)
 			.engGenre(engGenre)
 			.korGenre(korGenre)
-			.authorId(authorId)
+			.nickName(nickName)
 			.startContent(startContent)
 			.endContent(endContent)
 			.build();

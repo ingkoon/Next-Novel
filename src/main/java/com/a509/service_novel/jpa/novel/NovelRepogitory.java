@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NovelRepogitory extends JpaRepository<Novel, Integer> {
-	List<Novel> findAllByAuthorIdOrderByCreatedAtDesc(Integer authorId);
+	List<Novel> findAllByNickNameOrderByCreatedAtDesc(String nickName);
 }

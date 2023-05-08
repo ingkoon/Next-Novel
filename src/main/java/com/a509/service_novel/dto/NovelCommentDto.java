@@ -12,13 +12,13 @@ public class NovelCommentDto {
 	private int id;
 	private String content;
 	private String createdAt;
-	private int authorId;
+	private String nickName;
 	private int novelId;
 
 	public NovelComment toEntity(){
 		return NovelComment.builder()
 			.content(content)
-			.authorId(authorId)
+			.nickName(nickName)
 			.novelId(novelId)
 			.build();
 	}

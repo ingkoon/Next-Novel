@@ -1,41 +1,22 @@
 package com.a509.service_novel.controller;
 
-import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.a509.service_novel.dto.ImageDto;
-import com.a509.service_novel.dto.NovelContentDto;
-import com.a509.service_novel.dto.NovelImageDto;
 import com.a509.service_novel.dto.NovelListDto;
-import com.a509.service_novel.jpa.novel.Novel;
-import com.a509.service_novel.jpa.novelImage.NovelImage;
 import com.a509.service_novel.service.NovelImageComponent;
 
 import com.a509.service_novel.dto.NovelDetailDto;
@@ -76,7 +57,7 @@ public class NovelController {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
 			String UID = now.format(formatter);
 			int novelId = novelService.insertNovel(novelDetailDto,startImages,contentImages,coverImages,UID);
-			novelService.insertNovelImages(novelDetailDto.getAuthorId(),startImages,contentImages);
+			novelService.insertNovelImages(novelDetailDto.getNickName(),startImages,contentImages);
 			return new ResponseEntity<>(novelId, HttpStatus.OK);
 		}
 		catch (Exception e){
@@ -111,10 +92,10 @@ public class NovelController {
 	}
 
 	@GetMapping("/id/{id}")
-	public ResponseEntity<?> selectNovelByAuthorId(@PathVariable("id") int authorId){
+	public ResponseEntity<?> selectNovelByAuthorId(@PathVariable("id") String nickName){
 		try{
-			List<NovelListDto> novelWritten = novelService.selectNovelsByAuthorId(authorId);
-			return ResponseEntity.ok(novelService.selectNovelsByAuthorId(authorId));
+			List<NovelListDto> novelWritten = novelService.selectNovelsByAuthorId(nickName);
+			return ResponseEntity.ok(novelService.selectNovelsByAuthorId(nickName));
 		}
 		catch(Exception e){
 			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -123,10 +104,10 @@ public class NovelController {
 	}
 
 	@GetMapping("/image/{id}")
-	public ResponseEntity<?> selectAllNovelImage(@PathVariable("id") int authorId){
+	public ResponseEntity<?> selectAllNovelImage(@PathVariable("id") String nickName){
 
 		try{
-			List<ImageDto> images = novelService.selectAllNovelImage(authorId);
+			List<ImageDto> images = novelService.selectAllNovelImage(nickName);
 			return new ResponseEntity<>(images,HttpStatus.OK);
 		}
 		catch (Exception e){
