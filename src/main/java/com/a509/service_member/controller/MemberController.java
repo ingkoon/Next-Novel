@@ -1,10 +1,12 @@
 package com.a509.service_member.controller;
 
 import com.a509.service_member.dto.request.MemberLoginRequestDto;
+import com.a509.service_member.dto.request.MemberSignupCheckRequestDto;
 import com.a509.service_member.dto.request.MemberSignupRequestDto;
 import com.a509.service_member.dto.request.MemberUpdateRequestDto;
 import com.a509.service_member.dto.response.MemberTokenResponseDto;
 import com.a509.service_member.dto.response.MemberMyPageResponseDto;
+import com.a509.service_member.dto.response.MessageResponseDto;
 import com.a509.service_member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +37,12 @@ public class MemberController {
     public ResponseEntity<Void> signUp(@RequestBody @Validated MemberSignupRequestDto memberSignupRequestDto) {
         memberService.signUp(memberSignupRequestDto);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/check/email")
+    public ResponseEntity<MessageResponseDto> checkEmail(@RequestBody MemberSignupCheckRequestDto memberSignupCheckRequestDto) {
+        MessageResponseDto response = memberService.checkEmail(memberSignupCheckRequestDto);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")

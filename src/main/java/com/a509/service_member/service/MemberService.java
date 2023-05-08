@@ -1,10 +1,12 @@
 package com.a509.service_member.service;
 
 import com.a509.service_member.dto.request.MemberLoginRequestDto;
+import com.a509.service_member.dto.request.MemberSignupCheckRequestDto;
 import com.a509.service_member.dto.request.MemberSignupRequestDto;
 import com.a509.service_member.dto.request.MemberUpdateRequestDto;
 import com.a509.service_member.dto.response.MemberTokenResponseDto;
 import com.a509.service_member.dto.response.MemberMyPageResponseDto;
+import com.a509.service_member.dto.response.MessageResponseDto;
 import com.a509.service_member.enums.MemberState;
 import com.a509.service_member.exception.DuplicatedMemberException;
 import com.a509.service_member.exception.InvalidedAccessTokenException;
@@ -60,6 +62,23 @@ public class MemberService {
                 .profileImage(memberSignupRequestDto.getProfileImage())
                 .build();
         memberRepository.save(member);
+    }
+
+    public MessageResponseDto checkEmail(MemberSignupCheckRequestDto memberSignupCheckRequestDto) {
+        String res = "";
+        String msg = "";
+        if (memberRepository.existsByEmail(memberSignupCheckRequestDto.getEmail())) {
+            res = "success";
+            msg = "중복된 이메일입니다.";
+        } else {
+            res = "fail";
+            msg = "사용 가능한 이메일입니다.";
+        }
+        MessageResponseDto message = MessageResponseDto.builder()
+                .result(res)
+                .message(msg)
+                .build();
+        return message;
     }
 
     @Transactional
