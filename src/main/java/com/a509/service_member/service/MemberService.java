@@ -68,10 +68,10 @@ public class MemberService {
         String res = "";
         String msg = "";
         if (memberRepository.existsByEmail(memberSignupCheckRequestDto.getEmail())) {
-            res = "success";
+            res = "fail";
             msg = "중복된 이메일입니다.";
         } else {
-            res = "fail";
+            res = "success";
             msg = "사용 가능한 이메일입니다.";
         }
         MessageResponseDto message = MessageResponseDto.builder()
@@ -85,10 +85,10 @@ public class MemberService {
         String res = "";
         String msg = "";
         if (memberRepository.existsByNickname(memberSignupCheckRequestDto.getNickname())) {
-            res = "success";
+            res = "fail";
             msg = "중복된 닉네임입니다.";
         } else {
-            res = "fail";
+            res = "success";
             msg = "사용 가능한 닉네임입니다.";
         }
         MessageResponseDto message = MessageResponseDto.builder()
