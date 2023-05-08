@@ -38,7 +38,7 @@ public class NovelService {
 
 	private final NovelImageComponent novelImageComponent;
 	@Transactional
-	public void insertNovel(NovelDetailDto novelDetailDto
+	public int insertNovel(NovelDetailDto novelDetailDto
 		,MultipartFile[] startImages
 		,MultipartFile[] contentImages
 		,MultipartFile[] coverImages
@@ -84,6 +84,8 @@ public class NovelService {
 
 		novelImageComponent.save(coverImages[0],UID);
 		novelImageComponent.save(coverImages[1],UID);
+
+		return novel.getId();
 	}
 
 	@Transactional

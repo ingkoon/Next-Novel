@@ -75,9 +75,9 @@ public class NovelController {
 			LocalDateTime now = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
 			String UID = now.format(formatter);
-			novelService.insertNovel(novelDetailDto,startImages,contentImages,coverImages,UID);
+			int novelId = novelService.insertNovel(novelDetailDto,startImages,contentImages,coverImages,UID);
 			novelService.insertNovelImages(novelDetailDto.getAuthorId(),startImages,contentImages);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(novelId, HttpStatus.OK);
 		}
 		catch (Exception e){
 			return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
