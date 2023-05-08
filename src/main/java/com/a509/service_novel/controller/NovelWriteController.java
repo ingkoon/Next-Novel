@@ -101,6 +101,8 @@ public class NovelWriteController {
 		log.info("start save in redis");
 		try{
 			novelWriteService.setDialogHistory(dialogHistoryObject,authorId);
+
+			getQuestions(authorIdString);
 			return new ResponseEntity<>(novelWriteDto,HttpStatus.OK);
 		}
 		catch (Exception e){
@@ -109,49 +111,15 @@ public class NovelWriteController {
 	}
 
 	@PostMapping("/question")
-	public ResponseEntity<?> NovelStep3(@RequestParam("authorId") String authorIdString){
-
-		try{
-			MultiValueMap<String, Object> body;
-			body = new LinkedMultiValueMap<>();
-			int authorId = Integer.parseInt(authorIdString);
-
-			List<Object> dialogHistory = novelWriteService.getDialogHistory(authorId);
-			body.add("dialog_history",dialogHistory);
-			Map<String,Object> responseBody = webClient.post()
-				.uri("/novel/question")
-				.contentType(MediaType.MULTIPART_FORM_DATA)
-				.body(BodyInserters.fromMultipartData(body))
-				.retrieve()
-				.bodyToMono(new ParameterizedTypeReference<Map<String,Object>>() {})
-				.block();
-
-			dialogHistory = (List<Object>)responseBody.get("dialog_history");
-			String query1 = (String)responseBody.get("query1");
-			String query2 = (String)responseBody.get("query2");
-			String query3 = (String)responseBody.get("query3");
-			List<String> questions = new ArrayList<>();
-
-			questions.add(query1);
-			questions.add(query2);
-			questions.add(query3);
-
-
-			NovelWriteDto novelWriteDto = new NovelWriteDto();
-			novelWriteDto.setQuestions(questions);
-
-			log.info("start save in redis");
-
-			novelWriteService.setDialogHistory(dialogHistory,authorId);
-			return new ResponseEntity<>(novelWriteDto,HttpStatus.OK);
-
-		}
-		catch (Exception e){
-			return new ResponseEntity<>(e.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
+	public ResponseEntity<?> NovelStep3(@RequestParam("authorId") String authorIdString) {
+		int authorId = Integer.parseInt(authorIdString);
+		try {
+			return new ResponseEntity<>(novelWriteService.getQuestion(authorId), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
-
 	@PostMapping("/sequence")
 	public ResponseEntity<?> NovelStep4(@RequestParam("image") MultipartFile image
 										,@RequestParam("previousQuestion") String previousQuestion
@@ -195,8 +163,9 @@ public class NovelWriteController {
 			NovelWriteDto novelWriteDto = new NovelWriteDto();
 			novelWriteDto.setCaptions(captions);
 			novelWriteDto.setKorean_answer(koreanAnswer);
-
 			novelWriteService.setDialogHistory(dialogHistoryObject, authorId);
+
+			getQuestions(authorIdString);
 			return new ResponseEntity<>(novelWriteDto, HttpStatus.OK);
 		}
 		catch (Exception e){
@@ -261,6 +230,38 @@ public class NovelWriteController {
 		return ResponseEntity.ok()
 			.contentType(MediaType.IMAGE_PNG)
 			.body(resources);
+	}
+
+	public void getQuestions(String authorIdString) throws Exception{
+
+		MultiValueMap<String, Object> body;
+		body = new LinkedMultiValueMap<>();
+		int authorId = Integer.parseInt(authorIdString);
+
+		List<Object> dialogHistory = novelWriteService.getDialogHistory(authorId);
+		body.add("dialog_history",dialogHistory);
+		Map<String,Object> responseBody = webClient.post()
+			.uri("/novel/question")
+			.contentType(MediaType.MULTIPART_FORM_DATA)
+			.body(BodyInserters.fromMultipartData(body))
+			.retrieve()
+			.bodyToMono(new ParameterizedTypeReference<Map<String,Object>>() {})
+			.block();
+
+		dialogHistory = (List<Object>)responseBody.get("dialog_history");
+		String query1 = (String)responseBody.get("query1");
+		String query2 = (String)responseBody.get("query2");
+		String query3 = (String)responseBody.get("query3");
+		List<String> questions = new ArrayList<>();
+
+		questions.add(query1);
+		questions.add(query2);
+		questions.add(query3);
+		log.info("start save in redis");
+
+		novelWriteService.setDialogHistory(dialogHistory,authorId);
+		novelWriteService.setQuestion(questions,authorId);
+
 	}
 
 }

@@ -18,7 +18,8 @@ public class NovelDetailDto {
 	private String title;
 	private String introduction;
 	private String createdAt;
-	private int genre;
+	private String engGenre;;
+	private String korGenre;
 	private int authorId;
 	private List<NovelContentDto> contents;
 	private List<NovelCommentDto> comment;
@@ -39,7 +40,8 @@ public class NovelDetailDto {
 		return Novel.builder()
 			.title(title)
 			.introduction(introduction)
-			.genre(genre)
+			.engGenre(engGenre)
+			.korGenre(korGenre)
 			.authorId(authorId)
 			.startContent(startContent)
 			.endContent(endContent)

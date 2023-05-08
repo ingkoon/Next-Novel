@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.a509.service_novel.redis.Dialog;
 import com.a509.service_novel.redis.DialogHistory;
 import com.a509.service_novel.redis.DialogHistoryRepository;
+import com.a509.service_novel.redis.questions.Question;
+import com.a509.service_novel.redis.questions.QuestionRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class NovelWriteService {
 
 	private final DialogHistoryRepository dialogHistoryRepository;
+	private final QuestionRepository questionRepository;
 
 	public void setDialogHistory(List<Object> objects, int authorId) throws Exception{
 
@@ -55,5 +58,25 @@ public class NovelWriteService {
 			res.add(o);
 		}
 		return res;
+	}
+
+	public void setQuestion(List<String> questions, int authorId){
+		Question question = new Question();
+
+		question.setAuthorId(authorId);
+		question.setQuery1(questions.get(0));
+		question.setQuery2(questions.get(1));
+		question.setQuery3(questions.get(2));
+
+		questionRepository.save(question);
+	}
+
+	public Question getQuestion(int authorId) throws Exception{
+
+		Optional<Question> optional  = questionRepository.findById(authorId);
+		if(optional.isPresent()){
+			return optional.get();
+		}
+		throw new SQLException();
 	}
 }

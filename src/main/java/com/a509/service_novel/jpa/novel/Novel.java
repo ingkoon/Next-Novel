@@ -29,7 +29,8 @@ public class Novel {
 	private String coverImg;
 	private String introduction;
 	private String createdAt;
-	private int genre;
+	private String engGenre;;
+	private String korGenre;
 	private int authorId;
 	private int hitCount;
 	private int commentCount;
@@ -50,7 +51,8 @@ public class Novel {
 			.title(title)
 			.introduction(introduction)
 			.createdAt(createdAt)
-			.genre(genre)
+			.engGenre(engGenre)
+			.korGenre(korGenre)
 			.authorId(authorId)
 			.hitCount(hitCount)
 			.commentCount(commentCount)
