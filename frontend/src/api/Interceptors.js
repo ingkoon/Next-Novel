@@ -72,7 +72,6 @@ tokeninstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log("토큰인스턴스쪽에러");
     return Promise.reject(error);
   }
 );
