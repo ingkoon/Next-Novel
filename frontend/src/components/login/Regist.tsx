@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import style from "./Regist.module.css";
 import useUser from "../../hooks/useUser";
 
@@ -104,7 +104,10 @@ export default function Regist({ move }: RegistProps) {
 
         <div className={style.main}>
           <div className={style.loginlogo}>
-            <img src={process.env.PUBLIC_URL + "/img/NN_LOGO_text.svg"} />
+            <img
+              src={process.env.PUBLIC_URL + "/img/NN_LOGO_text.svg"}
+              alt="logo"
+            />
           </div>
 
           <div className={style.form}>
