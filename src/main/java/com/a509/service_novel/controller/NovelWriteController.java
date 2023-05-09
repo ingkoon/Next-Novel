@@ -109,7 +109,6 @@ public class NovelWriteController {
 
 	@PostMapping("/question")
 	public ResponseEntity<?> NovelStep3(@RequestParam("nickName") String nickName) {
-		int authorId = Integer.parseInt(nickName);
 		try {
 			return new ResponseEntity<>(novelWriteService.getQuestion(nickName), HttpStatus.OK);
 		} catch (Exception e) {
