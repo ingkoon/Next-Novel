@@ -4,9 +4,11 @@ import axios from "axios";
 
 // 소설 정보(제목, 작성자, 출간일, 장르) , 소설 불러오기
 export async function novelall(id) {
-  // const res = await tokeninstance.get(`novel/${id}/`)
-  // return res
-  return axios.get("/novel/read/novel_read.json");
+  // const res = await tokeninstance.get(`novel/${id}/`);
+  // return res;
+  const res = await instance.get(`novel/${id}/`);
+  return res;
+  // return axios.get("/novel/read/novel_read2.json");
 }
 
 // 소감평작성

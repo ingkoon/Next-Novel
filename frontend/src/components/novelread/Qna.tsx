@@ -1,21 +1,11 @@
 import style from "./Qna.module.css";
 
-type imageinfo = {
-  caption: string;
-  // created_at: string;
-  // id: number;
-  image: string;
-  // novel_content: number;
-};
 type qnainfo = {
-  chosen_query: string;
-  // content: string;
-  // id: number;
-  images: imageinfo[];
-  // query1: string;
-  // query2: string;
-  // query3: string;
-  // step: number;
+  novelId: number;
+  content: string;
+  query: string;
+  image: string;
+  caption: string;
 };
 interface QnaProps {
   qna: qnainfo;
@@ -35,9 +25,7 @@ export default function Qna({ qna, index }: QnaProps) {
               alt="quote1_black"
             />
           </div>
-          <div className={`${style.quest} ${style.qna_text}`}>
-            {qna.chosen_query}
-          </div>
+          <div className={`${style.quest} ${style.qna_text}`}>{qna.query}</div>
           <div className={style.icon}>
             <img
               src={process.env.PUBLIC_URL + "/icon/quote2_black.svg"}
@@ -49,11 +37,14 @@ export default function Qna({ qna, index }: QnaProps) {
         <div className={style.checking}>
           <div className={style.pic}>
             <div className={style.inpic}>
-              <img src={qna.images[0].image} alt="" />
+              <img
+                src={process.env.REACT_APP_IMAGE_API + qna.image}
+                alt="qnaimage"
+              />
             </div>
           </div>
 
-          <div className={style.caption}>{qna.images[0].caption}</div>
+          <div className={style.caption}>{qna.caption}</div>
           {/* <div className={style.caption_parent}>
                     <div className={style.caption}>{qna.images[0].caption}</div>
                 </div> */}

@@ -14,32 +14,27 @@ type Params = {
   id: string;
 };
 
+type MatInfo= {
+  imageName: string;
+  caption: string;
+}
+
+type NMat = MatInfo[];
+
 type Ninfo = {
-  cover_img: string;
+  coverImg: string;
   id: number;
   introduction: string;
-  original_cover_img: string;
+  originCoverImg: string;
   title: string;
 }
 
-type Ncaption = {
-  caption: string;
-  created_at: string;
-  id: number;
-  image: string,
-  novel_content: number;
-}
-
 type Ndtl = {
-  chosen_query: string;
+  novelId: number;
   content: string;
-  id: number;
-  images: Ncaption[];
-  novel: number;
-  query1: string;
-  query2: string;
-  query3: string;
-  step: number;
+  query: string;
+  image: string;
+  caption: string;
 }
 
 type Ncontent = Ndtl[];
@@ -57,12 +52,12 @@ export default function Book() {
   // const iid:number = parseInt(id!);
   const [novelid, setNovelid] = useState(id);
   const [novelinfo, setNovelinfo] = useState<Ninfo>();
+  const [novelMat, setNovelMat] = useState<NMat>([]);
   const [novelContent, setNovelContent] = useState<Ncontent>();
-  const [lastPage, setLastPage] = useState<Ncontent>([]);
+  const [lastPage, setLastPage] = useState("");
   const [rerender, setRerender] = useState("");
   const page_ref = useRef<HTMLDivElement>(null);
 
-  const [create, setCreate] = useState("");
   const [input, setInput] = useState<InputProps>({});
   const { submitComment } = useCommentWrite();
   const [flag, setFlag] = useState(false);
@@ -72,26 +67,20 @@ export default function Book() {
       const data = await novelall(novelid);
       console.log(data);
       setNovelinfo({
-        cover_img: data.data.novel.cover_img,
-        id: data.data.novel.id,
-        introduction: data.data.novel.introduction,
-        original_cover_img: data.data.novel.original_cover_img,
-        title: data.data.novel.title,
+        coverImg: data.data.coverImg,
+        id: data.data.id,
+        introduction: data.data.introduction,
+        originCoverImg: data.data.originCoverImg,
+        title: data.data.title,
       });
+      setNovelMat(data.data.startImages);
       setNovelContent(
-        data.data.novel_detail.slice(0, data.data.novel_detail.length - 1)
+        data.data.contents
       );
       setLastPage(
-        data.data.novel_detail.slice(
-          data.data.novel_detail.length - 1,
-          data.data.novel_detail.length
-        )
+        data.data.endContent
       );
 
-      const year = data.data.novel.created_at.substring(0, 4);
-      const month = data.data.novel.created_at.substring(5, 7);
-      const date = data.data.novel.created_at.substring(8, 10);
-      setCreate(year + "." + month + "." + date);
       setFlag(true);
     } catch (e) {
       console.log(e);
@@ -194,7 +183,7 @@ export default function Book() {
                     src={
                       novelinfo &&
                       process.env.REACT_APP_IMAGE_API +
-                        novelinfo.cover_img
+                        novelinfo.coverImg
                     }
                     alt="coverimg"
                   />
@@ -212,7 +201,7 @@ export default function Book() {
               return (
                 <>
                   <div className={style.page} ref={page_ref}>
-                    {index === 0 && <Materials mat={item} />}
+                    {index === 0 && <Materials mat={novelMat} />}
                     {index > 0 && <Qna qna={item} index={index} />}
                   </div>
                   <div className={style.page} ref={page_ref}>
@@ -223,7 +212,7 @@ export default function Book() {
             })}
 
             <div className={style.page}>
-              <span className={style.text}>{lastPage[0].content}</span>
+              <span className={style.text}>{lastPage}</span>
             </div>
             <div className={style.page}>
               <div className={style.ogcover}>
@@ -231,7 +220,7 @@ export default function Book() {
                   src={
                     novelinfo &&
                     process.env.REACT_APP_IMAGE_API +
-                      novelinfo.original_cover_img
+                      novelinfo.originCoverImg
                   }
                   alt="ogcover"
                 />

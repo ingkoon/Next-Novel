@@ -53,7 +53,10 @@ function Card({ props }) {
       <div className={style.card} onClick={(e) => navigateToPurchase(props.id)}>
         <div
           className={isHovering ? style.none : style.intro}
-          style={{ backgroundImage: `url(${props && props.coverImage})` }}
+          style={{
+            backgroundImage: `url(${props &&
+              process.env.REACT_APP_IMAGE_API + props.coverImg})`,
+          }}
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
         >
@@ -73,7 +76,10 @@ function Card({ props }) {
         </div>
         <div
           className={isHovering ? style.intro : style.none}
-          style={{ backgroundImage: `url(${props && props.coverImage})` }}
+          style={{
+            backgroundImage: `url(${props &&
+              process.env.REACT_APP_IMAGE_API + props.coverImg})`,
+          }}
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
         >

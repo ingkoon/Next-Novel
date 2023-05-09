@@ -8,16 +8,13 @@ type Params = {
 };
 
 type NInfo = {
-  author: string;
-  cover_img: string;
-  created_at: string;
-  genre: string;
   id: number;
-  introduction: string;
-  original_cover_img: string;
-  status: number;
-  step: number;
   title: string;
+  introduction: string;
+  createdAt: string;
+  engGenre: string;
+  korGenre: string;
+  nickName: string;
 };
 
 export default function InfoCard() {
@@ -30,10 +27,10 @@ export default function InfoCard() {
     try {
       const data = await novelall(novelid);
       console.log(data);
-      setNovelinfo(data.data.novel);
-      const year = data.data.novel.created_at.substring(0, 4);
-      const month = data.data.novel.created_at.substring(5, 7);
-      const date = data.data.novel.created_at.substring(8, 10);
+      setNovelinfo(data.data);
+      const year = data.data.createdAt.substring(0, 4);
+      const month = data.data.createdAt.substring(5, 7);
+      const date = data.data.createdAt.substring(8, 10);
       setCreate(year + "." + month + "." + date);
     } catch (e) {
       console.log(e);
@@ -62,13 +59,13 @@ export default function InfoCard() {
           </div>
           <div className={style.title}>{novelinfo && novelinfo.title}</div>
           <div className={style.sub}>
-            제작자 :<div>&nbsp;{novelinfo && novelinfo.author}</div>
+            제작자 :<div>&nbsp;{novelinfo && novelinfo.nickName}</div>
           </div>
           <div className={style.sub}>
             출간일 :<div>&nbsp;{novelinfo && create}</div>
           </div>
           <div className={style.sub}>
-            장르 :<div>&nbsp;{novelinfo && novelinfo.genre}</div>
+            장르 :<div>&nbsp;{novelinfo && novelinfo.korGenre}</div>
           </div>
           <img
             src={process.env.PUBLIC_URL + "/img/barcode.svg"}
