@@ -6,15 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.a509.service_novel.dto.ImageDto;
@@ -87,10 +83,15 @@ public class NovelController {
 		}
 	}
 
+	///novel?genre=장르&keyword=검색어&page=0&size=10
 	@GetMapping()
-	public ResponseEntity<?> selectNovels(){
+	public ResponseEntity<?> selectNovels(@RequestParam String genre,
+										  @RequestParam String keyword,
+										  @RequestParam int page,
+										  @RequestParam int size){
 		try{
-			return ResponseEntity.ok(novelService.selectNovelList());
+			Pageable pageable = PageRequest.of(page,size);
+			return ResponseEntity.ok(novelService.selectNovelList(genre, keyword, pageable));
 		}
 		catch(Exception e){
 			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
