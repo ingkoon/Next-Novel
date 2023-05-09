@@ -48,7 +48,7 @@ export default function WriteStep4a() {
   };
   const appendFormData = (files: File[]) => {
     const formData = new FormData();
-    formData.append("authorId", "1234");
+    formData.append("nickName", localStorage.getItem("nickname")!);
     formData.append("previousQuestion", novel.selectedQuestion);
     formData.append("image", files[0]);
 

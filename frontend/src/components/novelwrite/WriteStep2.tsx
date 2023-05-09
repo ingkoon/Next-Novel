@@ -47,8 +47,8 @@ export default function WriteStep2() {
   const appendFormData = (files: File[]) => {
     const formData = new FormData();
     files.forEach((file) => formData.append("images", file));
-    formData.append("genre", novel.genre + "");
-    formData.append("authorId", "1234");
+    formData.append("genre", novel.engGenreName);
+    formData.append("nickName", localStorage.getItem("nickname")!);
 
     return formData;
   };

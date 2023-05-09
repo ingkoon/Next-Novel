@@ -18,7 +18,7 @@ export default function SelectOption() {
       click3: "이대로 소설을\n마무리합니다",
       event: () => {
         const formData = new FormData();
-        formData.append("authorId", "1234");
+        formData.append("nickName", localStorage.getItem("nickname")!);
         endNovel.mutate(formData, {
           onSuccess: (res) => {
             console.log(res);
@@ -38,7 +38,7 @@ export default function SelectOption() {
       event: () => {
         if (count === 5) return;
         const formData = new FormData();
-        formData.append("authorId", "1234");
+        formData.append("nickName", localStorage.getItem("nickname")!);
         getQuestions.mutate(formData, {
           onSuccess: (res) => {
             console.log(res);

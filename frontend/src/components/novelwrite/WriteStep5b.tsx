@@ -48,7 +48,8 @@ export default function WriteStep5b() {
     finNovel.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
-        // navigate(`/library/${novel.id}/intro`, { state: { id: novel.id } });
+        const id = res.data.novelId;
+        navigate(`/library/${id}/intro`, { state: { id: id } });
       },
     });
   };
@@ -59,14 +60,20 @@ export default function WriteStep5b() {
       query: novel.totalQuestions[index],
       caption: novel.newMaterials[index].caption,
     }));
+    const startImagesVal = novel.materials.map((material) => ({
+      imageName: "",
+      caption: material.caption,
+    }));
     const novelJson = {
       title: input.title,
       introduction: input.desc,
-      genre: novel.genre + "",
-      authorId: 1234 + "",
+      engGenre: novel.engGenreName,
+      korGenre: novel.korGenreName,
+      nickName: localStorage.getItem("nickname")!,
+      contents: contentsVal,
+      startImages: startImagesVal,
       startContent: novel.startStory,
       endContent: novel.endStory,
-      contents: contentsVal,
     };
 
     formData.append(
@@ -160,7 +167,7 @@ export default function WriteStep5b() {
                           onChange={handleChange}
                         />
                       )}
-                      {index === 2 && <span>{novel.genreName}</span>}
+                      {index === 2 && <span>{novel.korGenreName}</span>}
                     </div>
                   </div>
                 </div>
