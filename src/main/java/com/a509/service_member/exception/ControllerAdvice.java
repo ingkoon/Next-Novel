@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ControllerAdvice {
 
     @ExceptionHandler({
-            InvalidedAccessTokenException.class
+            InvalidedAccessTokenException.class,
+            EmptyValueException.class
     }) public ResponseEntity<ErrorResponse> handleInvalidException(final RuntimeException e) {
         ErrorCode errorCode = ErrorCode.BAD_REQUEST;
         ErrorResponse response = ErrorResponse.of(errorCode);

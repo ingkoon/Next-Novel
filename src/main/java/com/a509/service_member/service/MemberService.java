@@ -1,14 +1,12 @@
 package com.a509.service_member.service;
 
-import com.a509.service_member.dto.request.MemberLoginRequestDto;
-import com.a509.service_member.dto.request.MemberSignupCheckRequestDto;
-import com.a509.service_member.dto.request.MemberSignupRequestDto;
-import com.a509.service_member.dto.request.MemberUpdateRequestDto;
+import com.a509.service_member.dto.request.*;
 import com.a509.service_member.dto.response.MemberTokenResponseDto;
 import com.a509.service_member.dto.response.MemberMyPageResponseDto;
 import com.a509.service_member.dto.response.MessageResponseDto;
 import com.a509.service_member.enums.MemberState;
 import com.a509.service_member.exception.DuplicatedMemberException;
+import com.a509.service_member.exception.EmptyValueException;
 import com.a509.service_member.exception.InvalidedAccessTokenException;
 import com.a509.service_member.exception.NoSuchMemberException;
 import com.a509.service_member.jpa.FileUploader;
@@ -160,12 +158,21 @@ public class MemberService {
         }
         member.setNickname(nickname);
 
-        if (!"".equals(memberUpdateRequestDto.getPassword()) && member.getProvider() == null) {
-            member.setPassword(bCryptPasswordEncoder.encode(memberUpdateRequestDto.getPassword()));
-        }
-
         String imgUrl = fileUploader.upload(multipartFile, "member");
         member.setProfileImage(imgUrl);
+    }
+
+    @Transactional
+    public void updatePassword(String token, MemberUpdatePasswordRequestDto memberUpdatePasswordRequestDto) {
+        Member member = findMember(jwtTokenProvider.getMember(token));
+
+        String password = memberUpdatePasswordRequestDto.getPassword().trim();
+        if("".equals(password)) {
+            throw new EmptyValueException("변경할 비밀번호를 입력해주세요.");
+        }
+        if (member.getProvider() == null) {
+            member.setPassword(bCryptPasswordEncoder.encode(password));
+        }
     }
 
     @Transactional

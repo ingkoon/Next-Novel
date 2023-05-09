@@ -1,9 +1,6 @@
 package com.a509.service_member.controller;
 
-import com.a509.service_member.dto.request.MemberLoginRequestDto;
-import com.a509.service_member.dto.request.MemberSignupCheckRequestDto;
-import com.a509.service_member.dto.request.MemberSignupRequestDto;
-import com.a509.service_member.dto.request.MemberUpdateRequestDto;
+import com.a509.service_member.dto.request.*;
 import com.a509.service_member.dto.response.MemberTokenResponseDto;
 import com.a509.service_member.dto.response.MemberMyPageResponseDto;
 import com.a509.service_member.dto.response.MessageResponseDto;
@@ -111,6 +108,14 @@ public class MemberController {
             @RequestPart("multipartFile") MultipartFile multipartFile,
             @RequestPart("request") @Validated MemberUpdateRequestDto memberUpdateRequestDto) {
         memberService.update(token, memberUpdateRequestDto, multipartFile);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/myPage/password")
+    public ResponseEntity<Void> updatePassword(
+            @RequestHeader("Authorization") final String token,
+            @RequestBody MemberUpdatePasswordRequestDto memberUpdatePasswordRequestDto) {
+        memberService.updatePassword(token, memberUpdatePasswordRequestDto);
         return ResponseEntity.ok().build();
     }
 
