@@ -158,8 +158,10 @@ public class MemberService {
         }
         member.setNickname(nickname);
 
-        String imgUrl = fileUploader.upload(multipartFile, "member");
-        member.setProfileImage(imgUrl);
+        if(!multipartFile.isEmpty()) {
+            String imgUrl = fileUploader.upload(multipartFile, "member");
+            member.setProfileImage(imgUrl);
+        }
     }
 
     @Transactional

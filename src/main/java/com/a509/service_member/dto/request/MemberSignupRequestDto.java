@@ -1,6 +1,7 @@
 package com.a509.service_member.dto.request;
 
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -15,6 +16,6 @@ public class MemberSignupRequestDto {
     private String password;
     @NotBlank(message = "닉네임은 필수 입력값입니다.")
     private String nickname;
-    private String profileImage;
+    private String profileImage = "C:\\Users\\SSAFY\\Desktop\\static\\images\\defaultProfileImg.png";
 
 }
