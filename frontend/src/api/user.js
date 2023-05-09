@@ -27,6 +27,11 @@ export async function normalLoginApi(jsonData) {
   return instance.post("member/login", jsonData, config2);
 }
 
+// 로그아웃
+export async function LogoutApi() {
+  return tokeninstance.get("member/logout");
+}
+
 // 회원정보
 export async function getuserinfo() {
   const res = await tokeninstance.get("user/");

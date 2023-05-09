@@ -4,6 +4,7 @@ import {
   emailCheckApi,
   nicknameCheckApi,
   normalLoginApi,
+  LogoutApi,
 } from "../api/user";
 
 export default function useNovelWrite() {
@@ -27,10 +28,15 @@ export default function useNovelWrite() {
     {}
   );
 
+  const Logout = () => {
+    return LogoutApi();
+  };
+
   return {
     normalRegist,
     emailCheck,
     nicknameCheck,
     normalLogin,
+    Logout,
   };
 }

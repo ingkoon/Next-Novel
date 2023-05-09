@@ -43,7 +43,10 @@ export default function LoginModal({
       }}
     >
       {loginOrRegist === "login" && (
-        <Login move={() => setLoginOrRegist("regist")} />
+        <Login
+          move={() => setLoginOrRegist("regist")}
+          closemodal={closemodal}
+        />
       )}
       {loginOrRegist === "regist" && (
         <Regist move={() => setLoginOrRegist("login")} />

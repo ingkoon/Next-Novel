@@ -1,10 +1,12 @@
 import { useState } from "react";
 import style from "./login.module.css";
 import useUser from "../../hooks/useUser";
+import { useNavigate } from "react-router-dom";
 
-export default function Login({ move }) {
+export default function Login({ move, closemodal }) {
   const { normalLogin } = useUser();
   const [info, setInfo] = useState({ email: "", pw: "" });
+  const navigate = useNavigate();
 
   function kakaoLogin() {
     const { Kakao } = window;
@@ -25,6 +27,11 @@ export default function Login({ move }) {
     normalLogin.mutate(jsonData, {
       onSuccess: (res) => {
         console.log(res);
+        localStorage.setItem("access_token", res.data.accessToken);
+        localStorage.setItem("refresh_token", res.data.refreshToken);
+        localStorage.setItem("nickname", res.data.nickname);
+        closemodal();
+        navigate("/");
       },
       onError: (res) => {
         console.log(res);
