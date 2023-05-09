@@ -1,30 +1,28 @@
 import style from "./IdCard.module.css";
 import Member from "./Member";
 import { useEffect, useState } from "react";
+import useUser from "../../hooks/useUser";
 
-import { getuserinfo } from "../../api/user.js";
 export default function IdCard() {
-  const [userinfo, setUserinfo] = useState({ profile_image: "", nickname: "" });
-  const [date, setDate] = useState("");
+  const [userinfo, setUserinfo] = useState({
+    profile_image: "",
+    nickname: "",
+    createdAt: "",
+  });
+  const { getUserInfo } = useUser();
 
   // api 통신하기
   async function getuser() {
     try {
-      // const data = await getuserinfo()
-      // setUserinfo(data.data)
-      // let tmp = data.data.created_at
-      // let year = tmp.substring(0, 4)
-      // let month = tmp.substring(5,7)
-      // let day = tmp.substring(8,10)
-      // let hour = tmp.substring(11,13)
-      // let min = tmp.substring(14,16)
-      // let sec = tmp.substring(17,19)
-      // setDate(year+month+day+'.'+hour+'.'+min+'.'+sec)
+      const res = await getUserInfo();
+      console.log(res);
       setUserinfo({
-        profile_image: "http://placehold.it/150X150",
-        nickname: "서철원",
+        profile_image:
+          res.data.profileImage ||
+          "https://i.pinimg.com/564x/3d/cd/4a/3dcd4af5bc9e06d36305984730ab7888.jpg",
+        nickname: res.data.nickname,
+        createdAt: res.data.createdAt.substring(0, 10),
       });
-      setDate("20230404.19.22.25");
     } catch (e) {
       console.log(e);
     }
@@ -87,7 +85,9 @@ export default function IdCard() {
                     <div className={style.info_name}>
                       ID {userinfo.nickname}
                     </div>
-                    <div className={style.info_date}>S/N {date}</div>
+                    <div className={style.info_date}>
+                      S/N {userinfo.createdAt}
+                    </div>
                   </div>
                   <div className={style.info_nation}>
                     <img
