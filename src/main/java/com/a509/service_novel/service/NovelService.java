@@ -183,12 +183,12 @@ public class NovelService {
 	}
 
 	@Transactional
-	public void insertNovelImages(String nickName, MultipartFile[] startImages, MultipartFile[] contentImages) throws Exception{
+	public void insertNovelImages(String nickName, MultipartFile[] startImages, MultipartFile[] contentImages,String UID) throws Exception{
 
 		for(MultipartFile image : startImages){
 
 			NovelImage novelImage = new NovelImage();
-			novelImage.setImageName(image.getOriginalFilename());
+			novelImage.setImageName(UID+image.getOriginalFilename());
 			novelImage.setNickName(nickName);
 			novelImageRepository.save(novelImage);
 		}
@@ -196,7 +196,7 @@ public class NovelService {
 		for(MultipartFile image : contentImages){
 
 			NovelImage novelImage = new NovelImage();
-			novelImage.setImageName(image.getOriginalFilename());
+			novelImage.setImageName(UID+image.getOriginalFilename());
 			novelImage.setNickName(nickName);
 			novelImageRepository.save(novelImage);
 		}
