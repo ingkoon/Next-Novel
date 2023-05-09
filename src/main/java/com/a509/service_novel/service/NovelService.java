@@ -188,7 +188,7 @@ public class NovelService {
 		for(MultipartFile image : startImages){
 
 			NovelImage novelImage = new NovelImage();
-			novelImage.setImageName(UID+image.getOriginalFilename());
+			novelImage.setImageName(UID+"_"+image.getOriginalFilename());
 			novelImage.setNickName(nickName);
 			novelImageRepository.save(novelImage);
 		}
@@ -196,7 +196,7 @@ public class NovelService {
 		for(MultipartFile image : contentImages){
 
 			NovelImage novelImage = new NovelImage();
-			novelImage.setImageName(UID+image.getOriginalFilename());
+			novelImage.setImageName(UID+"_"+image.getOriginalFilename());
 			novelImage.setNickName(nickName);
 			novelImageRepository.save(novelImage);
 		}
