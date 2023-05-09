@@ -19,7 +19,7 @@ import java.util.Map;
 public class KafkaConsumerConfig {
 
     @Bean
-    public ConsumerFactory<String, IsCheckOrderRequest> isCheckStatusConsumerFactory() {
+    public ConsumerFactory<String, IsCheckOrderRequest> isCheckConsumnerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "payment-group");
@@ -32,10 +32,10 @@ public class KafkaConsumerConfig {
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, IsCheckOrderRequest>
-    isCheckStatusListenerFactory() {
+    isCheckListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, IsCheckOrderRequest> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(isCheckStatusConsumerFactory());
+        factory.setConsumerFactory(isCheckConsumnerFactory());
         return factory;
     }
 }
