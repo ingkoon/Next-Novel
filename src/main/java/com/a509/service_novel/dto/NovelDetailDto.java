@@ -28,10 +28,7 @@ public class NovelDetailDto {
 	private int likeCount;
 	private String originCoverImg;
 	private String coverImg;
-	private String startImage1;
-	private String startImage2;
-	private String startImage3;
-	private String startImage4;
+	private List<ImageDto> startImages;
 	private String startContent;
 	private String endContent;
 
@@ -43,6 +40,14 @@ public class NovelDetailDto {
 			.engGenre(engGenre)
 			.korGenre(korGenre)
 			.nickName(nickName)
+			.startImage1(startImages.get(0).getImageName())
+			.startImage2(startImages.get(1).getImageName())
+			.startImage3(startImages.get(2).getImageName())
+			.startImage4(startImages.get(3).getImageName())
+			.imageCaption1(startImages.get(0).getCaption())
+			.imageCaption2(startImages.get(1).getCaption())
+			.imageCaption3(startImages.get(2).getCaption())
+			.imageCaption4(startImages.get(3).getCaption())
 			.startContent(startContent)
 			.endContent(endContent)
 			.build();

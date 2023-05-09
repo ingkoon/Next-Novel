@@ -1,11 +1,15 @@
 package com.a509.service_novel.jpa.novel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.a509.service_novel.dto.ImageDto;
 import com.a509.service_novel.dto.NovelDetailDto;
 import com.a509.service_novel.dto.NovelListDto;
 
@@ -41,11 +45,22 @@ public class Novel {
 	private String startImage3;
 	private String startImage4;
 
+	private String imageCaption1;
+	private String imageCaption2;
+	private String imageCaption3;
+	private String imageCaption4;
+
 	private String startContent;
 	private String endContent;
 
 
 	public NovelDetailDto toDto(){
+		List<ImageDto> images = new ArrayList<>();
+		images.add(new ImageDto(startImage1,imageCaption1));
+		images.add(new ImageDto(startImage2,imageCaption2));
+		images.add(new ImageDto(startImage3,imageCaption3));
+		images.add(new ImageDto(startImage4,imageCaption4));
+
 		return NovelDetailDto.builder()
 			.id(id)
 			.title(title)
@@ -57,12 +72,9 @@ public class Novel {
 			.hitCount(hitCount)
 			.commentCount(commentCount)
 			.likeCount(likeCount)
-			.startImage1(startImage1)
-			.startImage2(startImage2)
-			.startImage3(startImage3)
-			.startImage4(startImage4)
 			.originCoverImg(originCoverImg)
 			.coverImg(coverImg)
+			.startImages(images)
 			.startContent(startContent)
 			.endContent(endContent)
 			.build();

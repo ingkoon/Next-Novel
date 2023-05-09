@@ -206,7 +206,7 @@ public class NovelService {
 		List<NovelImage> novelImageList = novelImageRepository.findByNickName(nickName);
 		List<ImageDto> imageDtos = new ArrayList<>();
 		for(NovelImage image : novelImageList){
-			imageDtos.add(new ImageDto(image.getImageName()));
+			imageDtos.add(new ImageDto(image.getImageName(),""));
 		}
 		return imageDtos;
 	}

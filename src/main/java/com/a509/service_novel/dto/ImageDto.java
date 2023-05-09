@@ -11,4 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ImageDto {
 	private String imageName;
+	private String caption;
 }
