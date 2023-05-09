@@ -1,39 +1,31 @@
 import style from "./Update.module.css";
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useContext,
-  ChangeEvent,
-} from "react";
-import { patchuser, getuserinfo } from "../../../api/user";
-import { AuthContext } from "../../../context/AuthContext";
+import React, { useState, useRef, useEffect, ChangeEvent } from "react";
+import useUser from "../../../hooks/useUser";
 
 type UpdateProps = {
   closemodal: () => void;
 };
 export default function Update({ closemodal }: UpdateProps) {
-  const [imgFile, setImgFile] = useState("");
-  const [nickName, setNickName] = useState("");
+  const { getUserInfo, putUserInfo } = useUser();
   const [profile, setProfile] = useState<File | undefined>();
   const imgRef = useRef<HTMLInputElement>(null);
-  const [userinfo, setUserinfo] = useState("");
-  const { user, setUser } = useContext(AuthContext);
+  const [userinfo, setUserinfo] = useState({
+    profile_image: "",
+    nickname: "",
+    createdAt: "",
+  });
 
   // api 통신하기
   async function getuser() {
     try {
-      // const data = await getuserinfo();
-      // let tmp = data.data.created_at;
-      // let year = tmp.substring(0, 4);
-      // let month = tmp.substring(5, 7);
-      // let day = tmp.substring(8, 10);
-      // setNickName(data.data.nickname);
-      // setImgFile(data.data.profile_image);
-      // setUserinfo(year + "." + month + "." + day);
-      setNickName("서철원");
-      setImgFile("http://placehold.it/150X150");
-      setUserinfo("2023.04.05");
+      const res = await getUserInfo();
+      setUserinfo({
+        profile_image:
+          res.data.profileImage ||
+          "https://i.pinimg.com/564x/3d/cd/4a/3dcd4af5bc9e06d36305984730ab7888.jpg",
+        nickname: res.data.nickname,
+        createdAt: res.data.createdAt.substring(0, 10),
+      });
     } catch (e) {
       console.log(e);
     }
@@ -56,7 +48,7 @@ export default function Update({ closemodal }: UpdateProps) {
 
       reader.onloadend = () => {
         const result = reader.result as string;
-        setImgFile(result);
+        setUserinfo({ ...userinfo, profile_image: result });
       };
     }
   };
@@ -67,30 +59,30 @@ export default function Update({ closemodal }: UpdateProps) {
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNickName(e.target.value);
+    setUserinfo({ ...userinfo, nickname: e.target.value });
   };
 
   const updateuser = () => {
     const formData = new FormData();
 
-    if (profile !== undefined) {
-      formData.append("profile_image", profile);
-    }
-    formData.append("nickname", nickName);
+    formData.append("multipartFile", profile || ""); //프로필 안바꾸면 어떻게?
 
-    async function updateuserinfo() {
-      try {
-        const data = await patchuser(formData);
-        console.log(data);
+    const json = {
+      nickname: userinfo.nickname,
+    };
+    formData.append(
+      "request",
+      new Blob([JSON.stringify(json)], { type: "application/json" })
+    );
 
-        localStorage.setItem("nickname", nickName);
+    putUserInfo.mutate(formData, {
+      onSuccess: (res) => {
+        console.log(res);
+
+        localStorage.setItem("nickname", userinfo.nickname);
         closemodal();
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
-    updateuserinfo();
+      },
+    });
   };
 
   return (
@@ -103,29 +95,42 @@ export default function Update({ closemodal }: UpdateProps) {
       <div className={style.category}>
         <div className={style.categoryTitle}>
           <div className={style.icon}>
-            <img src={process.env.PUBLIC_URL + "/icon/mypage/nickname.svg"} />
+            <img
+              src={process.env.PUBLIC_URL + "/icon/mypage/nickname.svg"}
+              alt="icon"
+            />
           </div>
           <div className={style.categoryName}>닉네임</div>
         </div>
         <div className={style.categoryTitle}>
           <div className={style.icon}>
-            <img src={process.env.PUBLIC_URL + "/icon/mypage/profile.svg"} />
+            <img
+              src={process.env.PUBLIC_URL + "/icon/mypage/profile.svg"}
+              alt="icon"
+            />
           </div>
           <div className={style.categoryName}>프로필</div>
         </div>
         <div className={style.categoryTitle}>
           <div className={style.icon}>
-            <img src={process.env.PUBLIC_URL + "/icon/mypage/regdate.svg"} />
+            <img
+              src={process.env.PUBLIC_URL + "/icon/mypage/regdate.svg"}
+              alt="icon"
+            />
           </div>
           <div className={style.categoryName}>가입일자</div>
         </div>
         <div className={style.nickname}>
-          <input onChange={onChange} value={nickName} />
+          <input onChange={onChange} value={userinfo.nickname} />
         </div>
         <label htmlFor="inputimg" className={style.profile}>
-          <img src={imgFile} alt="updateprofile" onClick={changeprofile} />
+          <img
+            src={userinfo.profile_image}
+            alt="updateprofile"
+            onClick={changeprofile}
+          />
         </label>
-        <div className={style.regdate}>{userinfo}</div>
+        <div className={style.regdate}>{userinfo.createdAt}</div>
       </div>
 
       <div className={style.updatebtn}>

@@ -5,6 +5,8 @@ import {
   nicknameCheckApi,
   normalLoginApi,
   LogoutApi,
+  getUserInfoApi,
+  putUserInfoApi,
 } from "../api/user";
 
 export default function useNovelWrite() {
@@ -31,6 +33,13 @@ export default function useNovelWrite() {
   const Logout = () => {
     return LogoutApi();
   };
+  const getUserInfo = () => {
+    return getUserInfoApi();
+  };
+  const putUserInfo = useMutation(
+    (formData: FormData) => putUserInfoApi(formData),
+    {}
+  );
 
   return {
     normalRegist,
@@ -38,5 +47,7 @@ export default function useNovelWrite() {
     nicknameCheck,
     normalLogin,
     Logout,
+    getUserInfo,
+    putUserInfo,
   };
 }
