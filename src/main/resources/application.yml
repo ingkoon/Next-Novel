@@ -36,3 +36,4 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://***REMOVED***:8761/eureka
+
