@@ -125,10 +125,10 @@ public class OrderService {
                         .build();
 
         createOrderItemTemplate
-                .send("create_order_item", order.getId().toString(), orderItemRequestDto);
+                .send("create_order_item", orderItemRequestDto);
     }
     @Transactional
-    @KafkaListener(topics = "check_status")
+    @KafkaListener(topics = "check_status", containerFactory = "isCheckListenerContainerFactory")
     public void isCheckOrder(@Payload IsCheckOrderRequest requestDto) {
         Long id = requestDto.getOrderId();
         Order order = orderRepository.findById(id).orElseThrow(NoSuchOrderException::new);

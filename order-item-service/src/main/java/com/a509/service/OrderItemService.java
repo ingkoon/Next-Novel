@@ -19,11 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class OrderItemService {
     private final OrderItemRepository orderItemRepository;
-    private final KafkaTemplate<String, IsCheckOrderRequest> successOrderTemplate;
+    private final KafkaTemplate<String, IsCheckOrderRequest> successOrderTemplateV2;
 
     @Transactional
     @KafkaListener(topics = "create_order_item")
     public void createOrderItem(@Payload CreateOrderItemRequestDto requestDto){
+        log.info("========input data========");
         OrderItem orderItem = OrderItem.builder()
                 .orderId(requestDto.getOrderId())
                 .itemId(requestDto.getItemId())
@@ -31,10 +32,13 @@ public class OrderItemService {
                 .build();
 
         orderItemRepository.save(orderItem);
+
+        log.info("======== packaging for send data ========");
         IsCheckOrderRequest isCheckOrderRequest = IsCheckOrderRequest.builder()
                 .orderId(orderItem.getOrderId())
                 .status(OrderStatus.SUCCESS).build();
 
-        successOrderTemplate.send("check_status", orderItem.getOrderId().toString(), isCheckOrderRequest);
+        log.info("======== ready to send data ========");
+        successOrderTemplateV2.send("check_status", orderItem.getOrderId().toString(), isCheckOrderRequest);
     }
 }
