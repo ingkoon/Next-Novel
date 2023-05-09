@@ -1,11 +1,12 @@
 package com.a509.service_member.service;
 
 import com.a509.service_member.dto.request.MemberLoginRequestDto;
+import com.a509.service_member.dto.request.MemberSignupCheckRequestDto;
 import com.a509.service_member.dto.request.MemberSignupRequestDto;
 import com.a509.service_member.dto.request.MemberUpdateRequestDto;
 import com.a509.service_member.dto.response.MemberTokenResponseDto;
 import com.a509.service_member.dto.response.MemberMyPageResponseDto;
-import com.a509.service_member.enums.MemberRole;
+import com.a509.service_member.dto.response.MessageResponseDto;
 import com.a509.service_member.enums.MemberState;
 import com.a509.service_member.exception.DuplicatedMemberException;
 import com.a509.service_member.exception.InvalidedAccessTokenException;
@@ -43,6 +44,7 @@ public class MemberService {
         return memberRepository.findByEmail(email).orElseThrow(NoSuchMemberException::new);
     }
 
+    @Transactional
     public void signUp(MemberSignupRequestDto memberSignupRequestDto) {
         if (memberRepository.existsByEmail(memberSignupRequestDto.getEmail())) {
             throw new DuplicatedMemberException();
@@ -58,10 +60,42 @@ public class MemberService {
                 .password(bCryptPasswordEncoder.encode(memberSignupRequestDto.getPassword()))
                 .nickname(memberSignupRequestDto.getNickname())
                 .profileImage(memberSignupRequestDto.getProfileImage())
-                .state(MemberState.ACTIVE.name())
-                .role(MemberRole.ROLE_USER.name())
                 .build();
         memberRepository.save(member);
+    }
+
+    public MessageResponseDto checkEmail(MemberSignupCheckRequestDto memberSignupCheckRequestDto) {
+        String res = "";
+        String msg = "";
+        if (memberRepository.existsByEmail(memberSignupCheckRequestDto.getEmail())) {
+            res = "fail";
+            msg = "중복된 이메일입니다.";
+        } else {
+            res = "success";
+            msg = "사용 가능한 이메일입니다.";
+        }
+        MessageResponseDto message = MessageResponseDto.builder()
+                .result(res)
+                .message(msg)
+                .build();
+        return message;
+    }
+
+    public MessageResponseDto checkNickname(MemberSignupCheckRequestDto memberSignupCheckRequestDto) {
+        String res = "";
+        String msg = "";
+        if (memberRepository.existsByNickname(memberSignupCheckRequestDto.getNickname())) {
+            res = "fail";
+            msg = "중복된 닉네임입니다.";
+        } else {
+            res = "success";
+            msg = "사용 가능한 닉네임입니다.";
+        }
+        MessageResponseDto message = MessageResponseDto.builder()
+                .result(res)
+                .message(msg)
+                .build();
+        return message;
     }
 
     @Transactional

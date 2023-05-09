@@ -2,8 +2,8 @@ package com.a509.service_member.service;
 
 import com.a509.service_member.jpa.member.Member;
 import com.a509.service_member.jpa.member.MemberRepository;
+import com.a509.service_member.jpa.member.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,6 +24,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     // 해당하는 User 의 데이터가 존재한다면 UserDetails 객체로 만들어서 리턴
     private UserDetails createUserDetails(Member member) {
-        return new User(member.getUsername(), member.getPassword(), member.getAuthorities());
+        return new CustomUserDetails(member);
     }
 }
