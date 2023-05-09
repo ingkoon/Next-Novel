@@ -99,13 +99,13 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
+    @GetMapping("/myPage")
     public ResponseEntity<MemberMyPageResponseDto> findMyPage(@RequestHeader("Authorization") final String token) {
         MemberMyPageResponseDto response = memberService.findMyPage(token);
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping
+    @PutMapping("/myPage")
     public ResponseEntity<Void> update(
             @RequestHeader("Authorization") final String token,
             @RequestPart("multipartFile") MultipartFile multipartFile,
@@ -114,7 +114,7 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping
+    @DeleteMapping("/myPage")
     public ResponseEntity<Void> delete(@RequestHeader("Authorization") final String token) {
         memberService.delete(token);
         memberService.logout(token);
