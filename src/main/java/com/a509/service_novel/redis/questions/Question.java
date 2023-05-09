@@ -2,6 +2,8 @@ package com.a509.service_novel.redis.questions;
 
 
 
+import java.util.List;
+
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.annotation.Id;
 
@@ -13,8 +15,6 @@ public class Question {
 
 	@Id
 	private String nickName;
-	private String query1;
-	private String query2;
-	private String query3;
+	private List<String> questions;
 
 }

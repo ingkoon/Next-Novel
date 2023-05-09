@@ -64,9 +64,7 @@ public class NovelWriteService {
 		Question question = new Question();
 
 		question.setNickName(nickName);
-		question.setQuery1(questions.get(0));
-		question.setQuery2(questions.get(1));
-		question.setQuery3(questions.get(2));
+		question.setQuestions(questions);
 
 		questionRepository.save(question);
 	}
