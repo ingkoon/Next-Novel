@@ -98,6 +98,17 @@ public class NovelController {
 		}
 	}
 
+	@GetMapping("/recommend")
+	public ResponseEntity<?> selectRecommend(){
+		try{
+			List<NovelListDto> novelListDtos = novelService.selectNovelRecommend();
+			return ResponseEntity.ok(novelListDtos);
+		}
+		catch (Exception e){
+			return new ResponseEntity<>(e.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	@GetMapping("/id/{id}")
 	public ResponseEntity<?> selectNovelByAuthorId(@PathVariable("id") String nickName){
 		try{

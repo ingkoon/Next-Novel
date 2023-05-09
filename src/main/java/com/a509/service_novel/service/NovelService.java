@@ -217,4 +217,18 @@ public class NovelService {
 		}
 		return imageDtos;
 	}
+
+	public List<NovelListDto> selectNovelRecommend() throws Exception{
+
+		List<Novel> novels = novelRepogitory.findRandom5();
+		List<NovelListDto> novelDtos = new ArrayList<>();
+
+		for (Novel novel : novels) {
+			NovelListDto novelDto = novel.toListDto();
+			novelDtos.add(novelDto);
+		}
+
+		return novelDtos;
+
+	}
 }
