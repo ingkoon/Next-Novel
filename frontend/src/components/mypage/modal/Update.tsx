@@ -1,5 +1,11 @@
 import style from "./Update.module.css";
-import React, { useState, useRef, useEffect, useContext, ChangeEvent } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useContext,
+  ChangeEvent,
+} from "react";
 import { patchuser, getuserinfo } from "../../../api/user";
 import { AuthContext } from "../../../context/AuthContext";
 
@@ -39,8 +45,9 @@ export default function Update({ closemodal }: UpdateProps) {
   }, []);
 
   const saveImgFile = () => {
-    const file = imgRef.current?.files?.[0];
-    
+    const file =
+      imgRef.current && imgRef.current.files && imgRef.current.files[0];
+
     if (file) {
       setProfile(file);
 
@@ -54,7 +61,8 @@ export default function Update({ closemodal }: UpdateProps) {
     }
   };
 
-  const changeprofile = () => {
+  const changeprofile = (e: React.MouseEvent<HTMLImageElement>) => {
+    e.preventDefault();
     document.getElementById("inputimg")!.click();
   };
 

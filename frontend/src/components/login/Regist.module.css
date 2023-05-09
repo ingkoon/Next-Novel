@@ -85,7 +85,10 @@
   flex-direction: column;
   align-items: center;
   row-gap: 12px;
-  margin-top: 20px;
+  margin-top: 30px;
+}
+.inputBox {
+  position: relative;
 }
 .form input {
   height: 40px;
@@ -97,7 +100,27 @@
   font-family: "LINESeedKR-Bd";
   padding-top: 4px;
 }
-.form button {
+.checkButton {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  right: 10px;
+  font-family: "LINESeedKR-Bd";
+  padding-top: 4px;
+  border: none;
+  background-color: rgb(69, 69, 69);
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+}
+.checkButton.success {
+  background-color: rgb(0, 216, 32);
+}
+.checkButton.fail {
+  background-color: red;
+}
+
+.submitButton {
   height: 40px;
   width: 250px;
   border: none;

@@ -1,11 +1,13 @@
 import style from "./Delete.module.css";
 import { useNavigate } from "react-router-dom";
+import useUser from "../../../hooks/useUser";
 
 type DeleteProps = {
   closemodal: () => void;
 };
 export default function Delete({ closemodal }: DeleteProps) {
   const navigate = useNavigate();
+  const { Logout } = useUser();
 
   const navigateToHome = () => {
     navigate(`/`);
@@ -15,17 +17,20 @@ export default function Delete({ closemodal }: DeleteProps) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const logout = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-    localStorage.removeItem("nickname");
-    closemodal();
-    goTop();
-    navigateToHome();
-  };
-
-  const deletemem = () => {
-    logout();
+  const logout = async () => {
+    //로그아웃 요청
+    try {
+      const data = await Logout();
+      console.log(data);
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("nickname");
+      closemodal();
+      goTop();
+      navigateToHome();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -42,7 +47,7 @@ export default function Delete({ closemodal }: DeleteProps) {
 
       <div className={style.button}>
         <button onClick={() => closemodal()}>취소</button>
-        <button onClick={() => deletemem()}>확인</button>
+        <button onClick={() => logout()}>확인</button>
       </div>
 
       <img
