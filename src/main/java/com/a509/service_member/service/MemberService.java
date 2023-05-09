@@ -107,15 +107,9 @@ public class MemberService {
         stringRedisTemplate.opsForValue().set(accessToken, "logout", expiration, TimeUnit.MILLISECONDS);
     }
 
-    public MemberMyPageResponseDto findMyPage(String token, String nickname) {
-        Member member = memberRepository.findByNickname(nickname).orElseThrow(NoSuchMemberException::new);
-        String email = findMember(jwtTokenProvider.getMember(token)).getEmail();
-
-        if (memberRepository.existsByEmailAndNickname(email, nickname)) {
-            return new MemberMyPageResponseDto().fromMeEntity(member);
-        } else {
-            return new MemberMyPageResponseDto().fromOtherEntity(member);
-        }
+    public MemberMyPageResponseDto findMyPage(String token) {
+        Member member = findMember(jwtTokenProvider.getMember(token));
+        return new MemberMyPageResponseDto().fromMeEntity(member);
     }
 
     @Transactional

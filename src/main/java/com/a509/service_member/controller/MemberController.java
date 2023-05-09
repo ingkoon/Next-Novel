@@ -44,11 +44,9 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{member-nickname}")
-    public ResponseEntity<MemberMyPageResponseDto> findMyPage(
-            @RequestHeader("Authorization") final String token,
-            @PathVariable("member-nickname") final String nickname) {
-        MemberMyPageResponseDto response = memberService.findMyPage(token, nickname);
+    @GetMapping
+    public ResponseEntity<MemberMyPageResponseDto> findMyPage(@RequestHeader("Authorization") final String token) {
+        MemberMyPageResponseDto response = memberService.findMyPage(token);
         return ResponseEntity.ok(response);
     }
 
