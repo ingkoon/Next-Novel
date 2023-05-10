@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.a509.service_novel.dto.ImageDto;
 import com.a509.service_novel.dto.NovelContentDto;
 import com.a509.service_novel.dto.NovelDetailDto;
+import com.a509.service_novel.dto.NovelLikeDto;
 import com.a509.service_novel.jpa.novel.Novel;
 import com.a509.service_novel.jpa.novelComment.NovelComment;
 import com.a509.service_novel.jpa.novelComment.NovelCommentRepogitory;
@@ -25,6 +26,8 @@ import com.a509.service_novel.dto.NovelListDto;
 import com.a509.service_novel.jpa.novel.NovelRepogitory;
 import com.a509.service_novel.jpa.novelImage.NovelImage;
 import com.a509.service_novel.jpa.novelImage.NovelImageRepository;
+import com.a509.service_novel.mogo.NovelLike;
+import com.a509.service_novel.mogo.NovelLikeRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,6 +41,7 @@ public class NovelService {
 	private final NovelImageRepository novelImageRepository;
 
 	private final NovelImageComponent novelImageComponent;
+	private final NovelLikeRepository novelLikeRepository;
 	@Transactional
 	public int insertNovel(NovelDetailDto novelDetailDto
 		,MultipartFile[] startImages
@@ -230,5 +234,36 @@ public class NovelService {
 
 		return novelDtos;
 
+	}
+
+
+	public List<NovelListDto> selectLikedNovelList(String nickName) throws Exception{
+
+		List<NovelLike> novelLikes= novelLikeRepository.findAllByNickName(nickName);
+		List<NovelListDto> novelListDtos = new ArrayList<>();
+
+		for(NovelLike novelLike : novelLikes){
+			int likeNovelId = novelLike.getNovelId();
+			Optional<Novel> optional = novelRepogitory.findById(likeNovelId);
+			if(optional.isPresent()){
+				NovelListDto novelListDto = optional.get().toListDto();
+				novelListDtos.add(novelListDto);
+			}
+		}
+
+		return novelListDtos;
+	}
+
+	public void insertNovelLike(NovelLikeDto novelLikeDto) throws Exception{
+
+		Optional<NovelLike> optional = novelLikeRepository.findByNovelIdAndNickName(novelLikeDto.getNovelId(),novelLikeDto.getNickName());
+		if(optional.isPresent())
+			return;
+		NovelLike novelLike = novelLikeDto.toEntity();
+		novelLikeRepository.save(novelLike);
+	}
+
+	public void deleteNovelLike(NovelLikeDto novelLikeDto) throws Exception{
+		novelLikeRepository.deleteByNovelIdAndNickName(novelLikeDto.getNovelId(),novelLikeDto.getNickName());
 	}
 }

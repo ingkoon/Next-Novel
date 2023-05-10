@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.a509.service_novel.dto.ImageDto;
 import com.a509.service_novel.dto.NovelInsertResponseDto;
+import com.a509.service_novel.dto.NovelLikeDto;
 import com.a509.service_novel.dto.NovelListDto;
 import com.a509.service_novel.service.NovelImageComponent;
 
@@ -85,10 +86,10 @@ public class NovelController {
 
 	///novel?genre=장르&keyword=검색어&page=0&size=10
 	@GetMapping()
-	public ResponseEntity<?> selectNovels(@RequestParam String genre,
-										  @RequestParam String keyword,
-										  @RequestParam int page,
-										  @RequestParam int size){
+	public ResponseEntity<?> selectNovels(@RequestParam("genre") String genre,
+										  @RequestParam("keyword") String keyword,
+										  @RequestParam("page") int page,
+										  @RequestParam("size") int size){
 		try{
 			Pageable pageable = PageRequest.of(page,size);
 			return ResponseEntity.ok(novelService.selectNovelList(genre, keyword, pageable));
@@ -143,5 +144,37 @@ public class NovelController {
 		}
 	}
 
+
+	@GetMapping("/like/{nickName}")
+	public ResponseEntity<?> selectLikedNovels(@PathVariable("nickName") String nickName){
+		try{
+			return ResponseEntity.ok(novelService.selectLikedNovelList(nickName));
+		}
+		catch (Exception e){
+			return new ResponseEntity<>(e.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping("/like")
+	public ResponseEntity<?> selectLikedNovels(@RequestBody NovelLikeDto novelLikeDto){
+		try{
+			novelService.insertNovelLike(novelLikeDto);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch (Exception e){
+			return new ResponseEntity<>(e.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@DeleteMapping("/like")
+	public ResponseEntity<?> deletedLikedNovels(@RequestBody NovelLikeDto novelLikeDto){
+		try{
+			novelService.deleteNovelLike(novelLikeDto);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch (Exception e){
+			return new ResponseEntity<>(e.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 }
