@@ -1,5 +1,5 @@
 export default function useDataurlToFile() {
-  function dataurlToFile(imageSrcs: (string | undefined)[]) {
+  function dataurlToFile(imageSrcs: (string | undefined)[], order?: string) {
     //사실 undefined값을 들어오지 않는다.
     const byteStrings = imageSrcs.map((dataUrl) =>
       window.atob(dataUrl!.split(",")[1])
@@ -16,7 +16,7 @@ export default function useDataurlToFile() {
     );
     const files = myBlobs.map(
       (myBlob, index) =>
-        new File([myBlob], "".concat("material", index + "", ".png"))
+        new File([myBlob], "".concat(order || "image", index + "", ".png"))
     );
 
     return files;

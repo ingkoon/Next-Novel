@@ -114,7 +114,8 @@ export default function useCanvasSaveAndLoad({
   };
 
   const loadToCanvas = (choose: number) => {
-    const dataURL = paintings![choose];
+    const dataURL =
+      process.env.REACT_APP_IMAGE_API + `2023_05_09_08_26_50_material0.png`;
 
     const img = new Image();
     img.src = dataURL;

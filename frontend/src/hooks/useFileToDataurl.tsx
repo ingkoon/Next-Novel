@@ -11,6 +11,7 @@ export default function useFileToDataurl({ data }: FileToDataurlType) {
 
   useEffect(() => {
     if (data) {
+      console.log(data);
       Promise.all(
         data.map((image) => {
           return fetch(image.image)

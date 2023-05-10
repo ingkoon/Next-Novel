@@ -83,13 +83,18 @@ export default function WriteStep5b() {
     //파일로 변환 필요, 아니면 그냥 dataurl 형식 말고 파일로 저장시킬까.
 
     const start_images_files = dataurlToFile(
-      novel.materials.map((material) => material.image)
+      novel.materials.map((material) => material.image),
+      "start"
     );
     //이어하기가 없으면?
     const content_images_files = dataurlToFile(
-      novel.newMaterials.map((newMaterial) => newMaterial.image)
+      novel.newMaterials.map((newMaterial) => newMaterial.image),
+      "continue"
     );
-    const cover_images_files = dataurlToFile([novel.cover, novel.oldCover]);
+    const cover_images_files = dataurlToFile(
+      [novel.cover, novel.oldCover],
+      "end"
+    );
     start_images_files.forEach((file) => formData.append("start_images", file));
     content_images_files.forEach((file) =>
       formData.append("content_images", file)
