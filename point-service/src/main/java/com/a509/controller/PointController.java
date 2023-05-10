@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/point")
+@RequestMapping("/point")
 public class PointController {
     private final PointService pointService;
 

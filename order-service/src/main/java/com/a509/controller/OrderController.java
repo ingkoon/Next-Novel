@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/orders")
+@RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
         @GetMapping
@@ -38,8 +38,8 @@ public class OrderController {
                     .body(response);
         }
 
-        @GetMapping("/{memberId}/{orderId}")
-        public ResponseEntity<OrderResponseDto> findOrder(@PathVariable("memberId") long memberId, @PathVariable("orderId") long orderId) {
+        @GetMapping("/{nickName}/{orderId}")
+        public ResponseEntity<OrderResponseDto> findOrder(@PathVariable("nickName") String nickName, @PathVariable("orderId") long orderId) {
             OrderResponseDto response = orderService.findOrder(orderId);
             return ResponseEntity
                     .ok()
