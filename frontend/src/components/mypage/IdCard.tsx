@@ -2,6 +2,8 @@ import style from "./IdCard.module.css";
 import Member from "./Member";
 import { useEffect, useState } from "react";
 import useUser from "../../hooks/useUser";
+import usePayment from "../../hooks/usePayment";
+import { useNavigate } from "react-router-dom";
 
 export default function IdCard() {
   const [userinfo, setUserinfo] = useState({
@@ -10,6 +12,9 @@ export default function IdCard() {
     createdAt: "",
   });
   const { getUserInfo } = useUser();
+  const { getPoint } = usePayment();
+  const [point, setPoint] = useState();
+  const navigate = useNavigate();
 
   // api 통신하기
   async function getuser() {
@@ -27,6 +32,15 @@ export default function IdCard() {
       console.log(e);
     }
   }
+  async function getPointAsync() {
+    try {
+      const res = await getPoint();
+      console.log(res);
+      setPoint(res.data.point);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   const updatemember = () => {
     getuser();
@@ -35,6 +49,7 @@ export default function IdCard() {
   // api 호출하기
   useEffect(() => {
     getuser();
+    getPointAsync();
   }, []);
 
   return (
@@ -89,11 +104,11 @@ export default function IdCard() {
                       S/N {userinfo.createdAt}
                     </div>
                   </div>
-                  <div className={style.info_nation}>
-                    <img
-                      src={process.env.PUBLIC_URL + "img/korea.png"}
-                      alt="girl2"
-                    />
+                  <div
+                    className={style.info_point}
+                    onClick={() => navigate(`/payment`)}
+                  >
+                    {point} P
                   </div>
                 </div>
               </div>

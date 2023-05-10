@@ -242,16 +242,13 @@
   justify-content: space-between;
 }
 
-.info_nation {
+.info_point {
   display: flex;
   align-items: flex-end;
+  font-size: 40px;
 }
-.info_nation img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: 2px solid black;
-  margin-right: 10px;
+.info_point:hover {
+  cursor: pointer;
 }
 
 .logo {

@@ -29,14 +29,14 @@ export default function useNovelWrite() {
   const getOrderList = () => {
     return getOrderListApi();
   };
-  const getOrderDetail = () => {
-    return getOrderDetailApi();
+  const getOrderDetail = (id: number) => {
+    return getOrderDetailApi(id);
   };
   const getProductList = () => {
     return getProductListApi();
   };
-  const getProductDetail = () => {
-    return getProductDetailApi();
+  const getProductDetail = (id: number) => {
+    return getProductDetailApi(id);
   };
 
   return {
