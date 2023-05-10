@@ -7,11 +7,13 @@ type BookListProps = {
 };
 type Book = {
   id: number;
-  cover_img: string;
-  introduction: string;
-  novel_stats: { hit_count: number; like_count: number; comment_count: number };
-  author: string;
   title: string;
+  introduction: string;
+  nickName: string;
+  coverImg: string;
+  hitCount: number;
+  commentCount: number;
+  likeCount: number;
 };
 export default function BookList({ books }: BookListProps) {
   return (

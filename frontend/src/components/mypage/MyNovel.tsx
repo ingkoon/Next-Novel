@@ -53,12 +53,14 @@ export default function MyNovel() {
   const [likelen, setLikelen] = useState(0);
 
   const book = {
-    id: 999,
-    cover_img: "",
-    introduction: "",
-    novel_stats: { hit_count: 10, like_count: 10, comment_count: 10 },
-    author: "",
-    title: "",
+    id:1,
+    title:"제목",
+    introduction:"소개",
+    nickName:"닉네임",
+    coverImg:"",
+    hitCount:12,
+    commentCount:1,
+    likeCount:10
   };
   const books = [book, book, book, book, book, book, book, book];
 
