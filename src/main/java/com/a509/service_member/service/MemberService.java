@@ -50,8 +50,7 @@ public class MemberService {
     }
 
     @Transactional
-    public void signUp(MemberSignupRequestDto memberSignupRequestDto,
-        MultipartFile profileImage) {
+    public void signUp(MemberSignupRequestDto memberSignupRequestDto) {
         if (memberRepository.existsByEmail(memberSignupRequestDto.getEmail())) {
             throw new DuplicatedMemberException();
         }
@@ -60,22 +59,16 @@ public class MemberService {
             throw new DuplicatedMemberException("중복된 닉네임입니다.");
         }
 
-
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
-        String UID = now.format(formatter);
-
         Member member = Member
                 .builder()
                 .email(memberSignupRequestDto.getEmail())
                 .password(bCryptPasswordEncoder.encode(memberSignupRequestDto.getPassword()))
                 .nickname(memberSignupRequestDto.getNickname())
-                .profileImage(UID+"_"+profileImage.getOriginalFilename())
+                .profileImage(memberSignupRequestDto.getProfileImage())
                 .build();
         memberRepository.save(member);
 
         try {
-            memberImageComponent.save(profileImage,UID);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -179,8 +172,16 @@ public class MemberService {
         member.setNickname(nickname);
 
         if(!multipartFile.isEmpty()) {
-            String imgUrl = fileUploader.upload(multipartFile, "member");
-            member.setProfileImage(imgUrl);
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
+            String UID = now.format(formatter);
+            try{
+                memberImageComponent.save(multipartFile,UID);
+                member.setProfileImage(UID+"_"+multipartFile.getOriginalFilename());
+            }
+            catch(Exception e) {
+                throw new RuntimeException();
+            }
         }
     }
 

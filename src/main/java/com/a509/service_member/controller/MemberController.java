@@ -31,9 +31,8 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Void> signUp(@RequestPart("profile_image") MultipartFile profileImage,
-        @RequestPart("member") @Validated MemberSignupRequestDto memberSignupRequestDto) {
-        memberService.signUp(memberSignupRequestDto, profileImage);
+    public ResponseEntity<Void> signUp(@RequestBody @Validated MemberSignupRequestDto memberSignupRequestDto) {
+        memberService.signUp(memberSignupRequestDto);
         return ResponseEntity.ok().build();
     }
 
@@ -108,6 +107,7 @@ public class MemberController {
             @RequestHeader("Authorization") final String token,
             @RequestPart("multipartFile") MultipartFile multipartFile,
             @RequestPart("request") @Validated MemberUpdateRequestDto memberUpdateRequestDto) {
+
         memberService.update(token, memberUpdateRequestDto, multipartFile);
         return ResponseEntity.ok().build();
     }
