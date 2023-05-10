@@ -10,11 +10,10 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Document(collation = "novel_like")
+@Document(collection = "novel_like")
 @Builder
 public class NovelLike {
 
-	@Id
 	private int id;
 	private int novelId;
 	private String nickName;

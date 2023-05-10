@@ -273,6 +273,7 @@ public class NovelService {
 		if(optional.isPresent())
 			return;
 		NovelLike novelLike = novelLikeDto.toEntity();
+		System.out.println(novelLike);
 		novelLikeRepository.save(novelLike);
 	}
 
