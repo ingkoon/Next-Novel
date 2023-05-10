@@ -71,3 +71,5 @@ spring:
     database: mysql
     hibernate:
       ddl-auto: update
+  kafka:
+    bootstrap-servers: ***REMOVED***:9092

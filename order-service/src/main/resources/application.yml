@@ -79,3 +79,10 @@ spring:
     database: mysql
     hibernate:
       ddl-auto: update
+  kafka:
+    bootstrap-servers: ***REMOVED***:9092
+    consumer:
+      group-id: order
+    properties:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
