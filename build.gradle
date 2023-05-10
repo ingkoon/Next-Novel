@@ -1,55 +1,155 @@
-plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.7.11'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-}
-
-group = 'com.a509'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
+buildscript {
+	ext {
+		set('springCloudVersion', "2021.0.6")
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies{
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.7.11")
+		classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
 	}
 }
 
-repositories {
-	mavenCentral()
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	group = 'com.a509'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '11'
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+
+		implementation 'org.springframework.kafka:spring-kafka'
+		implementation("org.apache.kafka:kafka-clients:3.4.0")
+
+		testImplementation ('org.springframework.boot:spring-boot-starter-test'){
+			exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+		}
+	}
+
+	dependencyManagement {
+		imports {
+			mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		}
+	}
+
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
 }
-
-ext {
-	set('springCloudVersion', "2021.0.6")
+project(':core'){
+	dependencies {
+		implementation("org.springframework.boot:spring-boot-starter")
+		implementation("org.springframework.boot:spring-boot-starter-web")
+		implementation("io.github.bootpay:backend:+")
+	}
 }
+project(':point-service'){
+	dependencies {
+		implementation(project(":core"))
+		implementation("org.springframework.boot:spring-boot-starter")
+		implementation("org.springframework.boot:spring-boot-starter-web")
+		implementation("org.springframework.boot:spring-boot-starter-validation")
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+		implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.7.10")
+		implementation("org.springframework.boot:spring-boot-devtools:2.7.10")
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.10'
-	implementation 'org.springframework.boot:spring-boot-devtools:2.7.10'
+		implementation("mysql:mysql-connector-java:8.0.31")
+		implementation("io.github.bootpay:backend:+")
 
-	implementation 'mysql:mysql-connector-java:8.0.31'
-	implementation 'io.github.bootpay:backend:+'
+		implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testImplementation 'com.h2database:h2:2.1.214'
 
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'com.h2database:h2:2.1.214'
-
-	testCompileOnly 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
-}
-
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		testCompileOnly 'org.projectlombok:lombok'
+		testAnnotationProcessor 'org.projectlombok:lombok'
 	}
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
+project(':order-service'){
+	dependencies {
+		implementation(project(":core"))
+		implementation("org.springframework.boot:spring-boot-starter")
+		implementation("org.springframework.boot:spring-boot-starter-web")
+		implementation("org.springframework.boot:spring-boot-starter-validation")
+
+		implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.7.10")
+		implementation("org.springframework.boot:spring-boot-devtools:2.7.10")
+
+		implementation("mysql:mysql-connector-java:8.0.31")
+		implementation("io.github.bootpay:backend:+")
+
+		implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+
+
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testImplementation 'com.h2database:h2:2.1.214'
+
+		testCompileOnly 'org.projectlombok:lombok'
+		testAnnotationProcessor 'org.projectlombok:lombok'
+	}
+}
+
+project(':item-service'){
+	dependencies {
+		implementation(project(":core"))
+		implementation("org.springframework.boot:spring-boot-starter")
+		implementation("org.springframework.boot:spring-boot-starter-web")
+		implementation("org.springframework.boot:spring-boot-starter-validation")
+
+		implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.7.10")
+		implementation("org.springframework.boot:spring-boot-devtools:2.7.10")
+
+		implementation("mysql:mysql-connector-java:8.0.31")
+		implementation("io.github.bootpay:backend:+")
+
+		implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testImplementation 'com.h2database:h2:2.1.214'
+
+		testCompileOnly 'org.projectlombok:lombok'
+		testAnnotationProcessor 'org.projectlombok:lombok'
+	}
+}
+
+project(':order-item-service'){
+	dependencies {
+		implementation(project(":core"))
+		implementation("org.springframework.boot:spring-boot-starter")
+		implementation("org.springframework.boot:spring-boot-starter-web")
+		implementation("org.springframework.boot:spring-boot-starter-validation")
+
+		implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.7.10")
+		implementation("org.springframework.boot:spring-boot-devtools:2.7.10")
+
+		implementation("mysql:mysql-connector-java:8.0.31")
+		implementation("io.github.bootpay:backend:+")
+
+		implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testImplementation 'com.h2database:h2:2.1.214'
+
+		testCompileOnly 'org.projectlombok:lombok'
+		testAnnotationProcessor 'org.projectlombok:lombok'
+	}
 }
