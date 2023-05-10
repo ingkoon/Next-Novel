@@ -223,7 +223,7 @@ public class NovelService {
 		List<String> images = new ArrayList<>();
 		for(NovelImage novelImage : novelImageList){
 			String novelPath = path+"/"+novelImage.getImageName();
-			File imageFile = new File(path);
+			File imageFile = new File(novelPath);
 			FileInputStream imageInputStream = new FileInputStream(imageFile);
 			byte[] imageBytes = new byte[(int) imageFile.length()];
 			imageInputStream.read(imageBytes);
