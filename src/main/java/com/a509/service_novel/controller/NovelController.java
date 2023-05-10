@@ -106,7 +106,6 @@ public class NovelController {
 		catch(Exception e){
 			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 	}
 
 	@GetMapping("/image/{id}")
@@ -131,4 +130,6 @@ public class NovelController {
 			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+
 }
