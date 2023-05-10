@@ -30,17 +30,19 @@ export async function getgenre(genre) {
 
 // 추천 소설 목록
 export async function getrecommend() {
-  const res = await instance.get("novel/recommend/");
+  const res = await instance.get("novel/recommend");
   return res;
 }
 
 // 검색 결과
 export async function getsearch(keyword) {
-  // const res = await instance.get('novel', {
-  //   params : {
-  //     search : keyword
-  //   }
-  // })
-  // return res
-  // return axios.get("/novel/search/search_list.json");
+  const res = await instance.get("novel", {
+    params: {
+      genre: "all",
+      keyword: keyword,
+      page: 0,
+      size: 100,
+    },
+  });
+  return res;
 }
