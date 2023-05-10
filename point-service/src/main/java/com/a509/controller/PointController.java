@@ -29,8 +29,8 @@ public class PointController {
     }
 
     @GetMapping
-    public ResponseEntity<PointFindResponseDto> readPoint(@RequestParam("memberid") Long memberId){
-        PointFindResponseDto response = pointService.readPoint(memberId);
+    public ResponseEntity<PointFindResponseDto> readPoint(@RequestParam("nickName") String nickName){
+        PointFindResponseDto response = pointService.readPoint(nickName);
         return ResponseEntity
                 .ok()
                 .body(response);

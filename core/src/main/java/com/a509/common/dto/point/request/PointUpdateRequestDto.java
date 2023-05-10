@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PointUpdateRequestDto implements Serializable, Serializer {
-    private Long memberId;
+    private String nickName;
     private Long point;
 
     @Override

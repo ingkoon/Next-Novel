@@ -27,7 +27,7 @@ public class PointService {
     /* feature method: 포인트를 생성한다. */
     @Transactional
     public PointCreateResponseDto createPoint(PointCreateRequestDto request){
-        if(pointRepository.existsByMemberId(request.getMemberId())) throw new DuplicatedPointException();
+        if(pointRepository.existsByNickName(request.getNickName())) throw new DuplicatedPointException();
         Point point = request.toEntity();
         pointRepository.save(point);
 
@@ -35,8 +35,8 @@ public class PointService {
     }
 
     /* feature method: 포인트 정보를 가져온다. */
-    public PointFindResponseDto readPoint(Long memberId ){
-        Point point = findPoint(memberId);
+    public PointFindResponseDto readPoint(String nickName ){
+        Point point = findPoint(nickName);
         return new PointFindResponseDto()
                 .fromEntity(point);
     }
@@ -44,8 +44,8 @@ public class PointService {
     /* feature method: 포인트 정보를 갱신한다. */
     @Transactional
     public void updatePoint(PointUpdateRequestDto request){
-        Point point = findPoint(request.getMemberId());
-        log.info("=====" + point.getMemberId()+ "======");
+        Point point = findPoint(request.getNickName());
+        log.info("=====" + point.getNickName()+ "======");
         point.updatePoint(request.getPoint());
     }
 
@@ -53,21 +53,21 @@ public class PointService {
     @KafkaListener(topics = "order_item")
     public void updatePointV2(@Payload PointUpdateRequestDto request){
         log.info("===== start update point ======");
-        Point point = findPoint(request.getMemberId());
-        log.info("=====" + point.getMemberId()+ "======");
+        Point point = findPoint(request.getNickName());
+        log.info("=====" + point.getNickName()+ "======");
         point.updatePoint(request.getPoint());
     }
     /* feature method: 포인트 정보를 삭제한다. */
     @Transactional
     public void delete(PointDeleteRequestDto request){
-        Point point = findPoint(request.getMemberId());
+        Point point = findPoint(request.getNickName());
         pointRepository.delete(point);
     }
 
     /* Common method: findById를 통한 Point 객체 탐색 */
-    public Point findPoint(Long memberId){
+    public Point findPoint(String nickName){
         return pointRepository
-                .findByMemberId(memberId)
+                .findByNickName(nickName)
                 .orElseThrow(NoSuchPointException::new);
     }
 }
