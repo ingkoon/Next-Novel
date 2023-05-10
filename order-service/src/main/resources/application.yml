@@ -60,7 +60,7 @@ spring:
     name: order_service
   config:
     activate:
-      on-profile: service_payment
+      on-profile: order
 
   main:
     allow-bean-definition-overriding: true
