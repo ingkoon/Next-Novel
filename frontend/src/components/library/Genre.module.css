@@ -24,7 +24,7 @@
 
 .genre button:hover {
   background-color: #f66f00;
-  color : #fffefc;
+  color: #fffefc;
 }
 
 @media (max-width: 1439px) {
@@ -43,5 +43,19 @@
 
   .genre > button {
     font-size: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+  .genre {
+    width: 100%;
+  }
+
+  .genre > div {
+    display: none;
+  }
+
+  .genre > button {
+    font-size: 14px;
   }
 }

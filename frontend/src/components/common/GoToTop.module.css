@@ -1,7 +1,7 @@
 .gotop {
   font-size: 36px;
   text-align: center;
-  margin : 30px auto;
+  margin: 30px auto;
   cursor: pointer;
   width: 150px;
 }
@@ -11,4 +11,19 @@
   height: 4px;
   background-color: black;
   margin: 150px auto -5px;
+}
+
+@media (max-width: 1024px) {
+  .gotop {
+    font-size: 20px;
+    margin: 30px auto;
+    width: 150px;
+  }
+
+  .hr {
+    width: 70px;
+    height: 2px;
+    background-color: black;
+    margin: 150px auto -5px;
+  }
 }

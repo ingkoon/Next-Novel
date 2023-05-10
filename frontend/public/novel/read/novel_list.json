@@ -1,0 +1,101 @@
+[
+  {
+    "id": 3,
+    "title": "이건책이야1",
+    "introduction": "책입니다1",
+    "author": "내가씀1",
+    "coverImage": "/novel/cover.png",
+    "hitCount": 4,
+    "commentCount": 0,
+    "likeCount": 2,
+    "genre": "fantasy"
+  },
+  {
+    "id": 4,
+    "title": "이건책이야2",
+    "introduction": "책입니다2",
+    "author": "내가씀2",
+    "coverImage": "/novel/cover.png",
+    "hitCount": 2,
+    "commentCount": 0,
+    "likeCount": 8,
+    "genre": "mystery"
+  },
+  {
+    "id": 5,
+    "title": "이건책이야3",
+    "introduction": "책입니다3",
+    "author": "내가씀3",
+    "coverImage": "/novel/cover.png",
+    "hitCount": 6,
+    "commentCount": 0,
+    "likeCount": 2,
+    "genre": "mystery"
+  },
+  {
+    "id": 6,
+    "title": "이건책이야4",
+    "introduction": "책입니다4",
+    "author": "내가씀4",
+    "coverImage": "/novel/cover.png",
+    "hitCount": 3,
+    "commentCount": 0,
+    "likeCount": 2,
+    "genre": "romance"
+  },
+  {
+    "id": 7,
+    "title": "이건책이야5",
+    "introduction": "책입니다5",
+    "author": "내가씀5",
+    "coverImage": "/novel/cover.png",
+    "hitCount": 9,
+    "commentCount": 0,
+    "likeCount": 2,
+    "genre": "fantasy"
+  },
+  {
+    "id": 8,
+    "title": "이건책이야6",
+    "introduction": "책입니다6",
+    "author": "내가씀6",
+    "coverImage": "/novel/cover.png",
+    "hitCount": 12,
+    "commentCount": 0,
+    "likeCount": 2,
+    "genre": "romance"
+  },
+  {
+    "id": 9,
+    "title": "이건책이야7",
+    "introduction": "책입니다7",
+    "author": "내가씀7",
+    "coverImage": "/novel/cover.png",
+    "hitCount": 20,
+    "commentCount": 0,
+    "likeCount": 2,
+    "genre": "sf"
+  },
+  {
+    "id": 10,
+    "title": "이건책이야8",
+    "introduction": "책입니다8",
+    "author": "내가씀8",
+    "coverImage": "/novel/cover.png",
+    "hitCount": 6,
+    "commentCount": 0,
+    "likeCount": 2,
+    "genre": "sf"
+  },
+  {
+    "id": 11,
+    "title": "이건책이야9",
+    "introduction": "책입니다9",
+    "author": "내가씀9",
+    "coverImage": "/novel/cover.png",
+    "hitCount": 10,
+    "commentCount": 0,
+    "likeCount": 2,
+    "genre": "free"
+  }
+]

@@ -20,12 +20,12 @@
 .img img {
   width: 200px;
   height: 216px;
-  margin : auto;
+  margin: auto;
 }
 
 .strip {
   width: 100px;
-  border-bottom : 5px solid black;
+  border-bottom: 5px solid black;
   position: relative;
 }
 
@@ -35,26 +35,26 @@
   background-color: black;
   transform: rotate(101deg);
   position: absolute;
-  bottom : 50%;
-  left : -225px;
+  bottom: 50%;
+  left: -225px;
 }
 
 .newcard_infopart {
-  width : 450px;
-  border : 5px solid black;
-  border-left : 0 solid black;
+  width: 450px;
+  border: 5px solid black;
+  border-left: 0 solid black;
   border-radius: 0px 20px 20px 0px;
-  margin : 0;
+  margin: 0;
 }
 
 .newcard_new {
   width: 140px;
   height: 50px;
   background-color: #ff9243;
-  color : white;
+  color: white;
   border-radius: 50px;
   text-align: center;
-  font-family: 'LINESeedKR-Bd';
+  font-family: "LINESeedKR-Bd";
   font-size: 24px;
   line-height: 55px;
   float: right;
@@ -71,38 +71,39 @@
 }
 
 .newcard_writer {
-  font-size : 24px;
-  color : #ababab;
+  font-size: 24px;
+  color: #ababab;
 }
 
 .newcard_date {
-  color : #ababab;
+  color: #ababab;
 }
 
 .newcard_last {
-  font-size : 24px;
-  margin-top :20px;
+  font-size: 24px;
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
 }
 
-.newcard_heart, .newcard_comment {
+.newcard_heart,
+.newcard_comment {
   margin-right: 10px;
 }
 
 .newcard_quote1 {
   position: absolute;
   top: 0;
-  left : 5%;
+  left: 5%;
 }
 
-.newcard_quote2{
+.newcard_quote2 {
   position: absolute;
-  bottom : 5%;
+  bottom: 5%;
   right: 5%;
 }
 
-.newcard_intro{
+.newcard_intro {
   height: 45%;
   position: relative;
   /* padding : 0 20px; */
@@ -110,11 +111,11 @@
 
 .newcard_ment {
   font-size: 24px;
-  font-family: 'wild';
+  font-family: "wild";
   text-align: center;
   width: 80%;
-  padding : 0 10%;
-  margin : 10px 0;
+  padding: 0 10%;
+  margin: 10px 0;
   height: 100%;
   align-items: center;
   word-break: keep-all;
@@ -129,14 +130,14 @@
 
 .rainbowbg {
   position: absolute;
-  top : -15%;
+  top: -15%;
   left: 20%;
   animation: rotate_image 6s linear infinite;
   transform-origin: 50% 50%;
 }
 
-@keyframes rotate_image{
+@keyframes rotate_image {
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
