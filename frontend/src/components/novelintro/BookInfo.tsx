@@ -5,11 +5,25 @@ import { useNavigate } from "react-router-dom";
 
 import { getintro, postliked } from "../../api/novel";
 
+type NInfo = {
+  id: number;
+  title: string;
+  createdAt: string;
+  // introduction: string;
+  // engGenre: string;
+  // korGenre: string;
+  nickName: string;
+  hitCount: number;
+  commentCount: number;
+  likeCount: number;
+  user_liked: boolean;
+};
+
 export default function BookInfo() {
   const location = useLocation();
   const id = location.state.id;
   const [novelid, setNovelid] = useState(id);
-  const [novelinfo, setNovelinfo] = useState("");
+  const [novelinfo, setNovelinfo] = useState<NInfo>();
   const [create, setCreate] = useState("");
 
   const goTop = () => {
@@ -49,7 +63,7 @@ export default function BookInfo() {
 
   const navigate = useNavigate();
 
-  const navigateToRead = (id) => {
+  const navigateToRead = (id: number) => {
     navigate(`/library/${id}/read`, { state: { id: id } });
   };
 
@@ -100,7 +114,7 @@ export default function BookInfo() {
           </div>
           <div className={style.etc3}>
             <div className={style.likebtn} onClick={liked}>
-              {novelinfo.user_liked ? (
+              {novelinfo?.user_liked ? (
                 <img
                   src={process.env.PUBLIC_URL + "/icon/black_heart.svg"}
                   className={style.like}
