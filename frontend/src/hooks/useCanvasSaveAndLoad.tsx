@@ -1,5 +1,4 @@
 import { useEffect, useReducer } from "react";
-import useFileToDataurl from "./useFileToDataurl";
 
 type CanvasSaveAndLoadProps = {
   getCtx: CanvasRenderingContext2D;
@@ -14,7 +13,8 @@ type CanvasSaveAndLoadProps = {
   canvasRef: React.RefObject<HTMLCanvasElement>;
 };
 type DataType = {
-  image: string;
+  imageName: string;
+  caption: string;
 };
 type State = (string | undefined)[];
 type Action =
@@ -34,7 +34,7 @@ export default function useCanvasSaveAndLoad({
   canvasRef,
 }: CanvasSaveAndLoadProps) {
   const [store, dispatch] = useReducer(reducer, [imageSrcs[selected]]); //뒤로가기 저장소
-  const { paintings } = useFileToDataurl({ data }); //백엔드에서 불러올 그림
+  const paintings = data;
 
   function reducer(state: State, action: Action): State {
     //저장소 간리
@@ -114,8 +114,7 @@ export default function useCanvasSaveAndLoad({
   };
 
   const loadToCanvas = (choose: number) => {
-    const dataURL =
-      process.env.REACT_APP_IMAGE_API + `2023_05_09_08_26_50_material0.png`;
+    const dataURL = `data:image/png;base64,` + paintings[choose];
 
     const img = new Image();
     img.src = dataURL;

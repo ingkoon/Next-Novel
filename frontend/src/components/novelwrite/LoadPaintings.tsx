@@ -11,11 +11,7 @@ type LoadPaintingsProps = {
   refetch: <TPageData>(
     options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
   ) => Promise<QueryObserverResult<any, unknown>>;
-  data: DataType[];
-};
-type DataType = {
-  imageName: string;
-  caption: string;
+  data: string[];
 };
 export default function LoadPaintings({
   loadToCanvas,
@@ -45,7 +41,7 @@ export default function LoadPaintings({
             <div className={style.scroll}>
               {data?.map((image, index) => (
                 <img
-                src={process.env.REACT_APP_IMAGE_API + image.imageName}
+                src={`data:image/png;base64,`+image}
                   alt=""
                   key={index}
                   onClick={() => {
