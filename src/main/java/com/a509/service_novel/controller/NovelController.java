@@ -148,6 +148,7 @@ public class NovelController {
 	@GetMapping("/like/{nickName}")
 	public ResponseEntity<?> selectLikedNovels(@PathVariable("nickName") String nickName){
 		try{
+			System.out.println(nickName);
 			return ResponseEntity.ok(novelService.selectLikedNovelList(nickName));
 		}
 		catch (Exception e){
