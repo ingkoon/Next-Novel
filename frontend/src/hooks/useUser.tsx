@@ -7,6 +7,8 @@ import {
   LogoutApi,
   getUserInfoApi,
   putUserInfoApi,
+  getLikeNovelApi,
+  getMyNovelApi,
 } from "../api/user";
 
 export default function useNovelWrite() {
@@ -33,13 +35,23 @@ export default function useNovelWrite() {
   const Logout = () => {
     return LogoutApi();
   };
+
   const getUserInfo = () => {
     return getUserInfoApi();
   };
+
   const putUserInfo = useMutation(
     (formData: FormData) => putUserInfoApi(formData),
     {}
   );
+
+  const getLikeNovel = () => {
+    return getLikeNovelApi();
+  };
+
+  const getMyNovel = () => {
+    return getMyNovelApi();
+  };
 
   return {
     normalRegist,
@@ -49,5 +61,7 @@ export default function useNovelWrite() {
     Logout,
     getUserInfo,
     putUserInfo,
+    getLikeNovel,
+    getMyNovel,
   };
 }
