@@ -46,16 +46,16 @@ public class OrderController {
                     .body(response);
         }
 
-        @PostMapping
-        public ResponseEntity<OrderCreateResponseDto> createOrder(@RequestBody CreateRequestDto requestDto){
-            orderService.createOrder(requestDto);
-            OrderCreateResponseDto response = new OrderCreateResponseDto();
-            return ResponseEntity
-                    .ok()
-                    .body(response);
-        }
+//        @PostMapping
+//        public ResponseEntity<OrderCreateResponseDto> createOrder(@RequestBody CreateRequestDto requestDto){
+//            orderService.createOrder(requestDto);
+//            OrderCreateResponseDto response = new OrderCreateResponseDto();
+//            return ResponseEntity
+//                    .ok()
+//                    .body(response);
+//        }
 
-    @PostMapping("/test")
+    @PostMapping
     public ResponseEntity<OrderCreateResponseDto> createOrderV2(@RequestBody CreateRequestDto requestDto){
         orderService.createOrderV2(requestDto);
         OrderCreateResponseDto response = new OrderCreateResponseDto();
