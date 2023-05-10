@@ -1,0 +1,122 @@
+.wrapper {
+  position: relative;
+  /* width: 400px;
+  height: 500px; */
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background: #fffefc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-animation: flip-in-hor-bottom 0.5s
+    cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: flip-in-hor-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+
+  border-bottom: 2px solid #aeaeae;
+}
+
+.content {
+  width: 95%;
+  height: 80%;
+  margin: 0;
+  border: 3px solid #ff6600;
+  border-radius: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.part1 {
+  /* background: yellow; */
+  position: relative;
+  width: 100%;
+  display: flex;
+}
+
+.logo {
+  /* background: pink; */
+  position: relative;
+  top: 30px;
+  width: 20%;
+  left: 70%;
+  animation: up-down 1.4s infinite ease-in-out alternate;
+}
+.header {
+  /* background: red; */
+  width: 90%;
+  height: 80px;
+  margin-top: -20px;
+  left: 10%;
+  font-size: clamp(24px, 5vw, 32px);
+  font-family: "LINESeedKR-Bd";
+}
+
+.information {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.title {
+  /* background: pink; */
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  top: -10px;
+  width: 80%;
+  left: 10%;
+  right: 10%;
+  height: 80px;
+  font-size: clamp(24px, 3vw, 36px);
+  font-family: "LINESeedKR-Bd";
+}
+.sub {
+  margin: 0px 0px 5px 0px;
+  position: relative;
+  width: 50%;
+  left: 10%;
+  right: 10%;
+  display: flex;
+  font-size: 18px;
+  /* margin-bottom: 5px; */
+}
+
+.blank {
+  height: 50px;
+}
+.barcode {
+  display: none;
+}
+
+@keyframes up-down {
+  from {
+    transform: translatey(5px);
+  }
+  to {
+    transform: translatey(-5px);
+  }
+}
+
+@-webkit-keyframes flip-in-hor-bottom {
+  0% {
+    -webkit-transform: rotateX(80deg);
+    transform: rotateX(80deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+    opacity: 1;
+  }
+}
+@keyframes flip-in-hor-bottom {
+  0% {
+    -webkit-transform: rotateX(80deg);
+    transform: rotateX(80deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+    opacity: 1;
+  }
+}

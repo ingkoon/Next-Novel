@@ -1,6 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-export const AuthContext = createContext({user : {access_token : '', refresh_token : ''}, setUser : ()=> {}});
+export const AuthContext = createContext({
+  user: { access_token: "", refresh_token: "", nick_name: "" },
+  setUser: () => {},
+});
 
 // export function AuthContextProvider({ children }) {
 //   const [user, setUser] = useState();
@@ -17,24 +20,20 @@ export const AuthContext = createContext({user : {access_token : '', refresh_tok
 //   );
 // }
 
-export function AuthContextProvider({children}) {
+export function AuthContextProvider({ children }) {
   const setUser = (data) => {
-    setState(prevState => (
-      {
-        ...prevState,
-        user : data
-      }
-    ))
-  }
+    setState((prevState) => ({
+      ...prevState,
+      user: data,
+    }));
+  };
 
   const initState = {
-    user : {'access_token' : '', 'refresh_token':'', 'nickname':''},
-    setUser
-  }
+    user: { access_token: "", refresh_token: "", nickname: "" },
+    setUser,
+  };
   const [state, setState] = useState(initState);
-  return (
-    <AuthContext.Provider value={ state }>{children}</AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>;
 }
 
 // export function useAuthContext() {
