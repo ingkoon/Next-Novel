@@ -6,10 +6,9 @@ import Genre from "./Genre";
 import { useEffect, useState } from "react";
 import { getnovels, getgenre } from "../../api/library";
 
+
 export default function Booklist() {
   const [novels, setNovels] = useState([]);
-  let novellen = 0;
-  const [arr, setArr] = useState();
 
   // api 호출하기
   useEffect(() => {
@@ -17,15 +16,7 @@ export default function Booklist() {
       try {
         const data = await getnovels();
         console.log(data);
-        novellen = data.data.length;
         setNovels(data.data);
-
-        let tmp = [];
-        for (let i = 0; i < novellen; i++) {
-          tmp = [...tmp];
-          tmp.push(Card);
-        }
-        setArr(tmp);
       } catch (e) {
         console.log(e);
       }
@@ -34,22 +25,14 @@ export default function Booklist() {
     getnovel();
   }, []);
 
-  const selectgenre = (data) => {
+  const selectgenre = (data:string) => {
     getgenreres(data);
   };
 
-  async function getgenreres(genre) {
+  async function getgenreres(genre:string) {
     const data = await getgenre(genre);
     try {
-      novellen = data.data.length;
       setNovels(data.data);
-
-      let tmp = [];
-      for (let i = 0; i < novellen; i++) {
-        tmp = [...tmp];
-        tmp.push(Card);
-      }
-      setArr(tmp);
     } catch (e) {
       console.log(e);
     }
@@ -60,8 +43,8 @@ export default function Booklist() {
       <Genre selectgenre={selectgenre} />
       <hr className={style.line} />
       <div className={style.list}>
-        {arr?.map((Component, index) => (
-          <Component key={index} props={novels && novels[index]} />
+        {novels?.map((novelcard, index) => (
+          <Card key={index} props={novels && novelcard} />
         ))}
       </div>
     </div>

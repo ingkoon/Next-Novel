@@ -6,22 +6,22 @@ import { deletenovel } from "../../api/novel";
 import Modal from "react-modal";
 import Delete from "../mypage/modal/Delete";
 
-// type cardinfo = {
-//   id: number;
-//   title: string;
-//   introduction: string;
-//   author: string;
-//   coverImage: string;
-//   hitCount: number;
-//   commentCount: number;
-//   likeCount: number;
-// };
+type cardinfo = {
+  id: number;
+  title: string;
+  introduction: string;
+  nickName: string;
+  coverImg: string;
+  hitCount: number;
+  commentCount: number;
+  likeCount: number;
+};
 
-// interface CardProps {
-//   props: cardinfo;
-// }
+interface CardProps {
+  props: cardinfo;
+}
 
-function Card({ props }) {
+function Card({ props }: CardProps) {
   const [isHovering, setIsHovering] = useState(false);
   const { user } = useContext(AuthContext);
 
@@ -34,13 +34,13 @@ function Card({ props }) {
   };
   const navigate = useNavigate();
 
-  const navigateToPurchase = (id) => {
+  const navigateToPurchase = (id: number) => {
     navigate(`/library/${id}/intro`, { state: { id: id } });
   };
 
   const [modal, setModal] = useState(false);
 
-  const delnovel = (e) => {
+  const delnovel = (e: React.MouseEvent<HTMLImageElement>) => {
     e.stopPropagation();
     setModal(true);
   };
@@ -108,7 +108,7 @@ function Card({ props }) {
                 {props && props.commentCount}
               </span>
             </div>
-            {props && user.nickname === props.author ? (
+            {props && user.nick_name === props.nickName ? (
               <img
                 onClick={delnovel}
                 src={process.env.PUBLIC_URL + "/icon/trash.svg"}
@@ -122,10 +122,10 @@ function Card({ props }) {
         </div>
         <div className={style.info}>
           <div className={style.title}>{props && props.title}</div>
-          <div className={style.writer}>{props && props.author}</div>
+          <div className={style.writer}>{props && props.nickName}</div>
         </div>
         <img
-          src={props && props.cover_img}
+          src={props && process.env.REACT_APP_IMAGE_API + props.coverImg}
           className={style.bookimg}
           alt="bookimg"
         />
@@ -148,7 +148,12 @@ function Card({ props }) {
           },
         }}
       >
-        <Delete type="novel" id={props && props.id} closemodal={closemodal} />
+        <Delete
+          type="novel"
+          id={props && props.id}
+          closemodal={closemodal}
+          comid={props.id}
+        />
       </Modal>
     </>
   );

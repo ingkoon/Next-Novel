@@ -1,6 +1,11 @@
 import style from "./Book3d.module.css";
 
-export default function Book3d({ type, img }) {
+type book3dProps = {
+  type: string;
+  img: string;
+};
+
+export default function Book3d({ type, img }: book3dProps) {
   return (
     <div
       className={style.wrapper}

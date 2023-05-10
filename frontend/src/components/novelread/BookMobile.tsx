@@ -1,8 +1,7 @@
 import style from "./BookMobile.module.css";
 import Materials from "./Materials";
 import Qna from "./Qna";
-import Modal from "react-modal";
-import Login from "../login/Login";
+import LoginModal from "../common/LoginModal";
 
 import { useCallback, useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -57,6 +56,7 @@ export default function Book() {
   const [lastPage, setLastPage] = useState("");
   const [rerender, setRerender] = useState("");
   const page_ref = useRef<HTMLDivElement>(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false); //login
 
   const [input, setInput] = useState<InputProps>({});
   const { submitComment } = useCommentWrite();
@@ -114,14 +114,14 @@ export default function Book() {
     setInput((input) => ({ ...input, [name]: value }));
   };
 
-  const [loginIsOpen, setLoginIsOpen] = useState(false);
+  // const [loginIsOpen, setLoginIsOpen] = useState(false);
 
   const submit = () => {
     // 일단 로그인 주석처리
-    // if (!localStorage.getItem("access_token")) {
-    //   setLoginIsOpen(true);
-    //   return;
-    // }
+    if (!localStorage.getItem("access_token")) {
+      setModalIsOpen(true);
+      return;
+    }
     if (!input.comm) {
       return;
     }
@@ -144,7 +144,7 @@ export default function Book() {
     return formData;
   }
   const closemodal = () => {
-    setLoginIsOpen(false);
+    setModalIsOpen(false);
   };
 
   // ///////////////////////////////////////////////////
@@ -153,26 +153,7 @@ export default function Book() {
 
   return (
     <div className={style.back}>
-      <Modal
-        closeTimeoutMS={200}
-        isOpen={loginIsOpen}
-        onRequestClose={() => setLoginIsOpen(false)}
-        style={{
-          overlay: {
-            zIndex: "100",
-          },
-          content: {
-            width: "400px",
-            height: "500px",
-            margin: "auto",
-            padding: "0",
-            borderRadius: "20px",
-            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.5)",
-          },
-        }}
-      >
-        <Login />
-      </Modal>
+      <LoginModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
       {novelinfo && (
         <div className={style.book}>
           <div className={style.pages}>

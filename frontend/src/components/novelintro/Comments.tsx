@@ -10,22 +10,12 @@ export default function Comments() {
   const id = location.state.id;
   const [novelid, setNovelid] = useState(id);
   const [commentlist, setCommentlist] = useState([]);
-  let commentlen = 0;
 
   async function comment() {
     try {
       const data = await getcomment(novelid);
-      commentlen = data.data.comments.length;
       console.log(data);
       setCommentlist(data.data.comments);
-
-      // let tmp = [];
-      // for (let i = 0; i < commentlen; i++) {
-      //   tmp = [...tmp];
-      //   tmp.push(Bubble);
-      // }
-      // setArr(tmp);
-      // console.log(arr);
     } catch (e) {
       console.log(e);
     }

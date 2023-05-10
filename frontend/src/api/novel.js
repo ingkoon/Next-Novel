@@ -3,9 +3,9 @@ import axios from "axios";
 
 // intro가져오기
 export async function getintro(id) {
-  // const res = await tokeninstance.get(`novel/${id}/preview/`)
-  // return res
-  return axios.get("/novel/read/novel_read2.json");
+  const res = await tokeninstance.get(`novel/${id}/`);
+  return res;
+  // return axios.get("/novel/read/novel_read2.json");
 }
 
 //comment가져오기
