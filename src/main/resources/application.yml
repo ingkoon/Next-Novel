@@ -35,14 +35,14 @@ spring:
         #   uri: http://localhost:8011/
           uri: http://***REMOVED***:8011/
           predicates:
-            - Path=/member/**
+            - Path=/member/**, /img/member/**
         #   filters:
         #     - RewritePath=/member/(?<word>.*), /b/$\{word}
         - id: novel
         #   uri: http://localhost:8012/
           uri: http://***REMOVED***:8012/
           predicates:
-            - Path=/novel/**, /write/**, /comment/**, /img/**
+            - Path=/novel/**, /write/**, /comment/**, /img/novel/**
         - id: ai
         #   uri: http://localhost:8013/
           uri: http://***REMOVED***:8013/
