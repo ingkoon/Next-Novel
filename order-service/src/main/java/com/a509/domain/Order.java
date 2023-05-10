@@ -18,15 +18,15 @@ public class Order {
     @Id @Column(name = "order_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long memberId;
+    private String nickName;
     private Long price;
     private String receiptId;
     @Enumerated(value = EnumType.STRING)
     private OrderStatus status = OrderStatus.PENDING;
 
     @Builder
-    public Order(Long userId, Long price, String receiptId) {
-        this.memberId = userId;
+    public Order(String nickName, Long price, String receiptId) {
+        this.nickName = nickName;
         this.price = price;
         this.receiptId = receiptId;
     }

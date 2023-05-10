@@ -38,23 +38,12 @@ public class OrderService {
     private final KafkaTemplate<String, PointUpdateRequestDto> updatePointTemplate;
     private final KafkaTemplate<String, CreateOrderItemRequestDto> createOrderItemTemplate;
 
-//    @Autowired
-//    public OrderService(OrderRepository orderRepository,
-//                        BootPayComponent bootPayComponent,
-//                        @Qualifier("updatePointTemplate") KafkaTemplate<String, PointUpdateRequestDto> updatePointTemplate,
-//                        @Qualifier("createOrderItemTemplate") KafkaTemplate<String, CreateOrderItemRequestDto> createOrderItemTemplate) {
-//        this.orderRepository = orderRepository;
-//        this.bootPayComponent = bootPayComponent;
-//        this.updatePointTemplate = updatePointTemplate;
-//        this.createOrderItemTemplate = createOrderItemTemplate;
-//    }
-
     /*
     feature method: findOrders
     - 주문 내역 리스트를 가져온다.
      */
-    public List<OrderResponseDto> findOrders(Long memberId){
-        List<Order> orderList = orderRepository.findAllByMemberId(memberId);
+    public List<OrderResponseDto> findOrders(String nickName){
+        List<Order> orderList = orderRepository.findAllByNickName(nickName);
         log.info("===== list size : " + orderList.size() + "=====");
         return orderList
                 .stream()
@@ -113,10 +102,10 @@ public class OrderService {
         orderRepository.save(order);
 
         PointUpdateRequestDto pointUpdateRequestDto = PointUpdateRequestDto.builder()
-                .memberId(order.getMemberId())
+                .nickName(order.getNickName())
                 .point(order.getPrice()).build();
 
-        updatePointTemplate.send("order_item", order.getMemberId().toString(), pointUpdateRequestDto);
+        updatePointTemplate.send("order_item", order.getNickName().toString(), pointUpdateRequestDto);
         CreateOrderItemRequestDto orderItemRequestDto =
                 CreateOrderItemRequestDto.builder()
                         .orderId(order.getId())

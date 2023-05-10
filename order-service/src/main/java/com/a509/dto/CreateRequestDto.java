@@ -5,14 +5,14 @@ import lombok.Getter;
 
 @Getter
 public class CreateRequestDto {
-    private Long memberId;
+    private String nickName;
     private Long itemId;
     private Long price;
     private String receiptId;
 
     public Order toOrderEntity(){
         return Order.builder()
-                .userId(memberId)
+                .nickName(nickName)
                 .price(price)
                 .receiptId(receiptId)
                 .build();

@@ -29,10 +29,10 @@ public class OrderController {
                     .body(token);
         }
 
-        @GetMapping("/{memberId}")
+        @GetMapping("/{nickName}")
         public ResponseEntity<List<OrderResponseDto>> findOrderList(
-                @PathVariable("memberId") long memberId){
-            List<OrderResponseDto> response = orderService.findOrders(memberId);
+                @PathVariable("nickName") String nickName){
+            List<OrderResponseDto> response = orderService.findOrders(nickName);
             return ResponseEntity
                     .ok()
                     .body(response);

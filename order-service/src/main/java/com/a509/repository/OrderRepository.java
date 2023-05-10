@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    List<Order> findAllByMemberId(Long memberId);
+    List<Order> findAllByNickName(String nickName);
     Boolean existsByReceiptId(String receiptId);
+
 }
