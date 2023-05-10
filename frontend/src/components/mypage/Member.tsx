@@ -13,6 +13,7 @@ export default function Member({ updatemember }: MemberProps) {
   const [deleteIsOpen, setDeleteIsOpen] = useState(false);
 
   const closemodal = () => {
+    //업데이트 하고 닫으니까 ID카드에서도 새로운 값 갱신
     setUpdateIsOpen(false);
     setDeleteIsOpen(false);
     updatemember();

@@ -1,37 +1,37 @@
-import axios from "axios"
-import { useContext, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { AuthContext } from "../context/AuthContext"
+import axios from "axios";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = true;
 const instance = axios.create({
   baseURL: process.env.REACT_APP_DATA_API,
   // baseURL : 'https://nextnovel.site/api/'
-})
+});
 
 const tokeninstance = axios.create({
   baseURL: process.env.REACT_APP_DATA_API,
-})
+});
 
 // token 필요없는 api
 instance.interceptors.request.use(
   (config) => {
-    return config
+    return config;
   },
   (error) => {
-    console.log(error)
-    return Promise.reject(error)
+    console.log(error);
+    return Promise.reject(error);
   }
-)
+);
 
 instance.interceptors.response.use(
   (response) => {
-    return response
+    return response;
   },
   (error) => {
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
-)
+);
 
 // function TokenInterceptor({children}) {
 
@@ -54,26 +54,26 @@ instance.interceptors.response.use(
 // 토큰 필요한 api
 tokeninstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("access_token")
+    const token = localStorage.getItem("access_token");
     // const token = user.access_token
     if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
-    return config
+    return config;
   },
   (error) => {
-    console.log(error)
-    return Promise.reject(error)
+    console.log(error);
+    return Promise.reject(error);
   }
-)
+);
 
 tokeninstance.interceptors.response.use(
   (response) => {
-    return response
+    return response;
   },
   (error) => {
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
-)
+);
 
-export { instance, tokeninstance }
+export { instance, tokeninstance };

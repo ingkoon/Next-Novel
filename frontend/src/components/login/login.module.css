@@ -10,9 +10,8 @@
 }
 
 .loginlogo {
-  text-align: end;
-  margin-top : 10%;
-  margin-right: 30px;
+  margin-top: 30px;
+  text-align: center;
 }
 
 .title {
@@ -30,13 +29,6 @@
   text-align: start;
 }
 
-.kakao {
-  width: 300px;
-  height: 45px;
-  cursor: pointer;
-  margin-top : 30%;
-}
-
 .topborder {
   display: flex;
   justify-content: space-between;
@@ -44,13 +36,13 @@
 .topright {
   width: 100px;
   height: 15px;
-  background-color: #F66F00;
+  background-color: #f66f00;
   border-bottom-left-radius: 20px;
 }
 .topleft {
   width: 15px;
   height: 15px;
-  background-color: #F66F00;
+  background-color: #f66f00;
 }
 
 .middleborder {
@@ -60,7 +52,7 @@
 .leftborder {
   height: 470px;
   width: 15px;
-  background-color: #F66F00;
+  background-color: #f66f00;
 }
 
 .bottomborder {
@@ -70,21 +62,90 @@
 .bottomleft {
   width: 100px;
   height: 15px;
-  background-color: #F66F00;
+  background-color: #f66f00;
   border-top-right-radius: 20px;
 }
 .bottomright {
   width: 15px;
   height: 15px;
-  background-color: #F66F00;
+  background-color: #f66f00;
 }
 
-.welcome{
+.welcome {
   position: absolute;
   top: 15%;
   transform: rotate(-90deg);
-  left : -25px;
+  left: -25px;
   font-size: 30px;
   font-weight: bold;
-  font-family: 'handjet';
+  font-family: "handjet";
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 12px;
+  margin-top: 20px;
+}
+.form input {
+  height: 40px;
+  width: 250px;
+  border: none;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-family: "LINESeedKR-Bd";
+  padding-top: 4px;
+}
+.form button {
+  height: 40px;
+  width: 250px;
+  border: none;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: #f66f00;
+  color: white;
+  font-family: "LINESeedKR-Bd";
+  padding-top: 4px;
+}
+.form button:hover {
+  cursor: pointer;
+}
+.form span {
+  font-family: "LINESeedKR-Bd";
+  font-size: 13px;
+  border-bottom: 1px solid rgb(53, 53, 53);
+  color: rgb(53, 53, 53);
+}
+.form span:hover {
+  cursor: pointer;
+}
+
+.socialContainer {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.socialLine {
+  position: relative;
+  bottom: 2px;
+  display: inline-block;
+  margin: 0;
+  width: 100px;
+  height: 1px;
+  background-color: rgb(220, 220, 220);
+  border: none;
+}
+.socialTitle {
+  padding: 0 8px;
+  font-size: 13px;
+  color: rgb(181, 181, 181);
+  font-family: "LINESeedKR-Bd";
+}
+.socialButton {
+  display: flex;
+  column-gap: 12px;
+  margin: 15px auto;
 }
