@@ -6,7 +6,22 @@ import { deletenovel } from "../../api/novel";
 import Modal from "react-modal";
 import Delete from "../mypage/modal/Delete";
 
-function Card({ props }) {
+type cardinfo = {
+  id: number;
+  title: string;
+  introduction: string;
+  nickName: string;
+  coverImg: string;
+  hitCount: number;
+  commentCount: number;
+  likeCount: number;
+};
+
+interface CardProps {
+  props: cardinfo;
+}
+
+function Card({ props }: CardProps) {
   const [isHovering, setIsHovering] = useState(false);
   const { user } = useContext(AuthContext);
 
@@ -19,13 +34,13 @@ function Card({ props }) {
   };
   const navigate = useNavigate();
 
-  const navigateToPurchase = (id) => {
+  const navigateToPurchase = (id: number) => {
     navigate(`/library/${id}/intro`, { state: { id: id } });
   };
 
   const [modal, setModal] = useState(false);
 
-  const delnovel = (e) => {
+  const delnovel = (e: React.MouseEvent<HTMLImageElement>) => {
     e.stopPropagation();
     setModal(true);
   };
@@ -38,7 +53,10 @@ function Card({ props }) {
       <div className={style.card} onClick={(e) => navigateToPurchase(props.id)}>
         <div
           className={isHovering ? style.none : style.intro}
-          style={{ backgroundImage: `url(${props && props.cover_img})` }}
+          style={{
+            backgroundImage: `url(${props &&
+              process.env.REACT_APP_IMAGE_API + props.coverImg})`,
+          }}
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
         >
@@ -58,7 +76,10 @@ function Card({ props }) {
         </div>
         <div
           className={isHovering ? style.intro : style.none}
-          style={{ backgroundImage: `url(${props && props.cover_img})` }}
+          style={{
+            backgroundImage: `url(${props &&
+              process.env.REACT_APP_IMAGE_API + props.coverImg})`,
+          }}
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
         >
@@ -69,16 +90,14 @@ function Card({ props }) {
                 style={{ margin: "auto 5px" }}
                 alt="glasses"
               />
-              <span style={{ margin: "0 5px" }}>
-                {props && props.novel_stats.hit_count}
-              </span>
+              <span style={{ margin: "0 5px" }}>{props && props.hitCount}</span>
               <img
                 src={process.env.PUBLIC_URL + "/icon/heart.svg"}
                 style={{ margin: "auto 5px" }}
                 alt="heart"
               />
               <span style={{ margin: "0 5px" }}>
-                {props && props.novel_stats.like_count}
+                {props && props.likeCount}
               </span>
               <img
                 src={process.env.PUBLIC_URL + "/icon/comment.svg"}
@@ -86,10 +105,10 @@ function Card({ props }) {
                 alt="comment"
               />
               <span style={{ margin: "0 5px" }}>
-                {props && props.novel_stats.comment_count}
+                {props && props.commentCount}
               </span>
             </div>
-            {props && user.nickname === props.author ? (
+            {props && user.nick_name === props.nickName ? (
               <img
                 onClick={delnovel}
                 src={process.env.PUBLIC_URL + "/icon/trash.svg"}
@@ -103,10 +122,10 @@ function Card({ props }) {
         </div>
         <div className={style.info}>
           <div className={style.title}>{props && props.title}</div>
-          <div className={style.writer}>{props && props.author}</div>
+          <div className={style.writer}>{props && props.nickName}</div>
         </div>
         <img
-          src={props && props.cover_img}
+          src={props && process.env.REACT_APP_IMAGE_API + props.coverImg}
           className={style.bookimg}
           alt="bookimg"
         />
@@ -129,7 +148,12 @@ function Card({ props }) {
           },
         }}
       >
-        <Delete type="novel" id={props && props.id} closemodal={closemodal} />
+        <Delete
+          type="novel"
+          id={props && props.id}
+          closemodal={closemodal}
+          comid={props.id}
+        />
       </Modal>
     </>
   );

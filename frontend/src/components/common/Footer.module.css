@@ -1,116 +1,178 @@
-.block{
-    height: 250px;
-    background: #090909;
+.block {
+  height: 250px;
+  background: #090909;
+  width: 100%;
 }
 
-.toppart{
-    width: 100%;
+.toppart {
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+  top: 60px;
+  /* background: green; */
 }
-.botpart{
-    width: 100%;
-}
-
-.twrap{
-    display: flex;
-    width: 293px;
-    /* background: blue; */
-    position: relative;
-    top: 70px;
-    left: 1232px;
-}
-
-.bwrap{
-    display: flex;
-    width: 293px;
-    /* background: blue; */
-    position: relative;
-    top: 80px;
-    left: 1174px;
+.botpart {
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+  top: 80px;
+  /* background: red; */
 }
 
-.topN{
-    opacity: 50%;
-    height: 50px;
-    margin-right: 10px;
-    animation: lds-grid 1.2s linear infinite;
-    animation-delay: 0s;
-}
-.topE{
-    opacity: 50%;
-    height: 50px;
-    margin-right: 10px;
-    animation: lds-grid 1.2s linear infinite;
-    animation-delay: -0.4s;
-}
-.topX{
-    opacity: 50%;
-    height: 50px;
-    margin-right: 10px;
-    animation: lds-grid 1.2s linear infinite;
-    animation-delay: -0.8s;
+.twrap {
+  display: flex;
+  max-width: 100%;
+  min-height: 50px;
+  position: relative;
+  float: right;
 }
 
-.topT{
-    opacity: 50%;
-    height: 50px;
-    animation: lds-grid 1.2s linear infinite;
-    animation-delay: -0.4s;
+.bwrap {
+  display: flex;
+  max-width: 100%;
+  position: relative;
+  float: right;
+  min-height: 50px;
 }
 
-.botN{
-    opacity: 50%;
-    height: 50px;
-    margin-right: 10px;
-    animation: lds-grid 1.2s linear infinite;
-    animation-delay: -0.8s;
+.topN {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: 0s;
 }
-.botO{
-    opacity: 50%;
-    height: 50px;
-    margin-right: 10px;
-    animation: lds-grid 1.2s linear infinite;
-    animation-delay: -1.2s;
+.topE {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -0.4s;
 }
-.botV{
-    opacity: 50%;
-    height: 50px;
-    margin-right: 10px;
-    animation: lds-grid 1.2s linear infinite;
-    animation-delay: -0.8s;
-}
-.botE{
-    opacity: 50%;
-    height: 50px;
-    margin-right: 10px;
-    animation: lds-grid 1.2s linear infinite;
-    animation-delay: -1.2s;
-}
-.botL{
-    opacity: 50%;
-    height: 50px;
-    animation: lds-grid 1.2s linear infinite;
-    animation-delay: -1.6s;
+.topX {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -0.8s;
 }
 
-.text1{
-    color: #FFFEFC;
-    font-family: 'LINESeedKR-Bd';
-    position: relative;
-    top: -25px;
-    left: 50px;
-    width: 600px;
-    /* background: yellow; */
+.topT {
+  opacity: 50%;
+  height: 50px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -0.4s;
+  position: relative;
+  right: 0;
+  top: 0;
 }
 
-.gray{
-    color: #acacac;
+.botN {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -0.8s;
+}
+.botO {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -1.2s;
+}
+.botV {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -0.8s;
+}
+.botE {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -1.2s;
+}
+.botL {
+  opacity: 50%;
+  height: 50px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -1.6s;
+}
+
+.text1 {
+  color: #fffefc;
+  font-family: "LINESeedKR-Bd";
+  position: relative;
+  top: -25px;
+  left: 50px;
+  width: 90%;
+  height: 150px;
+  /* background: yellow; */
+}
+
+.credit {
+  position: relative;
+  top: 100px;
+  left: -130px;
+  height: 20px;
+}
+.gray {
+  color: #acacac;
 }
 
 @keyframes lds-grid {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.7;
   }
   50% {
     opacity: 0.5;
   }
+}
+
+@media (max-width: 1024px) {
+  .block {
+    height: 250px;
+  }
+  .toppart {
+    position: relative;
+    display: flex;
+    width: 90%;
+    top: 70px;
+    float: left;
+    opacity: 25%;
+    /* display: none; */
+  }
+  .botpart {
+    position: relative;
+    display: flex;
+    width: 100%;
+    top: 90px;
+    float: right;
+    opacity: 50%;
+    /* display: none; */
+  }
+
+  .text1 {
+    color: #fffefc;
+    font-family: "LINESeedKR-Bd";
+    font-size: 12px;
+    position: relative;
+    top: -10px;
+    left: 0px;
+    width: 50%;
+    /* display: flex;
+    align-items: center;
+    flex-direction: column; */
+    /* background: yellow; */
+  }
+  /* .credit {
+    position: relative;
+    height: 20px;
+    top: 25px;
+    left: -152px;
+  } */
 }

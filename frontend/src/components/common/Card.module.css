@@ -7,7 +7,7 @@
   margin: 25px;
   cursor: pointer;
   box-shadow: 0 10px 10px 5px #00000025;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .card:hover {
@@ -29,7 +29,9 @@
   color: white;
   font-family: wild;
   font-size: 24px;
-  width: 420px;
+  /* width: 420px;
+  height: 65%; */
+  width: 100%;
   height: 65%;
   border-bottom: 3px solid black;
   background-size: cover;
@@ -39,7 +41,7 @@
 
 .introment {
   height: 100%;
-  background-color: #ABABAB90;
+  background-color: #ababab90;
   backdrop-filter: blur(5px);
   display: flex;
   align-items: center;
@@ -54,18 +56,18 @@
 
 .ment {
   margin: 0 15%;
-  padding-bottom:20%;
+  padding-bottom: 20%;
   font-size: 24px;
   white-space: normal;
   text-align: center;
 }
 
-.info{
+.info {
   height: 35%;
-  font-family: 'gothic';
+  font-family: "gothic";
   margin-left: 40%;
   float: left;
-  padding-top : 20px;
+  padding-top: 20px;
   padding-left: 20px;
 }
 
@@ -78,15 +80,15 @@
   float: left;
 }
 
-.quote1{
+.quote1 {
   position: absolute;
   top: 2%;
-  left : 2%;
+  left: 2%;
 }
 
 .quote2 {
   position: absolute;
-  bottom : 25%;
+  bottom: 25%;
   right: 2%;
 }
 
@@ -99,6 +101,44 @@
 
 .trash {
   position: absolute;
-  bottom : 10px;
+  bottom: 10px;
   right: 10px;
+}
+
+@media (max-width: 400px) {
+  .introment {
+    background-color: #ababab30;
+    backdrop-filter: blur(10px);
+  }
+
+  .quote1 {
+    width: 10%;
+    margin-top: 15%;
+    margin-left: 3%;
+  }
+  .ment {
+    margin-top: 15%;
+  }
+  .quote2 {
+    width: 10%;
+    margin-top: 15%;
+    margin-right: 3%;
+  }
+
+  .bookimg {
+    display: none;
+  }
+  .title {
+    font-size: 24px;
+    margin-left: -100%;
+    margin-top: 10%;
+  }
+
+  .writer {
+    font-size: 16px;
+    margin-left: -100%;
+    margin-top: 10%;
+    /* float: left; */
+    color: #808080;
+  }
 }
