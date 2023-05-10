@@ -10,7 +10,6 @@ import com.a509.service_member.exception.DuplicatedMemberException;
 import com.a509.service_member.exception.EmptyValueException;
 import com.a509.service_member.exception.InvalidedAccessTokenException;
 import com.a509.service_member.exception.NoSuchMemberException;
-import com.a509.service_member.jpa.FileUploader;
 import com.a509.service_member.jpa.member.Member;
 import com.a509.service_member.jpa.member.MemberRepository;
 import com.a509.service_member.jwt.JwtTokenProvider;
@@ -42,7 +41,6 @@ public class MemberService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final StringRedisTemplate stringRedisTemplate;
-    private final FileUploader fileUploader;
     private final MemberImageComponent memberImageComponent;
 
     public Member findMember(String email) {
