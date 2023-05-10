@@ -69,4 +69,4 @@ spring:
         format_sql: true
     database: mysql
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
