@@ -2,7 +2,10 @@ package com.a509.service_novel.service;
 
 import javax.transaction.Transactional;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -42,6 +45,8 @@ public class NovelService {
 
 	private final NovelImageComponent novelImageComponent;
 	private final NovelLikeRepository novelLikeRepository;
+	private final String path = "/home/data";
+	// private final String path = "C:\\Users\\SSAFY\\Desktop\\imagelocation";
 	@Transactional
 	public int insertNovel(NovelDetailDto novelDetailDto
 		,MultipartFile[] startImages
@@ -213,13 +218,21 @@ public class NovelService {
 		}
 	}
 
-	public List<ImageDto> selectAllNovelImage(String nickName) throws Exception{
+	public List<String> selectAllNovelImage(String nickName) throws Exception{
 		List<NovelImage> novelImageList = novelImageRepository.findByNickName(nickName);
-		List<ImageDto> imageDtos = new ArrayList<>();
-		for(NovelImage image : novelImageList){
-			imageDtos.add(new ImageDto(image.getImageName(),""));
+		List<String> images = new ArrayList<>();
+		for(NovelImage novelImage : novelImageList){
+			String novelPath = path+"/"+novelImage.getImageName();
+			File imageFile = new File(path);
+			FileInputStream imageInputStream = new FileInputStream(imageFile);
+			byte[] imageBytes = new byte[(int) imageFile.length()];
+			imageInputStream.read(imageBytes);
+			String encodedString = Base64.getEncoder().encodeToString(imageBytes);
+
+			images.add(encodedString);
+
 		}
-		return imageDtos;
+		return images;
 	}
 
 	public List<NovelListDto> selectNovelRecommend() throws Exception{

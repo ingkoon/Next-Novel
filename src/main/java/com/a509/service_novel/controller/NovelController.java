@@ -125,7 +125,7 @@ public class NovelController {
 	public ResponseEntity<?> selectAllNovelImage(@PathVariable("id") String nickName){
 
 		try{
-			List<ImageDto> images = novelService.selectAllNovelImage(nickName);
+			List<String> images = novelService.selectAllNovelImage(nickName);
 			return new ResponseEntity<>(images,HttpStatus.OK);
 		}
 		catch (Exception e){

@@ -13,7 +13,7 @@ spring:
   #    url: jdbc:mysql://i8a703.p.ssafy.io:3306/project1db?serverTimezone=UTC&characterEncoding=UTF-8
   data:
     mongodb:
-      host: localhost
+      host: ***REMOVED***
       port: 27017
       authentication-database: admin
       database: novel
