@@ -1,5 +1,6 @@
 package com.a509.service_member.service;
 
+import com.a509.service_member.component.MemberImageComponent;
 import com.a509.service_member.dto.request.*;
 import com.a509.service_member.dto.response.MemberTokenResponseDto;
 import com.a509.service_member.dto.response.MemberMyPageResponseDto;
@@ -24,6 +25,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+
+import java.nio.file.NoSuchFileException;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -37,13 +43,15 @@ public class MemberService {
     private final JwtTokenProvider jwtTokenProvider;
     private final StringRedisTemplate stringRedisTemplate;
     private final FileUploader fileUploader;
+    private final MemberImageComponent memberImageComponent;
 
     public Member findMember(String email) {
         return memberRepository.findByEmail(email).orElseThrow(NoSuchMemberException::new);
     }
 
     @Transactional
-    public void signUp(MemberSignupRequestDto memberSignupRequestDto) {
+    public void signUp(MemberSignupRequestDto memberSignupRequestDto,
+        MultipartFile profileImage) {
         if (memberRepository.existsByEmail(memberSignupRequestDto.getEmail())) {
             throw new DuplicatedMemberException();
         }
@@ -52,14 +60,26 @@ public class MemberService {
             throw new DuplicatedMemberException("중복된 닉네임입니다.");
         }
 
+
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
+        String UID = now.format(formatter);
+
         Member member = Member
                 .builder()
                 .email(memberSignupRequestDto.getEmail())
                 .password(bCryptPasswordEncoder.encode(memberSignupRequestDto.getPassword()))
                 .nickname(memberSignupRequestDto.getNickname())
-                .profileImage(memberSignupRequestDto.getProfileImage())
+                .profileImage(UID+"_"+profileImage.getOriginalFilename())
                 .build();
         memberRepository.save(member);
+
+        try {
+            memberImageComponent.save(profileImage,UID);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public MessageResponseDto checkEmail(MemberSignupCheckRequestDto memberSignupCheckRequestDto) {

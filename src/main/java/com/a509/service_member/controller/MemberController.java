@@ -31,8 +31,9 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Void> signUp(@RequestBody @Validated MemberSignupRequestDto memberSignupRequestDto) {
-        memberService.signUp(memberSignupRequestDto);
+    public ResponseEntity<Void> signUp(@RequestPart("profile_image") MultipartFile profileImage,
+        @RequestPart("member") @Validated MemberSignupRequestDto memberSignupRequestDto) {
+        memberService.signUp(memberSignupRequestDto, profileImage);
         return ResponseEntity.ok().build();
     }
 
