@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -138,11 +139,17 @@ public class NovelService {
 	}
 
 	@Transactional
-	public List<NovelListDto> selectNovelList() throws Exception{
-		Sort sortByCreatedAt = Sort.by("createdAt").ascending();
+	public List<NovelListDto> selectNovelList(String genre, String keyword, Pageable pageable) throws Exception{
 
 		try {
-			List<Novel> novels = novelRepogitory.findAll(sortByCreatedAt);
+
+			List<Novel> novels = new ArrayList<>();
+			if(genre.equals("all")){
+				novels = novelRepogitory.findAllByTitleContainingOrderByIdDesc(keyword,pageable);
+			}
+			else{
+				novels = novelRepogitory.findAllByEngGenreAndTitleContainingOrderByIdDesc(genre,keyword,pageable);
+			}
 			List<NovelListDto> novelDtos = new ArrayList<>();
 
 			for (Novel novel : novels) {
@@ -209,5 +216,19 @@ public class NovelService {
 			imageDtos.add(new ImageDto(image.getImageName(),""));
 		}
 		return imageDtos;
+	}
+
+	public List<NovelListDto> selectNovelRecommend() throws Exception{
+
+		List<Novel> novels = novelRepogitory.findRandom5();
+		List<NovelListDto> novelDtos = new ArrayList<>();
+
+		for (Novel novel : novels) {
+			NovelListDto novelDto = novel.toListDto();
+			novelDtos.add(novelDto);
+		}
+
+		return novelDtos;
+
 	}
 }
