@@ -40,10 +40,14 @@ export default function useNovelWrite() {
     {}
   );
 
-  const getPaintings = useQuery(["paintings"], ()=> getPaintingsApi(localStorage.getItem("nickname")), {
-    enabled: false,
-    select: (data) => data.data,
-  });
+  const getPaintings = useQuery(
+    ["paintings"],
+    () => getPaintingsApi(localStorage.getItem("nickName")),
+    {
+      enabled: false,
+      select: (data) => data.data,
+    }
+  );
 
   return {
     getQuestions,
