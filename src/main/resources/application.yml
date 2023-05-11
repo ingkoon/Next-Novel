@@ -32,29 +32,30 @@ spring:
               - OPTIONS
       routes:
         - id: member
-        #   uri: http://localhost:8011/
           uri: http://***REMOVED***:8011/
           predicates:
             - Path=/member/**, /img/member/**
-        #   filters:
-        #     - RewritePath=/member/(?<word>.*), /b/$\{word}
         - id: novel
-        #   uri: http://localhost:8012/
           uri: http://***REMOVED***:8012/
           predicates:
             - Path=/novel/**, /write/**, /comment/**, /img/novel/**
         - id: ai
-        #   uri: http://localhost:8013/
           uri: http://***REMOVED***:8013/
           predicates:
             - Path=/ai/**
-        - id: payment
-        #   uri: http://localhost:8014/
+        - id: point
           uri: http://***REMOVED***:8014/
           predicates:
-            - Path=/payment/**
-        - id: jukebox
-        #   uri: http://localhost:8015/
+            - Path=/point/**
+        - id: order
           uri: http://***REMOVED***:8015/
           predicates:
-            - Path=/jukebox/**
+            - Path=/orders/**
+        - id: item
+          uri: http://***REMOVED***:8016/
+          predicates:
+            - Path=/item/**
+        - id: orderItem
+          uri: http://***REMOVED***:8017/
+          predicates:
+            - Path=/orderItem/**
