@@ -1,5 +1,7 @@
 package com.a509.service_novel.jpa.novel;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class Novel {
 
 
 	@Builder.Default
-	private String createdAt = "Default";
+	private String createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss"));
 	private String engGenre;;
 	private String korGenre;
 	private String nickName;

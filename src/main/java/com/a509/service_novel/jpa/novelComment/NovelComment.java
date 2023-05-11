@@ -1,5 +1,8 @@
 package com.a509.service_novel.jpa.novelComment;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +31,7 @@ public class NovelComment {
 	private String content;
 
 	@Builder.Default
-	private String createdAt = "Default";
+	private String createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss"));
 	private String nickName;
 	private int novelId;
 
