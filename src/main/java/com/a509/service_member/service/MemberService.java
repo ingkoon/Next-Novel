@@ -131,23 +131,7 @@ public class MemberService {
     }
 
     public void logout(String token) {
-        String accessToken = token.split(" ")[1];
-
-        // 1. Access Token 검증
-        if (!jwtTokenProvider.validateToken(accessToken)) throw new InvalidedAccessTokenException();
-
-        // 2. Access Token 에서 Member email 을 가져옵니다.
-        Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
-
-        // 3. Redis 에서 해당 Member email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
-        if (stringRedisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
-            // Refresh Token 삭제
-            stringRedisTemplate.delete("RT:" + authentication.getName());
-        }
-
-        // 4. 해당 Access Token 유효시간 가지고 와서 BlackList 로 저장하기
-        Long expiration = jwtTokenProvider.getExpiration(accessToken);
-        stringRedisTemplate.opsForValue().set(accessToken, "logout", expiration, TimeUnit.MILLISECONDS);
+        updateRedisItems(token, "logout");
     }
 
     public MemberMyPageResponseDto findMyPage(String token) {
@@ -200,5 +184,29 @@ public class MemberService {
     public void delete(String token) {
         Member member = findMember(jwtTokenProvider.getMember(token));
         member.setState(MemberState.RESIGNED.name());
+
+        updateRedisItems(token, "resign");
+    }
+
+    @Transactional
+    public void updateRedisItems(String token, String status) {
+
+        String accessToken = token.split(" ")[1];
+
+        // 1. Access Token 검증
+        if (!jwtTokenProvider.validateToken(accessToken)) throw new InvalidedAccessTokenException();
+
+        // 2. Access Token 에서 Member email 을 가져옵니다.
+        Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
+
+        // 3. Redis 에서 해당 Member email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
+        if (stringRedisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
+            // Refresh Token 삭제
+            stringRedisTemplate.delete("RT:" + authentication.getName());
+        }
+
+        // 4. 해당 Access Token 유효시간 가지고 와서 BlackList 로 저장하기
+        Long expiration = jwtTokenProvider.getExpiration(accessToken);
+        stringRedisTemplate.opsForValue().set(accessToken, status, expiration, TimeUnit.MILLISECONDS);
     }
 }
