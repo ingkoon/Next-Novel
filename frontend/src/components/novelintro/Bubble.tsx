@@ -58,7 +58,7 @@ export default function Bubble({ props, id, updatelist }: BubbleProps) {
           <span>{props && create}</span>
         </div>
 
-        {localStorage.getItem("nickname") === props.nickName ? (
+        {localStorage.getItem("nickName") === props.nickName ? (
           <div className={style.del} onClick={deletecomment}>
             <img
               src={process.env.PUBLIC_URL + "/icon/trash_black.svg"}

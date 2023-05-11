@@ -11,7 +11,7 @@ export default function Update({ closemodal }: UpdateProps) {
   const imgRef = useRef<HTMLInputElement>(null);
   const [userinfo, setUserinfo] = useState({
     profile_image: "",
-    nickname: "",
+    nickName: "",
     createdAt: "",
   });
 
@@ -23,7 +23,7 @@ export default function Update({ closemodal }: UpdateProps) {
         profile_image:
           res.data.profileImage ||
           "https://i.pinimg.com/564x/3d/cd/4a/3dcd4af5bc9e06d36305984730ab7888.jpg",
-        nickname: res.data.nickname,
+        nickName: res.data.nickName,
         createdAt: res.data.createdAt.substring(0, 10),
       });
     } catch (e) {
@@ -59,7 +59,7 @@ export default function Update({ closemodal }: UpdateProps) {
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUserinfo({ ...userinfo, nickname: e.target.value });
+    setUserinfo({ ...userinfo, nickName: e.target.value });
   };
 
   const updateuser = () => {
@@ -68,7 +68,7 @@ export default function Update({ closemodal }: UpdateProps) {
     formData.append("multipartFile", profile || ""); //프로필 안바꾸면 어떻게?
 
     const json = {
-      nickname: userinfo.nickname,
+      nickName: userinfo.nickName,
     };
     formData.append(
       "request",
@@ -79,7 +79,7 @@ export default function Update({ closemodal }: UpdateProps) {
       onSuccess: (res) => {
         console.log(res);
 
-        localStorage.setItem("nickname", userinfo.nickname);
+        localStorage.setItem("nickName", userinfo.nickName);
         closemodal();
       },
     });
@@ -96,7 +96,7 @@ export default function Update({ closemodal }: UpdateProps) {
         <div className={style.categoryTitle}>
           <div className={style.icon}>
             <img
-              src={process.env.PUBLIC_URL + "/icon/mypage/nickname.svg"}
+              src={process.env.PUBLIC_URL + "/icon/mypage/nickName.svg"}
               alt="icon"
             />
           </div>
@@ -120,8 +120,8 @@ export default function Update({ closemodal }: UpdateProps) {
           </div>
           <div className={style.categoryName}>가입일자</div>
         </div>
-        <div className={style.nickname}>
-          <input onChange={onChange} value={userinfo.nickname} />
+        <div className={style.nickName}>
+          <input onChange={onChange} value={userinfo.nickName} />
         </div>
         <label htmlFor="inputimg" className={style.profile}>
           <img

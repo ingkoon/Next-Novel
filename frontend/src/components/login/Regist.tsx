@@ -6,40 +6,40 @@ type RegistProps = {
   move: () => void;
 };
 export default function Regist({ move }: RegistProps) {
-  const { normalRegist, nicknameCheck, emailCheck } = useUser();
+  const { normalRegist, nickNameCheck, emailCheck } = useUser();
   const [info, setInfo] = useState({
-    nickname: "",
+    nickName: "",
     email: "",
     pw1: "",
     pw2: "",
   });
-  const [nicknameCheckState, setNicknameCheckState] = useState("");
+  const [nickNameCheckState, setNickNameCheckState] = useState("");
   const [emailCheckState, setEmailCheckState] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === "nickname") {
-      setNicknameCheckState("");
+    if (name === "nickName") {
+      setNickNameCheckState("");
     } else if (name === "email") {
       setEmailCheckState("");
     }
     setInfo({ ...info, [name]: value });
   };
   const check = (what: string) => {
-    if (what === "nickname") {
-      if (info.nickname.length === 0) {
+    if (what === "nickName") {
+      if (info.nickName.length === 0) {
         alert("닉네임을 확인해주세요!");
         return;
       }
-      nicknameCheck.mutate(
-        { nickname: info.nickname },
+      nickNameCheck.mutate(
+        { nickName: info.nickName },
         {
           onSuccess: (res) => {
             console.log(res);
             if (res.data.result === "fail") {
               alert(res.data.message);
             }
-            setNicknameCheckState(res.data.result);
+            setNickNameCheckState(res.data.result);
           },
         }
       );
@@ -65,7 +65,7 @@ export default function Regist({ move }: RegistProps) {
   };
 
   const handleSubmit = () => {
-    if (!(nicknameCheckState === "success" && emailCheckState === "success")) {
+    if (!(nickNameCheckState === "success" && emailCheckState === "success")) {
       alert("중복확인을 해주세요!");
       return;
     }
@@ -77,7 +77,7 @@ export default function Regist({ move }: RegistProps) {
     const jsonData = {
       email: info.email,
       password: info.pw1,
-      nickname: info.nickname,
+      nickName: info.nickName,
     };
 
     normalRegist.mutate(jsonData, {
@@ -114,14 +114,14 @@ export default function Regist({ move }: RegistProps) {
             <div className={style.inputBox}>
               <input
                 type="text"
-                value={info.nickname}
-                name="nickname"
+                value={info.nickName}
+                name="nickName"
                 onChange={handleChange}
                 placeholder="닉네임"
               />
               <button
-                className={`${style.checkButton} ${style[nicknameCheckState]}`}
-                onClick={() => check("nickname")}
+                className={`${style.checkButton} ${style[nickNameCheckState]}`}
+                onClick={() => check("nickName")}
               >
                 중복확인
               </button>

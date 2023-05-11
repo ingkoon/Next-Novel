@@ -86,11 +86,11 @@
   align-self: center;
 }
 
-.nickname {
+.nickName {
   align-self: center;
 }
 
-.nickname input {
+.nickName input {
   font-size: 24px;
   height: 30px;
   width: 75%;

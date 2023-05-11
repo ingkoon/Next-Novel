@@ -6,7 +6,7 @@ import useUser from "../../hooks/useUser";
 export default function IdCard() {
   const [userinfo, setUserinfo] = useState({
     profile_image: "",
-    nickname: "",
+    nickName: "",
     createdAt: "",
   });
   const { getUserInfo } = useUser();
@@ -20,7 +20,7 @@ export default function IdCard() {
         profile_image:
           res.data.profileImage ||
           "https://i.pinimg.com/564x/3d/cd/4a/3dcd4af5bc9e06d36305984730ab7888.jpg",
-        nickname: res.data.nickname,
+        nickName: res.data.nickName,
         createdAt: res.data.createdAt.substring(0, 10),
       });
     } catch (e) {
@@ -83,7 +83,7 @@ export default function IdCard() {
                 <div className={style.info_bottom2}>
                   <div className={style.info_sub}>
                     <div className={style.info_name}>
-                      ID {userinfo.nickname}
+                      ID {userinfo.nickName}
                     </div>
                     <div className={style.info_date}>
                       S/N {userinfo.createdAt}
