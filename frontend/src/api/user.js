@@ -42,16 +42,14 @@ export async function putUserInfoApi(formData) {
   return tokeninstance.put(`member/myPage`, formData, config);
 }
 
-// 제작한 소설
-export async function getmynovel() {
-  const res = await tokeninstance.get("user/novel/");
-  return res;
+// 좋아요한 소설
+export async function getLikeNovelApi() {
+  return tokeninstance.get(`novel/like/${localStorage.getItem("nickname")}`);
 }
 
-// 좋아요한 소설
-export async function getlikenovel() {
-  const res = await tokeninstance.get("user/liked-novel/");
-  return res;
+// 제작한 소설
+export async function getMyNovelApi() {
+  return tokeninstance.get(`novel/id/${localStorage.getItem("nickname")}`);
 }
 
 //회원 탈퇴
