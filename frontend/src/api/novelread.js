@@ -7,6 +7,9 @@ export async function novelall(id, nickName) {
   // const res = await instance.get(`novel/${id}/`);
   // return res;
   // return axios.get("/novel/read/novel_read2.json");
+  if (nickName === null) {
+    nickName = ""; // nickName이 null인 경우 빈 문자열로 할당
+  }
   console.log(nickName + "들어왔스빈다");
   const res = await instance.get(`novel/${id}/`, {
     params: {
@@ -25,7 +28,7 @@ export async function writecomment(commentData) {
   // return res;
 
   const res = await tokeninstance.post(
-    "novel/comment/",
+    "comment/",
     {
       content: commentData.content,
       nickName: commentData.nickName,
