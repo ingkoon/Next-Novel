@@ -20,7 +20,7 @@ export default function Thumbnail() {
     setNovelid(id);
     async function intro() {
       try {
-        const data = await getintro(novelid);
+        const data = await getintro(novelid, localStorage.getItem("nickName"));
         console.log(data);
         setNovelinfo(data.data);
       } catch (e) {
@@ -34,9 +34,11 @@ export default function Thumbnail() {
   return (
     <div>
       <div className={style.introBanner}>
-        <div className={style.bookCircle}>
-          <Book3d type="thumbnail" img={novelinfo!.coverImg} />
-        </div>
+        {novelinfo && (
+          <div className={style.bookCircle}>
+            <Book3d type="thumbnail" img={novelinfo.coverImg} />
+          </div>
+        )}
         <div className={style.bannerGrad} />
         <div className={style.quote}>
           <img

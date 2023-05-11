@@ -16,7 +16,7 @@ type NInfo = {
   hitCount: number;
   commentCount: number;
   likeCount: number;
-  user_liked: boolean;
+  liked: boolean;
 };
 
 export default function BookInfo() {
@@ -32,8 +32,9 @@ export default function BookInfo() {
 
   async function intro() {
     try {
-      const data = await getintro(novelid);
+      const data = await getintro(novelid, localStorage.getItem('nickName'));
       console.log(data);
+      console.log("닉네임불러오기:"+localStorage.getItem('nickName'));
       setNovelinfo(data.data);
 
       const year = data.data.createdAt.substring(0, 4);
@@ -59,7 +60,7 @@ export default function BookInfo() {
     goTop();
     setNovelid(id);
     intro();
-  }, [novelid]);
+  }, []);
 
   const navigate = useNavigate();
 
@@ -114,7 +115,7 @@ export default function BookInfo() {
           </div>
           <div className={style.etc3}>
             <div className={style.likebtn} onClick={liked}>
-              {novelinfo?.user_liked ? (
+              {novelinfo?.liked ? (
                 <img
                   src={process.env.PUBLIC_URL + "/icon/black_heart.svg"}
                   className={style.like}

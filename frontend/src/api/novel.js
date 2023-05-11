@@ -2,17 +2,30 @@ import { instance, tokeninstance } from "../api/Interceptors";
 import axios from "axios";
 
 // intro가져오기
-export async function getintro(id) {
-  const res = await tokeninstance.get(`novel/${id}/`);
+// export async function getintro(id) {
+//   const res = await instance.get(`novel/${id}/`);
+//   return res;
+// }
+// intro 가져오기 (nickName ver.)
+export async function getintro(id, nickName) {
+  console.log(nickName + "들어왔스빈다");
+  const res = await instance.get(`novel/${id}/`, {
+    params: {
+      nickName: nickName,
+    },
+  });
   return res;
-  // return axios.get("/novel/read/novel_read2.json");
 }
 
 //comment가져오기
-export async function getcomment(id) {
-  // const res = await instance.get(`novel/${id}/comment/`);
-  // return res;
-  return axios.get("/novel/read/novel_read2.json");
+export async function getcomment(id, nickName) {
+  console.log(nickName + "코멘트로들어왔스빈다");
+  const res = await instance.get(`novel/${id}/`, {
+    params: {
+      nickName: nickName,
+    },
+  });
+  return res;
 }
 
 // 댓글 삭제하기
