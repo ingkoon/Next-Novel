@@ -20,7 +20,7 @@ public class Point {
     @NotNull
     private String nickName;
     @NotNull
-    private Long point = 0L;
+    private Long point = 1000L;
     private LocalDateTime updatedAt = LocalDateTime.now();
     @Builder
     public Point(String nickName){
