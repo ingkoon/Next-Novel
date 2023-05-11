@@ -14,7 +14,7 @@ spring:
     name: service_member
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost/member?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    url: jdbc:mysql://localhost/members?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
 #    username: nextnovel
 #    password: ***REMOVED***
     url: jdbc:mysql://***REMOVED***:3306/members?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -28,12 +28,13 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
-  data:
-    redis:
-#      host: localhost
-      host: ***REMOVED***
-      port: 6379
-      password:
+  redis:
+    cluster:
+      nodes:
+        - ***REMOVED***:6379
+        - ***REMOVED***:6380
+        - ***REMOVED***:6381
+    password:
   servlet:
     multipart:
       max-file-size: 50MB
@@ -45,15 +46,11 @@ spring:
           google:
             client-id: ***REMOVED***
             client-secret: ***REMOVED***
+#            redirect-uri: http://localhost:8011/login/oauth2/code/google
             redirect-uri: http://***REMOVED***:8011/login/oauth2/code/google
             scope:
               - email
               - profile
-#            redirect-uri: http://localhost:8011/login/oauth2/code/google
 
 jwt:
   secret: ***REMOVED***
-file:
-  dir: C:\Users\SSAFY\Desktop
-  img:
-    profile: \static\images\defaultProfileImg.png
