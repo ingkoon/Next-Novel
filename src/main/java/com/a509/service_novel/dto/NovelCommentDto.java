@@ -14,6 +14,7 @@ public class NovelCommentDto {
 	private String createdAt;
 	private String nickName;
 	private int novelId;
+	private String profileImg;
 
 	public NovelComment toEntity(){
 		return NovelComment.builder()

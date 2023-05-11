@@ -45,6 +45,8 @@ public class NovelService {
 
 	private final NovelImageComponent novelImageComponent;
 	private final NovelLikeRepository novelLikeRepository;
+
+	private final MemberClientComponent memberClientComponent;
 	private final String path = "/home/data";
 	// private final String path = "C:\\Users\\SSAFY\\Desktop\\imagelocation";
 	@Transactional
@@ -134,6 +136,7 @@ public class NovelService {
 		for(NovelComment comment: comments){
 			NovelCommentDto novelCommentDto = comment.toDto();
 			commentDtos.add(novelCommentDto);
+			novelCommentDto.setProfileImg(memberClientComponent.getProfileImage(novelCommentDto.getNickName()));
 		}
 
 		//찾은 소설 dto전환
