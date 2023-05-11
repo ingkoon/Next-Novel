@@ -112,7 +112,7 @@ public class NovelController {
 		}
 	}
 
-	@GetMapping("/id/{id}")
+	@GetMapping("/my/{id}")
 	public ResponseEntity<?> selectNovelByAuthorId(@PathVariable("id") String nickName){
 		try{
 			List<NovelListDto> novelWritten = novelService.selectNovelsByAuthorId(nickName);
