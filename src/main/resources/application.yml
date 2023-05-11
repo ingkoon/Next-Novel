@@ -31,9 +31,15 @@ spring:
   redis:
     cluster:
       nodes:
-        - redis://***REMOVED***:6379
-        - redis://***REMOVED***:6380
-        - redis://***REMOVED***:6381
+        - ***REMOVED***:6379
+        - ***REMOVED***:6380
+        - ***REMOVED***:6381
+#  redis:
+#    cluster:
+#      nodes:
+#        - redis://***REMOVED***:6379
+#        - redis://***REMOVED***:6380
+#        - redis://***REMOVED***:6381
 #  redis:
 #    host: 127.0.0.1
 ##    host: 172.17.0.1
