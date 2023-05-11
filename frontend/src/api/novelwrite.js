@@ -1,5 +1,4 @@
-import { instance, tokeninstance } from "../api/Interceptors";
-import axios from "axios";
+import { tokeninstance } from "../api/Interceptors";
 
 const config = {
   headers: { "Content-Type": "multipart/form-data" },
@@ -10,30 +9,29 @@ const config2 = {
 };
 
 export async function fetchQuestions(formData) {
-  return instance.post("write/question/", formData);
+  return tokeninstance.post("write/question/", formData);
 }
 
 export async function startNovelApi(formData) {
-  return instance.post("write/start/", formData, config);
+  return tokeninstance.post("write/start/", formData, config);
 }
 
 export async function continueNovelApi(formData) {
-  return instance.post(`write/sequence/`, formData, config);
+  return tokeninstance.post(`write/sequence/`, formData, config);
 }
 
 export async function endNovelApi(formData) {
-  return instance.post(`write/end/`, formData);
+  return tokeninstance.post(`write/end/`, formData);
 }
 
 export async function makeCoverRequestApi(formData) {
-  return instance.post(`write/image/`, formData, config2);
+  return tokeninstance.post(`write/image/`, formData, config2);
 }
 
 export async function finNovelApi(formData) {
-  return instance.post(`novel/`, formData, config);
+  return tokeninstance.post(`novel/`, formData, config);
 }
 
-export async function fetchPaintings() {
-  // return tokeninstance.get(`user/drawing/`);
-  return axios.get("/novel/paintings.json");
+export async function getPaintingsApi(nickName) {
+  return tokeninstance.get(`/novel/image/${nickName}`);
 }

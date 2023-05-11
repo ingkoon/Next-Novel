@@ -6,8 +6,9 @@ type Material = {
 };
 
 type Novel = {
-  genre: number;
-  genreName: string;
+  genreIndex: number;
+  engGenreName: string;
+  korGenreName: string;
   materials: Material[];
   newMaterials: Material[];
   startStory: string;
@@ -31,8 +32,9 @@ type NovelContextType = {
 
 export const NovelContext = createContext<NovelContextType>({
   novel: {
-    genre: 0,
-    genreName: "로맨스",
+    genreIndex: 0,
+    engGenreName: "romance",
+    korGenreName: "로맨스",
     materials: [],
     newMaterials: [],
     startStory: "",
@@ -57,8 +59,9 @@ export function NovelContextProvider({
   children: React.ReactNode;
 }) {
   const [novel, setNovel] = useState<Novel>({
-    genre: 0,
-    genreName: "로맨스",
+    genreIndex: 0,
+    engGenreName: "romance",
+    korGenreName: "로맨스",
     materials: [],
     newMaterials: [],
     startStory: "",
