@@ -154,7 +154,7 @@ public class NovelService {
 	}
 
 	@Transactional
-	public List<NovelListDto> selectNovelList(String nickName, String genre, String keyword, Pageable pageable) throws Exception{
+	public List<NovelListDto> selectNovelList(String genre, String keyword, Pageable pageable) throws Exception{
 
 		try {
 
@@ -170,12 +170,6 @@ public class NovelService {
 			for (Novel novel : novels) {
 				NovelListDto novelDto = novel.toListDto();
 				novelDtos.add(novelDto);
-
-				Optional<NovelLike> novelLike = novelLikeRepository.findByNovelIdAndNickName(novel.getId(),nickName);
-				if(novelLike.isPresent())
-					novelDto.setIsLiked(true);
-				else
-					novelDto.setIsLiked(false);
 			}
 
 			return novelDtos;
@@ -196,11 +190,6 @@ public class NovelService {
 		for (Novel novel : novels) {
 			NovelListDto novelDto = novel.toListDto();
 			novelDtos.add(novelDto);
-			Optional<NovelLike> novelLike = novelLikeRepository.findByNovelIdAndNickName(novel.getId(),nickName);
-			if(novelLike.isPresent())
-				novelDto.setIsLiked(true);
-			else
-				novelDto.setIsLiked(false);
 		}
 
 		return novelDtos;

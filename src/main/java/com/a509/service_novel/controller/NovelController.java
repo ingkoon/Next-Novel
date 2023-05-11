@@ -87,14 +87,13 @@ public class NovelController {
 
 	///novel?genre=장르&keyword=검색어&page=0&size=10
 	@GetMapping()
-	public ResponseEntity<?> selectNovels(@RequestParam("nickName") String nickName,
-										  @RequestParam("genre") String genre,
+	public ResponseEntity<?> selectNovels(@RequestParam("genre") String genre,
 										  @RequestParam("keyword") String keyword,
 										  @RequestParam("page") int page,
 										  @RequestParam("size") int size){
 		try{
 			Pageable pageable = PageRequest.of(page,size);
-			return ResponseEntity.ok(novelService.selectNovelList(nickName, genre, keyword, pageable));
+			return ResponseEntity.ok(novelService.selectNovelList(genre, keyword, pageable));
 		}
 		catch(Exception e){
 			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
