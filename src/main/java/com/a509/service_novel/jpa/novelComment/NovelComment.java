@@ -27,8 +27,8 @@ public class NovelComment {
 
 	private String content;
 
-	@Column(updatable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
-	private String createdAt;
+	@Builder.Default
+	private String createdAt = "Default";
 	private String nickName;
 	private int novelId;
 

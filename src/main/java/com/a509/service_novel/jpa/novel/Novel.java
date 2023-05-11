@@ -35,8 +35,9 @@ public class Novel {
 	private String introduction;
 
 
-	@Column(updatable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
-	private String createdAt;
+
+	@Builder.Default
+	private String createdAt = "Default";
 	private String engGenre;;
 	private String korGenre;
 	private String nickName;
