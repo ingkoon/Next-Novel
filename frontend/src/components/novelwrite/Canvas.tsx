@@ -20,7 +20,6 @@ export default function Canvas({
 }: CanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null); //canvas
   const [getCtx, setGetCtx] = useState<CanvasRenderingContext2D>(); //canvas
-  const [rect, setRect] = useState<DOMRect>(); //터치용
   const canvasWidth = canvasType === "big" ? 600 : 340;
   const canvasHeight = canvasType === "big" ? 380 : 390;
   const canvasBoxRef = useRef<HTMLDivElement>(null);
@@ -64,7 +63,6 @@ export default function Canvas({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    setRect(canvas.getBoundingClientRect()); //터치용
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     ctx.lineWidth = 2.5;
