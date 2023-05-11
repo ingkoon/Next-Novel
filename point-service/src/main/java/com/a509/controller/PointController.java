@@ -36,7 +36,7 @@ public class PointController {
                 .body(response);
     }
 
-    @PutMapping
+    @PatchMapping
     public ResponseEntity<PointUpdateResponseDto> updatePoint(@RequestBody PointUpdateRequestDto request){
         pointService.updatePoint(request);
         PointUpdateResponseDto response = new PointUpdateResponseDto();
