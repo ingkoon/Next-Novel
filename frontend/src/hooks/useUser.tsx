@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import {
   normalRegistApi,
   emailCheckApi,
-  nicknameCheckApi,
+  nickNameCheckApi,
   normalLoginApi,
   LogoutApi,
   getUserInfoApi,
@@ -22,8 +22,8 @@ export default function useNovelWrite() {
     {}
   );
 
-  const nicknameCheck = useMutation(
-    (jsonData: Object) => nicknameCheckApi(jsonData),
+  const nickNameCheck = useMutation(
+    (jsonData: Object) => nickNameCheckApi(jsonData),
     {}
   );
 
@@ -56,7 +56,7 @@ export default function useNovelWrite() {
   return {
     normalRegist,
     emailCheck,
-    nicknameCheck,
+    nickNameCheck,
     normalLogin,
     Logout,
     getUserInfo,

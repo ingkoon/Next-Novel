@@ -29,7 +29,7 @@ export default function Login({ move, closemodal }) {
         console.log(res);
         localStorage.setItem("access_token", res.data.accessToken);
         localStorage.setItem("refresh_token", res.data.refreshToken);
-        localStorage.setItem("nickname", res.data.nickname);
+        localStorage.setItem("nickName", res.data.nickName);
         closemodal();
         navigate("/");
       },
