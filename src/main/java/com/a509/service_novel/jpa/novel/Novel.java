@@ -3,6 +3,7 @@ package com.a509.service_novel.jpa.novel;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +33,9 @@ public class Novel {
 	private String originCoverImg;
 	private String coverImg;
 	private String introduction;
+
+
+	@Column(updatable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
 	private String createdAt;
 	private String engGenre;;
 	private String korGenre;

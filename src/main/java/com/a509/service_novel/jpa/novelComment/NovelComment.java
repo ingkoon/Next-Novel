@@ -1,5 +1,6 @@
 package com.a509.service_novel.jpa.novelComment;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,8 @@ public class NovelComment {
 	private int id;
 
 	private String content;
+
+	@Column(updatable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
 	private String createdAt;
 	private String nickName;
 	private int novelId;

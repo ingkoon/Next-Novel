@@ -17,6 +17,7 @@ public class NovelDetailDto {
 	private int id;
 	private String title;
 	private String introduction;
+
 	private String createdAt;
 	private String engGenre;;
 	private String korGenre;
