@@ -29,6 +29,7 @@ import java.nio.file.NoSuchFileException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -137,6 +138,15 @@ public class MemberService {
     public MemberMyPageResponseDto findMyPage(String token) {
         Member member = findMember(jwtTokenProvider.getMember(token));
         return new MemberMyPageResponseDto().fromMeEntity(member);
+    }
+
+    public String findMyPageImage(String nickName) {
+        Optional<Member> member = memberRepository.findByNickName(nickName);
+        if(member.isPresent()) {
+            return member.get().getProfileImage();
+        } else {
+            return "defaultProfileImg.png";
+        }
     }
 
     @Transactional

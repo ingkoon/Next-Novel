@@ -102,6 +102,11 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/myPage/image/{nick-name}")
+    public String findMyPageImage(@PathVariable(value = "nick-name") final String nickName) {
+        return memberService.findMyPageImage(nickName);
+    }
+
     @PutMapping("/myPage")
     public ResponseEntity<Void> update(
             @RequestHeader("Authorization") final String token,
