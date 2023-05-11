@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MemberMyPageResponseDto {
     private String email;
-    private String nickname;
+    private String nickName;
     private String profileImage;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -25,7 +25,7 @@ public class MemberMyPageResponseDto {
     public MemberMyPageResponseDto fromMeEntity(Member member) {
         return MemberMyPageResponseDto.builder()
                 .email(member.getEmail())
-                .nickname(member.getNickname())
+                .nickName(member.getNickName())
                 .profileImage(member.getProfileImage())
                 .provider(member.getProvider())
                 .createdAt(member.getCreatedAt())
@@ -37,7 +37,7 @@ public class MemberMyPageResponseDto {
 
     public MemberMyPageResponseDto fromOtherEntity(Member member) {
         return MemberMyPageResponseDto.builder()
-                .nickname(member.getNickname())
+                .nickName(member.getNickName())
                 .profileImage(member.getProfileImage())
                 // 작성한 소설
                 // 좋아요를 누른 소설

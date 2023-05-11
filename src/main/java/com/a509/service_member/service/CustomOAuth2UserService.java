@@ -47,7 +47,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .builder()
                     .email(email)
                     .password(bCryptPasswordEncoder.encode(providerId))
-                    .nickname(oAuth2UserInfo.getEmail())
+                    .nickName(oAuth2UserInfo.getEmail())
                     .profileImage(oAuth2UserInfo.getProfileImage())
                     .provider(provider)
                     .providerId(providerId)

@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
-@Entity
+@Entity(name = "members")
 @Getter
 @NoArgsConstructor
 public class Member{
@@ -25,7 +25,7 @@ public class Member{
     private String password;
 
     @NotNull
-    private String nickname;
+    private String nickName;
     private String profileImage;
 
     private String provider;    // null, google, kakao
@@ -40,10 +40,10 @@ public class Member{
     private LocalDateTime updatedAt;
 
     @Builder
-    public Member(String email, String password, String nickname, String profileImage, String provider, String providerId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Member(String email, String password, String nickName, String profileImage, String provider, String providerId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.email = email;
         this.password = password;
-        this.nickname = nickname;
+        this.nickName = nickName;
         this.profileImage = profileImage;
         this.provider = provider;
         this.providerId = providerId;
