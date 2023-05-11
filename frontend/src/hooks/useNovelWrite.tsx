@@ -6,13 +6,10 @@ import {
   endNovelApi,
   makeCoverRequestApi,
   finNovelApi,
-  fetchPaintings,
+  getPaintingsApi,
 } from "../api/novelwrite";
-import { useNovelContext } from "../context/NovelContext";
 
 export default function useNovelWrite() {
-  const { novel } = useNovelContext();
-
   const getQuestions = useMutation(
     (formData: FormData) => fetchQuestions(formData),
     {}
@@ -43,10 +40,14 @@ export default function useNovelWrite() {
     {}
   );
 
-  const getPaintings = useQuery(["paintings"], fetchPaintings, {
-    enabled: false,
-    select: (data) => data.data,
-  });
+  const getPaintings = useQuery(
+    ["paintings"],
+    () => getPaintingsApi(localStorage.getItem("nickName")),
+    {
+      enabled: false,
+      select: (data) => data.data,
+    }
+  );
 
   return {
     getQuestions,
