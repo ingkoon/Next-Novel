@@ -60,7 +60,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://***REMOVED***:3306/novel?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://***REMOVED***:3306/point?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password: ***REMOVED***
 
