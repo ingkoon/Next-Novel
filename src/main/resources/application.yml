@@ -31,9 +31,9 @@ spring:
   redis:
     cluster:
       nodes:
-          - redis://***REMOVED***:6379
-          - redis://***REMOVED***:6380
-          - redis://***REMOVED***:6381
+        - redis://***REMOVED***:6379
+        - redis://***REMOVED***:6380
+        - redis://***REMOVED***:6381
 #  redis:
 #    cluster:
 #      nodes:
