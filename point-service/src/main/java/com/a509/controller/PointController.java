@@ -53,4 +53,22 @@ public class PointController {
                 .ok()
                 .body(response);
     }
+
+    @PostMapping("/test")
+    public ResponseEntity<PointUpdateResponseDto> updatePointV2(@RequestBody PointUpdateRequestDto request){
+        pointService.updatePoint(request);
+        PointUpdateResponseDto response = new PointUpdateResponseDto();
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
+
+    @PatchMapping("/test")
+    public ResponseEntity<PointUpdateResponseDto> updatePointV3(@RequestBody PointUpdateRequestDto request){
+        pointService.updatePoint(request);
+        PointUpdateResponseDto response = new PointUpdateResponseDto();
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
 }
