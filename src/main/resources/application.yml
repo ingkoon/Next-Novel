@@ -29,18 +29,24 @@ spring:
         format_sql: true
         show_sql: true
   redis:
-    host: 127.0.0.1
-#    host: 172.17.0.1
-    port: 6379
     cluster:
       nodes:
-          - 127.0.0.1:6379
-          - 127.0.0.1:6380
-          - 127.0.0.1:6381
-#        - 172.17.0.1:6379
-#        - 172.17.0.1:6380
-#        - 172.17.0.1:6381
-    password:
+        - redis://***REMOVED***:6379
+        - redis://***REMOVED***:6380
+        - redis://***REMOVED***:6381
+#  redis:
+#    host: 127.0.0.1
+##    host: 172.17.0.1
+#    port: 6379
+#    cluster:
+#      nodes:
+#          - 127.0.0.1:6379
+#          - 127.0.0.1:6380
+#          - 127.0.0.1:6381
+##        - 172.17.0.1:6379
+##        - 172.17.0.1:6380
+##        - 172.17.0.1:6381
+#    password:
   servlet:
     multipart:
       max-file-size: 50MB
