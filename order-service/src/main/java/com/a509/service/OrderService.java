@@ -113,8 +113,11 @@ public class OrderService {
                         .price(requestDto.getPrice())
                         .build();
 
+        log.info("=====success send to point =====");
         createOrderItemTemplate
                 .send("create_order_item", orderItemRequestDto);
+
+        log.info("=====success send to orderItem =====");
     }
     @Transactional
     @KafkaListener(topics = "check_status", containerFactory = "isCheckListenerContainerFactory")
