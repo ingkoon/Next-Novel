@@ -29,12 +29,8 @@ spring:
         format_sql: true
         show_sql: true
   redis:
-#    port: 6379
-    cluster:
-      nodes:
-        - ***REMOVED***:6379
-        - ***REMOVED***:6380
-        - ***REMOVED***:6381
+    host: ***REMOVED***
+    port: 6379
 #  redis:
 #    cluster:
 #      nodes:
