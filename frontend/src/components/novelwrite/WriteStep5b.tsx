@@ -48,7 +48,8 @@ export default function WriteStep5b() {
     finNovel.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
-        // navigate(`/library/${novel.id}/intro`, { state: { id: novel.id } });
+        const id = res.data.novelId;
+        navigate(`/library/${id}/intro`, { state: { id: id } });
       },
     });
   };
@@ -59,14 +60,20 @@ export default function WriteStep5b() {
       query: novel.totalQuestions[index],
       caption: novel.newMaterials[index].caption,
     }));
+    const startImagesVal = novel.materials.map((material) => ({
+      imageName: "",
+      caption: material.caption,
+    }));
     const novelJson = {
       title: input.title,
       introduction: input.desc,
-      genre: novel.genre + "",
-      authorId: 1234 + "",
+      engGenre: novel.engGenreName,
+      korGenre: novel.korGenreName,
+      nickName: localStorage.getItem("nickName")!,
+      contents: contentsVal,
+      startImages: startImagesVal,
       startContent: novel.startStory,
       endContent: novel.endStory,
-      contents: contentsVal,
     };
 
     formData.append(
@@ -76,13 +83,18 @@ export default function WriteStep5b() {
     //파일로 변환 필요, 아니면 그냥 dataurl 형식 말고 파일로 저장시킬까.
 
     const start_images_files = dataurlToFile(
-      novel.materials.map((material) => material.image)
+      novel.materials.map((material) => material.image),
+      "start"
     );
     //이어하기가 없으면?
     const content_images_files = dataurlToFile(
-      novel.newMaterials.map((newMaterial) => newMaterial.image)
+      novel.newMaterials.map((newMaterial) => newMaterial.image),
+      "continue"
     );
-    const cover_images_files = dataurlToFile([novel.cover, novel.oldCover]);
+    const cover_images_files = dataurlToFile(
+      [novel.cover, novel.oldCover],
+      "end"
+    );
     start_images_files.forEach((file) => formData.append("start_images", file));
     content_images_files.forEach((file) =>
       formData.append("content_images", file)
@@ -160,7 +172,7 @@ export default function WriteStep5b() {
                           onChange={handleChange}
                         />
                       )}
-                      {index === 2 && <span>{novel.genreName}</span>}
+                      {index === 2 && <span>{novel.korGenreName}</span>}
                     </div>
                   </div>
                 </div>
