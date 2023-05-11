@@ -3,7 +3,9 @@ package com.a509.service;
 import com.a509.common.dto.order.request.IsCheckOrderRequest;
 import com.a509.common.dto.orderitem.request.CreateOrderItemRequestDto;
 import com.a509.common.enums.OrderStatus;
+import com.a509.common.exception.orderitem.NoSuchOrderItemException;
 import com.a509.domain.OrderItem;
+import com.a509.dto.response.OrderItemResponseDto;
 import com.a509.repository.OrderItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,5 +42,22 @@ public class OrderItemService {
 
         log.info("======== ready to send data ========");
         successOrderTemplateV2.send("check_status", orderItem.getOrderId().toString(), isCheckOrderRequest);
+    }
+
+    public OrderItemResponseDto readOrderItem(Long oderItemId){
+        OrderItem orderItem = orderItemRepository.findById(oderItemId).orElseThrow(NoSuchOrderItemException::new);
+        return new OrderItemResponseDto()
+                .fromEntity(orderItem);
+    }
+
+    @Transactional
+    public void createOrderItemV2(CreateOrderItemRequestDto requestDto){
+        OrderItem orderItem = OrderItem.builder()
+                .orderId(requestDto.getOrderId())
+                .itemId(requestDto.getItemId())
+                .price(requestDto.getPrice())
+                .build();
+        orderItemRepository.save(orderItem);
+        log.info("success save");
     }
 }

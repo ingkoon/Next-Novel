@@ -17,7 +17,7 @@ public class OrderItem {
     private Long orderId;
     private Long itemId;
     private Long price;
-    private LocalDateTime createAt = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Builder
     public OrderItem(Long orderId, Long itemId, Long price) {
