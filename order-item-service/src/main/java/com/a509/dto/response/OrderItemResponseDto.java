@@ -16,6 +16,13 @@ public class OrderItemResponseDto {
     private Long price;
     private LocalDateTime createdAt;
 
+    public OrderItemResponseDto(OrderItem orderItem) {
+        this.orderId = orderItem.getOrderId();
+        this.itemId = orderItem.getItemId();
+        this.price = orderItem.getPrice();
+        this.createdAt = orderItem.getCreatedAt();
+    }
+
     public OrderItemResponseDto fromEntity(OrderItem orderItem){
         return OrderItemResponseDto
                 .builder()

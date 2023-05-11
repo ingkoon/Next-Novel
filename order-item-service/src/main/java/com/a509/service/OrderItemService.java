@@ -15,6 +15,9 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -44,10 +47,17 @@ public class OrderItemService {
         successOrderTemplateV2.send("check_status", orderItem.getOrderId().toString(), isCheckOrderRequest);
     }
 
-    public OrderItemResponseDto readOrderItem(Long oderItemId){
+    public OrderItemResponseDto getOrderItem(Long oderItemId){
         OrderItem orderItem = orderItemRepository.findById(oderItemId).orElseThrow(NoSuchOrderItemException::new);
         return new OrderItemResponseDto()
                 .fromEntity(orderItem);
+    }
+
+    public List<OrderItemResponseDto> getOrderItemList(Long orderId){
+        List<OrderItem> orderItemList = orderItemRepository.findAllByOrderId(orderId);
+        List<OrderItemResponseDto> responseList = orderItemList.stream()
+                .map(OrderItemResponseDto::new).collect(Collectors.toList());
+        return responseList;
     }
 
     @Transactional

@@ -23,13 +23,21 @@ public class OrderItemController {
                 .body("성공적으로 저장되었습니다.");
     }
 
-    @GetMapping
-    public ResponseEntity<List<OrderItemResponseDto>> getOrderItemList(){
-        return null;
+    @GetMapping("/{orderId}")
+    public ResponseEntity<List<OrderItemResponseDto>> getOrderItemList(@PathVariable("orderId") Long orderId){
+        List<OrderItemResponseDto> orderItemList = orderItemService.getOrderItemList(orderId);
+        return ResponseEntity
+                .ok()
+                .body(orderItemList);
     }
 
-    @GetMapping("/{orderItemId}")
-    public ResponseEntity<OrderItemResponseDto> getOrderItem(){
-        return null;
+    @GetMapping("/{orderId}/{orderItemId}")
+    public ResponseEntity<OrderItemResponseDto> getOrderItem(
+            @PathVariable("orderId") Long orderId,
+            @PathVariable("orderItemId") Long orderItemId){
+        OrderItemResponseDto response = orderItemService.getOrderItem(orderItemId);
+        return ResponseEntity
+                .ok()
+                .body(response);
     }
 }
