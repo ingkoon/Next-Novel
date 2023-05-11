@@ -53,7 +53,6 @@ public class NovelWriteController {
 		.build();
 
 	private final HttpHeaders headerImagePNG = new HttpHeaders();
-
 	@PostMapping("/start")
 	public ResponseEntity<?> NovelStart(@RequestParam("images") MultipartFile[] images
 		, @RequestParam("genre") String genre

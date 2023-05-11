@@ -31,6 +31,12 @@ public class NovelDetailDto {
 	private List<ImageDto> startImages;
 	private String startContent;
 	private String endContent;
+	private boolean isLiked;
+
+
+	public void setIsLiked(boolean isLiked){
+		this.isLiked = isLiked;
+	}
 
 
 	public Novel toEntityNovel() {

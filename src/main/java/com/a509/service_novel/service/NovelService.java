@@ -99,7 +99,7 @@ public class NovelService {
 	}
 
 	@Transactional
-	public NovelDetailDto selectNovelDetail(int id) throws Exception{
+	public NovelDetailDto selectNovelDetail(int id, String nickName) throws Exception{
 
 		///소설 찾기
 		Novel novel = novelRepogitory.getById(id);
@@ -144,11 +144,17 @@ public class NovelService {
 		//찾은 코멘트 dto 저장
 		novelDetailDto.setComments(commentDtos);
 
+		Optional<NovelLike> novelLike = novelLikeRepository.findByNovelIdAndNickName(id,nickName);
+		if(novelLike.isPresent())
+			novelDetailDto.setIsLiked(true);
+		else
+			novelDetailDto.setIsLiked(false);
+
 		return novelDetailDto;
 	}
 
 	@Transactional
-	public List<NovelListDto> selectNovelList(String genre, String keyword, Pageable pageable) throws Exception{
+	public List<NovelListDto> selectNovelList(String nickName, String genre, String keyword, Pageable pageable) throws Exception{
 
 		try {
 
@@ -164,6 +170,12 @@ public class NovelService {
 			for (Novel novel : novels) {
 				NovelListDto novelDto = novel.toListDto();
 				novelDtos.add(novelDto);
+
+				Optional<NovelLike> novelLike = novelLikeRepository.findByNovelIdAndNickName(novel.getId(),nickName);
+				if(novelLike.isPresent())
+					novelDto.setIsLiked(true);
+				else
+					novelDto.setIsLiked(false);
 			}
 
 			return novelDtos;
@@ -184,6 +196,11 @@ public class NovelService {
 		for (Novel novel : novels) {
 			NovelListDto novelDto = novel.toListDto();
 			novelDtos.add(novelDto);
+			Optional<NovelLike> novelLike = novelLikeRepository.findByNovelIdAndNickName(novel.getId(),nickName);
+			if(novelLike.isPresent())
+				novelDto.setIsLiked(true);
+			else
+				novelDto.setIsLiked(false);
 		}
 
 		return novelDtos;
@@ -264,6 +281,7 @@ public class NovelService {
 			}
 		}
 
+
 		return novelListDtos;
 	}
 
@@ -275,9 +293,21 @@ public class NovelService {
 		NovelLike novelLike = novelLikeDto.toEntity();
 		System.out.println(novelLike);
 		novelLikeRepository.save(novelLike);
+
+
+		Optional<Novel> optionalNovel = novelRepogitory.findById(novelLikeDto.getNovelId());
+		if(optionalNovel.isPresent()){
+			Novel novel = optionalNovel.get();
+			novel.setLikeCount(novel.getLikeCount()+1);
+		}
 	}
 
 	public void deleteNovelLike(NovelLikeDto novelLikeDto) throws Exception{
 		novelLikeRepository.deleteByNovelIdAndNickName(novelLikeDto.getNovelId(),novelLikeDto.getNickName());
+		Optional<Novel> optionalNovel = novelRepogitory.findById(novelLikeDto.getNovelId());
+		if(optionalNovel.isPresent()){
+			Novel novel = optionalNovel.get();
+			novel.setLikeCount(novel.getLikeCount()-1);
+		}
 	}
 }

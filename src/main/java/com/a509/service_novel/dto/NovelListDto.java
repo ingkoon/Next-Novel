@@ -15,5 +15,10 @@ public class NovelListDto {
 	private int hitCount;
 	private int commentCount;
 	private int likeCount;
+	private boolean isLiked;
+
+	public void setIsLiked(boolean isLiked){
+		this.isLiked = isLiked;
+	}
 
 }
