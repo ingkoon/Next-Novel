@@ -24,6 +24,9 @@
   background: black;
   border-radius: 8px;
 }
+.canvas {
+  touch-action: none;
+}
 .canvas.big {
   border: 3px solid black;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

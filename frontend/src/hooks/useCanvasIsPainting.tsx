@@ -60,6 +60,8 @@ export default function useCanvasIsPainting({
 
   const touchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
     // console.log("터치 시작");
+    setPainting(true)
+    setHasPaintBefore(true);
 
     const touch = e.touches[0];
     const touchX = touch.pageX - rect.current!.left + canvasBox.scrollLeft;
@@ -96,6 +98,8 @@ export default function useCanvasIsPainting({
 
     isDrawingRef.current = false;
     previousPointRef.current = null;
+
+    setPainting(false)
   };
 
   return {
