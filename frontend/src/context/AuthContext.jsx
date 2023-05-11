@@ -29,7 +29,7 @@ export function AuthContextProvider({ children }) {
   };
 
   const initState = {
-    user: { access_token: "", refresh_token: "", nickname: "" },
+    user: { access_token: "", refresh_token: "", nickName: "" },
     setUser,
   };
   const [state, setState] = useState(initState);
