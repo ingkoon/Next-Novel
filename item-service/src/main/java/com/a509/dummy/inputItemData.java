@@ -20,6 +20,8 @@ public class inputItemData implements CommandLineRunner {
         for (Items items : Items.values()) {
             Item tmp = Item.builder()
                     .name(items)
+                    .point(items.getValue())
+                    .price(items.getValue() * 10)
                     .build();
             itemRepository.save(tmp);
         }

@@ -17,8 +17,13 @@ public class Item {
     private Long id;
     @Enumerated(value = EnumType.STRING)
     private Items name;
+    private Long point;
+    private Long price;
+
     @Builder
-    public Item(Items name){
+    public Item(Items name, Long point, Long price) {
         this.name = name;
+        this.point = point;
+        this.price = price;
     }
 }

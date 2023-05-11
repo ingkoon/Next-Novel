@@ -14,16 +14,22 @@ import lombok.NoArgsConstructor;
 public class ItemResponseDto {
     private Long id;
     private Items items;
+    private Long point;
+    private Long price;
 
     public ItemResponseDto(Item item){
         this.id = item.getId();
         this.items = item.getName();
+        this.point = item.getPoint();
+        this.price = item.getPrice();
     }
 
     public ItemResponseDto fromEntity(Item item){
         return ItemResponseDto.builder()
                 .id(item.getId())
                 .items(item.getName())
+                .point(item.getPoint())
+                .price(item.getPrice())
                 .build();
     }
 }
