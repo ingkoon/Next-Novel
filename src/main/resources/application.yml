@@ -54,7 +54,7 @@ spring:
         - id: item
           uri: http://***REMOVED***:8016/
           predicates:
-            - Path=/item/**
+            - Path=/items/**
         - id: orderItem
           uri: http://***REMOVED***:8017/
           predicates:
