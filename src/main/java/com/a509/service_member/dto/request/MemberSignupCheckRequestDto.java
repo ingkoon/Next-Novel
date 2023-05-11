@@ -6,5 +6,5 @@ import lombok.Getter;
 public class MemberSignupCheckRequestDto {
 
     private String email;
-    private String nickname;
+    private String nickName;
 }

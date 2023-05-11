@@ -55,7 +55,7 @@ public class MemberService {
             throw new DuplicatedMemberException();
         }
 
-        if (memberRepository.existsByNickname(memberSignupRequestDto.getNickname())) {
+        if (memberRepository.existsByNickName(memberSignupRequestDto.getNickName())) {
             throw new DuplicatedMemberException("중복된 닉네임입니다.");
         }
 
@@ -63,7 +63,7 @@ public class MemberService {
                 .builder()
                 .email(memberSignupRequestDto.getEmail())
                 .password(bCryptPasswordEncoder.encode(memberSignupRequestDto.getPassword()))
-                .nickname(memberSignupRequestDto.getNickname())
+                .nickName(memberSignupRequestDto.getNickName())
                 .profileImage(memberSignupRequestDto.getProfileImage())
                 .build();
         memberRepository.save(member);
@@ -92,10 +92,10 @@ public class MemberService {
         return message;
     }
 
-    public MessageResponseDto checkNickname(MemberSignupCheckRequestDto memberSignupCheckRequestDto) {
+    public MessageResponseDto checkNickName(MemberSignupCheckRequestDto memberSignupCheckRequestDto) {
         String res = "";
         String msg = "";
-        if (memberRepository.existsByNickname(memberSignupCheckRequestDto.getNickname())) {
+        if (memberRepository.existsByNickName(memberSignupCheckRequestDto.getNickName())) {
             res = "fail";
             msg = "중복된 닉네임입니다.";
         } else {
@@ -161,15 +161,15 @@ public class MemberService {
     public void update(String token, MemberUpdateRequestDto memberUpdateRequestDto, MultipartFile multipartFile) {
         Member member = findMember(jwtTokenProvider.getMember(token));
 
-        String nickname = memberUpdateRequestDto.getNickname().trim();
-        if ("".equals(nickname)) {    // 닉네임 공백 체크
+        String nickName = memberUpdateRequestDto.getNickName().trim();
+        if ("".equals(nickName)) {    // 닉네임 공백 체크
             throw new NoSuchMemberException("닉네임은 필수 입력 사항입니다.");
         }
-        if (!member.getNickname().equals(nickname) &&
-                memberRepository.existsByNickname(nickname)) { // 닉네임 중복체크
+        if (!member.getNickName().equals(nickName) &&
+                memberRepository.existsByNickName(nickName)) { // 닉네임 중복체크
             throw new DuplicatedMemberException("중복된 닉네임입니다.");
         }
-        member.setNickname(nickname);
+        member.setNickName(nickName);
 
         if(!multipartFile.isEmpty()) {
             LocalDateTime now = LocalDateTime.now();

@@ -46,7 +46,7 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setHeaderParam("typ","JWT")
                 .setSubject(authentication.getName())
-                .claim(NAME_KEY, member.getNickname())
+                .claim(NAME_KEY, member.getNickName())
                 .claim(AUTHORITIES_KEY, member.getRole())
                 .setExpiration(accessTokenExpiresIn)
                 .compact();
@@ -59,7 +59,7 @@ public class JwtTokenProvider {
                 .compact();
 
         return MemberTokenResponseDto.builder()
-                .nickname(member.getNickname())
+                .nickName(member.getNickName())
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
