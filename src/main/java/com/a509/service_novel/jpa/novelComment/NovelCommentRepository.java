@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface NovelCommentRepogitory extends JpaRepository<NovelComment,Integer> {
+public interface NovelCommentRepository extends JpaRepository<NovelComment,Integer> {
 
 	List<NovelComment> findAllByNovelId(Integer id);
 

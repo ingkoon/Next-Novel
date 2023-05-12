@@ -1,4 +1,4 @@
-package com.a509.service_novel.service;
+package com.a509.service_novel.component;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

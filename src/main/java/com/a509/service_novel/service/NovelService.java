@@ -15,18 +15,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.a509.service_novel.dto.ImageDto;
+import com.a509.service_novel.component.MemberClientComponent;
+import com.a509.service_novel.component.NovelImageComponent;
 import com.a509.service_novel.dto.NovelContentDto;
 import com.a509.service_novel.dto.NovelDetailDto;
-import com.a509.service_novel.dto.NovelLikeDto;
 import com.a509.service_novel.jpa.novel.Novel;
 import com.a509.service_novel.jpa.novelComment.NovelComment;
-import com.a509.service_novel.jpa.novelComment.NovelCommentRepogitory;
+import com.a509.service_novel.jpa.novelComment.NovelCommentRepository;
 import com.a509.service_novel.jpa.novelContent.NovelContent;
-import com.a509.service_novel.jpa.novelContent.NovelContentRepogitory;
+import com.a509.service_novel.jpa.novelContent.NovelContentRepository;
 import com.a509.service_novel.dto.NovelCommentDto;
 import com.a509.service_novel.dto.NovelListDto;
-import com.a509.service_novel.jpa.novel.NovelRepogitory;
+import com.a509.service_novel.jpa.novel.NovelRepository;
 import com.a509.service_novel.jpa.novelImage.NovelImage;
 import com.a509.service_novel.jpa.novelImage.NovelImageRepository;
 import com.a509.service_novel.mogo.NovelLike;
@@ -38,9 +38,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class NovelService {
 
-	private final NovelRepogitory novelRepogitory;
-	private final NovelContentRepogitory novelContentRepogitory;
-	private final NovelCommentRepogitory novelCommentRepogitory;
+	private final NovelRepository novelRepository;
+	private final NovelContentRepository novelContentRepository;
+	private final NovelCommentRepository novelCommentRepository;
 	private final NovelImageRepository novelImageRepository;
 
 	private final NovelImageComponent novelImageComponent;
@@ -60,7 +60,7 @@ public class NovelService {
 		System.out.println("start save content");
 
 		Novel novel = novelDetailDto.toEntityNovel();
-		novelRepogitory.save(novel);
+		novelRepository.save(novel);
 
 
 		//content 저장
@@ -75,7 +75,7 @@ public class NovelService {
 
 			System.out.println(novelContent);
 			novelImageComponent.save(contentImages[i],UID);
-			novelContentRepogitory.save(novelContent);
+			novelContentRepository.save(novelContent);
 		}
 		System.out.println("end save content");
 
@@ -104,17 +104,17 @@ public class NovelService {
 	public NovelDetailDto selectNovelDetail(int id, String nickName) throws Exception{
 
 		///소설 찾기
-		Novel novel = novelRepogitory.getById(id);
+		Novel novel = novelRepository.getById(id);
 		System.out.println("found novel");
 		System.out.println(novel);
 		//소설의 내용 찾기
-		List<NovelContent> contents = novelContentRepogitory.findByNovelId(id);
+		List<NovelContent> contents = novelContentRepository.findByNovelId(id);
 		System.out.println("found contents");
 		System.out.println(contents);
 		List<NovelContentDto> novelContentDtos = new ArrayList<>();
 
 		///소설 댓글 찾기
-		Optional<List<NovelComment>> optionalComments = novelCommentRepogitory.findByNovelId(id);
+		Optional<List<NovelComment>> optionalComments = novelCommentRepository.findByNovelId(id);
 		List<NovelComment> comments = new ArrayList<>();
 		List<NovelCommentDto> commentDtos = new ArrayList<>();
 
@@ -163,10 +163,10 @@ public class NovelService {
 
 			List<Novel> novels = new ArrayList<>();
 			if(genre.equals("all")){
-				novels = novelRepogitory.findAllByTitleContainingOrderByIdDesc(keyword,pageable);
+				novels = novelRepository.findAllByTitleContainingOrderByIdDesc(keyword,pageable);
 			}
 			else{
-				novels = novelRepogitory.findAllByEngGenreAndTitleContainingOrderByIdDesc(genre,keyword,pageable);
+				novels = novelRepository.findAllByEngGenreAndTitleContainingOrderByIdDesc(genre,keyword,pageable);
 			}
 			List<NovelListDto> novelDtos = new ArrayList<>();
 
@@ -187,7 +187,7 @@ public class NovelService {
 
 		Sort sortByCreatedAt = Sort.by("createdAt").ascending();
 
-		List<Novel> novels = novelRepogitory.findAllByNickNameOrderByCreatedAtDesc(nickName);
+		List<Novel> novels = novelRepository.findAllByNickNameOrderByCreatedAtDesc(nickName);
 		List<NovelListDto> novelDtos = new ArrayList<>();
 
 		for (Novel novel : novels) {
@@ -200,11 +200,11 @@ public class NovelService {
 
 	@Transactional
 	public void deleteNovel(int id) throws Exception{
-		List<NovelContent> contents = novelContentRepogitory.findByNovelId(id);
+		List<NovelContent> contents = novelContentRepository.findByNovelId(id);
 		for(NovelContent content : contents){
-			novelContentRepogitory.deleteByNovelId(id);
+			novelContentRepository.deleteByNovelId(id);
 		}
-		novelRepogitory.deleteById(id);
+		novelRepository.deleteById(id);
 	}
 
 	@Transactional
@@ -246,7 +246,7 @@ public class NovelService {
 
 	public List<NovelListDto> selectNovelRecommend() throws Exception{
 
-		List<Novel> novels = novelRepogitory.findRandom5();
+		List<Novel> novels = novelRepository.findRandom5();
 		List<NovelListDto> novelDtos = new ArrayList<>();
 
 		for (Novel novel : novels) {
@@ -256,50 +256,5 @@ public class NovelService {
 
 		return novelDtos;
 
-	}
-
-
-	public List<NovelListDto> selectLikedNovelList(String nickName) throws Exception{
-
-		List<NovelLike> novelLikes= novelLikeRepository.findAllByNickName(nickName);
-		List<NovelListDto> novelListDtos = new ArrayList<>();
-
-		for(NovelLike novelLike : novelLikes){
-			int likeNovelId = novelLike.getNovelId();
-			Optional<Novel> optional = novelRepogitory.findById(likeNovelId);
-			if(optional.isPresent()){
-				NovelListDto novelListDto = optional.get().toListDto();
-				novelListDtos.add(novelListDto);
-			}
-		}
-
-
-		return novelListDtos;
-	}
-
-	public void insertNovelLike(NovelLikeDto novelLikeDto) throws Exception{
-
-		Optional<NovelLike> optional = novelLikeRepository.findByNovelIdAndNickName(novelLikeDto.getNovelId(),novelLikeDto.getNickName());
-		if(optional.isPresent())
-			return;
-		NovelLike novelLike = novelLikeDto.toEntity();
-		System.out.println(novelLike);
-		novelLikeRepository.save(novelLike);
-
-
-		Optional<Novel> optionalNovel = novelRepogitory.findById(novelLikeDto.getNovelId());
-		if(optionalNovel.isPresent()){
-			Novel novel = optionalNovel.get();
-			novel.setLikeCount(novel.getLikeCount()+1);
-		}
-	}
-
-	public void deleteNovelLike(NovelLikeDto novelLikeDto) throws Exception{
-		novelLikeRepository.deleteByNovelIdAndNickName(novelLikeDto.getNovelId(),novelLikeDto.getNickName());
-		Optional<Novel> optionalNovel = novelRepogitory.findById(novelLikeDto.getNovelId());
-		if(optionalNovel.isPresent()){
-			Novel novel = optionalNovel.get();
-			novel.setLikeCount(novel.getLikeCount()-1);
-		}
 	}
 }

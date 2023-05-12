@@ -2,9 +2,7 @@ package com.a509.service_novel.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,14 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.a509.service_novel.dto.ImageDto;
 import com.a509.service_novel.dto.NovelInsertResponseDto;
-import com.a509.service_novel.dto.NovelLikeDto;
 import com.a509.service_novel.dto.NovelListDto;
 import com.a509.service_novel.redis.DialogHistory;
 import com.a509.service_novel.redis.DialogHistoryRepository;
-import com.a509.service_novel.service.MemberClientComponent;
-import com.a509.service_novel.service.NovelImageComponent;
+import com.a509.service_novel.component.NovelImageComponent;
 
 import com.a509.service_novel.dto.NovelDetailDto;
 import com.a509.service_novel.service.NovelService;
@@ -58,6 +53,9 @@ public class NovelController {
 			return new ResponseEntity<>(e.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+
+	// -------------------------------------------------
 
 	@PostMapping()
 	public ResponseEntity<?> insertNovel(@RequestPart("start_images") MultipartFile[] startImages
@@ -156,39 +154,4 @@ public class NovelController {
 			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-
-	@GetMapping("/like/{nickName}")
-	public ResponseEntity<?> selectLikedNovels(@PathVariable("nickName") String nickName){
-		try{
-			System.out.println(nickName);
-			return ResponseEntity.ok(novelService.selectLikedNovelList(nickName));
-		}
-		catch (Exception e){
-			return new ResponseEntity<>(e.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@PostMapping("/like")
-	public ResponseEntity<?> insertLikedNovel(@RequestBody NovelLikeDto novelLikeDto){
-		try{
-			novelService.insertNovelLike(novelLikeDto);
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
-		catch (Exception e){
-			return new ResponseEntity<>(e.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@DeleteMapping("/like")
-	public ResponseEntity<?> deletedLikedNovels(@RequestBody NovelLikeDto novelLikeDto){
-		try{
-			novelService.deleteNovelLike(novelLikeDto);
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
-		catch (Exception e){
-			return new ResponseEntity<>(e.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
 }

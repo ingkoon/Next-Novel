@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface NovelContentRepogitory extends JpaRepository<NovelContent,Integer> {
+public interface NovelContentRepository extends JpaRepository<NovelContent,Integer> {
 
 	List<NovelContent> findByNovelId(Integer novelId);
 	void deleteByNovelId(Integer novelId);

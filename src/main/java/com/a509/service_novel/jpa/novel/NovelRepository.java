@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface NovelRepogitory extends JpaRepository<Novel, Integer> {
+public interface NovelRepository extends JpaRepository<Novel, Integer> {
 	List<Novel> findAllByNickNameOrderByCreatedAtDesc(String nickName);
 	List<Novel> findAllByEngGenreAndTitleContainingOrderByIdDesc(String Genre, String keyword, Pageable pageable);
 	List<Novel> findAllByTitleContainingOrderByIdDesc(String keyword, Pageable pageable);

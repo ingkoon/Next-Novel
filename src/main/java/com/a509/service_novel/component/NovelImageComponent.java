@@ -1,4 +1,4 @@
-package com.a509.service_novel.service;
+package com.a509.service_novel.component;
 
 import java.io.File;
 import java.nio.file.Paths;
