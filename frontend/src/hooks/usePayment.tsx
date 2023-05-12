@@ -3,16 +3,19 @@ import {
   getPointApi,
   updataPointApi,
   deletePointApi,
+  getOrderTokenApi,
   createOrderApi,
+  cancelOrderApi,
   getOrderListApi,
   getOrderDetailApi,
   getProductListApi,
   getProductDetailApi,
 } from "../api/payment";
+import { CreateOrder, NickName } from "../types";
 
 export default function useNovelWrite() {
-  const createPoint = () => {
-    return createPointApi();
+  const createPoint = (jsonData: NickName) => {
+    return createPointApi(jsonData);
   };
   const getPoint = () => {
     return getPointApi();
@@ -23,8 +26,14 @@ export default function useNovelWrite() {
   const deletePoint = () => {
     return deletePointApi();
   };
-  const createOrder = () => {
-    return createOrderApi();
+  const getOrderToken = () => {
+    return getOrderTokenApi();
+  };
+  const createOrder = (jsonData: CreateOrder) => {
+    return createOrderApi(jsonData);
+  };
+  const cancelOrder = () => {
+    return cancelOrderApi();
   };
   const getOrderList = () => {
     return getOrderListApi();
@@ -44,7 +53,9 @@ export default function useNovelWrite() {
     getPoint,
     updataPoint,
     deletePoint,
+    getOrderToken,
     createOrder,
+    cancelOrder,
     getOrderList,
     getOrderDetail,
     getProductList,

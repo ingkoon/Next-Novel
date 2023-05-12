@@ -69,7 +69,7 @@ export default function WriteStep5b() {
       introduction: input.desc,
       engGenre: novel.engGenreName,
       korGenre: novel.korGenreName,
-      nickName: localStorage.getItem("nickname")!,
+      nickName: localStorage.getItem("nickName")!,
       contents: contentsVal,
       startImages: startImagesVal,
       startContent: novel.startStory,

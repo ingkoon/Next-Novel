@@ -18,8 +18,8 @@ export async function emailCheckApi(jsonData) {
 }
 
 // 닉네임 중복 검사
-export async function nicknameCheckApi(jsonData) {
-  return instance.post("member/check/nickname/", jsonData, config2);
+export async function nickNameCheckApi(jsonData) {
+  return instance.post("member/check/nickName/", jsonData, config2);
 }
 
 // 자체 로그인
@@ -42,16 +42,14 @@ export async function putUserInfoApi(formData) {
   return tokeninstance.put(`member/myPage`, formData, config);
 }
 
-// 제작한 소설
-export async function getmynovel() {
-  const res = await tokeninstance.get("user/novel/");
-  return res;
+// 좋아요한 소설
+export async function getLikeNovelApi() {
+  return tokeninstance.get(`novel/like/${localStorage.getItem("nickName")}`);
 }
 
-// 좋아요한 소설
-export async function getlikenovel() {
-  const res = await tokeninstance.get("user/liked-novel/");
-  return res;
+// 제작한 소설
+export async function getMyNovelApi() {
+  return tokeninstance.get(`novel/id/${localStorage.getItem("nickName")}`);
 }
 
 //회원 탈퇴

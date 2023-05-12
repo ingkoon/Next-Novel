@@ -2,11 +2,13 @@ import { useMutation } from "@tanstack/react-query";
 import {
   normalRegistApi,
   emailCheckApi,
-  nicknameCheckApi,
+  nickNameCheckApi,
   normalLoginApi,
   LogoutApi,
   getUserInfoApi,
   putUserInfoApi,
+  getLikeNovelApi,
+  getMyNovelApi,
 } from "../api/user";
 
 export default function useNovelWrite() {
@@ -20,8 +22,8 @@ export default function useNovelWrite() {
     {}
   );
 
-  const nicknameCheck = useMutation(
-    (jsonData: Object) => nicknameCheckApi(jsonData),
+  const nickNameCheck = useMutation(
+    (jsonData: Object) => nickNameCheckApi(jsonData),
     {}
   );
 
@@ -33,21 +35,33 @@ export default function useNovelWrite() {
   const Logout = () => {
     return LogoutApi();
   };
+
   const getUserInfo = () => {
     return getUserInfoApi();
   };
+
   const putUserInfo = useMutation(
     (formData: FormData) => putUserInfoApi(formData),
     {}
   );
 
+  const getLikeNovel = () => {
+    return getLikeNovelApi();
+  };
+
+  const getMyNovel = () => {
+    return getMyNovelApi();
+  };
+
   return {
     normalRegist,
     emailCheck,
-    nicknameCheck,
+    nickNameCheck,
     normalLogin,
     Logout,
     getUserInfo,
     putUserInfo,
+    getLikeNovel,
+    getMyNovel,
   };
 }

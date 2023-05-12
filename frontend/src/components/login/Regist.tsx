@@ -1,45 +1,48 @@
 import { useState } from "react";
 import style from "./Regist.module.css";
 import useUser from "../../hooks/useUser";
+import usePayment from "../../hooks/usePayment";
+import { NickName } from "../../types";
 
 type RegistProps = {
   move: () => void;
 };
 export default function Regist({ move }: RegistProps) {
-  const { normalRegist, nicknameCheck, emailCheck } = useUser();
+  const { normalRegist, nickNameCheck, emailCheck } = useUser();
   const [info, setInfo] = useState({
-    nickname: "",
+    nickName: "",
     email: "",
     pw1: "",
     pw2: "",
   });
-  const [nicknameCheckState, setNicknameCheckState] = useState("");
+  const [nickNameCheckState, setNickNameCheckState] = useState("");
   const [emailCheckState, setEmailCheckState] = useState("");
+  const { createPoint } = usePayment();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === "nickname") {
-      setNicknameCheckState("");
+    if (name === "nickName") {
+      setNickNameCheckState("");
     } else if (name === "email") {
       setEmailCheckState("");
     }
     setInfo({ ...info, [name]: value });
   };
   const check = (what: string) => {
-    if (what === "nickname") {
-      if (info.nickname.length === 0) {
+    if (what === "nickName") {
+      if (info.nickName.length === 0) {
         alert("닉네임을 확인해주세요!");
         return;
       }
-      nicknameCheck.mutate(
-        { nickname: info.nickname },
+      nickNameCheck.mutate(
+        { nickName: info.nickName },
         {
           onSuccess: (res) => {
             console.log(res);
             if (res.data.result === "fail") {
               alert(res.data.message);
             }
-            setNicknameCheckState(res.data.result);
+            setNickNameCheckState(res.data.result);
           },
         }
       );
@@ -65,7 +68,7 @@ export default function Regist({ move }: RegistProps) {
   };
 
   const handleSubmit = () => {
-    if (!(nicknameCheckState === "success" && emailCheckState === "success")) {
+    if (!(nickNameCheckState === "success" && emailCheckState === "success")) {
       alert("중복확인을 해주세요!");
       return;
     }
@@ -77,16 +80,29 @@ export default function Regist({ move }: RegistProps) {
     const jsonData = {
       email: info.email,
       password: info.pw1,
-      nickname: info.nickname,
+      nickName: info.nickName,
     };
 
     normalRegist.mutate(jsonData, {
       onSuccess: (res) => {
         console.log(res);
-        move(); //로그인 성공시
+        const jsonData2: NickName = {
+          nickName: info.nickName,
+        };
+        createPointAsync(jsonData2); //포인트 생성
       },
     });
   };
+
+  async function createPointAsync(jsonData: NickName) {
+    try {
+      const res = await createPoint(jsonData);
+      console.log(res);
+      move(); //회원가입 성공시 로그인으로 이동, 추후 이동 예정
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <div
@@ -114,14 +130,14 @@ export default function Regist({ move }: RegistProps) {
             <div className={style.inputBox}>
               <input
                 type="text"
-                value={info.nickname}
-                name="nickname"
+                value={info.nickName}
+                name="nickName"
                 onChange={handleChange}
                 placeholder="닉네임"
               />
               <button
-                className={`${style.checkButton} ${style[nicknameCheckState]}`}
-                onClick={() => check("nickname")}
+                className={`${style.checkButton} ${style[nickNameCheckState]}`}
+                onClick={() => check("nickName")}
               >
                 중복확인
               </button>
