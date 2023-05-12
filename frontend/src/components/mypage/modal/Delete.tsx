@@ -20,7 +20,7 @@ export default function Delete({ type, id, closemodal, comid }: DeleteProps) {
 
   async function delcomment() {
     try {
-      const data = await deletecomment(id, comid);
+      const data = await deletecomment(comid);
       console.log(data);
       closemodal();
     } catch (e) {

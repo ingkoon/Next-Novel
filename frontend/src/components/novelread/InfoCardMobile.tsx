@@ -25,12 +25,12 @@ export default function InfoCard() {
 
   async function nvinfo() {
     try {
-      const data = await novelall(novelid);
+      const data = await novelall(novelid, localStorage.getItem("nickName"));
       console.log(data);
-      setNovelinfo(data.data.novel);
-      const year = data.data.created_at.substring(0, 4);
-      const month = data.data.created_at.substring(5, 7);
-      const date = data.data.created_at.substring(8, 10);
+      setNovelinfo(data.data);
+      const year = data.data.createdAt.substring(0, 4);
+      const month = data.data.createdAt.substring(5, 7);
+      const date = data.data.createdAt.substring(8, 10);
       setCreate(year + "." + month + "." + date);
     } catch (e) {
       console.log(e);

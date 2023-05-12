@@ -64,7 +64,7 @@ export default function Book() {
   async function nvinfo() {
     console.log("노벨아이디" + novelid);
     try {
-      const data = await novelall(novelid);
+      const data = await novelall(novelid, localStorage.getItem('nickName'));
       console.log(data);
       setNovelinfo({
         coverImg: data.data.coverImg,
@@ -147,9 +147,11 @@ export default function Book() {
       return;
     }
 
-    const formData = appendFormData();
-
-    submitComment.mutate(formData, {
+    submitComment.mutate({
+    content: input.comm.trim(),
+    nickName: localStorage.getItem("nickName"),
+    novelId: novelid
+  }, {
       onSuccess: (res) => {
         console.log(res);
         navigate(`/library/${novelid}/intro`, { state: { id: novelid } });
@@ -157,13 +159,6 @@ export default function Book() {
     });
   };
 
-  const appendFormData = () => {
-    const formData = new FormData();
-    formData.append('novel_id', novelid!);
-    formData.append('comment', input.comm!);
-
-    return formData;
-  }
   const closemodal = () => {
     setModalIsOpen(false);
   };

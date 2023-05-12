@@ -13,7 +13,7 @@ export default function Comments() {
 
   async function comment() {
     try {
-      const data = await getcomment(novelid);
+      const data = await getcomment(novelid, localStorage.getItem("nickName"));
       console.log(data);
       setCommentlist(data.data.comments);
     } catch (e) {

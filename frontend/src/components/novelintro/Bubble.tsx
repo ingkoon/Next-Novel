@@ -43,7 +43,9 @@ export default function Bubble({ props, id, updatelist }: BubbleProps) {
     <>
       <div className={style.bubble}>
         <img
-          src={props && process.env.REACT_APP_IMAGE_API + props.profileImg}
+          src={
+            props && process.env.REACT_APP_MEMBER_IMAGE_API + props.profileImg
+          }
           className={style.profilepic}
           alt="profileimage"
         />

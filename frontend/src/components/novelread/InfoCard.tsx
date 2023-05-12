@@ -25,7 +25,7 @@ export default function InfoCard() {
 
   async function nvinfo() {
     try {
-      const data = await novelall(novelid);
+      const data = await novelall(novelid, localStorage.getItem("nickName"));
       console.log(data);
       setNovelinfo(data.data);
       const year = data.data.createdAt.substring(0, 4);
