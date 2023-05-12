@@ -19,10 +19,10 @@ public class NovelSequenceGenerator {
 			sequence = NovelLikeSequence.builder().build();
 			sequence.setId(sequenceId);
 			sequence.setNovelLikeId(1);
+			novelLikeSequenceRepository.save(sequence);
 		} else {
 			sequence.setNovelLikeId(sequence.getNovelLikeId() + 1);
 		}
-		novelLikeSequenceRepository.save(sequence);
 		return sequence.getNovelLikeId();
 	}
 }

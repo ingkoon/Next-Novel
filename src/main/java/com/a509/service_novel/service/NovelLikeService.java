@@ -44,9 +44,11 @@ public class NovelLikeService {
 
 	public void insertNovelLike(NovelLikeDto novelLikeDto) throws Exception{
 
+		System.out.println(novelSequenceGenerator.generateSequence(0));
 		Optional<NovelLike> optional = novelLikeRepository.findByNovelIdAndNickName(novelLikeDto.getNovelId(),novelLikeDto.getNickName());
 		if(optional.isPresent())
 			return;
+
 		NovelLike novelLike = novelLikeDto.toEntity(novelSequenceGenerator);
 		System.out.println(novelLike);
 		novelLikeRepository.save(novelLike);
