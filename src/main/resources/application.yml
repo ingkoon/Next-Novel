@@ -20,6 +20,7 @@ spring:
             allowedOrigins:
               - 'http://***REMOVED***'
               - 'http://***REMOVED***:443'
+              - 'https//***REMOVED***'
               - 'http://localhost:3000'
             allow-credentials: true
             allowedHeaders: '*'
