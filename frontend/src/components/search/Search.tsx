@@ -1,25 +1,23 @@
 import style from "./Search.module.css";
 import Booklist from "./Booklist";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent, KeyboardEvent } from "react";
 import { getsearch } from "../../api/library";
 
 export default function Search() {
   const [keyword, setKeyword] = useState("");
   const [result, setResult] = useState("  ");
   const [novels, setNovels] = useState([]);
-  let novellen = 0;
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   };
 
-  async function getsearchlist(keyword) {
+  async function getsearchlist(keyword: string) {
     try {
       const data = await getsearch(keyword);
       console.log(data);
-      novellen = data.data.results.length;
-      setNovels(data.data.results);
+      setNovels(data.data);
     } catch (e) {
       console.log(e);
     }
@@ -30,7 +28,7 @@ export default function Search() {
     setResult(keyword);
   };
 
-  const handleOnKeyPress = (e) => {
+  const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       search();
     }
