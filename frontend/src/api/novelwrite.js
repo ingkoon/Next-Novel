@@ -9,27 +9,27 @@ const config2 = {
 };
 
 export async function fetchQuestions(formData) {
-  return tokeninstance.post("write/question/", formData);
+  return tokeninstance.post("write/question", formData);
 }
 
 export async function startNovelApi(formData) {
-  return tokeninstance.post("write/start/", formData, config);
+  return tokeninstance.post("write/start", formData, config);
 }
 
 export async function continueNovelApi(formData) {
-  return tokeninstance.post(`write/sequence/`, formData, config);
+  return tokeninstance.post(`write/sequence`, formData, config);
 }
 
 export async function endNovelApi(formData) {
-  return tokeninstance.post(`write/end/`, formData);
+  return tokeninstance.post(`write/end`, formData);
 }
 
 export async function makeCoverRequestApi(formData) {
-  return tokeninstance.post(`write/image/`, formData, config2);
+  return tokeninstance.post(`write/image`, formData, config2);
 }
 
 export async function finNovelApi(formData) {
-  return tokeninstance.post(`novel/`, formData, config);
+  return tokeninstance.post(`novel`, formData, config);
 }
 
 export async function getPaintingsApi(nickName) {

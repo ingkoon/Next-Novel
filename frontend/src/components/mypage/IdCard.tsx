@@ -23,8 +23,7 @@ export default function IdCard() {
       console.log(res);
       setUserinfo({
         profile_image:
-          res.data.profileImage ||
-          "https://i.pinimg.com/564x/3d/cd/4a/3dcd4af5bc9e06d36305984730ab7888.jpg",
+          process.env.REACT_APP_MEMBER_IMAGE_API + res.data.profileImage,
         nickName: res.data.nickName,
         createdAt: res.data.createdAt.substring(0, 10),
       });
