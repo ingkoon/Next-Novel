@@ -59,3 +59,7 @@ spring:
           uri: http://***REMOVED***:8017/
           predicates:
             - Path=/orderItem/**
+        - id: tempTest
+          uri: http://***REMOVED***:8111/
+          predicates:
+            - Path=/tempTest/**
