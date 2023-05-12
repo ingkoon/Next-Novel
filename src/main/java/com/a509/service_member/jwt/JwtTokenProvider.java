@@ -15,7 +15,12 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.security.Key;
+import java.security.KeyFactory;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -28,8 +33,10 @@ public class JwtTokenProvider {
     private static final String NAME_KEY = "name";
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분
+//    private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 3 * 1000L;              // 3초
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일
+//    private static final long REFRESH_TOKEN_EXPIRE_TIME = 60 * 1000L;    // 1분
     private final Key key;
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
@@ -96,20 +103,23 @@ public class JwtTokenProvider {
     }
 
     // 토큰 정보를 검증하는 메서드
-    public boolean validateToken(String token) {
+    public String validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
+            return "ok";
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT Token", e);
+            return "invalid";
         } catch (ExpiredJwtException e) {
             log.info("Expired JWT Token", e);
+            return "expired";
         } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT Token", e);
+            return "unsupported";
         } catch (IllegalArgumentException e) {
             log.info("JWT claims string is empty.", e);
+            return "empty";
         }
-        return false;
     }
 
     public Long getExpiration(String accessToken) {
@@ -135,4 +145,25 @@ public class JwtTokenProvider {
     public void checkLength(String token){
         if(token.length() < 7) throw new JwtException("올바르지 않은 토큰 유형입니다.");
     }
+
+    // String으로 된 코드를 복호화한다.
+//    public Jws<Claims> getClaims(String jwt) {
+//        try {
+//            // 암호화 키로 복호화한다.
+//            // 즉 암호화 키가 다르면 에러가 발생한다.
+//            return Jwts.parser()
+//                    .setSigningKey(secretKey)
+//                    .parseClaimsJws(jwt);
+//        }catch(SignatureException e) {
+//            return null;
+//        }
+//    }
+//
+//    // 토큰을 통해 Payload 의 데이터를 취득
+//    public Object getClaims(Jws<Claims> claims, String key) {
+//        // 데이터 취득
+//        return claims.getBody()
+//                .get(key);
+//    }
+
 }
