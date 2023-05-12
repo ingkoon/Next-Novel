@@ -34,9 +34,6 @@ spring:
   redis:
     host: ***REMOVED***
     port: 6379
-    sentinel:
-      master: redis-master
-      nodes: ***REMOVED***:26379,***REMOVED***:26380, ***REMOVED***:26381
   servlet:
     multipart:
       max-file-size: 50MB
