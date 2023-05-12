@@ -7,7 +7,7 @@ type UpdateProps = {
 };
 export default function Update({ closemodal }: UpdateProps) {
   const { getUserInfo, putUserInfo } = useUser();
-  const [profile, setProfile] = useState<File | undefined>();
+  const [profile, setProfile] = useState(new File([], ""));
   const imgRef = useRef<HTMLInputElement>(null);
   const [userinfo, setUserinfo] = useState({
     profile_image: "",
@@ -21,8 +21,7 @@ export default function Update({ closemodal }: UpdateProps) {
       const res = await getUserInfo();
       setUserinfo({
         profile_image:
-          res.data.profileImage ||
-          "https://i.pinimg.com/564x/3d/cd/4a/3dcd4af5bc9e06d36305984730ab7888.jpg",
+          process.env.REACT_APP_MEMBER_IMAGE_API + res.data.profileImage,
         nickName: res.data.nickName,
         createdAt: res.data.createdAt.substring(0, 10),
       });
@@ -65,7 +64,7 @@ export default function Update({ closemodal }: UpdateProps) {
   const updateuser = () => {
     const formData = new FormData();
 
-    formData.append("multipartFile", profile || ""); //프로필 안바꾸면 어떻게?
+    formData.append("multipartFile", profile); //프로필 안바꾸면 어떻게?
 
     const json = {
       nickName: userinfo.nickName,
