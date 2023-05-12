@@ -17,6 +17,9 @@ import com.a509.service_novel.dto.ImageDto;
 import com.a509.service_novel.dto.NovelInsertResponseDto;
 import com.a509.service_novel.dto.NovelLikeDto;
 import com.a509.service_novel.dto.NovelListDto;
+import com.a509.service_novel.redis.DialogHistory;
+import com.a509.service_novel.redis.DialogHistoryRepository;
+import com.a509.service_novel.service.MemberClientComponent;
 import com.a509.service_novel.service.NovelImageComponent;
 
 import com.a509.service_novel.dto.NovelDetailDto;
@@ -31,8 +34,17 @@ public class NovelController {
 
 	private final NovelService novelService;
 	private final NovelImageComponent novelImageComponent;
+	private final DialogHistoryRepository dialogHistoryRepository;
 	@GetMapping("/hello")
 	public ResponseEntity<?> hello(){
+		return new ResponseEntity<>("hello",HttpStatus.OK);
+	}
+
+
+	@GetMapping("/redis")
+	public ResponseEntity<?> helloreids(){
+		DialogHistory dialogHistory = new DialogHistory();
+		dialogHistoryRepository.save(dialogHistory);
 		return new ResponseEntity<>("hello",HttpStatus.OK);
 	}
 

@@ -32,10 +32,15 @@ spring:
       max-request-size: 30MB
       max-file-size: 10MB
       location : uploads/
-
   redis:
     host: ***REMOVED***
     port: 6379
+    sentinel:
+      master: redis-master
+      nodes: ***REMOVED***:26379,***REMOVED***:26380, ***REMOVED***:26381
+#  redis:
+#    host: ***REMOVED***
+#    port: 6379
 
 eureka:
   client:
