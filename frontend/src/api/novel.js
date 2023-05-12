@@ -7,13 +7,12 @@ export async function getintro(id, nickName) {
     nickName = ""; // nickName이 null인 경우 빈 문자열로 할당
   }
   console.log(nickName + "들어왔스빈다");
-  const res = await instance.get(`novel/${id}/`, {
+  const res = await instance.get(`novel/${id}`, {
     params: {
       nickName: nickName,
     },
   });
   return res;
-  // return axios.get("/novel/read/novel_read2.json");
 }
 
 //comment가져오기
@@ -22,7 +21,7 @@ export async function getcomment(id, nickName) {
   if (nickName === null) {
     nickName = ""; // nickName이 null인 경우 빈 문자열로 할당
   }
-  const res = await instance.get(`novel/${id}/`, {
+  const res = await instance.get(`novel/${id}`, {
     params: {
       nickName: nickName,
     },
@@ -32,18 +31,43 @@ export async function getcomment(id, nickName) {
 
 // 댓글 삭제하기
 export async function deletecomment(commentid) {
-  const res = await tokeninstance.delete(`comment/${commentid}/`);
+  const res = await tokeninstance.delete(`comment/${commentid}`);
   return res;
 }
 
 // 글 삭제하기
 export async function deletenovel(id) {
-  const res = await tokeninstance.delete(`novel/${id}/`);
+  const res = await tokeninstance.delete(`novel/${id}`);
   return res;
 }
 
 // 좋아요 하기
-export async function postliked(id) {
-  const res = await tokeninstance.post(`novel/${id}/like/`);
+export async function postliked(novelId, nickName) {
+  const res = await tokeninstance.post(
+    "novel/like",
+    {
+      novelId: novelId,
+      nickName: nickName,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return res;
+}
+
+// 좋아요 삭제하기
+export async function deleteliked(novelId, nickName) {
+  const res = await tokeninstance.delete("novel/like", {
+    data: JSON.stringify({
+      novelId: novelId,
+      nickName: nickName,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   return res;
 }
