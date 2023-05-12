@@ -227,6 +227,7 @@ public class NovelService {
 		}
 	}
 
+	@Transactional
 	public List<String> selectAllNovelImage(String nickName) throws Exception{
 		List<NovelImage> novelImageList = novelImageRepository.findByNickName(nickName);
 		List<String> images = new ArrayList<>();
@@ -244,6 +245,7 @@ public class NovelService {
 		return images;
 	}
 
+	@Transactional
 	public List<NovelListDto> selectNovelRecommend() throws Exception{
 
 		List<Novel> novels = novelRepository.findRandom5();

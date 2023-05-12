@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.a509.service_novel.redis.Dialog;
@@ -25,6 +27,7 @@ public class NovelWriteService {
 	private final DialogHistoryRepository dialogHistoryRepository;
 	private final QuestionRepository questionRepository;
 
+	@Transactional
 	public void setDialogHistory(List<Object> objects, String nickName) throws Exception{
 
 		DialogHistory dial = new DialogHistory();
@@ -43,6 +46,7 @@ public class NovelWriteService {
 		dialogHistoryRepository.save(dial);
 	}
 
+	@Transactional
 	public List<Object> getDialogHistory(String nickName) throws Exception{
 
 		Optional<DialogHistory> options= dialogHistoryRepository.findById(nickName);
@@ -60,6 +64,7 @@ public class NovelWriteService {
 		return res;
 	}
 
+	@Transactional
 	public void setQuestion(List<String> questions, String nickName){
 		Question question = new Question();
 
@@ -69,6 +74,7 @@ public class NovelWriteService {
 		questionRepository.save(question);
 	}
 
+	@Transactional
 	public Question getQuestion(String nickName) throws Exception{
 
 		Optional<Question> optional  = questionRepository.findById(nickName);

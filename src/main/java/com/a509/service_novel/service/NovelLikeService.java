@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.a509.service_novel.dto.NovelLikeDto;
@@ -24,6 +26,7 @@ public class NovelLikeService {
 	private final NovelRepository novelRepository;
 	private final NovelSequenceGenerator novelSequenceGenerator;
 
+	@Transactional
 	public List<NovelListDto> selectLikedNovelList(String nickName) throws Exception{
 
 		List<NovelLike> novelLikes= novelLikeRepository.findAllByNickName(nickName);
@@ -42,6 +45,7 @@ public class NovelLikeService {
 		return novelListDtos;
 	}
 
+	@Transactional
 	public void insertNovelLike(NovelLikeDto novelLikeDto) throws Exception{
 
 		System.out.println(novelSequenceGenerator.generateSequence(0));
@@ -61,6 +65,7 @@ public class NovelLikeService {
 		}
 	}
 
+	@Transactional
 	public void deleteNovelLike(NovelLikeDto novelLikeDto) throws Exception{
 		novelLikeRepository.deleteByNovelIdAndNickName(novelLikeDto.getNovelId(),novelLikeDto.getNickName());
 		Optional<Novel> optionalNovel = novelRepository.findById(novelLikeDto.getNovelId());
