@@ -12,6 +12,7 @@ import com.a509.service_novel.jpa.novel.Novel;
 import com.a509.service_novel.jpa.novel.NovelRepository;
 import com.a509.service_novel.mogo.NovelLike;
 import com.a509.service_novel.mogo.NovelLikeRepository;
+import com.a509.service_novel.mogo.sequencce.NovelSequenceGenerator;
 
 import lombok.AllArgsConstructor;
 
@@ -21,6 +22,7 @@ public class NovelLikeService {
 
 	private final NovelLikeRepository novelLikeRepository;
 	private final NovelRepository novelRepository;
+	private final NovelSequenceGenerator novelSequenceGenerator;
 
 	public List<NovelListDto> selectLikedNovelList(String nickName) throws Exception{
 
@@ -45,7 +47,7 @@ public class NovelLikeService {
 		Optional<NovelLike> optional = novelLikeRepository.findByNovelIdAndNickName(novelLikeDto.getNovelId(),novelLikeDto.getNickName());
 		if(optional.isPresent())
 			return;
-		NovelLike novelLike = novelLikeDto.toEntity();
+		NovelLike novelLike = novelLikeDto.toEntity(novelSequenceGenerator);
 		System.out.println(novelLike);
 		novelLikeRepository.save(novelLike);
 
