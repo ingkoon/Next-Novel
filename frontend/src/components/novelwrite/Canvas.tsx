@@ -20,9 +20,9 @@ export default function Canvas({
 }: CanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null); //canvas
   const [getCtx, setGetCtx] = useState<CanvasRenderingContext2D>(); //canvas
-  const [rect, setRect] = useState<DOMRect>(); //터치용
   const canvasWidth = canvasType === "big" ? 600 : 340;
   const canvasHeight = canvasType === "big" ? 380 : 390;
+  const canvasBoxRef = useRef<HTMLDivElement>(null);
 
   const {
     getPaintings: { refetch, data },
@@ -36,7 +36,11 @@ export default function Canvas({
     painting,
     hasPaintBefore,
     setPainting,
-  } = useCanvasIsPainting({ getCtx: getCtx!, rect: rect! });
+  } = useCanvasIsPainting({
+    canvas: canvasRef.current!,
+    getCtx: getCtx!,
+    canvasBox: canvasBoxRef.current!,
+  });
 
   const { loadToCanvas, goBack, initCanvas } = useCanvasSaveAndLoad({
     getCtx: getCtx!,
@@ -59,7 +63,6 @@ export default function Canvas({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    setRect(canvas.getBoundingClientRect()); //터치용
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     ctx.lineWidth = 2.5;
@@ -73,7 +76,7 @@ export default function Canvas({
   return (
     <div className={`${style.container} ${style[canvasType]}`}>
       <div className={style.canvasContainer}>
-        <div className={style.canvasBox}>
+        <div className={style.canvasBox} ref={canvasBoxRef}>
           <canvas
             className={`${style.canvas} ${style[canvasType]}`}
             ref={canvasRef}

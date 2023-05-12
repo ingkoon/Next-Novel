@@ -18,12 +18,14 @@
   text-align: center;
 }
 .canvasBox::-webkit-scrollbar {
-  width: 8px;
+  height: 8px;
 }
 .canvasBox::-webkit-scrollbar-thumb {
   background: black;
   border-radius: 8px;
-  border: 4px solid #fffefc;
+}
+.canvas {
+  touch-action: none;
 }
 .canvas.big {
   border: 3px solid black;

@@ -11,6 +11,7 @@ import NovelSearch from "./pages/NovelSearch";
 import MyPage from "./pages/MyPage";
 import NovelWrite from "./pages/NovelWrite";
 import Landing from "./pages/Landing";
+import Test from "./pages/Test";
 import OnlyLogin from "./components/login/OnlyLogin";
 import Modal from "react-modal";
 
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "/laboratory",
         element: <NovelWrite />,
+      },
+      {
+        path: "/test",
+        element: <Test width={600} height={380} />,
       },
     ],
   },
