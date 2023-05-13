@@ -1,5 +1,5 @@
 import { tokeninstance } from "./Interceptors";
-import { CreateOrder, NickName } from "../types";
+import { CreateOrder, NickName, UpdatePoint } from "../types";
 
 const config = {
   headers: { "Content-Type": "application/json" },
@@ -13,7 +13,7 @@ export async function getPointApi() {
     params: { nickName: localStorage.getItem("nickName") },
   });
 }
-export async function updataPointApi() {
+export async function updatePointApi(jsonData: UpdatePoint) {
   return tokeninstance.patch("point");
 }
 export async function deletePointApi() {
