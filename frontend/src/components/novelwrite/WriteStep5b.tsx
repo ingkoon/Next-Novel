@@ -7,6 +7,8 @@ import useNovelWrite from "../../hooks/useNovelWrite";
 import { useNavigate } from "react-router-dom";
 import useCheckReady from "../../hooks/useCheckReady";
 import useDataurlToFile from "../../hooks/useDataurlToFile";
+import usePayment from "../../hooks/usePayment";
+import { UpdatePoint } from "../../types";
 
 type Input = {
   title: string;
@@ -20,6 +22,7 @@ export default function WriteStep5b() {
   const navigate = useNavigate();
   const { isShaking, checkReady } = useCheckReady();
   const { dataurlToFile } = useDataurlToFile();
+  const { updatePoint } = usePayment();
 
   const buttons = [
     {
@@ -48,11 +51,26 @@ export default function WriteStep5b() {
     finNovel.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
-        const id = res.data.novelId;
-        navigate(`/library/${id}/intro`, { state: { id: id } });
+        //소설 쓸때 포인트 차감
+        updatePointAsync(res.data.novelId);
       },
     });
   };
+  async function updatePointAsync(id: number) {
+    try {
+      const jsonData: UpdatePoint = {
+        nickName: localStorage.getItem("nickName")!,
+        point: 10,
+      };
+      const res = await updatePoint(jsonData);
+      console.log(res);
+
+      navigate(`/library/${id}/intro`, { state: { id: id } });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   const appendFormData = () => {
     const formData = new FormData();
     const contentsVal = novel.newMaterials.map((_, index) => ({
@@ -75,6 +93,7 @@ export default function WriteStep5b() {
       startContent: novel.startStory,
       endContent: novel.endStory,
     };
+    console.log(novelJson);
 
     formData.append(
       "novel",

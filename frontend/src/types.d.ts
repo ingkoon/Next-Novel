@@ -8,3 +8,8 @@ export type CreateOrder = {
 export type NickName = {
   nickName: string;
 };
+
+export type UpdatePoint = {
+  nickName: string;
+  point: number;
+};
