@@ -115,6 +115,7 @@ export default function ProductList() {
     try {
       const res = await createOrder(jsonData);
       console.log(res);
+      window.location.reload(); //새로고침
     } catch (e) {
       console.log(e);
     }

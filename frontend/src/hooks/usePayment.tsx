@@ -1,7 +1,7 @@
 import {
   createPointApi,
   getPointApi,
-  updataPointApi,
+  updatePointApi,
   deletePointApi,
   getOrderTokenApi,
   createOrderApi,
@@ -11,7 +11,7 @@ import {
   getProductListApi,
   getProductDetailApi,
 } from "../api/payment";
-import { CreateOrder, NickName } from "../types";
+import { CreateOrder, NickName, UpdatePoint } from "../types";
 
 export default function useNovelWrite() {
   const createPoint = (jsonData: NickName) => {
@@ -20,8 +20,8 @@ export default function useNovelWrite() {
   const getPoint = () => {
     return getPointApi();
   };
-  const updataPoint = () => {
-    return updataPointApi();
+  const updatePoint = (jsonData: UpdatePoint) => {
+    return updatePointApi(jsonData);
   };
   const deletePoint = () => {
     return deletePointApi();
@@ -51,7 +51,7 @@ export default function useNovelWrite() {
   return {
     createPoint,
     getPoint,
-    updataPoint,
+    updatePoint,
     deletePoint,
     getOrderToken,
     createOrder,
