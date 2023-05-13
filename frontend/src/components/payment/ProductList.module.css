@@ -32,6 +32,9 @@
   align-items: center;
   margin: 5px 0;
 }
+.item:hover {
+  cursor: pointer;
+}
 .item.selected {
   border: 2px solid #f66f00;
   color: #f66f00;

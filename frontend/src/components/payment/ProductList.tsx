@@ -45,30 +45,30 @@ export default function ProductList() {
 
   async function openBootpayAsync() {
     BootPay.request({
-      application_id: "",
+      application_id: process.env.REACT_APP_PAYMENT_KEY,
       price: selectedOption!.price, //실제 결제되는 가격
       name: selectedOption!.point + "P", //결제창에서 보여질 이름
       order_id: "order_id_1234", //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
       pg: "",
       method: "card", //결제수단, 입력하지 않으면 결제수단 선택부터 화면이 시작합니다.
       show_agree_window: 0, // 부트페이 정보 동의 창 보이기 여부
-      items: [
-        {
-          item_name: "나는 아이템", //상품명
-          qty: 1, //수량
-          unique: "123", //해당 상품을 구분짓는 primary key
-          price: 1000, //상품 단가
-          cat1: "TOP", // 대표 상품의 카테고리 상, 50글자 이내
-          cat2: "티셔츠", // 대표 상품의 카테고리 중, 50글자 이내
-          cat3: "라운드 티", // 대표상품의 카테고리 하, 50글자 이내
-        },
-      ],
-      user_info: {
-        username: "사용자 이름",
-        email: "사용자 이메일",
-        addr: "사용자 주소",
-        phone: "010-1234-4567",
-      },
+      // items: [
+      //   {
+      //     item_name: "나는 아이템", //상품명
+      //     qty: 1, //수량
+      //     unique: "123", //해당 상품을 구분짓는 primary key
+      //     price: 1000, //상품 단가
+      //     cat1: "TOP", // 대표 상품의 카테고리 상, 50글자 이내
+      //     cat2: "티셔츠", // 대표 상품의 카테고리 중, 50글자 이내
+      //     cat3: "라운드 티", // 대표상품의 카테고리 하, 50글자 이내
+      //   },
+      // ],
+      // user_info: {
+      //   username: "사용자 이름",
+      //   email: "사용자 이메일",
+      //   addr: "사용자 주소",
+      //   phone: "010-1234-4567",
+      // },
     })
       .error(function(data: any) {
         //결제 진행시 에러가 발생하면 수행됩니다.
@@ -132,7 +132,9 @@ export default function ProductList() {
           return (
             <div
               className={`${style.item} ${
-                selectedOption!.id === product.id ? style.selected : ""
+                selectedOption && selectedOption.id === product.id
+                  ? style.selected
+                  : ""
               }`}
               key={index}
               onClick={() => setSelectedOption(product)}
@@ -144,7 +146,7 @@ export default function ProductList() {
         })}
         <div className={style.listDesc}>
           충전 후 예상 보유 포인트 :{" "}
-          {point ? point + selectedOption!.point : undefined}P
+          {point && selectedOption ? point + selectedOption.point : undefined}P
         </div>
         <button className={style.payButton} onClick={openBootpayAsync}>
           결제하기
