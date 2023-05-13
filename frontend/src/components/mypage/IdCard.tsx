@@ -107,7 +107,7 @@ export default function IdCard() {
                     className={style.info_point}
                     onClick={() => navigate(`/payment`)}
                   >
-                    {point} P
+                    ▸ {point} P
                   </div>
                 </div>
               </div>
