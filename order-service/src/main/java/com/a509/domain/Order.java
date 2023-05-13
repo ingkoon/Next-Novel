@@ -19,14 +19,16 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nickName;
+    private Long itemId;
     private Long price;
     private String receiptId;
     @Enumerated(value = EnumType.STRING)
     private OrderStatus status = OrderStatus.PENDING;
 
     @Builder
-    public Order(String nickName, Long price, String receiptId) {
+    public Order(String nickName, Long itemId, Long price, String receiptId) {
         this.nickName = nickName;
+        this.itemId = itemId;
         this.price = price;
         this.receiptId = receiptId;
     }

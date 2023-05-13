@@ -42,6 +42,8 @@ public class OrderService {
     feature method: findOrders
     - 주문 내역 리스트를 가져온다.
      */
+    @KafkaListener(topics = "get_order_item",
+            containerFactory = "getItemConsumerListenerContainerFactory")
     public List<OrderResponseDto> findOrders(String nickName){
         List<Order> orderList = orderRepository.findAllByNickName(nickName);
         log.info("===== list size : " + orderList.size() + "=====");

@@ -14,6 +14,7 @@ public class CreateRequestDto {
         return Order.builder()
                 .nickName(nickName)
                 .price(price)
+                .itemId(itemId)
                 .receiptId(receiptId)
                 .build();
     }
