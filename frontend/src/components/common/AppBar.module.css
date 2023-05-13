@@ -43,6 +43,9 @@
 .menuIcon:hover {
   cursor: pointer;
 }
+.loginimg:hover {
+  cursor: pointer;
+}
 .menu * {
   text-decoration: none;
   color: white;
