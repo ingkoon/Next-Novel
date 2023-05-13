@@ -6,7 +6,7 @@ type UpdateProps = {
   closemodal: () => void;
 };
 export default function Update({ closemodal }: UpdateProps) {
-  const { getUserInfo, putUserInfo } = useUser();
+  const { getUserInfo, putUserInfo, nickNameCheck } = useUser();
   const [profile, setProfile] = useState(new File([], ""));
   const imgRef = useRef<HTMLInputElement>(null);
   const [userinfo, setUserinfo] = useState({
@@ -14,6 +14,7 @@ export default function Update({ closemodal }: UpdateProps) {
     nickName: "",
     createdAt: "",
   });
+  const [nickNameCheckState, setNickNameCheckState] = useState("success");
 
   // api 통신하기
   async function getuser() {
@@ -58,13 +59,19 @@ export default function Update({ closemodal }: UpdateProps) {
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setNickNameCheckState("");
     setUserinfo({ ...userinfo, nickName: e.target.value });
   };
 
   const updateuser = () => {
+    if (!(nickNameCheckState === "success")) {
+      alert("중복확인을 해주세요!");
+      return;
+    }
+
     const formData = new FormData();
 
-    formData.append("multipartFile", profile); //프로필 안바꾸면 어떻게?
+    formData.append("multipartFile", profile);
 
     const json = {
       nickName: userinfo.nickName,
@@ -83,7 +90,31 @@ export default function Update({ closemodal }: UpdateProps) {
       },
     });
   };
-
+  const check = () => {
+    //닉네임 미입력
+    if (userinfo.nickName.length === 0) {
+      alert("닉네임을 확인해주세요!");
+      return;
+    }
+    //현재 닉네임 입력
+    if (userinfo.nickName === localStorage.getItem("nickName")) {
+      setNickNameCheckState("success");
+      return;
+    }
+    //닉네임 체크
+    nickNameCheck.mutate(
+      { nickName: userinfo.nickName },
+      {
+        onSuccess: (res) => {
+          console.log(res);
+          if (res.data.result === "fail") {
+            alert(res.data.message);
+          }
+          setNickNameCheckState(res.data.result);
+        },
+      }
+    );
+  };
   return (
     <div className={style.update}>
       <div className={style.close} onClick={() => closemodal()}>
@@ -121,6 +152,12 @@ export default function Update({ closemodal }: UpdateProps) {
         </div>
         <div className={style.nickName}>
           <input onChange={onChange} value={userinfo.nickName} />
+          <button
+            className={`${style.checkButton} ${style[nickNameCheckState]}`}
+            onClick={() => check()}
+          >
+            중복확인
+          </button>
         </div>
         <label htmlFor="inputimg" className={style.profile}>
           <img
