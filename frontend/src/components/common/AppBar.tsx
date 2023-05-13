@@ -27,12 +27,12 @@ export default function AppBar() {
         </div>
       </div>
       <div className={style.logo}>
-        <Link to="/">
+        <Link to="/" onClick={() => setToggle(false)}>
           <img src={process.env.PUBLIC_URL + "/icon/logo.svg"} alt="logo" />
         </Link>
       </div>
       <div className={`${style.menu} ${toggle ? style.on : style.off}`}>
-        <Link to="/library">
+        <Link to="/library" onClick={() => setToggle(false)}>
           <img
             src={process.env.PUBLIC_URL + "/icon/banner/library.svg"}
             className={style.menuIcon}
@@ -40,7 +40,7 @@ export default function AppBar() {
           />
           <div className={style.arrowBox}>도서관</div>
         </Link>
-        <Link to="/library/search">
+        <Link to="/library/search" onClick={() => setToggle(false)}>
           <img
             src={process.env.PUBLIC_URL + "/icon/banner/search.svg"}
             className={style.menuIcon}
@@ -51,6 +51,7 @@ export default function AppBar() {
         <Link
           to="/laboratory"
           onClick={(e) => {
+            setToggle(false);
             e.preventDefault();
             navigate("/laboratory", { state: uuid() });
           }}
@@ -63,7 +64,13 @@ export default function AppBar() {
           <div className={style.arrowBox}>소설생성</div>
         </Link>
         {!localStorage.getItem("access_token") ? (
-          <div className={style.loginimg} onClick={() => setModalIsOpen(true)}>
+          <div
+            className={style.loginimg}
+            onClick={() => {
+              setModalIsOpen(true);
+              setToggle(false);
+            }}
+          >
             <img
               src={process.env.PUBLIC_URL + "/icon/banner/login.svg"}
               className={style.menuIcon}
@@ -72,7 +79,7 @@ export default function AppBar() {
             <div className={style.arrowBox}>로그인</div>
           </div>
         ) : (
-          <Link to="/mypage">
+          <Link to="/mypage" onClick={() => setToggle(false)}>
             <img
               src={process.env.PUBLIC_URL + "/icon/banner/idcard.svg"}
               className={style.menuIcon}
