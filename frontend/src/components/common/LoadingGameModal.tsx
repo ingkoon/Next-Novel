@@ -3,7 +3,10 @@ import Modal from "react-modal";
 
 import Snakegame from "../game/Snakegame.jsx";
 
-export default function LoadingGameModal({ state }) {
+type LoadingGameModalProps = {
+  state: boolean;
+};
+export default function LoadingGameModal({ state }: LoadingGameModalProps) {
   return (
     <>
       <Modal
