@@ -18,7 +18,7 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
-              - '*'
+              - '**'
 #              - 'http://***REMOVED***'
 #              - 'http://***REMOVED***:443'
 #              - 'https//***REMOVED***'
