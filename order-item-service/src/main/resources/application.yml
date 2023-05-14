@@ -44,9 +44,9 @@ spring:
     hibernate:
       ddl-auto: create
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:9092
 kafka-config:
-  datasource: localhost:9092
+  datasource: kafka:9092
 ---
 spring:
   application:
