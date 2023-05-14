@@ -12,6 +12,12 @@
   margin-bottom: 20px;
 }
 
+.trigger {
+  width: 100%;
+  height: 5px;
+  background: blue;
+}
+
 @media (max-width: 1439px) {
   .list {
     display: flex;

@@ -30,12 +30,16 @@ export default function Booklist({ novels }: BookListProps) {
   //   setArr(tmp);
   // }, [novels]);
 
+  const refreshList = () => {
+    return;
+  }
+
   return (
     <div>
       <hr className={style.line} />
       <div className={style.list}>
         {novels?.map((book, index) => (
-          <Card key={index} props={book} />
+          <Card key={index} props={book} refreshList={refreshList}/>
         ))}
       </div>
     </div>

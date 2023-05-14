@@ -19,9 +19,10 @@ type cardinfo = {
 
 interface CardProps {
   props: cardinfo;
+  refreshList: () => void;
 }
 
-function Card({ props }: CardProps) {
+function Card({ props, refreshList }: CardProps) {
   const [isHovering, setIsHovering] = useState(false);
   const { user } = useContext(AuthContext);
 
@@ -108,7 +109,7 @@ function Card({ props }: CardProps) {
                 {props && props.commentCount}
               </span>
             </div>
-            {props && user.nick_name === props.nickName ? (
+            {localStorage.getItem("nickName") === props.nickName ? (
               <img
                 onClick={delnovel}
                 src={process.env.PUBLIC_URL + "/icon/trash.svg"}
@@ -153,6 +154,7 @@ function Card({ props }: CardProps) {
           id={props && props.id}
           closemodal={closemodal}
           comid={props.id}
+          refreshList={refreshList}
         />
       </Modal>
     </>
