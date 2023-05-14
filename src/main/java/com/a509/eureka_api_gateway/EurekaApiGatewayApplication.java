@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+
 
 @SpringBootApplication
 @EnableEurekaClient
