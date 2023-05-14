@@ -45,8 +45,7 @@ spring:
           google:
             client-id: ***REMOVED***
             client-secret: ***REMOVED***
-#            redirect-uri: http://localhost:8011/login/oauth2/code/google
-            redirect-uri: http://***REMOVED***:8011/login/oauth2/code/google
+            redirect-uri: https://***REMOVED***/api/member/oauth2/code/google
             scope:
               - email
               - profile
