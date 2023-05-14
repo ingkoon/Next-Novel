@@ -44,9 +44,11 @@ spring:
     hibernate:
       ddl-auto: create
   kafka:
-    bootstrap-servers: kafka:9092
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: payment-group
 kafka-config:
-  datasource: kafka:9092
+  datasource: localhost:9092
 ---
 spring:
   application:
@@ -74,5 +76,7 @@ spring:
       ddl-auto: update
   kafka:
     bootstrap-servers: kafka:9092
+    consumer:
+      group-id: payment-group
 kafka-config:
   datasource: kafka:9092

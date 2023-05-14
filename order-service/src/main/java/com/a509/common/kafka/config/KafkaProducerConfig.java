@@ -2,6 +2,7 @@ package com.a509.common.kafka.config;
 
 import com.a509.common.dto.order.request.CancelRequestDto;
 import com.a509.common.dto.orderitem.request.CreateOrderItemRequestDto;
+import com.a509.common.dto.orderitem.request.DeleteOrderItemRequestDto;
 import com.a509.common.dto.point.request.PointUpdateRequestDto;
 import com.a509.dto.CreateRequestDto;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -48,7 +49,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, CancelRequestDto> cancelOrderFactory() {
+    public ProducerFactory<String, DeleteOrderItemRequestDto> cancelOrderFactory() {
         configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl);
         configProps.put(ProducerConfig.CONNECTIONS_MAX_IDLE_MS_CONFIG, 5000); // 5초로 설정
@@ -79,7 +80,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, CancelRequestDto> cancelOrderItemTemplate(ProducerFactory<String, CancelRequestDto> cancelOrderItemFactory){
+    public KafkaTemplate<String, DeleteOrderItemRequestDto> cancelOrderItemTemplate(ProducerFactory<String, DeleteOrderItemRequestDto> cancelOrderItemFactory){
         return new KafkaTemplate<>(cancelOrderItemFactory);
     }
 }

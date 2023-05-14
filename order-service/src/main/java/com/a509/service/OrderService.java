@@ -38,7 +38,6 @@ public class OrderService {
     private final BootPayComponent bootPayComponent;
     private final KafkaTemplate<String, PointUpdateRequestDto> updatePointTemplate;
     private final KafkaTemplate<String, CreateOrderItemRequestDto> createOrderItemTemplate;
-
     private final KafkaTemplate<String, DeleteOrderItemRequestDto> cancelOrderItemTemplate;
 
     /*

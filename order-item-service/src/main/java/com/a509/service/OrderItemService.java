@@ -52,11 +52,7 @@ public class OrderItemService {
     @KafkaListener(topics = "delete_order_item")
     public void deleteOrderItem(@Payload DeleteOrderItemRequestDto requestDto){
         log.info("========input data========");
-        OrderItem orderItem = OrderItem.builder()
-                .orderId(requestDto.getOrderId())
-                .itemId(requestDto.getItemId())
-                .price(requestDto.getPrice())
-                .build();
+        OrderItem orderItem = orderItemRepository.findByOrderId(requestDto.getOrderId()).orElseThrow(NoSuchOrderItemException::new);
         orderItemRepository.findByOrderId(requestDto.getOrderId());
         orderItemRepository.delete(orderItem);
 

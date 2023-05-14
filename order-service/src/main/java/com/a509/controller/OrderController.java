@@ -1,6 +1,6 @@
 package com.a509.controller;
 
-import com.a509.dto.CancelRequestDto;
+import com.a509.common.dto.order.request.CancelRequestDto;
 import com.a509.dto.CreateRequestDto;
 import com.a509.dto.response.CancelResponseDto;
 import com.a509.dto.response.OrderCreateResponseDto;
