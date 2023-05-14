@@ -47,6 +47,9 @@ spring:
     bootstrap-servers: localhost:9092
     consumer:
       group-id: order
+kafka-config:
+  datasource: localhost:9092
+
 ---
 spring:
   application:
@@ -73,6 +76,8 @@ spring:
     hibernate:
       ddl-auto: update
   kafka:
-    bootstrap-servers: ***REMOVED***:9092
+    bootstrap-servers: kafka:9092
     consumer:
       group-id: order
+kafka-config:
+  datasource: kafka:9092

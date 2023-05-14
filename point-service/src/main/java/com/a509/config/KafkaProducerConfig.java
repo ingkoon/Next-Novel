@@ -19,6 +19,8 @@ public class KafkaProducerConfig {
 
     private Map<String, Object> configProps;
 
+
+
 //    @Bean
 //    public ProducerFactory<String, CreateRequestDto> createOrderFactory() {
 //        configProps = new HashMap<>();
