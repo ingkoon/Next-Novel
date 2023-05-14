@@ -2,7 +2,14 @@ import React from "react";
 import Modal from "react-modal";
 import StoryInProgress from "../novelwrite/StoryInProgress";
 
-export default function LoadingModal({ modalIsOpen, setModalIsOpen }) {
+type StoryInProgressModalProps = {
+  modalIsOpen: boolean;
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+export default function StoryInProgressModal({
+  modalIsOpen,
+  setModalIsOpen,
+}: StoryInProgressModalProps) {
   const closemodal = () => {
     setModalIsOpen(false);
   };
@@ -26,7 +33,7 @@ export default function LoadingModal({ modalIsOpen, setModalIsOpen }) {
           },
         }}
       >
-        <StoryInProgress closemodal={closemodal} />
+        <StoryInProgress />
       </Modal>
     </>
   );

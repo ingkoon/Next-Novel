@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react"
-import Modal from "react-modal"
+import React, { useEffect, useState } from "react";
+import Modal from "react-modal";
 
-import Snakegame from "../game/Snakegame.jsx"
+import Snakegame from "../game/Snakegame.jsx";
 
-export default function LoadingModal({ state }) {
-
+type LoadingGameModalProps = {
+  state: boolean;
+};
+export default function LoadingGameModal({ state }: LoadingGameModalProps) {
   return (
     <>
       <Modal
@@ -21,13 +23,13 @@ export default function LoadingModal({ state }) {
             alignItems: "center",
             background: "#090909",
             margin: "auto",
-            overflowX : 'hidden'
+            overflowX: "hidden",
+            inset: "0",
           },
         }}
       >
-        
-        <Snakegame state=""/>
+        <Snakegame state="" />
       </Modal>
     </>
-  )
+  );
 }

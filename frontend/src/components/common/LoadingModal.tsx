@@ -2,7 +2,10 @@ import React from "react";
 import Modal from "react-modal";
 import style from "./LoadingModal.module.css";
 
-export default function LoadingModal({ state }) {
+type LoadingModalProps = {
+  state: boolean;
+};
+export default function LoadingModal({ state }: LoadingModalProps) {
   return (
     <>
       <Modal
@@ -19,6 +22,7 @@ export default function LoadingModal({ state }) {
             alignItems: "center",
             inset: "0",
             background: "none",
+            padding: "0",
           },
         }}
       >
