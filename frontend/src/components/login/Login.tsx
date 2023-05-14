@@ -1,21 +1,25 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import style from "./login.module.css";
 import useUser from "../../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 
-export default function Login({ move, closemodal }) {
+type LoginProps = {
+  move: () => void;
+  closemodal: () => void;
+};
+export default function Login({ move, closemodal }: LoginProps) {
   const { normalLogin } = useUser();
   const [info, setInfo] = useState({ email: "", pw: "" });
   const navigate = useNavigate();
 
-  function kakaoLogin() {
-    const { Kakao } = window;
-    Kakao.Auth.authorize({
-      redirectUri: process.env.REACT_APP_KAKAO_API,
-      // prompts : "login" //항상 로그인을 하게 만드는거임.
-    });
-  }
-  const handleChange = (e) => {
+  // function kakaoLogin() {
+  //   const { Kakao } = window;
+  //   Kakao.Auth.authorize({
+  //     redirectUri: process.env.REACT_APP_KAKAO_API,
+  //     // prompts : "login" //항상 로그인을 하게 만드는거임.
+  //   });
+  // }
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInfo({ ...info, [name]: value });
   };
@@ -88,7 +92,6 @@ export default function Login({ move, closemodal }) {
 
             <div className={style.socialButton}>
               <img
-                onClick={kakaoLogin}
                 src={process.env.PUBLIC_URL + "/icon/kakao.svg"}
                 alt="login"
               />
