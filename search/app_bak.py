@@ -6,14 +6,13 @@ import pandas as pd
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from get_novel_data import get_novel_data
 from db_conn import conn
 from model import NovelContent
 
-from typing import List
-from pydantic import BaseModel
-
-class Item(BaseModel):
-    queries: List[str]
+# 여기 검색할 내용 어떤걸로 할까요
+def get_gpt_text():
+    pass
 
 app = FastAPI()
 
@@ -23,8 +22,8 @@ def read_root():
     return {"Hello": "World"}
 
 
-@app.post("/search")
-def read_item(item:Item):
+@app.get("/search")
+def read_item():
     # data 받아오기
     session = conn()
     
@@ -42,7 +41,7 @@ def read_item(item:Item):
 
     # content열만 따로 뽑아서 chatgpt의 내용 추가
     data_content = data['content']
-    data_content.loc[len(data_content)] = " ".join(item.queries)
+    data_content.loc[len(data_content)] = get_gpt_text()
 
     # 단어 단위로 벡터라이징
     tfidf = TfidfVectorizer(stop_words='english')
@@ -64,6 +63,3 @@ def read_item(item:Item):
     df["content"] = data['content']
 
     return df.to_json()
-
-if __name__ == "__main__":
-    print(conn())
