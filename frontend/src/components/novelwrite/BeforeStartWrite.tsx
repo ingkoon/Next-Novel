@@ -14,10 +14,10 @@ export default function BeforeStartWrite({ setOrder }: BeforeStartWriteType) {
   const { getPoint } = usePayment();
 
   const start = async () => {
-    // if (!localStorage.getItem("access_token")) {
-    //   setModalIsOpen(true);
-    //   return;
-    // }
+    if (!localStorage.getItem("nickName")) {
+      setModalIsOpen(true);
+      return;
+    }
     const point = await getPointAsync();
     if (point < 10) {
       alert(

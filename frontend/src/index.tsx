@@ -15,6 +15,7 @@ import Payment from "./pages/Payment";
 import Test from "./pages/Test";
 import OnlyLogin from "./components/login/OnlyLogin";
 import Modal from "react-modal";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -44,16 +45,16 @@ const router = createBrowserRouter([
         element: <NovelSearch />,
       },
       {
-        path: "/mypage",
-        element: <MyPage />,
-      },
-      {
         path: "/laboratory",
         element: <NovelWrite />,
       },
       {
+        path: "/mypage",
+        element: <ProtectedRoute component={MyPage} />,
+      },
+      {
         path: "/payment",
-        element: <Payment />,
+        element: <ProtectedRoute component={Payment} />,
       },
       {
         path: "/test",
