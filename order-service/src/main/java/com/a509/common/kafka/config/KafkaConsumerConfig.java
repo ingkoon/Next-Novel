@@ -31,6 +31,7 @@ public class KafkaConsumerConfig {
         props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "payment-group");
+        props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, 5000); // 5초로 설정
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
