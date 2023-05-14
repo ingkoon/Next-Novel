@@ -205,7 +205,7 @@ public class MemberService {
         String accessToken = token.split(" ")[1];
 
         // 1. Access Token 검증
-        if (jwtTokenProvider.validateToken(accessToken).equals("ok")) throw new InvalidedAccessTokenException();
+        if (!jwtTokenProvider.validateToken(accessToken).equals("ok")) throw new InvalidedAccessTokenException();
 
         // 2. Access Token 에서 Member email 을 가져옵니다.
         Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
