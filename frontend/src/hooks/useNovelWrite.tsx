@@ -42,7 +42,7 @@ export default function useNovelWrite() {
 
   const getPaintings = useQuery(
     ["paintings"],
-    () => getPaintingsApi(localStorage.getItem("nickName")),
+    () => getPaintingsApi(localStorage.getItem("nickName")!),
     {
       enabled: false,
       select: (data) => data.data,

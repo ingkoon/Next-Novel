@@ -51,12 +51,14 @@ export default function WriteStep5b() {
     finNovel.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
-        //소설 쓸때 포인트 차감
-        updatePointAsync(res.data.novelId);
+        updatePointAsync();
+        //원래는 포인트 차감 성공시 finNovel을 하고, 실패 시 포인트 되돌려받기를 하고 싶으나...
+        const id = res.data.novelId;
+        navigate(`/library/${id}/intro`, { state: { id: id } });
       },
     });
   };
-  async function updatePointAsync(id: number) {
+  async function updatePointAsync() {
     try {
       const jsonData: UpdatePoint = {
         nickName: localStorage.getItem("nickName")!,
@@ -64,8 +66,6 @@ export default function WriteStep5b() {
       };
       const res = await updatePoint(jsonData);
       console.log(res);
-
-      navigate(`/library/${id}/intro`, { state: { id: id } });
     } catch (e) {
       console.log(e);
     }
@@ -152,7 +152,7 @@ export default function WriteStep5b() {
           <div className={style.input}>
             {buttons.map((button, index) => {
               return (
-                <div className={style.elementBox}>
+                <div className={style.elementBox} key={index}>
                   <div className={style.element1} />
                   <div className={style.element2} />
                   <div className={style.element3} />
