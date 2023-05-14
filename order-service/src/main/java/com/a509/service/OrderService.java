@@ -103,7 +103,7 @@ public class OrderService {
 
         PointUpdateRequestDto pointUpdateRequestDto = PointUpdateRequestDto.builder()
                 .nickName(order.getNickName())
-                .point(order.getPrice()).build();
+                .point(order.getPrice()/10L).build();
 
         updatePointTemplate.send("order_item", order.getNickName().toString(), pointUpdateRequestDto);
         CreateOrderItemRequestDto orderItemRequestDto =
