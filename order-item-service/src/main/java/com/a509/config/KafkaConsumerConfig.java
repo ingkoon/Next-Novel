@@ -1,6 +1,7 @@
 package com.a509.config;
 
 import com.a509.common.dto.orderitem.request.CreateOrderItemRequestDto;
+import com.a509.common.dto.orderitem.request.DeleteOrderItemRequestDto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,11 +34,32 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
+    public ConsumerFactory<String, DeleteOrderItemRequestDto> deleteOrderItemConsumerFactory() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "payment-group");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
+                new JsonDeserializer<>(DeleteOrderItemRequestDto.class));
+    }
+
+    @Bean
     public ConcurrentKafkaListenerContainerFactory<String, CreateOrderItemRequestDto>
-    kafkaListenerContainerFactory() {
+    createListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, CreateOrderItemRequestDto> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(createOrderItemConsumerFactory());
+        return factory;
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, DeleteOrderItemRequestDto>
+    deleteListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, DeleteOrderItemRequestDto> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(deleteOrderItemConsumerFactory());
         return factory;
     }
 

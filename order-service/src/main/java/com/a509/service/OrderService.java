@@ -1,15 +1,16 @@
 package com.a509.service;
 
 import com.a509.common.bootpay.BootPayComponent;
+import com.a509.common.dto.order.request.CancelRequestDto;
 import com.a509.common.dto.order.request.IsCheckOrderRequest;
 import com.a509.common.dto.orderitem.request.CreateOrderItemRequestDto;
+import com.a509.common.dto.orderitem.request.DeleteOrderItemRequestDto;
 import com.a509.common.dto.point.request.PointUpdateRequestDto;
 
 import com.a509.common.exception.order.DuplicatedOrderException;
 import com.a509.common.exception.order.NoSuchOrderException;
 
 import com.a509.domain.Order;
-import com.a509.dto.CancelRequestDto;
 import com.a509.dto.CreateRequestDto;
 import com.a509.dto.response.OrderResponseDto;
 import com.a509.dto.response.TokenResponseDto;
@@ -37,6 +38,8 @@ public class OrderService {
     private final BootPayComponent bootPayComponent;
     private final KafkaTemplate<String, PointUpdateRequestDto> updatePointTemplate;
     private final KafkaTemplate<String, CreateOrderItemRequestDto> createOrderItemTemplate;
+
+    private final KafkaTemplate<String, DeleteOrderItemRequestDto> cancelOrderItemTemplate;
 
     /*
     feature method: findOrders
@@ -149,7 +152,27 @@ public class OrderService {
     @Transactional
     public void cancelOrder(CancelRequestDto requestDto){
         Order order = orderRepository.findById(requestDto.getOrderId()).orElseThrow(NoSuchOrderException::new);
-        bootPayComponent.cancelOrder(requestDto.getReceiptId());
+        bootPayComponent.cancelOrder(order.getReceiptId());
+
+        PointUpdateRequestDto pointUpdateRequestDto = PointUpdateRequestDto.builder()
+                .nickName(order.getNickName())
+                .point(order.getPrice()/10L * -1).build();
+
+        updatePointTemplate.send("order_item", order.getNickName().toString(), pointUpdateRequestDto);
+
+        DeleteOrderItemRequestDto orderItemRequestDto =
+                DeleteOrderItemRequestDto.builder()
+                        .orderId(order.getId())
+                        .itemId(order.getItemId())
+                        .price(order.getPrice())
+                        .build();
+
+        log.info("=====success send to point =====");
+        cancelOrderItemTemplate
+                .send("delete_order_item", orderItemRequestDto);
+
+        log.info("=====success send to orderItem =====");
+
         orderRepository.delete(order);
     }
 }

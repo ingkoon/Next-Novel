@@ -2,6 +2,7 @@ package com.a509.service;
 
 import com.a509.common.dto.order.request.IsCheckOrderRequest;
 import com.a509.common.dto.orderitem.request.CreateOrderItemRequestDto;
+import com.a509.common.dto.orderitem.request.DeleteOrderItemRequestDto;
 import com.a509.common.enums.OrderStatus;
 import com.a509.common.exception.orderitem.NoSuchOrderItemException;
 import com.a509.domain.OrderItem;
@@ -45,6 +46,21 @@ public class OrderItemService {
 
         log.info("======== ready to send data ========");
         successOrderTemplateV2.send("check_status", orderItem.getOrderId().toString(), isCheckOrderRequest);
+    }
+
+    @Transactional
+    @KafkaListener(topics = "delete_order_item")
+    public void deleteOrderItem(@Payload DeleteOrderItemRequestDto requestDto){
+        log.info("========input data========");
+        OrderItem orderItem = OrderItem.builder()
+                .orderId(requestDto.getOrderId())
+                .itemId(requestDto.getItemId())
+                .price(requestDto.getPrice())
+                .build();
+        orderItemRepository.findByOrderId(requestDto.getOrderId());
+        orderItemRepository.delete(orderItem);
+
+        log.info("======== packaging for send data ========");
     }
 
     public OrderItemResponseDto getOrderItem(Long oderItemId){

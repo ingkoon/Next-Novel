@@ -1,5 +1,6 @@
 package com.a509.common.kafka.config;
 
+import com.a509.common.dto.order.request.CancelRequestDto;
 import com.a509.common.dto.orderitem.request.CreateOrderItemRequestDto;
 import com.a509.common.dto.point.request.PointUpdateRequestDto;
 import com.a509.dto.CreateRequestDto;
@@ -35,12 +36,24 @@ public class KafkaProducerConfig {
 
     @Bean
     public ProducerFactory<String, PointUpdateRequestDto> updatePointFactory() {
+
         configProps = new HashMap<>();
+
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl);
         configProps.put(ProducerConfig.CONNECTIONS_MAX_IDLE_MS_CONFIG, 5000); // 5초로 설정
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
 
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+
+    @Bean
+    public ProducerFactory<String, CancelRequestDto> cancelOrderFactory() {
+        configProps = new HashMap<>();
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUrl);
+        configProps.put(ProducerConfig.CONNECTIONS_MAX_IDLE_MS_CONFIG, 5000); // 5초로 설정
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
@@ -63,5 +76,10 @@ public class KafkaProducerConfig {
     @Bean
     public KafkaTemplate<String, CreateOrderItemRequestDto> createOrderItemTemplate(ProducerFactory<String, CreateOrderItemRequestDto> createOrderItemFactory) {
         return new KafkaTemplate<>(createOrderItemFactory);
+    }
+
+    @Bean
+    public KafkaTemplate<String, CancelRequestDto> cancelOrderItemTemplate(ProducerFactory<String, CancelRequestDto> cancelOrderItemFactory){
+        return new KafkaTemplate<>(cancelOrderItemFactory);
     }
 }
