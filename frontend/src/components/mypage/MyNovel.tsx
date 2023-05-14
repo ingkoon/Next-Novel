@@ -106,7 +106,7 @@ export default function MyNovel() {
 
       <div ref={parentRef} className={style.booklist} id="booklist1">
         <div ref={childRef} style={{ width: "100%" }}>
-          <BookList books={myNovelList} />
+          <BookList books={myNovelList} refreshList={() => getMyNovelAsync()} />
         </div>
       </div>
 
@@ -136,7 +136,10 @@ export default function MyNovel() {
 
       <div ref={parentRef2} className={style.booklist} id="booklist2">
         <div ref={childRef2} style={{ width: "100%" }}>
-          <BookList books={likeNovelList} />
+          <BookList
+            books={likeNovelList}
+            refreshList={() => getLikeNovelAsync()}
+          />
         </div>
       </div>
 
