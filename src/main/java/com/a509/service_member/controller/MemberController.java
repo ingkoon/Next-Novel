@@ -8,10 +8,17 @@ import com.a509.service_member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -20,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class MemberController {
 
     private final MemberService memberService;
+    private final WebClient webClient = WebClient.create();
     @Value("${spring.security.oauth2.client.registration.google.client-id}")
     String googleClientId;
     @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
@@ -54,7 +62,7 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/oauth/google")
+    @GetMapping("/oauth2/google")
     public String google() {
         String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleClientId + "&redirect_uri=" + googleRedirecUrl
                 + "&response_type=code&scope=email%20profile&access_type=offline";
@@ -70,10 +78,50 @@ public class MemberController {
         return test1;
     }
 
-//    @GetMapping("/oauth/kakao/login")
-//    public String redirectKakao(){
-//        return "https://kauth.kakao.com/oauth/authorize?client_id=" + REST_API_KEY +
-//                "&redirect_uri=" + redirect_uri + "&response_type=code";
+    @GetMapping("/oauth2/code/google")
+    public ResponseEntity<?> redirectGoogle(String state, String code, String scope, String authuser, String prompt) {
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("code", code);
+        body.add("client_id", "***REMOVED***");
+        body.add("client_secret", "***REMOVED***");
+        body.add("redirect_uri", "https://***REMOVED***/api/member/oauth2/code/google");
+        body.add("grant_type", "authorization_code");
+        Map<String, Object> responseBody = webClient.post()
+                .uri(uriBuilder -> uriBuilder
+                        .scheme("https")
+                        .host("oauth2.googleapis.com")
+                        .path("/token")
+                        .build())
+                .bodyValue(body)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+                })
+                .block();
+
+        String token = (String) responseBody.get("id_token");
+        System.out.println(token);
+
+        // token 의 payload 정보를 추출
+//        MemberLoginRequestDto memberLoginRequestDto = memberService.getOauth2Login(token);
+//        System.out.println("================");
+//        System.out.println(memberService.getOauth2Login(token));
+
+        // oauth2 login 수행
+//        memberService.login();
+
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+    }
+
+//    @GetMapping("/test1")
+//    public String test1() {
+//        String token = "***REMOVED***";
+//        token = "***REMOVED***";
+//        System.out.println("================");
+//        System.out.println(memberService.getOauth2Login(token));
+//
+//
+//        return "test1";
 //    }
 
 //    @Hidden
