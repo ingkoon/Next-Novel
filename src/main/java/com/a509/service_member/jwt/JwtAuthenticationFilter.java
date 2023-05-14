@@ -58,7 +58,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                 System.out.println("토큰의 유효시간 만료됨!!!!!!");
                 System.out.println(token);
                 // refresh token 이 만료된 경우에는 null 값이 들어감
-                String refreshToken = stringRedisTemplate.opsForValue().get("RT:"+jwtTokenProvider.getAuthentication(token).getName());
+                String refreshToken = stringRedisTemplate.opsForValue().get("RT:"+token);
                 System.out.println(refreshToken);
                 if(refreshToken == null) {
                     fail(response, "refresh token is expired.");
