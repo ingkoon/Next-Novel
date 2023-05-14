@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.security.Key;
@@ -48,6 +49,9 @@ public class JwtTokenProvider {
 	//    private static final long REFRESH_TOKEN_EXPIRE_TIME = 60 * 1000L;    // 1분
 	private final Key key;
 
+	private static final String AUTHORIZATION_HEADER = "Authorization";
+
+
 	public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
 		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
 		this.key = Keys.hmacShaKeyFor(keyBytes);
@@ -73,9 +77,12 @@ public class JwtTokenProvider {
 
 	public String resolveToken(ServerHttpRequest request) {
 		HttpHeaders requestHeader = request.getHeaders();
-		String accessToken = requestHeader.get("Authorization").get(0).substring(7);
+		String accessToken = requestHeader.get(AUTHORIZATION_HEADER).get(0);
 		System.out.println("[resolveToken@JwtTokenProvider]" + accessToken);
-		return accessToken;
+		if (StringUtils.hasText(accessToken) && accessToken.startsWith(BEARER_TYPE)) {
+			return accessToken.substring(7);
+		}
+		return null;
 	}
 
 	// 토큰 정보를 검증하는 메서드

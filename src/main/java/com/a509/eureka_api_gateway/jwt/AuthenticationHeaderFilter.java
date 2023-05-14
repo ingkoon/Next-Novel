@@ -1,18 +1,24 @@
 package com.a509.eureka_api_gateway.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,11 +29,17 @@ import com.fasterxml.jackson.core.type.TypeReference;
 public class AuthenticationHeaderFilter extends AbstractGatewayFilterFactory<AuthenticationHeaderFilter.Config> {
 
 	private final JwtTokenProvider jwtTokenProvider;
+	private final StringRedisTemplate stringRedisTemplate;
+	private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일
 
-	public AuthenticationHeaderFilter(JwtTokenProvider jwtTokenProvider) {
+
+	public AuthenticationHeaderFilter(JwtTokenProvider jwtTokenProvider, StringRedisTemplate stringRedisTemplate) {
 		super(Config.class);
 		this.jwtTokenProvider = jwtTokenProvider;
+		this.stringRedisTemplate = stringRedisTemplate;
 	}
+
+
 
 	@Override
 	public GatewayFilter apply(Config config) {
@@ -38,19 +50,15 @@ public class AuthenticationHeaderFilter extends AbstractGatewayFilterFactory<Aut
 			ServerWebExchange newExchange = exchange;
 
 			// Step 1. RequestHeader에서 jwt 토큰 추출
-			String accessToken = jwtTokenProvider.resolveToken(
-				request); // 유효하지 않은 세션 (refreshToken이 DB에 있는 값과 다른 값)인지 판단
+			String accessToken = jwtTokenProvider.resolveToken(request);
 
 
 			// Step 2. 토큰의 유효성 검사
 			if (accessToken != "") { // 유효한 로그인 세션이라면
 
-				//리프레시 토큰 가져오는 로직
+				String refreshToken = stringRedisTemplate.opsForValue().get("RT:"+accessToken);
 
-				String refreshToken = "";
-				//팀장님 구현해주세요
-
-				if (jwtTokenProvider.validateToken(refreshToken)) { // 만약 refreshToken의 유효시간이 아직 남았다면
+				if (!ObjectUtils.isEmpty(accessToken) && jwtTokenProvider.validateToken(refreshToken)) { // 만약 refreshToken의 유효시간이 아직 남았다면
 					if (!jwtTokenProvider.validateToken(accessToken)) { // 만약 AccessToken의 유효시간이 만료되었다면
 						log.info("유효한 로그인 세션이나, AccessToken이 만료되었습니다. AccessToken을 재발급합니다.");
 						// 재발급 후, 컨텍스트에 다시 넣기
@@ -70,6 +78,11 @@ public class AuthenticationHeaderFilter extends AbstractGatewayFilterFactory<Aut
 							.build();
 
 						newExchange = exchange.mutate().request(newRequest).build();
+						stringRedisTemplate.delete(accessToken);
+						stringRedisTemplate.opsForValue()
+								.set("RT:" + newAccessToken, refreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
+
+
 					} else {
 						log.info("AccessToken의 유효시간이 아직 남아있습니다.");
 					}
@@ -85,6 +98,7 @@ public class AuthenticationHeaderFilter extends AbstractGatewayFilterFactory<Aut
 		});
 
 	}
+
 
 	private Mono<Void> handleUnAuthorized(ServerWebExchange exchange) {
 		ServerHttpResponse response = exchange.getResponse();
