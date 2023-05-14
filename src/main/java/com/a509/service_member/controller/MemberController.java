@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
+import java.util.Base64;
+import java.util.Collections;
 import java.util.Map;
 
 @Slf4j
@@ -79,8 +84,8 @@ public class MemberController {
     }
 
     @GetMapping("/oauth2/code/google")
-    public ResponseEntity<?> redirectGoogle(String state, String code, String scope, String authuser, String prompt) {
-
+    public ResponseEntity<MemberTokenResponseDto> loginOauth2Google(String code) {
+        // google 에서 설정한 redirect uri 로 요청이 들어오면 쿼리 스트링으로 들어온 code 값을 이용해서 회원 정보 가져오기
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("code", code);
         body.add("client_id", "***REMOVED***");
@@ -101,27 +106,23 @@ public class MemberController {
 
         String token = (String) responseBody.get("id_token");
         System.out.println(token);
-
-        // token 의 payload 정보를 추출
-//        MemberLoginRequestDto memberLoginRequestDto = memberService.getOauth2Login(token);
-//        System.out.println("================");
-//        System.out.println(memberService.getOauth2Login(token));
-
-        // oauth2 login 수행
-//        memberService.login();
-
-        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        
+        MemberTokenResponseDto response = null;
+        if(token == null) {
+            System.out.println("is null !!!!");
+            System.out.println((String) responseBody.get("access_token"));
+        } else {
+            response = memberService.oauth2Login("google", token);
+        }
+        return ResponseEntity.ok(response);
     }
 
 //    @GetMapping("/test1")
-//    public String test1() {
+//    public void test1() {
 //        String token = "***REMOVED***";
-//        token = "***REMOVED***";
-//        System.out.println("================");
-//        System.out.println(memberService.getOauth2Login(token));
+//        byte[] bytes = Base64.getDecoder().decode(token);
+//        System.out.println("Decoded string: " + new String(bytes, StandardCharsets.UTF_8));
 //
-//
-//        return "test1";
 //    }
 
 //    @Hidden

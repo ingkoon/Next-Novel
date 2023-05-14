@@ -13,6 +13,8 @@ import com.a509.service_member.exception.NoSuchMemberException;
 import com.a509.service_member.jpa.member.Member;
 import com.a509.service_member.jpa.member.MemberRepository;
 import com.a509.service_member.jwt.JwtTokenProvider;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -25,10 +27,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.NoSuchFileException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -130,6 +134,59 @@ public class MemberService {
                 .set("RT:" + tokenInfo.getAccessToken(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
         return tokenInfo;
+    }
+
+    // MemberTokenResponseDto 형식으로 반환
+    public MemberTokenResponseDto oauth2Login(String provider, String token) {
+        // JWT token 의 payload 값 decode
+        String[] jwtParts = token.split("\\.");
+        byte[] bytes = Base64.getDecoder().decode((jwtParts[1]));
+        String payload = new String(bytes, StandardCharsets.UTF_8);
+        System.out.println(payload);
+
+        // String 형태를 json 형태로 변환 후 정보 추출
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(payload, JsonObject.class);
+
+        String subValue = jsonObject.get("sub").getAsString();
+        String emailValue = jsonObject.get("email").getAsString();
+        String nameValue = jsonObject.get("name").getAsString();
+        String pictureValue = jsonObject.get("picture").getAsString();
+
+        // 다음 형태의 이메일로 이미 가입 되어있는지 확인
+        String email = provider+"@"+emailValue;   // ex)google@ejk9658@gmail.com
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+
+        Member member;
+        if (optionalMember.isEmpty()) {
+            // 해당 닉네임으로 이미 가입 되어있는지 확인함
+            int num = 0;
+            while(memberRepository.existsByNickName(nameValue)) {
+                nameValue = jsonObject.get("name").getAsString()+"_"+(++num);    // ex)닉네임_0
+            }
+
+            // 회원가입 진행
+            member = Member
+                    .builder()
+                    .email(email)
+                    .password(bCryptPasswordEncoder.encode("딘추"))
+                    .nickName(nameValue)
+                    .profileImage(pictureValue)
+                    .provider(provider)
+                    .providerId(subValue)
+                    .build();
+            memberRepository.save(member);
+        } else {
+            member = optionalMember.get();
+        }
+
+        System.out.println(member.toString());
+
+        // 로그인 진행
+        MemberLoginRequestDto loginDto = new MemberLoginRequestDto();
+        loginDto.setEmail(member.getEmail());
+        loginDto.setPassword("딘추");
+        return login(loginDto);
     }
 
     public void logout(String token) {
