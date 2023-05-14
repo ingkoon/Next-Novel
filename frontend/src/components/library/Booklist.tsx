@@ -3,7 +3,7 @@ import Card from "../common/Card";
 import Genre from "./Genre";
 
 //api
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getnovels } from "../../api/library";
 
 type carddata = {
@@ -26,9 +26,9 @@ export default function Booklist() {
   const [isLoading, setIsLoading] = useState(false);
 
   // api 호출하기 ( 페이지 로드시, 전체소설 불러오기->(genre:"all" , page:0) )
-  useEffect(() => {
-    async function getnovel() {
-      try {
+
+  const getnovel = async () => {
+    try {
         setGenre("all");
         const data = await getnovels("all", 0);
         console.log("불러오자마자 페이지:"+page);
@@ -37,7 +37,20 @@ export default function Booklist() {
       } catch (e) {
         console.log(e);
       }
-    }
+  }
+
+  useEffect(() => {
+    // async function getnovel() {
+    //   try {
+    //     setGenre("all");
+    //     const data = await getnovels("all", 0);
+    //     console.log("불러오자마자 페이지:"+page);
+    //     console.log(data);
+    //     setNovels(data.data);
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // }
 
     getnovel();
   }, []);
@@ -56,6 +69,8 @@ export default function Booklist() {
 
 
   // 무한 스크롤
+  const triggerRef = useRef(null);
+
   const fetchData = async () => {
     try {
       setIsLoading(true);
@@ -86,6 +101,37 @@ export default function Booklist() {
     };
   }, [isLoading]);
 
+  //투명div감지 무한스크롤
+  // useEffect(() => {
+  // const observer = new IntersectionObserver((entries) => {
+  //   entries.forEach((entry) => {
+  //     if (entry.isIntersecting) {
+  //       console.log("감지&한무발동")
+  //       fetchData();
+  //       setPage((prevPage) => prevPage + 1); // 페이지 업데이트
+  //     }
+  //   });
+  // });
+
+  //   if (triggerRef.current) {
+  //     observer.observe(triggerRef.current);
+  //   }
+
+  //   return () => {
+  //     if (triggerRef.current) {
+  //       observer.unobserve(triggerRef.current);
+  //     }
+  //   };
+  // }, [isLoading]);
+
+  //카드 삭제 시 리스트 다시 불러오기
+  const goTop = () => {
+    window.scrollTo({ top: 250, behavior: "smooth" });
+  };
+  const refreshList = async () => {
+    selectgenre("all");
+    goTop();
+  }
 
   return (
     <div>
@@ -93,9 +139,10 @@ export default function Booklist() {
       <hr className={style.line} />
       <div className={style.list}>
         {novels?.map((novelcard, index) => (
-          <Card key={index} props={novelcard} />
+          <Card key={index} props={novelcard} refreshList={refreshList} />
         ))}
       </div>
+      <div className={style.trigger} ref={triggerRef}></div>
     </div>
   );
 }
