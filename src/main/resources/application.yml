@@ -33,12 +33,18 @@ spring:
               - OPTIONS
 # 로그인이 필요한 작업 : 마이페이지, 소설작성, 댓글,
       routes:
+        -
+        - id: auth_member
+          uri: http://***REMOVED***:8011/
+          predicates:
+            - Path=/member/myPage/image/**, /member/logout
+            - Method=GET,PUT,DELETE
 
         - id: auth_member
           uri: http://***REMOVED***:8011/
           predicates:
             - Path=/member/myPage, /member/logout
-            - Method=POST,PUT,DELETE
+            - Method=GET,POST,PUT,DELETE
           filters:
             - AuthenticationHeaderFilter
 
