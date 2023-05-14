@@ -21,6 +21,7 @@ boot-pay:
   rest-api-key: ***REMOVED***
   private-key: D6+wqdBeprLC6I2LwR42iG/YHMIHjwaynDkkjSmLHYo=
 
+
 ---
 
 spring:
@@ -52,7 +53,8 @@ spring:
     properties:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-
+kafka-config:
+  datasource: localhost:9092
 ---
 
 spring:
@@ -82,8 +84,10 @@ spring:
   kafka:
 #    bootstrap-servers: ***REMOVED***:9092
     bootstrap-servers: localhost:9092
-#    consumer:
-#      group-id: payment-group
+    consumer:
+      group-id: payment-group
 #    properties:
 #      key-serializer: org.apache.kafka.common.serialization.StringSerializer
 #      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+kafka-config:
+  datasource: localhost:9092
