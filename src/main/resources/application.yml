@@ -64,3 +64,8 @@ spring:
           uri: http://***REMOVED***:8111/
           predicates:
             - Path=/tempTest/**
+
+
+
+jwt:
+  secret: ***REMOVED***
