@@ -125,8 +125,9 @@ public class MemberService {
         MemberTokenResponseDto tokenInfo = jwtTokenProvider.generateToken(authentication, member);
 
         // 4. RefreshToken Redis 저장 (expirationTime 설정을 통해 자동 삭제 처리)
+        // "RT:{AccessToken}" : "{RefreshToken}"
         stringRedisTemplate.opsForValue()
-                .set("RT:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
+                .set("RT:" + tokenInfo.getAccessToken(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
         return tokenInfo;
     }
@@ -204,15 +205,16 @@ public class MemberService {
         String accessToken = token.split(" ")[1];
 
         // 1. Access Token 검증
-        if (jwtTokenProvider.validateToken(accessToken).equals("ok")) throw new InvalidedAccessTokenException();
+        if (!jwtTokenProvider.validateToken(accessToken).equals("ok")) throw new InvalidedAccessTokenException();
 
         // 2. Access Token 에서 Member email 을 가져옵니다.
         Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
 
-        // 3. Redis 에서 해당 Member email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
-        if (stringRedisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
+        // 3. Redis Access Token 으로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
+        // "RT:{AccessToken}" : "{RefreshToken}"
+        if (stringRedisTemplate.opsForValue().get("RT:" + accessToken) != null) {
             // Refresh Token 삭제
-            stringRedisTemplate.delete("RT:" + authentication.getName());
+            stringRedisTemplate.delete("RT:" + accessToken);
         }
 
         // 4. 해당 Access Token 유효시간 가지고 와서 BlackList 로 저장하기

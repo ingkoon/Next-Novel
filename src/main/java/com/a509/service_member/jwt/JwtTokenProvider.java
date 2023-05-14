@@ -62,6 +62,9 @@ public class JwtTokenProvider {
         String refreshToken = Jwts.builder()
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setHeaderParam("typ","JWT")
+                .setSubject(authentication.getName())
+                .claim(NAME_KEY, member.getNickName())
+                .claim(AUTHORITIES_KEY, member.getRole())
                 .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                 .compact();
 
