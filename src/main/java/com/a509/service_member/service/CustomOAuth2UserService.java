@@ -63,9 +63,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .provider(provider)
                     .providerId(providerId)
                     .build();
-            member = memberRepository.save(member);
+            memberRepository.save(member);
         } else {
-            member =optionalMember.get();
+            member = optionalMember.get();
         }
 
         System.out.println(member.toString());
