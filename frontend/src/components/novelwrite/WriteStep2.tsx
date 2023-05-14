@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Bottom from "./Bottom";
 import Canvas from "./Canvas";
 import Preview from "./Preview";
@@ -8,6 +8,7 @@ import { useNovelContext } from "../../context/NovelContext";
 import LoadingGameModal from "../common/LoadingGameModal";
 import useCheckReady from "../../hooks/useCheckReady";
 import useDataurlToFile from "../../hooks/useDataurlToFile";
+import LoadingModal from "../common/LoadingModal";
 
 export default function WriteStep2() {
   const { novel, setNovel, setStep } = useNovelContext();
@@ -18,6 +19,18 @@ export default function WriteStep2() {
   const [selected, setSelected] = useState(0);
   const { isShaking, checkReady } = useCheckReady();
   const { dataurlToFile } = useDataurlToFile();
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const button = () => {
     //그림 유효성 검사
@@ -55,7 +68,8 @@ export default function WriteStep2() {
 
   return (
     <div className={style.container}>
-      <LoadingGameModal state={startNovel.isLoading} />
+      <LoadingGameModal state={startNovel.isLoading && windowWidth > 768} />
+      <LoadingModal state={startNovel.isLoading && windowWidth <= 768} />
       <div className={style.component}>
         <Preview imageSrcs={imageSrcs} setSelected={setSelected} />
         <Canvas

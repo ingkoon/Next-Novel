@@ -19,6 +19,7 @@ export default function LoadingModal({ state }) {
             alignItems: "center",
             inset: "0",
             background: "none",
+            padding: "0",
           },
         }}
       >
