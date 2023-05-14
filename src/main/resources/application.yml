@@ -18,9 +18,9 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
-              - 'http://***REMOVED***'
-              - 'http://***REMOVED***:443'
               - 'https://***REMOVED***'
+              - 'http://***REMOVED***:443'
+              - 'https://localhost:3000'
               - 'http://localhost:3000'
             allow-credentials: true
             allowedHeaders: '*'
