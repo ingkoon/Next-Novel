@@ -4,6 +4,7 @@ import style from "./BookList.module.css";
 
 type BookListProps = {
   books: Book[];
+  refreshList: () => void;
 };
 type Book = {
   id: number;
@@ -15,11 +16,11 @@ type Book = {
   commentCount: number;
   likeCount: number;
 };
-export default function BookList({ books }: BookListProps) {
+export default function BookList({ books, refreshList }: BookListProps) {
   return (
     <div className={style.cardlist}>
       {books.map((book, index) => (
-        <Card props={book} key={index} />
+        <Card props={book} key={index} refreshList={refreshList} />
       ))}
     </div>
   );
