@@ -6,12 +6,21 @@ type DeleteProps = {
   id: number;
   closemodal: () => void;
   comid: number;
+  refreshList: () => void;
 };
-export default function Delete({ type, id, closemodal, comid }: DeleteProps) {
+export default function Delete({
+  type,
+  id,
+  closemodal,
+  comid,
+  refreshList,
+}: DeleteProps) {
   async function delnovel() {
     try {
       const data = await deletenovel(id);
       console.log(data);
+      console.log("삭제되었음");
+      refreshList();
       closemodal();
     } catch (e) {
       console.log(e);
@@ -31,6 +40,7 @@ export default function Delete({ type, id, closemodal, comid }: DeleteProps) {
   const deletething = () => {
     if (type === "novel") {
       delnovel();
+      refreshList();
     } else if (type === "comment") {
       delcomment();
     }

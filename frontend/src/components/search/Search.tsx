@@ -15,7 +15,7 @@ export default function Search() {
 
   async function getsearchlist(keyword: string) {
     try {
-      const data = await getsearch(keyword);
+      const data = await getsearch(keyword, 0);
       console.log(data);
       setNovels(data.data);
     } catch (e) {

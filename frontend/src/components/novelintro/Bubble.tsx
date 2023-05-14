@@ -38,6 +38,10 @@ export default function Bubble({ props, id, updatelist }: BubbleProps) {
     updatelist();
     setModal(false);
   };
+  //댓글에선refreshList불필요
+  const refreshList = () => {
+    return;
+  };
 
   return (
     <>
@@ -93,6 +97,7 @@ export default function Bubble({ props, id, updatelist }: BubbleProps) {
           id={id}
           closemodal={closemodal}
           comid={props.id}
+          refreshList={refreshList}
         />
       </Modal>
     </>
