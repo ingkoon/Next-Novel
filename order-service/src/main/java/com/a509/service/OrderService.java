@@ -151,7 +151,7 @@ public class OrderService {
     @Transactional
     public void cancelOrder(CancelRequestDto requestDto){
         Order order = orderRepository.findById(requestDto.getOrderId()).orElseThrow(NoSuchOrderException::new);
-        bootPayComponent.cancelOrder(order.getReceiptId());
+        bootPayComponent.cancelOrder(order.getReceiptId(), order.getPrice());
 
         PointUpdateRequestDto pointUpdateRequestDto = PointUpdateRequestDto.builder()
                 .nickName(order.getNickName())
