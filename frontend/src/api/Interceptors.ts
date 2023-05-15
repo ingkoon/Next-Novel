@@ -69,6 +69,10 @@ tokeninstance.interceptors.request.use(
 
 tokeninstance.interceptors.response.use(
   (response) => {
+    if (response.headers["Authorization"]) {
+      console.log("@@@@");
+      console.log(response.headers.Authorization);
+    }
     return response;
   },
   (error) => {
