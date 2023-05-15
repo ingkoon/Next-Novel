@@ -50,11 +50,10 @@ spring:
         - id: auth_novel
           uri: http://***REMOVED***:8012/
           predicates:
-            - Path=/comment/**, /write/**
+            - Path=/comment/**, /write/**, /novel
             - Method=POST,PUT,DELETE
           filters:
             - AuthenticationHeaderFilter
-
 
 
         - id: member
