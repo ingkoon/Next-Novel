@@ -8,11 +8,11 @@ import lombok.Getter;
 public class PointCreateRequestDto {
 
 //    @Positive
-    private String nickName;
+    private Long memberId;
 
     public Point toEntity(){
         return Point.builder()
-                .nickName(nickName)
+                .memberId(memberId)
                 .build();
     }
 }
