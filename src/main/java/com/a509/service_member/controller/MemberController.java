@@ -71,7 +71,7 @@ public class MemberController {
             response = memberService.oauth2Login("google", token);
         }
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "https://***REMOVED***");
+        headers.add("Location", "https://***REMOVED***?toekn="+response.toString());
         return new ResponseEntity<>(response, headers, HttpStatus.FOUND);
     }
 
