@@ -12,13 +12,6 @@ export default function Login({ move, closemodal }: LoginProps) {
   const [info, setInfo] = useState({ email: "", pw: "" });
   const navigate = useNavigate();
 
-  // function kakaoLogin() {
-  //   const { Kakao } = window;
-  //   Kakao.Auth.authorize({
-  //     redirectUri: process.env.REACT_APP_KAKAO_API,
-  //     // prompts : "login" //항상 로그인을 하게 만드는거임.
-  //   });
-  // }
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInfo({ ...info, [name]: value });
@@ -42,6 +35,16 @@ export default function Login({ move, closemodal }: LoginProps) {
         alert("이메일 또는 비밀번호를 확인해 주세요.");
       },
     });
+  };
+  const kakaoLogin = () => {
+    // const { Kakao } = window;
+    // Kakao.Auth.authorize({
+    //   redirectUri: process.env.REACT_APP_KAKAO_API,
+    //   // prompts : "login" //항상 로그인을 하게 만드는거임.
+    // });
+  };
+  const googleLogin = () => {
+    window.open(process.env.REACT_APP_GOOGLE_API!, "_blank");
   };
 
   return (
@@ -98,6 +101,7 @@ export default function Login({ move, closemodal }: LoginProps) {
               <img
                 src={process.env.PUBLIC_URL + "/icon/google.svg"}
                 alt="login"
+                onClick={googleLogin}
               />
             </div>
           </div>
