@@ -70,8 +70,6 @@ public class NovelController {
 		,@RequestPart("cover_images") MultipartFile[] coverImages
 		,@RequestPart("novel") NovelDetailDto novelDetailDto){
 		try{
-
-			System.out.println(contentImages);
 			LocalDateTime now = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
 			String UID = now.format(formatter);
