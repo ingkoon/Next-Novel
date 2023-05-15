@@ -79,12 +79,18 @@ public class BootPayComponent {
      */
     public HashMap<String, Object> cancelOrder(String receiptId){
         Bootpay bootpay = new Bootpay(restApiKey, privateKey);
+
         Cancel cancel = new Cancel();
         cancel.receiptId = receiptId;
         cancel.cancelUsername = "관리자";
         cancel.cancelMessage = "변심에 의한 주문 취소";
+        HashMap<String, Object> tokenMap = connectBootPay();
+
+        String token = tokenMap.get("access_token").toString();
+        bootpay.setToken(token);
 
         HashMap<String, Object> receiptCancel = null;
+
         try {
             receiptCancel = bootpay.receiptCancel(cancel);
         } catch (Exception e) {
