@@ -2,7 +2,7 @@ package com.a509.service_member.security;
 
 import com.a509.service_member.jwt.JwtAuthenticationFilter;
 import com.a509.service_member.jwt.JwtTokenProvider;
-import com.a509.service_member.service.CustomOAuth2UserService;
+//import com.a509.service_member.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final StringRedisTemplate stringRedisTemplate;
-    private final CustomOAuth2UserService customOAuth2UserService;
+//    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -35,11 +35,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
-                .and()
-                .oauth2Login()
-                .userInfoEndpoint(userInfo -> {
-                    userInfo.userService(customOAuth2UserService);
-                })
+//                .and()
+//                .oauth2Login()
+//                .userInfoEndpoint(userInfo -> {
+//                    userInfo.userService(customOAuth2UserService);
+//                })
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, stringRedisTemplate), UsernamePasswordAuthenticationFilter.class);
     }
