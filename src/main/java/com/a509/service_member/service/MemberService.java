@@ -17,13 +17,18 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.transaction.Transactional;
 
@@ -33,6 +38,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -47,6 +53,13 @@ public class MemberService {
     private final JwtTokenProvider jwtTokenProvider;
     private final StringRedisTemplate stringRedisTemplate;
     private final MemberImageComponent memberImageComponent;
+    private final WebClient webClient = WebClient.create();
+    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    String googleClientId;
+    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+    String googleClientSecret;
+    @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
+    String googleRedirectUrl;
 
     public Member findMember(String email) {
         return memberRepository.findByEmail(email).orElseThrow(NoSuchMemberException::new);
@@ -136,7 +149,28 @@ public class MemberService {
         return tokenInfo;
     }
 
-    // MemberTokenResponseDto 형식으로 반환
+    public String getTokenOauth2Google(String code) {
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("code", code);
+        body.add("client_id", googleClientId);
+        body.add("client_secret", googleClientSecret);
+        body.add("redirect_uri", googleRedirectUrl);
+        body.add("grant_type", "authorization_code");
+        Map<String, Object> responseBody = webClient.post()
+                .uri(uriBuilder -> uriBuilder
+                        .scheme("https")
+                        .host("oauth2.googleapis.com")
+                        .path("/token")
+                        .build())
+                .bodyValue(body)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+                })
+                .block();
+
+        return (String) responseBody.get("id_token");
+    }
+
     public MemberTokenResponseDto oauth2Login(String provider, String token) {
         // JWT token 의 payload 값 decode
         String[] jwtParts = token.split("\\.");
