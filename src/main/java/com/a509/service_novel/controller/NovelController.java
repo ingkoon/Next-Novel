@@ -75,6 +75,7 @@ public class NovelController {
 			return ResponseEntity.ok(novelInsertResponseDto);
 		}
 		catch (Exception e){
+			System.out.println(e);
 			return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

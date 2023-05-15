@@ -96,6 +96,7 @@ public class NovelService {
 
 		novelImageComponent.save(coverImages[0],UID);
 		novelImageComponent.save(coverImages[1],UID);
+		System.out.println("insert novel end");
 
 		return novel.getId();
 	}
@@ -225,6 +226,7 @@ public class NovelService {
 			novelImage.setNickName(nickName);
 			novelImageRepository.save(novelImage);
 		}
+		System.out.println("insert image end");
 	}
 
 	@Transactional
