@@ -52,7 +52,8 @@ public class AuthenticationHeaderFilter extends AbstractGatewayFilterFactory<Aut
 
 			// Step 1. RequestHeader에서 jwt 토큰 추출
 			String accessToken = jwtTokenProvider.resolveToken(request);
-			System.out.println(accessToken);
+			log.info(accessToken);
+			log.info("토큰검증!");
 
 
 			// Step 2. 토큰의 유효성 검사

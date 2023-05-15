@@ -61,11 +61,10 @@ spring:
           predicates:
             - Path=/member/**, /img/member/**
 
-
         - id: novel
           uri: http://***REMOVED***:8012/
           predicates:
-            - Path=/novel/**, /write/**, /comment/**, /img/novel/**
+            - Path=/novel/**, /img/novel/**
 
         - id: ai
           uri: http://***REMOVED***:8013/
