@@ -69,9 +69,9 @@ tokeninstance.interceptors.request.use(
 
 tokeninstance.interceptors.response.use(
   (response) => {
-    if (response.headers["Authorization"]) {
-      console.log("@@@@");
-      console.log(response.headers.Authorization);
+    if (response.headers["authorization"]) {
+      const access_token = response.headers.authorization.split(" ")[1];
+      localStorage.setItem("access_token", access_token);
     }
     return response;
   },
