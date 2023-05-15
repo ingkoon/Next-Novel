@@ -31,7 +31,8 @@ public class AuthenticationHeaderFilter extends AbstractGatewayFilterFactory<Aut
 	private final JwtTokenProvider jwtTokenProvider;
 	private final StringRedisTemplate stringRedisTemplate;
 	private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일
-
+	private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분
+	
 
 	public AuthenticationHeaderFilter(JwtTokenProvider jwtTokenProvider, StringRedisTemplate stringRedisTemplate) {
 		super(Config.class);
@@ -80,7 +81,7 @@ public class AuthenticationHeaderFilter extends AbstractGatewayFilterFactory<Aut
 						newExchange = exchange.mutate().request(newRequest).build();
 						stringRedisTemplate.delete(accessToken);
 						stringRedisTemplate.opsForValue()
-								.set("RT:" + newAccessToken, refreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
+								.set("RT:" + newAccessToken, refreshToken, ACCESS_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
 
 
 					} else {
