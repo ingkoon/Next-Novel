@@ -1,18 +1,18 @@
 package com.a509.service_member.security;
 
+import com.a509.service_member.component.LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+    private final LoginSuccessHandler loginSuccessHandler;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -27,15 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .oauth2Login()
-                .successHandler(successHandler());
-    }
-
-    private AuthenticationSuccessHandler successHandler() {
-        return (request, response, authentication) -> {
-            // 로그인 성공 후 토큰을 생성하거나 필요한 정보를 추출합니다.
-            // 프론트엔드 서버로 리디렉션합니다.
-            response.sendRedirect("https://***REMOVED***");
-        };
+                .successHandler(loginSuccessHandler);
     }
 
 }
