@@ -59,7 +59,7 @@ public class NovelController {
 
 	@PostMapping()
 	public ResponseEntity<?> insertNovel(@RequestPart("start_images") MultipartFile[] startImages
-		,@RequestPart("content_images") MultipartFile[] contentImages
+		,@RequestPart(name="content_images", required = false) MultipartFile[] contentImages
 		,@RequestPart("cover_images") MultipartFile[] coverImages
 		,@RequestPart("novel") NovelDetailDto novelDetailDto){
 		try{
