@@ -77,11 +77,12 @@ public class BootPayComponent {
     /*
     결제 취소
      */
-    public HashMap<String, Object> cancelOrder(String receiptId){
+    public HashMap<String, Object> cancelOrder(String receiptId, Long price){
         Bootpay bootpay = new Bootpay(restApiKey, privateKey);
 
         Cancel cancel = new Cancel();
         cancel.receiptId = receiptId;
+        cancel.cancelPrice = Double.parseDouble(price + "");
         cancel.cancelUsername = "관리자";
         cancel.cancelMessage = "변심에 의한 주문 취소";
         HashMap<String, Object> tokenMap = connectBootPay();

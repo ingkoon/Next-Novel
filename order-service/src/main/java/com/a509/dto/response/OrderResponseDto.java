@@ -9,13 +9,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderResponseDto {
-    private Long id;
+    private Long orderId;
     private Long point;
     private Long price;
     private String receiptId;
 
     public OrderResponseDto(Order order) {
-        this.id = order.getId();
+        this.orderId = order.getId();
         this.price = order.getPrice();
         this.point = order.getPrice() / 10L;
         this.receiptId = order.getReceiptId();
@@ -23,7 +23,7 @@ public class OrderResponseDto {
 
     public OrderResponseDto fromEntity(Order order){
         return OrderResponseDto.builder()
-                .id(order.getId())
+                .orderId(order.getId())
                 .point(order.getPrice()/10L)
                 .price(order.getPrice())
                 .receiptId(order.getReceiptId())

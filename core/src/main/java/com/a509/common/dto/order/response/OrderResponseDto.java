@@ -10,7 +10,4 @@ import lombok.*;
 public class OrderResponseDto {
     private Long id;
     private String receiptId;
-
-
-
 }
