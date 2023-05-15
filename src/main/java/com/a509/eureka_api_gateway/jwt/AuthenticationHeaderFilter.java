@@ -52,10 +52,11 @@ public class AuthenticationHeaderFilter extends AbstractGatewayFilterFactory<Aut
 
 			// Step 1. RequestHeader에서 jwt 토큰 추출
 			String accessToken = jwtTokenProvider.resolveToken(request);
+			System.out.println(accessToken);
 
 
 			// Step 2. 토큰의 유효성 검사
-			if (accessToken != "") { // 유효한 로그인 세션이라면
+			if (accessToken != null) { // 유효한 로그인 세션이라면
 
 				String refreshToken = stringRedisTemplate.opsForValue().get("RT:"+accessToken);
 
