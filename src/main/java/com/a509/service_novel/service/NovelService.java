@@ -219,6 +219,8 @@ public class NovelService {
 			novelImageRepository.save(novelImage);
 		}
 
+		if(contentImages==null)
+			return;
 		for(MultipartFile image : contentImages){
 
 			NovelImage novelImage = new NovelImage();
