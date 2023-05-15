@@ -15,12 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.security.Key;
-import java.security.KeyFactory;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -29,14 +24,12 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class JwtTokenProvider {
-
-    private static final String NAME_KEY = "name";
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
-//    private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 1000L;              // 1분
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분
+//    private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 1000L;              // 1분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일
-//    private static final long REFRESH_TOKEN_EXPIRE_TIME = 60 * 1000L;    // 1분
+    //    private static final long REFRESH_TOKEN_EXPIRE_TIME = 60 * 1000L;    // 1분
     private final Key key;
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
@@ -53,7 +46,6 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setHeaderParam("typ","JWT")
                 .setSubject(authentication.getName())
-                .claim(NAME_KEY, member.getNickName())
                 .claim(AUTHORITIES_KEY, member.getRole())
                 .setExpiration(accessTokenExpiresIn)
                 .compact();
@@ -63,7 +55,6 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setHeaderParam("typ","JWT")
                 .setSubject(authentication.getName())
-                .claim(NAME_KEY, member.getNickName())
                 .claim(AUTHORITIES_KEY, member.getRole())
                 .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                 .compact();
