@@ -8,23 +8,10 @@ import com.a509.service_member.exception.InvalidedAccessTokenException;
 import com.a509.service_member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.reactive.function.client.WebClient;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.security.GeneralSecurityException;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -33,10 +20,6 @@ import java.util.Map;
 public class MemberController {
 
     private final MemberService memberService;
-    @Value("${spring.security.oauth2.client.registration.google.client-id}")
-    String googleClientId;
-    @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
-    String googleRedirectUrl;
 
     @GetMapping
     public String hello() {
@@ -69,18 +52,7 @@ public class MemberController {
 
     @GetMapping("/oauth2/google")
     public String google() {
-        String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleClientId + "&redirect_uri=" + googleRedirectUrl
-                + "&response_type=code&scope=email%20profile&access_type=offline";
-//        + "&response_type=code&scope=email%20profile%20openid&access_type=offline";
-        String test1 = "https://accounts.google.com/o/oauth2/v2/auth?" +
-                "&scope=https://www.googleapis.com/auth/contacts.readonly&" +
-                "access_type=offline&" +
-                "include_granted_scopes=true&" +
-                "response_type=code&" +
-                "state=state_parameter_passthrough_value&" +
-                "redirect_uri="+googleRedirectUrl+"&" +
-                "client_id="+googleClientId;
-        return test1;
+        return "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcontacts.readonly&access_type=offline&include_granted_scopes=true&response_type=code&state=state_parameter_passthrough_value&redirect_uri=https%3A%2F%2F***REMOVED***%2Fapi%2Fmember%2Foauth2%2Fcode%2Fgoogle&client_id=***REMOVED***&service=lso&o2v=2&flowName=GeneralOAuthFlow";
     }
 
     @GetMapping("/oauth2/code/google")
@@ -89,7 +61,7 @@ public class MemberController {
         // http 통신 타서 google 회원 정보 가져오기
         String token = memberService.getTokenOauth2Google(code);
         System.out.println(token);
-        
+
         MemberTokenResponseDto response = null;
         if(token == null) {
             throw new InvalidedAccessTokenException("다른 방법으로 로그인하세요.");
