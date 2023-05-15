@@ -71,6 +71,7 @@ public class NovelController {
 			System.out.println("endendendend");
 			NovelInsertResponseDto novelInsertResponseDto = new NovelInsertResponseDto();
 			novelInsertResponseDto.setNovelId(novelId);
+			System.out.println(novelInsertResponseDto);
 			return ResponseEntity.ok(novelInsertResponseDto);
 		}
 		catch (Exception e){
