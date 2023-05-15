@@ -181,8 +181,15 @@ public class MemberService {
 
         String subValue = jsonObject.get("sub").getAsString();
         String emailValue = jsonObject.get("email").getAsString();
-        String nameValue = jsonObject.get("name").getAsString();
-        String pictureValue = jsonObject.get("picture").getAsString();
+        String nameValue = "";
+        String pictureValue = "";
+        try {
+            nameValue = jsonObject.get("name").getAsString();
+            pictureValue = jsonObject.get("picture").getAsString();
+        } catch (Exception e) {
+            nameValue = emailValue;
+            pictureValue = "defaultProfileImg.png";
+        }
 
         // 다음 형태의 이메일로 이미 가입 되어있는지 확인
         String email = provider+"@"+emailValue;   // ex)google@ejk9658@gmail.com
