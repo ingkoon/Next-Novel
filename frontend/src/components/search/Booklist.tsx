@@ -17,21 +17,14 @@ type Book = {
 
 type BookListProps = {
   novels: Book[];
+  props: string;
+  getsearchlist: (keyword: string) => void;
 };
 
-export default function Booklist({ novels }: BookListProps) {
-  // const [novels, setNovels] = useState([]);
-  // useEffect(() => {
-  //   let tmp = [];
-  //   for (let i = 0; i < novellen; i++) {
-  //     tmp = [...tmp];
-  //     tmp.push(Card);
-  //   }
-  //   setArr(tmp);
-  // }, [novels]);
+export default function Booklist({ novels, props, getsearchlist }: BookListProps) {
 
   const refreshList = () => {
-    return;
+    getsearchlist(props);
   }
 
   return (

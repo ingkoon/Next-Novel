@@ -15,12 +15,14 @@ export default function Thumbnail() {
   const id = location.state.id;
   const [novelid, setNovelid] = useState(id);
   const [novelinfo, setNovelinfo] = useState<NInfo>();
+  //로컬 닉네임
+  const localNickname: string = localStorage.getItem('nickName') ?? '';
 
   useEffect(() => {
     setNovelid(id);
     async function intro() {
       try {
-        const data = await getintro(novelid, localStorage.getItem("nickName"));
+        const data = await getintro(novelid, localNickname);
         console.log(data);
         setNovelinfo(data.data);
       } catch (e) {
