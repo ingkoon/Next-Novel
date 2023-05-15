@@ -4,8 +4,8 @@ COPY . /app
 
 WORKDIR /app
 
-EXPOSE 8000
+EXPOSE 8018
 
 RUN pip3 install -r requirements.txt
 
-ENTRYPOINT ["uvicorn","app:app","--reload","--host=0.0.0.0","--port=8000"]
+ENTRYPOINT ["uvicorn","app:app","--reload","--host=0.0.0.0","--port=8018"]
