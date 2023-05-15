@@ -1,12 +1,14 @@
 package com.a509.service_member.dto.request;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Getter
+@Setter
 public class MemberLoginRequestDto {
 
     @NotBlank(message = "이메일은 필수 입력값입니다.")

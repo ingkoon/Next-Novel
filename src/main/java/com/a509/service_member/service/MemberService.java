@@ -13,22 +13,32 @@ import com.a509.service_member.exception.NoSuchMemberException;
 import com.a509.service_member.jpa.member.Member;
 import com.a509.service_member.jpa.member.MemberRepository;
 import com.a509.service_member.jwt.JwtTokenProvider;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.transaction.Transactional;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.NoSuchFileException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -43,6 +53,13 @@ public class MemberService {
     private final JwtTokenProvider jwtTokenProvider;
     private final StringRedisTemplate stringRedisTemplate;
     private final MemberImageComponent memberImageComponent;
+    private final WebClient webClient = WebClient.create();
+    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    String googleClientId;
+    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+    String googleClientSecret;
+    @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
+    String googleRedirectUrl;
 
     public Member findMember(String email) {
         return memberRepository.findByEmail(email).orElseThrow(NoSuchMemberException::new);
@@ -130,6 +147,80 @@ public class MemberService {
                 .set("RT:" + tokenInfo.getAccessToken(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
         return tokenInfo;
+    }
+
+    public String getTokenOauth2Google(String code) {
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("code", code);
+        body.add("client_id", googleClientId);
+        body.add("client_secret", googleClientSecret);
+        body.add("redirect_uri", googleRedirectUrl);
+        body.add("grant_type", "authorization_code");
+        Map<String, Object> responseBody = webClient.post()
+                .uri(uriBuilder -> uriBuilder
+                        .scheme("https")
+                        .host("oauth2.googleapis.com")
+                        .path("/token")
+                        .build())
+                .bodyValue(body)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+                })
+                .block();
+
+        return (String) responseBody.get("id_token");
+    }
+
+    public MemberTokenResponseDto oauth2Login(String provider, String token) {
+        // JWT token 의 payload 값 decode
+        String[] jwtParts = token.split("\\.");
+        byte[] bytes = Base64.getDecoder().decode((jwtParts[1]));
+        String payload = new String(bytes, StandardCharsets.UTF_8);
+        System.out.println(payload);
+
+        // String 형태를 json 형태로 변환 후 정보 추출
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(payload, JsonObject.class);
+
+        String subValue = jsonObject.get("sub").getAsString();
+        String emailValue = jsonObject.get("email").getAsString();
+        String nameValue = jsonObject.get("name").getAsString();
+        String pictureValue = jsonObject.get("picture").getAsString();
+
+        // 다음 형태의 이메일로 이미 가입 되어있는지 확인
+        String email = provider+"@"+emailValue;   // ex)google@ejk9658@gmail.com
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+
+        Member member;
+        if (optionalMember.isEmpty()) {
+            // 해당 닉네임으로 이미 가입 되어있는지 확인함
+            int num = 0;
+            while(memberRepository.existsByNickName(nameValue)) {
+                nameValue = jsonObject.get("name").getAsString()+"_"+(++num);    // ex)닉네임_0
+            }
+
+            // 회원가입 진행
+            member = Member
+                    .builder()
+                    .email(email)
+                    .password(bCryptPasswordEncoder.encode("딘추"))
+                    .nickName(nameValue)
+                    .profileImage(pictureValue)
+                    .provider(provider)
+                    .providerId(subValue)
+                    .build();
+            memberRepository.save(member);
+        } else {
+            member = optionalMember.get();
+        }
+
+        System.out.println(member.toString());
+
+        // 로그인 진행
+        MemberLoginRequestDto loginDto = new MemberLoginRequestDto();
+        loginDto.setEmail(member.getEmail());
+        loginDto.setPassword("딘추");
+        return login(loginDto);
     }
 
     public void logout(String token) {
