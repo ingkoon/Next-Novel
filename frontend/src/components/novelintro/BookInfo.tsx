@@ -26,6 +26,9 @@ export default function BookInfo() {
   const [novelid, setNovelid] = useState(id);
   const [novelinfo, setNovelinfo] = useState<NInfo>();
   const [create, setCreate] = useState("");
+  //로컬스토리지 닉네임
+  const localNickname: string = localStorage.getItem('nickName') ?? '';
+
 
   const goTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -33,7 +36,8 @@ export default function BookInfo() {
 
   async function intro() {
     try {
-      const data = await getintro(novelid, localStorage.getItem('nickName'));
+      
+      const data = await getintro(novelid, localNickname);
       console.log(data);
       console.log("닉네임불러오기:"+localStorage.getItem('nickName'));
       setNovelinfo(data.data);
@@ -52,7 +56,7 @@ export default function BookInfo() {
     console.log(novelinfo?.liked);
     if (novelinfo?.liked) {
       try {
-        const data = await deleteliked(novelid, localStorage.getItem('nickName'));
+        const data = await deleteliked(novelid, localNickname);
         console.log(data);
         intro();
       } catch (e) {
@@ -60,7 +64,7 @@ export default function BookInfo() {
       }
     }else{
       try {
-        const data = await postliked(novelid, localStorage.getItem('nickName'));
+        const data = await postliked(novelid, localNickname);
         console.log(data);
         intro();
       } catch (e) {

@@ -77,7 +77,8 @@ export default function Search() {
       </div>
       <div className={style.search_result}>"{result}"에 대한 검색결과 :</div>
 
-      <Booklist novels={novels} />
+      {/* <Booklist novels={novels} /> */}
+      <Booklist novels={novels} props={keyword} getsearchlist={getsearchlist} />
     </div>
   );
 }
