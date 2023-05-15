@@ -80,7 +80,7 @@ spring:
         format_sql: true
     database: mysql
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
   kafka:
 #    bootstrap-servers: ***REMOVED***:9092
     bootstrap-servers: kafka:9092

@@ -65,8 +65,8 @@ public class OrderController {
     }
 
         @DeleteMapping
-        public ResponseEntity<CancelResponseDto> cancelOrder(@RequestBody CancelRequestDto requestDto){
-            orderService.cancelOrder(requestDto);
+        public ResponseEntity<CancelResponseDto> cancelOrder(@RequestParam Long orderId){
+            orderService.cancelOrder(orderId);
             CancelResponseDto responseDto = new CancelResponseDto();
             return ResponseEntity
                     .ok()

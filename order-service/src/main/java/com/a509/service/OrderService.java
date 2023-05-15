@@ -149,8 +149,8 @@ public class OrderService {
     기능을 수행한다.
      */
     @Transactional
-    public void cancelOrder(CancelRequestDto requestDto){
-        Order order = orderRepository.findById(requestDto.getOrderId()).orElseThrow(NoSuchOrderException::new);
+    public void cancelOrder(Long orderId){
+        Order order = orderRepository.findById(orderId).orElseThrow(NoSuchOrderException::new);
         bootPayComponent.cancelOrder(order.getReceiptId(), order.getPrice());
 
         PointUpdateRequestDto pointUpdateRequestDto = PointUpdateRequestDto.builder()
