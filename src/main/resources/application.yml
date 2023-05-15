@@ -49,6 +49,15 @@ spring:
             scope:
               - email
               - profile
+#          kakao:
+#            client-id: c14601ca26611d190ce398541516755a
+#            redirect-uri: https://***REMOVED***/api/member/oauth2/code/kakao
+#        provider:
+#          kakao:
+#            authorization-uri: https://kauth.kakao.com/oauth/authorize
+#            token-uri: https://kauth.kakao.com/oauth/token
+#            user-info-uri: https://kapi.kakao.com/v2/user/me
+#            user-name-attribute: kakao_account
 
 jwt:
   secret: ***REMOVED***
