@@ -50,11 +50,6 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/oauth2/google")
-    public String google() {
-        return "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcontacts.readonly&access_type=offline&include_granted_scopes=true&response_type=code&state=state_parameter_passthrough_value&redirect_uri=https%3A%2F%2F***REMOVED***%2Fapi%2Fmember%2Foauth2%2Fcode%2Fgoogle&client_id=***REMOVED***&service=lso&o2v=2&flowName=GeneralOAuthFlow";
-    }
-
     @GetMapping("/oauth2/code/google")
     public ResponseEntity<MemberTokenResponseDto> loginOauth2Google(@RequestParam("code") String code) {
         // google 에서 설정한 redirect uri 로 요청이 들어오면 쿼리 스트링으로 들어온 code 값을 이용
@@ -68,6 +63,22 @@ public class MemberController {
         } else {
             response = memberService.oauth2Login("google", token);
         }
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/oauth2/code/kakao")
+    public ResponseEntity<MemberTokenResponseDto> loginOauth2Kakao(@RequestParam("code") String code) {
+        // kakao 에서 설정한 redirect uri 로 요청이 들어오면 쿼리 스트링으로 들어온 code 값을 이용
+        // http 통신 타서 kakao 회원 정보 가져오기
+        String token = memberService.getTokenOauth2Kakao(code);
+        System.out.println(token);
+
+        MemberTokenResponseDto response = null;
+//        if(token == null) {
+//            throw new InvalidedAccessTokenException("다른 방법으로 로그인하세요.");
+//        } else {
+//            response = memberService.loginOauth2Kakao(token);
+//        }
         return ResponseEntity.ok(response);
     }
 

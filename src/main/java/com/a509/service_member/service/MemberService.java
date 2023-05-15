@@ -57,6 +57,10 @@ public class MemberService {
     String googleClientSecret;
     @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
     String googleRedirectUrl;
+    @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
+    String kakaoClientId;
+    @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
+    String kakaoRedirectUrl;
 
     public Member findMember(String email) {
         return memberRepository.findByEmail(email).orElseThrow(NoSuchMemberException::new);
@@ -167,6 +171,49 @@ public class MemberService {
 
         return (String) responseBody.get("id_token");
     }
+
+    public String getTokenOauth2Kakao(String code) {
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "authorization_code");
+        body.add("client_id", kakaoClientId);
+        body.add("redirect_uri", kakaoRedirectUrl);
+        body.add("code", code);
+        Map<String, Object> responseBody = webClient.post()
+                .uri(uriBuilder -> uriBuilder
+                        .scheme("https")
+                        .host("kauth.kakao.com")
+                        .path("/oauth/token")
+                        .build())
+//                .contentType(Media)
+                .bodyValue(body)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+                })
+                .block();
+
+        return (String) responseBody.get("access_token");
+    }
+
+//    public MemberTokenResponseDto loginOauth2Kakao(String code) {
+//        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+//        body.add("grant_type", "authorization_code");
+//        body.add("client_id", kakaoClientId);
+//        body.add("redirect_uri", kakaoRedirectUrl);
+//        body.add("code", code);
+//        Map<String, Object> responseBody = webClient.post()
+//                .uri(uriBuilder -> uriBuilder
+//                        .scheme("https")
+//                        .host("kauth.kakao.com")
+//                        .path("/oauth/token")
+//                        .build())
+//                .bodyValue(body)
+//                .retrieve()
+//                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+//                })
+//                .block();
+//
+//        return
+//    }
 
     public MemberTokenResponseDto oauth2Login(String provider, String token) {
         // JWT token 의 payload 값 decode
