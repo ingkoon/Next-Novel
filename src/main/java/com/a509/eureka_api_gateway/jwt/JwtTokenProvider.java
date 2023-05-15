@@ -53,6 +53,7 @@ public class JwtTokenProvider {
 
 
 	public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+		System.out.println(secretKey);
 		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
 		this.key = Keys.hmacShaKeyFor(keyBytes);
 	}
@@ -61,13 +62,13 @@ public class JwtTokenProvider {
 	public String generateToken(Map<String,Object> payload) {
 		long now = (new Date()).getTime();
 		// Access Token 생성
+
 		Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
 		String accessToken = Jwts.builder()
 				.signWith(key, SignatureAlgorithm.HS256)
 				.setHeaderParam("typ", "JWT")
 				.setSubject((String) payload.get("sub"))
 				.claim(EMAIL_KEY, payload.get(EMAIL_KEY))
-				.claim(NAME_KEY, payload.get(NAME_KEY))
 				.claim(AUTHORITIES_KEY, payload.get(AUTHORITIES_KEY))
 				.setExpiration(accessTokenExpiresIn)
 				.compact();

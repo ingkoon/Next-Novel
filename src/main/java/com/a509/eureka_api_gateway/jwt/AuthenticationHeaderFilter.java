@@ -86,6 +86,8 @@ public class AuthenticationHeaderFilter extends AbstractGatewayFilterFactory<Aut
 								.set("RT:" + newAccessToken, refreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
 
 
+
+
 					} else {
 						log.info("AccessToken의 유효시간이 아직 남아있습니다.");
 					}
