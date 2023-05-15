@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class CreateRequestDto {
-    private String nickName;
+    private String memberId;
     private Long itemId;
     private Long price;
     private String receiptId;

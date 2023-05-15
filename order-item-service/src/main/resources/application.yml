@@ -73,7 +73,7 @@ spring:
         format_sql: true
     database: mysql
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   kafka:
     bootstrap-servers: kafka:9092
     consumer:

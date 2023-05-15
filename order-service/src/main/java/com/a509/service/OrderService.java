@@ -44,8 +44,8 @@ public class OrderService {
     feature method: findOrders
     - 주문 내역 리스트를 가져온다.
      */
-    public List<OrderResponseDto> findOrders(String nickName){
-        List<Order> orderList = orderRepository.findAllByNickName(nickName);
+    public List<OrderResponseDto> findOrders(long memberId){
+        List<Order> orderList = orderRepository.findAllByMemberId(memberId);
         log.info("===== list size : " + orderList.size() + "=====");
         return orderList
                 .stream()
@@ -104,10 +104,10 @@ public class OrderService {
         orderRepository.save(order);
 
         PointUpdateRequestDto pointUpdateRequestDto = PointUpdateRequestDto.builder()
-                .nickName(order.getNickName())
+                .memberId(order.getMemberId())
                 .point(order.getPrice()/10L).build();
 
-        updatePointTemplate.send("order_item", order.getNickName().toString(), pointUpdateRequestDto);
+        updatePointTemplate.send("order_item", order.getMemberId().toString(), pointUpdateRequestDto);
         CreateOrderItemRequestDto orderItemRequestDto =
                 CreateOrderItemRequestDto.builder()
                         .orderId(order.getId())
@@ -154,10 +154,10 @@ public class OrderService {
         bootPayComponent.cancelOrder(order.getReceiptId(), order.getPrice());
 
         PointUpdateRequestDto pointUpdateRequestDto = PointUpdateRequestDto.builder()
-                .nickName(order.getNickName())
+                .memberId(order.getMemberId())
                 .point(order.getPrice()/10L * -1).build();
 
-        updatePointTemplate.send("order_item", order.getNickName().toString(), pointUpdateRequestDto);
+        updatePointTemplate.send("order_item", order.getMemberId().toString(), pointUpdateRequestDto);
 
         DeleteOrderItemRequestDto orderItemRequestDto =
                 DeleteOrderItemRequestDto.builder()

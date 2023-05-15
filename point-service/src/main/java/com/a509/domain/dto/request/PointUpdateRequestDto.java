@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PointUpdateRequestDto {
-    private String nickName;
+    private Long memberId;
     private Long point;
 }

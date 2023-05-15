@@ -29,17 +29,17 @@ public class OrderController {
                     .body(token);
         }
 
-        @GetMapping("/{nickName}")
+        @GetMapping("/{memberId}")
         public ResponseEntity<List<OrderResponseDto>> findOrderList(
-                @PathVariable("nickName") String nickName){
-            List<OrderResponseDto> response = orderService.findOrders(nickName);
+                @PathVariable("memberId") Long memberId){
+            List<OrderResponseDto> response = orderService.findOrders(memberId);
             return ResponseEntity
                     .ok()
                     .body(response);
         }
 
-        @GetMapping("/{nickName}/{orderId}")
-        public ResponseEntity<OrderResponseDto> findOrder(@PathVariable("nickName") String nickName, @PathVariable("orderId") long orderId) {
+        @GetMapping("/{memberId}/{orderId}")
+        public ResponseEntity<OrderResponseDto> findOrder(@PathVariable("memberId") Long memberId, @PathVariable("orderId") long orderId) {
             OrderResponseDto response = orderService.findOrder(orderId);
             return ResponseEntity
                     .ok()
