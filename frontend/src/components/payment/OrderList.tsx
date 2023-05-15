@@ -26,23 +26,12 @@ export default function OrderList() {
     }
   }
 
-  const tempData = [
-    { id: 0, point: 500, price: 5000, receiptId: "644a307d966b740020754edc" },
-    {
-      id: 0,
-      point: 10000,
-      price: 100000,
-      receiptId: "644a307d966b740020754edc",
-    },
-    { id: 0, point: 1000, price: 10000, receiptId: "644a307d966b740020754edc" },
-    { id: 0, point: 5000, price: 50000, receiptId: "644a307d966b740020754edc" },
-  ];
-
   return (
     <div className={style.container}>
       <div className={style.list}>
         <div className={style.listTitle}>포인트 내역</div>
-        {tempData.map((order, index) => {
+        {orderList.length === 0 && <div>결제 내역이 없습니다</div>}
+        {orderList.map((order, index) => {
           return (
             <div className={style.item} key={index}>
               <div className={style.itemLeft}>
