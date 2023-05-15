@@ -8,7 +8,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper";
 
-import { getrecommend } from "../../api/library.js";
+import { getrecommend } from "../../api/library";
 
 interface SwiperStyle extends CSSProperties {
   "--swiper-navigation-color"?: string;

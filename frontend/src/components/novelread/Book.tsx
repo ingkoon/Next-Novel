@@ -49,7 +49,8 @@ type InputProps = {
 
 export default function Book() {
   const { id } = useParams<Params>();
-  const [novelid, setNovelid] = useState(id);
+  const Nid = id? parseInt(id) : 0;
+  const [novelid, setNovelid] = useState(Nid);
   const [novelinfo, setNovelinfo] = useState<Ninfo>();
   const [novelMat, setNovelMat] = useState<NMat>([]);
   const [novelContent, setNovelContent] = useState<Ncontent>();
@@ -57,6 +58,8 @@ export default function Book() {
   const [rerender, setRerender] = useState("");
   const page_ref = useRef<HTMLDivElement>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false); //loginmodal
+  //로컬 닉네임
+  const localNickname: string = localStorage.getItem('nickName') ?? '';
 
   const [input, setInput] = useState<InputProps>({});
   const { submitComment } = useCommentWrite();
@@ -64,7 +67,7 @@ export default function Book() {
   async function nvinfo() {
     console.log("노벨아이디" + novelid);
     try {
-      const data = await novelall(novelid, localStorage.getItem('nickName'));
+      const data = await novelall(novelid, localNickname);
       console.log(data);
       setNovelinfo({
         coverImg: data.data.coverImg,
@@ -91,7 +94,7 @@ export default function Book() {
 
   useEffect(() => {
     console.log("mount useEffect");
-    setNovelid(id);
+    setNovelid(Nid);
     nvinfo();
   }, [novelid]);
 
@@ -149,7 +152,7 @@ export default function Book() {
 
     submitComment.mutate({
     content: input.comm.trim(),
-    nickName: localStorage.getItem("nickName"),
+    nickName: localNickname,
     novelId: novelid
   }, {
       onSuccess: (res) => {
