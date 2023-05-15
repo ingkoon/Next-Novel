@@ -83,7 +83,7 @@ public class AuthenticationHeaderFilter extends AbstractGatewayFilterFactory<Aut
 						newExchange = exchange.mutate().request(newRequest).build();
 						stringRedisTemplate.delete(accessToken);
 						stringRedisTemplate.opsForValue()
-								.set("RT:" + newAccessToken, refreshToken, ACCESS_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
+								.set("RT:" + newAccessToken, refreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
 
 
 					} else {
