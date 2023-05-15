@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.a509.service_novel.component.MemberClientComponent;
+import com.a509.service_novel.dto.MemberMyPageResponseDto;
+import com.a509.service_novel.dto.MyPageDto;
 import com.a509.service_novel.dto.NovelInsertResponseDto;
 import com.a509.service_novel.dto.NovelListDto;
 import com.a509.service_novel.redis.DialogHistory;
@@ -18,6 +21,7 @@ import com.a509.service_novel.redis.DialogHistoryRepository;
 import com.a509.service_novel.component.NovelImageComponent;
 
 import com.a509.service_novel.dto.NovelDetailDto;
+import com.a509.service_novel.service.NovelLikeService;
 import com.a509.service_novel.service.NovelService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +34,9 @@ public class NovelController {
 	private final NovelService novelService;
 	private final NovelImageComponent novelImageComponent;
 	private final DialogHistoryRepository dialogHistoryRepository;
+
+	private final NovelLikeService novelLikeService;
+	private final MemberClientComponent memberClientComponent;
 	@GetMapping("/hello")
 	public ResponseEntity<?> hello(){
 		return new ResponseEntity<>("hello",HttpStatus.OK);
@@ -126,10 +133,18 @@ public class NovelController {
 	}
 
 	@GetMapping("/my/{id}")
-	public ResponseEntity<?> selectNovelByAuthorId(@PathVariable("id") String nickName){
+	public ResponseEntity<?> selectNovelByAuthorId(@PathVariable("id") String nickName,
+													@RequestHeader("Authorization") final String token){
 		try{
+			MemberMyPageResponseDto memberMyPageResponseDto = memberClientComponent.findMyPage(token).getBody();
+			List<NovelListDto> novelLikes= novelLikeService.selectLikedNovelList(nickName);
 			List<NovelListDto> novelWritten = novelService.selectNovelsByAuthorId(nickName);
-			return ResponseEntity.ok(novelService.selectNovelsByAuthorId(nickName));
+
+			MyPageDto myPageDto = new MyPageDto();
+			myPageDto.setNovelLikes(novelLikes);
+			myPageDto.setNovelWritten(novelWritten);
+			myPageDto.setProfile(memberMyPageResponseDto);
+			return ResponseEntity.ok(myPageDto);
 		}
 		catch(Exception e){
 			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
