@@ -131,18 +131,16 @@ public class NovelController {
 	}
 
 	@GetMapping("/my/{id}")
-	public ResponseEntity<?> selectNovelByAuthorId(@PathVariable("id") String nickName,
-													@RequestHeader("Authorization") final String token){
+	public ResponseEntity<?> selectNovelByAuthorId(@PathVariable("id") String nickName){
 		try{
-			MemberMyPageResponseDto memberMyPageResponseDto = memberClientComponent.findMyPage(token).getBody();
-			List<NovelListDto> novelLikes= novelLikeService.selectLikedNovelList(nickName);
-			List<NovelListDto> novelWritten = novelService.selectNovelsByAuthorId(nickName);
-
-			MyPageDto myPageDto = new MyPageDto();
-			myPageDto.setNovelLikes(novelLikes);
-			myPageDto.setNovelWritten(novelWritten);
-			myPageDto.setProfile(memberMyPageResponseDto);
-			return ResponseEntity.ok(myPageDto);
+			// List<NovelListDto> novelLikes= novelLikeService.selectLikedNovelList(nickName);
+			// List<NovelListDto> novelWritten = novelService.selectNovelsByAuthorId(nickName);
+			//
+			// MyPageDto myPageDto = new MyPageDto();
+			// myPageDto.setNovelLikes(novelLikes);
+			// myPageDto.setNovelWritten(novelWritten);
+			// myPageDto.setProfile(memberMyPageResponseDto);
+			return ResponseEntity.ok(novelService.selectNovelsByAuthorId(nickName));
 		}
 		catch(Exception e){
 			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
