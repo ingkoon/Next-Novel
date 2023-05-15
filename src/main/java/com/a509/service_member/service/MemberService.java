@@ -8,7 +8,6 @@ import com.a509.service_member.dto.response.MessageResponseDto;
 import com.a509.service_member.enums.MemberState;
 import com.a509.service_member.exception.DuplicatedMemberException;
 import com.a509.service_member.exception.EmptyValueException;
-import com.a509.service_member.exception.InvalidedAccessTokenException;
 import com.a509.service_member.exception.NoSuchMemberException;
 import com.a509.service_member.jpa.member.Member;
 import com.a509.service_member.jpa.member.MemberRepository;
@@ -33,8 +32,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import javax.transaction.Transactional;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.NoSuchFileException;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -196,7 +193,7 @@ public class MemberService {
             // 해당 닉네임으로 이미 가입 되어있는지 확인함
             int num = 0;
             while(memberRepository.existsByNickName(nameValue)) {
-                nameValue = jsonObject.get("name").getAsString()+"_"+(++num);    // ex)닉네임_0
+                nameValue = jsonObject.get("name").getAsString()+"_"+(++num);    // ex)닉네임_1
             }
 
             // 회원가입 진행
@@ -292,23 +289,16 @@ public class MemberService {
 
     @Transactional
     public void updateRedisItems(String token, String status) {
-
         String accessToken = token.split(" ")[1];
 
-        // 1. Access Token 검증
-        if (!jwtTokenProvider.validateToken(accessToken).equals("ok")) throw new InvalidedAccessTokenException();
-
-        // 2. Access Token 에서 Member email 을 가져옵니다.
-        Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
-
-        // 3. Redis Access Token 으로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
+        // 1. Redis Access Token 으로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
         // "RT:{AccessToken}" : "{RefreshToken}"
         if (stringRedisTemplate.opsForValue().get("RT:" + accessToken) != null) {
             // Refresh Token 삭제
             stringRedisTemplate.delete("RT:" + accessToken);
         }
 
-        // 4. 해당 Access Token 유효시간 가지고 와서 BlackList 로 저장하기
+        // 2. 해당 Access Token 유효시간 가지고 와서 BlackList 로 저장하기
         Long expiration = jwtTokenProvider.getExpiration(accessToken);
         stringRedisTemplate.opsForValue().set(accessToken, status, expiration, TimeUnit.MILLISECONDS);
     }
