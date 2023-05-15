@@ -19,13 +19,16 @@ type NInfo = {
 
 export default function InfoCard() {
   const { id } = useParams<Params>();
-  const [novelid, setNovelid] = useState(id);
+  const Nid = id? parseInt(id) : 0;
+  const [novelid, setNovelid] = useState<number>(Nid);
   const [novelinfo, setNovelinfo] = useState<NInfo>();
   const [create, setCreate] = useState("");
+  //로컬 닉네임
+  const localNickname: string = localStorage.getItem('nickName') ?? '';
 
   async function nvinfo() {
     try {
-      const data = await novelall(novelid, localStorage.getItem("nickName"));
+      const data = await novelall(novelid, localNickname);
       console.log(data);
       setNovelinfo(data.data);
       const year = data.data.createdAt.substring(0, 4);
@@ -38,7 +41,7 @@ export default function InfoCard() {
   }
 
   useEffect(() => {
-    setNovelid(id);
+    setNovelid(Nid);
     nvinfo();
   }, [novelid]);
 

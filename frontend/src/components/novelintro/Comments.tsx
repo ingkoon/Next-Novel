@@ -10,10 +10,14 @@ export default function Comments() {
   const id = location.state.id;
   const [novelid, setNovelid] = useState(id);
   const [commentlist, setCommentlist] = useState([]);
+  
+  //로컬 닉네임
+  const localNickname: string = localStorage.getItem('nickName') ?? '';
+
 
   async function comment() {
     try {
-      const data = await getcomment(novelid, localStorage.getItem("nickName"));
+      const data = await getcomment(novelid, localNickname);
       console.log(data);
       setCommentlist(data.data.comments);
     } catch (e) {

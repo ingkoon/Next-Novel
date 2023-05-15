@@ -85,10 +85,11 @@ export default function Booklist() {
     }
   };
 
+  // 바닥에서 300px 상단에서 한무스크롤 발동
   useEffect(() => {
     const handleScroll = () => {
       const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-      if (scrollTop + clientHeight >= scrollHeight - 5 && !isLoading) {
+      if (scrollTop + clientHeight >= scrollHeight - 300 && !isLoading) {
         console.log("한무스크롤발동! 현재페이지는:" + page)
         fetchData();
         setPage((prevPage) => prevPage + 1); // 페이지 업데이트
@@ -142,7 +143,7 @@ export default function Booklist() {
           <Card key={index} props={novelcard} refreshList={refreshList} />
         ))}
       </div>
-      <div className={style.trigger} ref={triggerRef}></div>
+      {/* <div className={style.trigger} ref={triggerRef}></div> */}
     </div>
   );
 }

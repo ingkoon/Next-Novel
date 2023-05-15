@@ -11,8 +11,8 @@ export default function useCommentWrite() {
       novelId,
     }: {
       content: string;
-      nickName: string | null;
-      novelId: string | undefined;
+      nickName: string;
+      novelId: number;
     }) => {
       const res = await writecomment({ content, nickName, novelId });
       return res.data;

@@ -1,9 +1,10 @@
-import { instance } from "../api/Interceptors";
-import { tokeninstance } from "../api/Interceptors";
+import { NickName } from "./../types.d";
+import { instance } from "./Interceptors";
+import { tokeninstance } from "./Interceptors";
 import axios from "axios";
 
 // 소설 정보(제목, 작성자, 출간일, 장르) , 소설 불러오기
-export async function novelall(id, nickName) {
+export async function novelall(id: number, nickName: string) {
   // const res = await instance.get(`novel/${id}/`);
   // return res;
   // return axios.get("/novel/read/novel_read2.json");
@@ -20,7 +21,12 @@ export async function novelall(id, nickName) {
 }
 
 // 소감평작성
-export async function writecomment(commentData) {
+type commentData = {
+  content: string;
+  nickName: string;
+  novelId: number;
+};
+export async function writecomment(commentData: commentData) {
   // console.log("넘어오나요" + formData);
   // const res = await tokeninstance.post(`novel/${id}/comment/`, {
   //   content: comment,
