@@ -56,7 +56,7 @@ public class MemberController {
     }
 
     @GetMapping("/oauth2/code/google")
-    public ResponseEntity<MemberTokenResponseDto> loginOauth2Google(String code) {
+    public ResponseEntity<MemberTokenResponseDto> loginOauth2Google(@RequestParam("code") String code) {
         // google 에서 설정한 redirect uri 로 요청이 들어오면 쿼리 스트링으로 들어온 code 값을 이용
         // http 통신 타서 google 회원 정보 가져오기
         String token = memberService.getTokenOauth2Google(code);
