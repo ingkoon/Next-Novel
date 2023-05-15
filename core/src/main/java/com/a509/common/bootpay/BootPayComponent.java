@@ -91,13 +91,16 @@ public class BootPayComponent {
 
         HashMap<String, Object> receiptCancel = null;
 
+
         try {
             receiptCancel = bootpay.receiptCancel(cancel);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        if(receiptCancel.get("error_code") != null)
+        if(receiptCancel.get("error_code") != null) {
+            log.info(receiptCancel.toString());
             throw new InvalidReceiptException("결제 정보를 확인할 수 없습니다.");
+        }
         return receiptCancel;
     }
 }
