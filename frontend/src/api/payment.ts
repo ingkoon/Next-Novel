@@ -14,7 +14,7 @@ export async function getPointApi() {
   });
 }
 export async function updatePointApi(jsonData: UpdatePoint) {
-  return tokeninstance.patch("point");
+  return tokeninstance.put("point", jsonData);
 }
 export async function deletePointApi() {
   return tokeninstance.delete("point");
