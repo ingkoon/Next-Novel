@@ -68,7 +68,9 @@ public class MemberController {
         } else {
             response = memberService.oauth2Login("google", token);
         }
-        return ResponseEntity.ok(response);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "https://***REMOVED***");
+        return new ResponseEntity<>(response, headers, HttpStatus.FOUND);
     }
 
 //    @GetMapping("/test1")
