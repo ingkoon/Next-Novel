@@ -55,6 +55,14 @@ spring:
           filters:
             - AuthenticationHeaderFilter
 
+        - id: auth_novel_mypage
+          uri: http://***REMOVED***:8012/
+          predicates:
+            - Path=/novel/like/**, /novel/my/**
+            - Method=GET
+          filters:
+            - AuthenticationHeaderFilter
+
 
         - id: member
           uri: http://***REMOVED***:8011/
