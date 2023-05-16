@@ -1,15 +1,15 @@
 export type CreateOrder = {
-  nickName: string;
+  memberId: string;
   itemId: number;
   price: number;
   receiptId: string;
 };
 
-export type NickName = {
-  nickName: string;
+export type MemberId = {
+  memberId: string;
 };
 
 export type UpdatePoint = {
-  nickName: string;
+  memberId: string;
   point: number;
 };

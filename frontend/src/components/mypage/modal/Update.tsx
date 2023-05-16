@@ -84,8 +84,6 @@ export default function Update({ closemodal }: UpdateProps) {
     putUserInfo.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
-
-        localStorage.setItem("nickName", userinfo.nickName);
         closemodal();
       },
     });

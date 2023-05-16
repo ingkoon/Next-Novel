@@ -102,7 +102,7 @@ export default function ProductList() {
         console.log(data);
 
         const jsonData: CreateOrder = {
-          nickName: localStorage.getItem("nickName")!,
+          memberId: localStorage.getItem("memberId")!,
           itemId: selectedOption!.id,
           price: selectedOption!.price,
           receiptId: data.receipt_id,

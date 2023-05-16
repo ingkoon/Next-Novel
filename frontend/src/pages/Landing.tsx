@@ -25,11 +25,11 @@ export default function Landing() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const access_token = queryParams.get("accesstoken");
-    const nickName = queryParams.get("nickname");
+    const memberId = queryParams.get("memberId");
 
-    if (access_token && nickName) {
+    if (access_token && memberId) {
       localStorage.setItem("access_token", access_token);
-      localStorage.setItem("nickName", nickName);
+      localStorage.setItem("memberId", memberId);
       navigate("/");
     }
   }, []);
