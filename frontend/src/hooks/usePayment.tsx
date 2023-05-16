@@ -32,8 +32,8 @@ export default function useNovelWrite() {
   const createOrder = (jsonData: CreateOrder) => {
     return createOrderApi(jsonData);
   };
-  const cancelOrder = () => {
-    return cancelOrderApi();
+  const cancelOrder = (orderId: number) => {
+    return cancelOrderApi(orderId);
   };
   const getOrderList = () => {
     return getOrderListApi();

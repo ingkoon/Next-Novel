@@ -25,8 +25,8 @@ export async function getOrderTokenApi() {
 export async function createOrderApi(jsonData: CreateOrder) {
   return tokeninstance.post("orders", jsonData, config);
 }
-export async function cancelOrderApi() {
-  return tokeninstance.delete("orders");
+export async function cancelOrderApi(orderId: number) {
+  return tokeninstance.delete("orders", { params: { orderId: orderId } });
 }
 export async function getOrderListApi() {
   return tokeninstance.get(`orders/${localStorage.getItem("nickName")}`);
