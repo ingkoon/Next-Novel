@@ -44,7 +44,7 @@ export default function Login({ move, closemodal }: LoginProps) {
     // });
   };
   const googleLogin = () => {
-    window.open(process.env.REACT_APP_GOOGLE_API!, "_blank");
+    window.location.href = process.env.REACT_APP_GOOGLE_API!;
   };
 
   return (
