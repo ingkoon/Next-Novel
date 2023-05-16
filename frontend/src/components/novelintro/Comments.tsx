@@ -53,14 +53,16 @@ export default function Comments() {
         {commentlist.length === 0 ? (
           <div> 등록된 감상평이 없습니다. </div>
         ) : (
-          <div>
+          <div className={style.bub_container}>
             {commentlist.map((comment, index) => (
-              <Bubble
-                updatelist={updatelist}
-                key={index}
-                props={comment}
-                novelId={novelid}
-              />
+              <div className={style.bub}>
+                <Bubble
+                  updatelist={updatelist}
+                  key={index}
+                  props={comment}
+                  novelId={novelid}
+                />
+              </div>
             ))}
           </div>
         )}
