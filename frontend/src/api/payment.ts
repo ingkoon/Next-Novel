@@ -14,7 +14,7 @@ export async function getPointApi() {
   });
 }
 export async function updatePointApi(jsonData: UpdatePoint) {
-  return tokeninstance.patch("point");
+  return tokeninstance.put("point", jsonData);
 }
 export async function deletePointApi() {
   return tokeninstance.delete("point");
@@ -25,8 +25,8 @@ export async function getOrderTokenApi() {
 export async function createOrderApi(jsonData: CreateOrder) {
   return tokeninstance.post("orders", jsonData, config);
 }
-export async function cancelOrderApi() {
-  return tokeninstance.delete("orders");
+export async function cancelOrderApi(orderId: number) {
+  return tokeninstance.delete("orders", { params: { orderId: orderId } });
 }
 export async function getOrderListApi() {
   return tokeninstance.get(`orders/${localStorage.getItem("nickName")}`);
