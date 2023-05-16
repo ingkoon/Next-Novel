@@ -32,6 +32,7 @@ public class NovelComment {
 	@Builder.Default
 	private String createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss"));
 	private long memberId;
+	private String nickName;
 	private int novelId;
 
 	public NovelCommentDto toDto(){
@@ -39,6 +40,7 @@ public class NovelComment {
 			.commentId(id)
 			.content(content)
 			.memberId(memberId)
+			.nickName(nickName)
 			.createdAt(createdAt)
 			.novelId(novelId)
 			.build();

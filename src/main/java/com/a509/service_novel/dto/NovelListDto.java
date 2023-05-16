@@ -11,6 +11,7 @@ public class NovelListDto {
 	private String title;
 	private String introduction;
 	private long memberId;
+	private String nickName;
 	private String coverImg;
 	private int hitCount;
 	private int commentCount;

@@ -13,6 +13,7 @@ public class NovelCommentDto {
 	private String content;
 	private String createdAt;
 	private long memberId;
+	private String nickName;
 	private int novelId;
 	private String profileImg;
 
@@ -20,6 +21,7 @@ public class NovelCommentDto {
 		return NovelComment.builder()
 			.content(content)
 			.memberId(memberId)
+			.nickName(nickName)
 			.novelId(novelId)
 			.build();
 	}

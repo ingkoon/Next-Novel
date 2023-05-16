@@ -42,6 +42,7 @@ public class Novel {
 	private String engGenre;;
 	private String korGenre;
 	private long memberId;
+	private String nickName;
 	private int hitCount;
 	private int commentCount;
 	private int likeCount;
@@ -74,6 +75,7 @@ public class Novel {
 			.engGenre(engGenre)
 			.korGenre(korGenre)
 			.memberId(memberId)
+			.nickName(nickName)
 			.hitCount(hitCount)
 			.commentCount(commentCount)
 			.likeCount(likeCount)
@@ -91,6 +93,7 @@ public class Novel {
 			.title(title)
 			.introduction(introduction)
 			.memberId(memberId)
+			.nickName(nickName)
 			.coverImg(coverImg)
 			.hitCount(hitCount)
 			.commentCount(commentCount)

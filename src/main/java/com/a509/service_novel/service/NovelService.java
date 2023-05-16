@@ -137,7 +137,7 @@ public class NovelService {
 		for(NovelComment comment: comments){
 			NovelCommentDto novelCommentDto = comment.toDto();
 			commentDtos.add(novelCommentDto);
-			novelCommentDto.setProfileImg(memberClientComponent.findMyPageImage(novelCommentDto.getMemberId()));
+			novelCommentDto.setProfileImg(memberClientComponent.findMyPageImage(novelCommentDto.getNickName()));
 		}
 
 		//찾은 소설 dto전환

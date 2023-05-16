@@ -22,6 +22,7 @@ public class NovelDetailDto {
 	private String engGenre;;
 	private String korGenre;
 	private long memberId;
+	private String nickName;
 	private List<NovelContentDto> contents;
 	private List<NovelCommentDto> comments;
 	private int hitCount;
