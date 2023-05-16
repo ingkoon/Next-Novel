@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 
 @Slf4j
 @RestController
@@ -63,7 +65,9 @@ public class MemberController {
         } else {
             response = memberService.oauth2Login("google", token);
         }
-        return ResponseEntity.ok(response);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "https://***REMOVED***?accesstoekn="+response.getAccessToken());
+        return new ResponseEntity<>(response, headers, HttpStatus.FOUND);
     }
 
     @GetMapping("/oauth2/code/kakao")
