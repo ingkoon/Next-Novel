@@ -199,43 +199,11 @@ public class MemberService {
         return (String) responseBody.get("access_token");
     }
 
-    public MemberTokenResponseDto loginOauth2Kakao(String token) {
-        Map<String, Object> responseBody = webClient.post()
-                .uri(uriBuilder -> uriBuilder
-                        .scheme("https")
-                        .host("kapi.kakao.com")
-                        .path("/v2/user/me")
-                        .build())
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
-                })
-                .block();
-
-        System.out.println("----------------");
-        System.out.println(responseBody);
-        System.out.println("----------------");
-        System.out.println(responseBody.toString());
-//        // String 형태를 json 형태로 변환 후 정보 추출
-//        Gson gson = new Gson();
-//        JsonObject jsonObject = gson.fromJson(payload, JsonObject.class);
-//
-//        // Member 생성 후 로그인 진행
-//        String subValue = jsonObject.get("sub").getAsString();
-//        String emailValue = jsonObject.get("email").getAsString();
-//        String nameValue = "";
-//        String pictureValue = "";
-
-        return null;
-    }
-
     public MemberTokenResponseDto loginOauth2Google(String token) {
         // JWT token 의 payload 값 decode
         String[] jwtParts = token.split("\\.");
         byte[] bytes = Base64.getDecoder().decode((jwtParts[1]));
         String payload = new String(bytes, StandardCharsets.UTF_8);
-        System.out.println(payload);
 
         // String 형태를 json 형태로 변환 후 정보 추출
         Gson gson = new Gson();
@@ -254,7 +222,31 @@ public class MemberService {
             pictureValue = "defaultProfileImg.png";
         }
 
-        return oauth2Login("google", subValue, emailValue, "", "");
+        return oauth2Login("google", subValue, emailValue, nameValue, pictureValue);
+    }
+
+    public MemberTokenResponseDto loginOauth2Kakao(String token) {
+        Map<String, Object> responseBody = webClient.post()
+                .uri(uriBuilder -> uriBuilder
+                        .scheme("https")
+                        .host("kapi.kakao.com")
+                        .path("/v2/user/me")
+                        .build())
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+                })
+                .block();
+
+        String subValue = responseBody.get("id").toString();
+        Map<String, Object> kakaoAcount = (Map<String, Object>) responseBody.get("kakao_account");
+        String emailValue = kakaoAcount.get("email").toString();
+        Map<String, Object> profile = (Map<String, Object>) kakaoAcount.get("profile");
+        String nameValue = profile.get("nickname").toString();
+        String pictureValue = profile.get("profile_image_url").toString();
+
+        return oauth2Login("kakao", subValue, emailValue, nameValue, pictureValue);
     }
 
     public MemberTokenResponseDto oauth2Login(String provider, String subValue, String emailValue, String nameValue, String pictureValue) {
