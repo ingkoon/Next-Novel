@@ -1,5 +1,4 @@
 import {
-  createPointApi,
   getPointApi,
   updatePointApi,
   deletePointApi,
@@ -11,12 +10,9 @@ import {
   getProductListApi,
   getProductDetailApi,
 } from "../api/payment";
-import { CreateOrder, NickName, UpdatePoint } from "../types";
+import { CreateOrder, UpdatePoint } from "../types";
 
 export default function useNovelWrite() {
-  const createPoint = (jsonData: NickName) => {
-    return createPointApi(jsonData);
-  };
   const getPoint = () => {
     return getPointApi();
   };
@@ -49,7 +45,6 @@ export default function useNovelWrite() {
   };
 
   return {
-    createPoint,
     getPoint,
     updatePoint,
     deletePoint,

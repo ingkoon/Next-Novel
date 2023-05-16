@@ -14,7 +14,7 @@ export default function BeforeStartWrite({ setOrder }: BeforeStartWriteType) {
   const { getPoint } = usePayment();
 
   const start = async () => {
-    if (!localStorage.getItem("nickName")) {
+    if (!localStorage.getItem("access_token")) {
       setModalIsOpen(true);
       return;
     }

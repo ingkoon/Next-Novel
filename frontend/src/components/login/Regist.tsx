@@ -1,8 +1,6 @@
 import { useState } from "react";
 import style from "./Regist.module.css";
 import useUser from "../../hooks/useUser";
-import usePayment from "../../hooks/usePayment";
-import { NickName } from "../../types";
 
 type RegistProps = {
   move: () => void;
@@ -17,7 +15,6 @@ export default function Regist({ move }: RegistProps) {
   });
   const [nickNameCheckState, setNickNameCheckState] = useState("");
   const [emailCheckState, setEmailCheckState] = useState("");
-  const { createPoint } = usePayment();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -86,23 +83,10 @@ export default function Regist({ move }: RegistProps) {
     normalRegist.mutate(jsonData, {
       onSuccess: (res) => {
         console.log(res);
-        const jsonData2: NickName = {
-          nickName: info.nickName,
-        };
-        createPointAsync(jsonData2); //포인트 생성
+        move();
       },
     });
   };
-
-  async function createPointAsync(jsonData: NickName) {
-    try {
-      const res = await createPoint(jsonData);
-      console.log(res);
-      move(); //회원가입 성공시 로그인으로 이동, 추후 이동 예정
-    } catch (e) {
-      console.log(e);
-    }
-  }
 
   return (
     <div
