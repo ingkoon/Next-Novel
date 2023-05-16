@@ -3,13 +3,23 @@ package com.a509.service_novel.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
+import org.json.JSONObject;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.a509.service_novel.component.MemberClientComponent;
 import com.a509.service_novel.dto.MemberMyPageResponseDto;
@@ -24,6 +34,7 @@ import com.a509.service_novel.dto.NovelDetailDto;
 import com.a509.service_novel.service.NovelLikeService;
 import com.a509.service_novel.service.NovelService;
 
+import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -37,6 +48,15 @@ public class NovelController {
 
 	private final NovelLikeService novelLikeService;
 	private final MemberClientComponent memberClientComponent;
+
+	private final WebClient webClient = WebClient.builder()
+		.exchangeStrategies(ExchangeStrategies.builder()
+			.codecs(configurer -> configurer
+				.defaultCodecs()
+				.maxInMemorySize(-1))
+			.build())
+		.baseUrl("http://***REMOVED***:8018/search")
+		.build();
 	@GetMapping("/hello")
 	public ResponseEntity<?> hello(){
 		return new ResponseEntity<>("hello",HttpStatus.OK);
@@ -166,6 +186,37 @@ public class NovelController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch (Exception e){
+			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/similarity")
+	public ResponseEntity<?> selectNovelsBySimilarity(
+		@RequestParam("keyword") String keyword){
+		try{
+			System.out.println(keyword);
+
+			JSONObject body = new JSONObject();
+			body.put("query", keyword);
+			System.out.println(body);
+			Map<String, Object> responseBody = webClient.post()
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				.body(BodyInserters.fromValue(body.toString()))
+				.retrieve()
+				.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+				.block();
+			System.out.println(responseBody);
+			// response body = List id, List score;
+
+			List<Integer> ids = (List<Integer>)responseBody.get("id");
+			List<Double> scores = (List<Double>)responseBody.get("scores");
+
+
+			List<NovelListDto> novelListDtos = novelService.selectNovelListBySimilarity(ids,scores);
+			return ResponseEntity.ok(novelListDtos);
+		}
+		catch(Exception e){
+			System.out.println(e.toString());
 			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

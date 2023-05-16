@@ -15,5 +15,6 @@ public class NovelListDto {
 	private int hitCount;
 	private int commentCount;
 	private int likeCount;
+	private Double score;
 
 }

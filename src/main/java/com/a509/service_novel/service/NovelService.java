@@ -32,6 +32,7 @@ import com.a509.service_novel.jpa.novelImage.NovelImageRepository;
 import com.a509.service_novel.mogo.NovelLike;
 import com.a509.service_novel.mogo.NovelLikeRepository;
 
+import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -183,6 +184,7 @@ public class NovelService {
 		}
 	}
 
+
 	@Transactional
 	public List<NovelListDto> selectNovelsByAuthorId(String nickName) throws Exception{
 
@@ -260,5 +262,19 @@ public class NovelService {
 
 		return novelDtos;
 
+	}
+
+	public List<NovelListDto> selectNovelListBySimilarity(List<Integer> ids, List<Double> scores) {
+		List<NovelListDto> novelListDtos = new ArrayList<>();
+		for(int i = 0; i<ids.size(); i++){
+			System.out.println(ids.get(i)+" " +scores.get(i));
+			Optional<Novel> optional = novelRepository.findById(ids.get(i));
+			if(optional.isPresent()){
+				NovelListDto novelListDto = optional.get().toListDto();
+				novelListDto.setScore(scores.get(i));
+				novelListDtos.add(novelListDto);
+			}
+		}
+		return novelListDtos;
 	}
 }
