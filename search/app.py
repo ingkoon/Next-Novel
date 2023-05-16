@@ -63,7 +63,7 @@ def read_item(item:Item):
     df.columns = ["id", "scores"]
     df["content"] = data['content']
 
-    return df.to_dict()
+    return df.to_dict(orient='list')
 
 if __name__ == "__main__":
     print(conn())
