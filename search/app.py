@@ -55,13 +55,14 @@ def read_item(item:Item):
     sim_scores = list(enumerate(cosine_sim[len(data_content) - 1]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
 
-    # 가장 유사한 10개의 텍스트를 받아온다.
-    sim_scores = sim_scores[1:11]
+    # 가장 유사한 12개의 텍스트를 받아온다.
+    sim_scores = sim_scores[1:13]
 
-    # 가장 유사한 10개의 텍스트의 인덱스를 얻는다.
+    # 가장 유사한 12개의 텍스트의 인덱스를 얻는다.
     df = pd.DataFrame(sim_scores)
     df.columns = ["id", "scores"]
-    df["content"] = data['content']
+
+    df = df.sort_values(by=["scores","id"], ascending=False)
 
     return df.to_dict(orient='list')
 
