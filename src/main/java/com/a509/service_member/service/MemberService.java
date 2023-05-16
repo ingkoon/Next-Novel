@@ -19,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -57,6 +59,13 @@ public class MemberService {
     String googleClientSecret;
     @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
     String googleRedirectUrl;
+    @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
+    String kakaoClientId;
+    @Value("${spring.security.oauth2.client.registration.kakao.redirectUri}")
+    String kakaoRedirectUrl;
+    @Value("${spring.security.oauth2.client.registration.kakao.authorization-grant-type}")
+    String grantType;
+
 
     public Member findMember(String email) {
         return memberRepository.findByEmail(email).orElseThrow(NoSuchMemberException::new);
@@ -152,7 +161,7 @@ public class MemberService {
         body.add("client_id", googleClientId);
         body.add("client_secret", googleClientSecret);
         body.add("redirect_uri", googleRedirectUrl);
-        body.add("grant_type", "authorization_code");
+        body.add("grant_type", grantType);
         Map<String, Object> responseBody = webClient.post()
                 .uri(uriBuilder -> uriBuilder
                         .scheme("https")
@@ -168,7 +177,60 @@ public class MemberService {
         return (String) responseBody.get("id_token");
     }
 
-    public MemberTokenResponseDto oauth2Login(String provider, String token) {
+    public String getTokenOauth2Kakao(String code) {
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", grantType);
+        body.add("client_id", kakaoClientId);
+        body.add("redirect_uri", kakaoRedirectUrl);
+        body.add("code", code);
+        Map<String, Object> responseBody = webClient.post()
+                .uri(uriBuilder -> uriBuilder
+                        .scheme("https")
+                        .host("kauth.kakao.com")
+                        .path("/oauth/token")
+                        .build())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .bodyValue(body)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+                })
+                .block();
+
+        return (String) responseBody.get("access_token");
+    }
+
+    public MemberTokenResponseDto loginOauth2Kakao(String token) {
+        Map<String, Object> responseBody = webClient.post()
+                .uri(uriBuilder -> uriBuilder
+                        .scheme("https")
+                        .host("kapi.kakao.com")
+                        .path("/v2/user/me")
+                        .build())
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+                })
+                .block();
+
+        System.out.println("----------------");
+        System.out.println(responseBody);
+        System.out.println("----------------");
+        System.out.println(responseBody.toString());
+//        // String 형태를 json 형태로 변환 후 정보 추출
+//        Gson gson = new Gson();
+//        JsonObject jsonObject = gson.fromJson(payload, JsonObject.class);
+//
+//        // Member 생성 후 로그인 진행
+//        String subValue = jsonObject.get("sub").getAsString();
+//        String emailValue = jsonObject.get("email").getAsString();
+//        String nameValue = "";
+//        String pictureValue = "";
+
+        return null;
+    }
+
+    public MemberTokenResponseDto loginOauth2Google(String token) {
         // JWT token 의 payload 값 decode
         String[] jwtParts = token.split("\\.");
         byte[] bytes = Base64.getDecoder().decode((jwtParts[1]));
@@ -179,6 +241,7 @@ public class MemberService {
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(payload, JsonObject.class);
 
+        // Member 생성 후 로그인 진행
         String subValue = jsonObject.get("sub").getAsString();
         String emailValue = jsonObject.get("email").getAsString();
         String nameValue = "";
@@ -191,6 +254,10 @@ public class MemberService {
             pictureValue = "defaultProfileImg.png";
         }
 
+        return oauth2Login("google", subValue, emailValue, "", "");
+    }
+
+    public MemberTokenResponseDto oauth2Login(String provider, String subValue, String emailValue, String nameValue, String pictureValue) {
         // 다음 형태의 이메일로 이미 가입 되어있는지 확인
         String email = provider+"@"+emailValue;   // ex)google@ejk9658@gmail.com
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
@@ -199,8 +266,9 @@ public class MemberService {
         if (optionalMember.isEmpty()) {
             // 해당 닉네임으로 이미 가입 되어있는지 확인함
             int num = 0;
-            while(memberRepository.existsByNickName(nameValue)) {
-                nameValue = jsonObject.get("name").getAsString()+"_"+(++num);    // ex)닉네임_1
+            String name = nameValue;
+            while(memberRepository.existsByNickName(name)) {
+                name = nameValue+"_"+(++num);    // ex)닉네임_1
             }
 
             // 회원가입 진행
@@ -208,7 +276,7 @@ public class MemberService {
                     .builder()
                     .email(email)
                     .password(bCryptPasswordEncoder.encode("딘추"))
-                    .nickName(nameValue)
+                    .nickName(name)
                     .profileImage(pictureValue)
                     .provider(provider)
                     .providerId(subValue)
@@ -218,12 +286,10 @@ public class MemberService {
             member = optionalMember.get();
         }
 
-        System.out.println(member.toString());
-
-        // 로그인 진행
         MemberLoginRequestDto loginDto = new MemberLoginRequestDto();
         loginDto.setEmail(member.getEmail());
         loginDto.setPassword("딘추");
+
         return login(loginDto);
     }
 

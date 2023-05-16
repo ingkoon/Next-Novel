@@ -12,10 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-public class CustomUserDetails implements UserDetails, OAuth2User {
+public class CustomUserDetails implements UserDetails {
+//public class CustomUserDetails implements UserDetails, OAuth2User {
 
     private Member member;
-    private Map<String, Object> attributes;
+//    private Map<String, Object> attributes;
 
     // 일반 로그인
     public CustomUserDetails(Member member) {
@@ -23,10 +24,10 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     }
 
     // OAuth 로그인
-    public CustomUserDetails(Member member, Map<String, Object> attributes) {
-        this.member = member;
-        this.attributes = attributes;
-    }
+//    public CustomUserDetails(Member member, Map<String, Object> attributes) {
+//        this.member = member;
+//        this.attributes = attributes;
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -65,13 +66,13 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
         return true;
     }
 
-    @Override
-    public Map<String, Object> getAttributes() {
-        return attributes;
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
+//    @Override
+//    public Map<String, Object> getAttributes() {
+//        return attributes;
+//    }
+//
+//    @Override
+//    public String getName() {
+//        return null;
+//    }
 }
