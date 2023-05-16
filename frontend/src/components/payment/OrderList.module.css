@@ -22,6 +22,16 @@
 .itemLeft {
   font-size: 12px;
 }
+.itemRight > div:last-child {
+  color: #a9a9a9;
+  font-size: 11px;
+  text-align: right;
+}
+.itemRight > div:last-child:hover {
+  color: #666666;
+  cursor: pointer;
+  text-decoration: underline;
+}
 @media (max-width: 1024px) {
   .container {
     padding: 0 16%;

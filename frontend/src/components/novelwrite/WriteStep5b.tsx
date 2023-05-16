@@ -62,7 +62,7 @@ export default function WriteStep5b() {
     try {
       const jsonData: UpdatePoint = {
         nickName: localStorage.getItem("nickName")!,
-        point: 10,
+        point: -10,
       };
       const res = await updatePoint(jsonData);
       console.log(res);
