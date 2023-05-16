@@ -63,7 +63,7 @@ public class MemberController {
         if(token == null) {
             throw new InvalidedAccessTokenException("다른 방법으로 로그인하세요.");
         } else {
-            response = memberService.oauth2Login("google", token);
+            response = memberService.loginOauth2Google(token);
         }
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "https://***REMOVED***?accesstoekn="+response.getAccessToken());
@@ -78,12 +78,14 @@ public class MemberController {
         System.out.println(token);
 
         MemberTokenResponseDto response = null;
-//        if(token == null) {
-//            throw new InvalidedAccessTokenException("다른 방법으로 로그인하세요.");
-//        } else {
-//            response = memberService.loginOauth2Kakao(token);
-//        }
-        return ResponseEntity.ok(response);
+        if(token == null) {
+            throw new InvalidedAccessTokenException("다른 방법으로 로그인하세요.");
+        } else {
+            response = memberService.loginOauth2Kakao(token);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "https://***REMOVED***?accesstoekn="+response.getAccessToken());
+        return new ResponseEntity<>(response, headers, HttpStatus.FOUND);
     }
 
 //    @GetMapping("/test1")
