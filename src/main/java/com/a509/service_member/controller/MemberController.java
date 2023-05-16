@@ -65,7 +65,7 @@ public class MemberController {
             response = memberService.loginOauth2Google(token);
         }
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "https://***REMOVED***?accesstoken="+response.getAccessToken()+"&nickname="+response.getNickName());
+        headers.add("Location", "https://***REMOVED***?accesstoken="+response.getAccessToken()+"&memberId="+response.getMemberId());
         return new ResponseEntity<>(response, headers, HttpStatus.FOUND);
     }
 
@@ -82,7 +82,7 @@ public class MemberController {
             response = memberService.loginOauth2Kakao(token);
         }
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "https://***REMOVED***?accesstoken="+response.getAccessToken()+"&nickname="+response.getNickName());
+        headers.add("Location", "https://***REMOVED***?accesstoken="+response.getAccessToken()+"&memberId="+response.getMemberId());
         return new ResponseEntity<>(response, headers, HttpStatus.FOUND);
     }
 
