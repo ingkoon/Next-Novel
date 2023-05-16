@@ -57,7 +57,6 @@ public class MemberController {
         // google 에서 설정한 redirect uri 로 요청이 들어오면 쿼리 스트링으로 들어온 code 값을 이용
         // http 통신 타서 google 회원 정보 가져오기
         String token = memberService.getTokenOauth2Google(code);
-        System.out.println(token);
 
         MemberTokenResponseDto response = null;
         if(token == null) {
@@ -75,7 +74,6 @@ public class MemberController {
         // kakao 에서 설정한 redirect uri 로 요청이 들어오면 쿼리 스트링으로 들어온 code 값을 이용
         // http 통신 타서 kakao 회원 정보 가져오기
         String token = memberService.getTokenOauth2Kakao(code);
-        System.out.println(token);
 
         MemberTokenResponseDto response = null;
         if(token == null) {
@@ -87,28 +85,6 @@ public class MemberController {
         headers.add("Location", "https://***REMOVED***?accesstoken="+response.getAccessToken()+"&nickname="+response.getNickName());
         return new ResponseEntity<>(response, headers, HttpStatus.FOUND);
     }
-
-//    @GetMapping("/test1")
-//    public void test1() {
-//        String token = "***REMOVED***";
-//        byte[] bytes = Base64.getDecoder().decode(token);
-//        System.out.println("Decoded string: " + new String(bytes, StandardCharsets.UTF_8));
-//
-//    }
-
-//    @Hidden
-//    @ResponseBody
-//    @GetMapping(value = "/oauth/kakao")
-//    public ResponseEntity<MemberResponse> kakaoCallback(@RequestParam String code) {
-//        // 1. kakao 에서 받은 access_token을 다시 카카오만의 REDIRECT_URI 로 보내서 사용자 정보를 받음
-//        String token = memberService.getKakaoToken(code);
-//        List<String> account = memberService.getKakaoMember(token);
-
-//    @GetMapping("/oauth2/authorization/google")
-//    public ResponseEntity<MemberTokenResponseDto> googleCallback() {
-////        MemberTokenResponseDto response = memberService.loadUser();
-////        return ResponseEntity.ok(response);
-//    }
 
     @GetMapping("/logout")
     public ResponseEntity<Void> logout(@RequestHeader("Authorization") final String token) {
