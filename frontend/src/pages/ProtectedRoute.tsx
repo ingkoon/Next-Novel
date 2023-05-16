@@ -8,7 +8,7 @@ type ProtectedRouteProps = {
 export default function ProtectedRoute({
   component: Component,
 }: ProtectedRouteProps) {
-  if (localStorage.getItem("nickName")) {
+  if (localStorage.getItem("access_token")) {
     return <Component />;
   } else {
     alert("로그인이 필요한 서비스 입니다");

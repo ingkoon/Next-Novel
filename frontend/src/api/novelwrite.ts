@@ -33,6 +33,6 @@ export async function finNovelApi(formData: FormData) {
   return tokeninstance.post(`novel`, formData, config);
 }
 
-export async function getPaintingsApi(nickName: string) {
-  return tokeninstance.get(`/novel/image/${nickName}`);
+export async function getPaintingsApi(memberId: string) {
+  return tokeninstance.get(`/novel/image/${memberId}`);
 }

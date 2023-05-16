@@ -24,7 +24,7 @@ export default function Delete({ closemodal }: DeleteProps) {
       console.log(data);
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
-      localStorage.removeItem("nickName");
+      localStorage.removeItem("memberId");
       closemodal();
       goTop();
       navigateToHome();

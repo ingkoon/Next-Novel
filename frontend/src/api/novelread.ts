@@ -1,4 +1,3 @@
-import { NickName } from "./../types.d";
 import { instance } from "./Interceptors";
 import { tokeninstance } from "./Interceptors";
 import axios from "axios";

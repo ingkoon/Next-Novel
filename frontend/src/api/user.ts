@@ -44,12 +44,12 @@ export async function putUserInfoApi(formData: FormData) {
 
 // 좋아요한 소설
 export async function getLikeNovelApi() {
-  return tokeninstance.get(`novel/like/${localStorage.getItem("nickName")}`);
+  return tokeninstance.get(`novel/like/${localStorage.getItem("memberId")}`);
 }
 
 // 제작한 소설
 export async function getMyNovelApi() {
-  return tokeninstance.get(`novel/my/${localStorage.getItem("nickName")}`);
+  return tokeninstance.get(`novel/my/${localStorage.getItem("memberId")}`);
 }
 
 //회원 탈퇴
