@@ -8,8 +8,10 @@ type UpdateProps = {
 export default function Update({ closemodal }: UpdateProps) {
   const { getUserInfo, putUserInfo, nickNameCheck } = useUser();
   const [profile, setProfile] = useState(new File([], ""));
+  const [nickName, setNickName] = useState("");
   const imgRef = useRef<HTMLInputElement>(null);
   const [userinfo, setUserinfo] = useState({
+    //서버에서 받은 정보
     profile_image: "",
     nickName: "",
     createdAt: "",
@@ -26,6 +28,7 @@ export default function Update({ closemodal }: UpdateProps) {
         nickName: res.data.nickName,
         createdAt: res.data.createdAt.substring(0, 10),
       });
+      setNickName(res.data.nickName);
     } catch (e) {
       console.log(e);
     }
@@ -60,7 +63,7 @@ export default function Update({ closemodal }: UpdateProps) {
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNickNameCheckState("");
-    setUserinfo({ ...userinfo, nickName: e.target.value });
+    setNickName(e.target.value);
   };
 
   const updateuser = () => {
@@ -74,7 +77,7 @@ export default function Update({ closemodal }: UpdateProps) {
     formData.append("multipartFile", profile);
 
     const json = {
-      nickName: userinfo.nickName,
+      nickName: nickName,
     };
     formData.append(
       "request",
@@ -84,26 +87,24 @@ export default function Update({ closemodal }: UpdateProps) {
     putUserInfo.mutate(formData, {
       onSuccess: (res) => {
         console.log(res);
-
-        localStorage.setItem("nickName", userinfo.nickName);
         closemodal();
       },
     });
   };
   const check = () => {
     //닉네임 미입력
-    if (userinfo.nickName.length === 0) {
+    if (nickName.length === 0) {
       alert("닉네임을 확인해주세요!");
       return;
     }
     //현재 닉네임 입력
-    if (userinfo.nickName === localStorage.getItem("nickName")) {
+    if (nickName === userinfo.nickName) {
       setNickNameCheckState("success");
       return;
     }
     //닉네임 체크
     nickNameCheck.mutate(
-      { nickName: userinfo.nickName },
+      { nickName: nickName },
       {
         onSuccess: (res) => {
           console.log(res);
@@ -151,7 +152,7 @@ export default function Update({ closemodal }: UpdateProps) {
           <div className={style.categoryName}>가입일자</div>
         </div>
         <div className={style.nickName}>
-          <input onChange={onChange} value={userinfo.nickName} />
+          <input onChange={onChange} value={nickName} />
           <button
             className={`${style.checkButton} ${style[nickNameCheckState]}`}
             onClick={() => check()}

@@ -61,7 +61,7 @@ export default function WriteStep5b() {
   async function updatePointAsync() {
     try {
       const jsonData: UpdatePoint = {
-        nickName: localStorage.getItem("nickName")!,
+        memberId: localStorage.getItem("memberId")!,
         point: -10,
       };
       const res = await updatePoint(jsonData);
@@ -87,7 +87,7 @@ export default function WriteStep5b() {
       introduction: input.desc,
       engGenre: novel.engGenreName,
       korGenre: novel.korGenreName,
-      nickName: localStorage.getItem("nickName")!,
+      memberId: localStorage.getItem("memberId")!,
       contents: contentsVal,
       startImages: startImagesVal,
       startContent: novel.startStory,
