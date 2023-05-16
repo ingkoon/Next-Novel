@@ -2,7 +2,7 @@ import style from "./Search.module.css";
 import Booklist from "./Booklist";
 
 import { useEffect, useState, ChangeEvent, KeyboardEvent } from "react";
-import { getsearch } from "../../api/library";
+import { getsearch, getsimilarity } from "../../api/library";
 
 export default function Search() {
   const [keyword, setKeyword] = useState("");
@@ -23,8 +23,25 @@ export default function Search() {
     }
   }
 
+  async function getsimilarlist(keyword: string) {
+    try {
+      const data = await getsimilarity(keyword);
+      console.log(data);
+      setNovels(data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  // 일반검색
   const search = () => {
     getsearchlist(keyword);
+    setResult(keyword);
+  };
+
+  // 유사도검색
+  const similaritysearch = () => {
+    getsimilarlist(keyword);
     setResult(keyword);
   };
 
@@ -48,7 +65,7 @@ export default function Search() {
         />
 
         <div className={style.search}>
-          <div>Q. 찾는 소설이 있으신가요?</div>
+          <div className={style.question}>Q. 찾는 소설이 있으신가요?</div>
           <div className={style.form}>
             A.
             <input
@@ -61,6 +78,11 @@ export default function Search() {
             <button className={style.searchbtn} onClick={search}>
               {" "}
               제출{" "}
+            </button>
+            <div className={style.divbar} />
+            <button className={style.searchbtn} onClick={similaritysearch}>
+              {" "}
+              유사도검색{" "}
             </button>
           </div>
         </div>

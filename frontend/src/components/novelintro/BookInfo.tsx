@@ -12,7 +12,7 @@ type NInfo = {
   createdAt: string;
   // introduction: string;
   // engGenre: string;
-  // korGenre: string;
+  korGenre: string;
   nickName: string;
   hitCount: number;
   commentCount: number;
@@ -26,9 +26,10 @@ export default function BookInfo() {
   const [novelid, setNovelid] = useState(id);
   const [novelinfo, setNovelinfo] = useState<NInfo>();
   const [create, setCreate] = useState("");
-  //로컬스토리지 닉네임
-  const localNickname: string = localStorage.getItem('nickName') ?? '';
 
+  //로컬 멤버아이디
+  const localValue: string | null = localStorage.getItem('memberId');
+  const localMemberId: number = localValue !== null ? parseInt(localValue) : 0;
 
   const goTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -37,9 +38,9 @@ export default function BookInfo() {
   async function intro() {
     try {
       
-      const data = await getintro(novelid, localNickname);
+      const data = await getintro(novelid, localMemberId);
       console.log(data);
-      console.log("닉네임불러오기:"+localStorage.getItem('nickName'));
+      console.log("닉네임불러오기:"+localStorage.getItem('localMemberId'));
       setNovelinfo(data.data);
 
       const year = data.data.createdAt.substring(0, 4);
@@ -56,7 +57,7 @@ export default function BookInfo() {
     console.log(novelinfo?.liked);
     if (novelinfo?.liked) {
       try {
-        const data = await deleteliked(novelid, localNickname);
+        const data = await deleteliked(novelid, localMemberId);
         console.log(data);
         intro();
       } catch (e) {
@@ -64,7 +65,7 @@ export default function BookInfo() {
       }
     }else{
       try {
-        const data = await postliked(novelid, localNickname);
+        const data = await postliked(novelid, localMemberId);
         console.log(data);
         intro();
       } catch (e) {
@@ -74,7 +75,7 @@ export default function BookInfo() {
   }
 
   useEffect(() => {
-    goTop();
+    goTop(); // 페이지 로드시 맨위로
     setNovelid(id);
     intro();
   }, []);
@@ -112,12 +113,14 @@ export default function BookInfo() {
             <div>
               <div className={style.etc1}>제작자</div>
               <div className={style.etc1}>출간일</div>
+              <div className={style.etc1}>장르</div>
             </div>
             <div>
               <div className={style.etc2}>
                 {novelinfo && novelinfo.nickName}
               </div>
               <div className={style.etc2}>{novelinfo && create}</div>
+              <div className={style.etc2}>{novelinfo && novelinfo.korGenre}</div>
             </div>
           </div>
         </div>

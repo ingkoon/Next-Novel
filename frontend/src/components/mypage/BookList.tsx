@@ -15,6 +15,7 @@ type Book = {
   hitCount: number;
   commentCount: number;
   likeCount: number;
+  score: number;
 };
 export default function BookList({ books, refreshList }: BookListProps) {
   return (

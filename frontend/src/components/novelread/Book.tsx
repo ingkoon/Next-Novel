@@ -58,8 +58,10 @@ export default function Book() {
   const [rerender, setRerender] = useState("");
   const page_ref = useRef<HTMLDivElement>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false); //loginmodal
-  //로컬 닉네임
-  const localNickname: string = localStorage.getItem('nickName') ?? '';
+
+  //로컬 멤버아이디
+  const localValue: string | null = localStorage.getItem('memberId');
+  const localMemberId: number = localValue !== null ? parseInt(localValue) : 0;
 
   const [input, setInput] = useState<InputProps>({});
   const { submitComment } = useCommentWrite();
@@ -67,7 +69,7 @@ export default function Book() {
   async function nvinfo() {
     console.log("노벨아이디" + novelid);
     try {
-      const data = await novelall(novelid, localNickname);
+      const data = await novelall(novelid, localMemberId);
       console.log(data);
       setNovelinfo({
         coverImg: data.data.coverImg,
@@ -152,7 +154,8 @@ export default function Book() {
 
     submitComment.mutate({
     content: input.comm.trim(),
-    nickName: localNickname,
+    nickName: localStorage.getItem('nickName')!,
+    memberId: localMemberId,
     novelId: novelid
   }, {
       onSuccess: (res) => {

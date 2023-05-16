@@ -13,6 +13,7 @@ type Book = {
   hitCount: number;
   commentCount: number;
   likeCount: number;
+  score: number;
 };
 
 type BookListProps = {

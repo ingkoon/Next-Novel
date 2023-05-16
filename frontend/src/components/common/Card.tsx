@@ -15,15 +15,17 @@ type cardinfo = {
   hitCount: number;
   commentCount: number;
   likeCount: number;
+  score: number | null;
 };
 
-interface CardProps {
+type CardProps = {
   props: cardinfo;
   refreshList: () => void;
-}
+};
 
 function Card({ props, refreshList }: CardProps) {
   const [isHovering, setIsHovering] = useState(false);
+  const { score } = props;
   const { user } = useContext(AuthContext);
 
   const handleMouseOver = () => {
@@ -124,6 +126,11 @@ function Card({ props, refreshList }: CardProps) {
         <div className={style.info}>
           <div className={style.title}>{props && props.title}</div>
           <div className={style.writer}>{props && props.nickName}</div>
+          {score !== null && (
+            <div>
+              유사도: <span>{props && props.score}</span>
+            </div>
+          )}
         </div>
         <img
           src={props && process.env.REACT_APP_IMAGE_API + props.coverImg}
