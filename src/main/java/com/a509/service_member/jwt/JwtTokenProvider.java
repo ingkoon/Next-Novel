@@ -24,12 +24,13 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class JwtTokenProvider {
+    private static final String EMAIL_KEY = "email";
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;              // 30분
 //    private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 1000L;              // 1분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일
-    //    private static final long REFRESH_TOKEN_EXPIRE_TIME = 60 * 1000L;    // 1분
+//    private static final long REFRESH_TOKEN_EXPIRE_TIME = 60 * 1000L;    // 1분
     private final Key key;
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
@@ -45,7 +46,8 @@ public class JwtTokenProvider {
         String accessToken = Jwts.builder()
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setHeaderParam("typ","JWT")
-                .setSubject(authentication.getName())
+                .setSubject(member.getId().toString())
+                .claim(EMAIL_KEY, authentication.getName())
                 .claim(AUTHORITIES_KEY, member.getRole())
                 .setExpiration(accessTokenExpiresIn)
                 .compact();
@@ -54,12 +56,14 @@ public class JwtTokenProvider {
         String refreshToken = Jwts.builder()
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setHeaderParam("typ","JWT")
-                .setSubject(authentication.getName())
+                .setSubject(member.getId().toString())
+                .claim(EMAIL_KEY, authentication.getName())
                 .claim(AUTHORITIES_KEY, member.getRole())
                 .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                 .compact();
 
         return MemberTokenResponseDto.builder()
+                .memberId(member.getId())
                 .nickName(member.getNickName())
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
@@ -84,7 +88,7 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         // UserDetails 객체를 만들어서 Authentication 리턴
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
+        UserDetails principal = new User(claims.get(EMAIL_KEY).toString(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 

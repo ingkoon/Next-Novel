@@ -12,6 +12,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class MemberTokenResponseDto {
+    private Long memberId;
     private String nickName;
     private String grantType;
     private String accessToken;

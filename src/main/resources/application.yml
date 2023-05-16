@@ -14,12 +14,12 @@ spring:
     name: service_member
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost/members?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    username: nextnovel
-#    password: ***REMOVED***
-    url: jdbc:mysql://***REMOVED***:3306/members?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
+    url: jdbc:mysql://localhost/members?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: nextnovel
     password: ***REMOVED***
+#    url: jdbc:mysql://***REMOVED***:3306/members?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    username: root
+#    password: ***REMOVED***
   jpa:
     database: mysql
     hibernate:

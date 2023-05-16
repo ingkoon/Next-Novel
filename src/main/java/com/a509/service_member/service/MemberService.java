@@ -67,8 +67,14 @@ public class MemberService {
     String grantType;
 
 
-    public Member findMember(String email) {
-        return memberRepository.findByEmail(email).orElseThrow(NoSuchMemberException::new);
+    public Member findMember(String key, String value) {
+        if(key.equals("id")) {
+            return memberRepository.findById(Long.valueOf(value)).orElseThrow(NoSuchMemberException::new);
+        } else if(key.equals("email")) {
+            return memberRepository.findByEmail(value).orElseThrow(NoSuchMemberException::new);
+        } else {
+            throw new NoSuchMemberException();
+        }
     }
 
     @Transactional
@@ -133,7 +139,7 @@ public class MemberService {
 
     @Transactional
     public MemberTokenResponseDto login(MemberLoginRequestDto memberLoginRequestDto) {
-        Member member = findMember(memberLoginRequestDto.getEmail());
+        Member member = findMember("email", memberLoginRequestDto.getEmail());
         if (member.getState().equals(MemberState.RESIGNED.name())) throw new NoSuchMemberException("탈퇴한 사용자입니다.");
 
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
@@ -290,7 +296,7 @@ public class MemberService {
     }
 
     public MemberMyPageResponseDto findMyPage(String token) {
-        Member member = findMember(jwtTokenProvider.getMember(token));
+        Member member = findMember("id", jwtTokenProvider.getMember(token));
         return new MemberMyPageResponseDto().fromMeEntity(member);
     }
 
@@ -305,7 +311,7 @@ public class MemberService {
 
     @Transactional
     public void update(String token, MemberUpdateRequestDto memberUpdateRequestDto, MultipartFile multipartFile) {
-        Member member = findMember(jwtTokenProvider.getMember(token));
+        Member member = findMember("id", jwtTokenProvider.getMember(token));
 
         String nickName = memberUpdateRequestDto.getNickName().trim();
         if ("".equals(nickName)) {    // 닉네임 공백 체크
@@ -326,14 +332,14 @@ public class MemberService {
                 member.setProfileImage(UID+"_"+multipartFile.getOriginalFilename());
             }
             catch(Exception e) {
-                throw new RuntimeException();
+                throw new RuntimeException(e);
             }
         }
     }
 
     @Transactional
     public void updatePassword(String token, MemberUpdatePasswordRequestDto memberUpdatePasswordRequestDto) {
-        Member member = findMember(jwtTokenProvider.getMember(token));
+        Member member = findMember("id", jwtTokenProvider.getMember(token));
 
         String password = memberUpdatePasswordRequestDto.getPassword().trim();
         if("".equals(password)) {
@@ -346,7 +352,7 @@ public class MemberService {
 
     @Transactional
     public void delete(String token) {
-        Member member = findMember(jwtTokenProvider.getMember(token));
+        Member member = findMember("id", jwtTokenProvider.getMember(token));
         member.setState(MemberState.RESIGNED.name());
 
         updateRedisItems(token, "resign");

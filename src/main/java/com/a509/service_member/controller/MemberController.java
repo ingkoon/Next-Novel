@@ -98,8 +98,8 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/myPage/image/{nick-name}")
-    public String findMyPageImage(@PathVariable(value = "nick-name") final String nickName) {
+    @GetMapping("/myPage/image/{nick_name}")
+    public String findMyPageImage(@PathVariable(value = "nick_name") final String nickName) {
         return memberService.findMyPageImage(nickName);
     }
 
@@ -108,7 +108,6 @@ public class MemberController {
             @RequestHeader("Authorization") final String token,
             @RequestPart("multipartFile") MultipartFile multipartFile,
             @RequestPart("request") @Validated MemberUpdateRequestDto memberUpdateRequestDto) {
-
         memberService.update(token, memberUpdateRequestDto, multipartFile);
         return ResponseEntity.ok().build();
     }
