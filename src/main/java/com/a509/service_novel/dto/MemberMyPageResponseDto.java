@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MemberMyPageResponseDto {
 	private String email;
-	private String nickName;
+	private long memberId;
 	private String profileImage;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;

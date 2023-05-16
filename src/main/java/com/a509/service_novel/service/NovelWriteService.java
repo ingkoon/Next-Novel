@@ -28,7 +28,7 @@ public class NovelWriteService {
 	private final QuestionRepository questionRepository;
 
 	@Transactional
-	public void setDialogHistory(List<Object> objects, String nickName) throws Exception{
+	public void setDialogHistory(List<Object> objects, long memberId) throws Exception{
 
 		DialogHistory dial = new DialogHistory();
 		dial.setDialog(new ArrayList<>());
@@ -40,16 +40,16 @@ public class NovelWriteService {
 			d.setContent(tmp.get("content"));
 			dial.getDialog().add(d);
 		}
-		dial.setNickName(nickName);
+		dial.setMemberId(memberId);
 		// System.out.println(dial);
 		// d.setDialog(dial);
 		dialogHistoryRepository.save(dial);
 	}
 
 	@Transactional
-	public List<Object> getDialogHistory(String nickName) throws Exception{
+	public List<Object> getDialogHistory(long memberId) throws Exception{
 
-		Optional<DialogHistory> options= dialogHistoryRepository.findById(nickName);
+		Optional<DialogHistory> options= dialogHistoryRepository.findById(memberId);
 		if(options.isPresent() == false)
 			throw new SQLException();
 
@@ -65,19 +65,19 @@ public class NovelWriteService {
 	}
 
 	@Transactional
-	public void setQuestion(List<String> questions, String nickName){
+	public void setQuestion(List<String> questions, long memberId){
 		Question question = new Question();
 
-		question.setNickName(nickName);
+		question.setMemberId(memberId);
 		question.setQuestions(questions);
 
 		questionRepository.save(question);
 	}
 
 	@Transactional
-	public Question getQuestion(String nickName) throws Exception{
+	public Question getQuestion(long memberId) throws Exception{
 
-		Optional<Question> optional  = questionRepository.findById(nickName);
+		Optional<Question> optional  = questionRepository.findById(memberId);
 		if(optional.isPresent()){
 			return optional.get();
 		}

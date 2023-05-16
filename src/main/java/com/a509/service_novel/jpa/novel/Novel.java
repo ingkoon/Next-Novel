@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,11 +41,10 @@ public class Novel {
 	private String createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss"));
 	private String engGenre;;
 	private String korGenre;
-	private String nickName;
+	private long memberId;
 	private int hitCount;
 	private int commentCount;
 	private int likeCount;
-
 	private String startImage1;
 	private String startImage2;
 	private String startImage3;
@@ -69,13 +67,13 @@ public class Novel {
 		images.add(new ImageDto(startImage4,imageCaption4));
 
 		return NovelDetailDto.builder()
-			.id(id)
+			.novelId(id)
 			.title(title)
 			.introduction(introduction)
 			.createdAt(createdAt)
 			.engGenre(engGenre)
 			.korGenre(korGenre)
-			.nickName(nickName)
+			.memberId(memberId)
 			.hitCount(hitCount)
 			.commentCount(commentCount)
 			.likeCount(likeCount)
@@ -89,10 +87,10 @@ public class Novel {
 
 	public NovelListDto toListDto(){
 		return NovelListDto.builder()
-			.id(id)
+			.novelId(id)
 			.title(title)
 			.introduction(introduction)
-			.nickName(nickName)
+			.memberId(memberId)
 			.coverImg(coverImg)
 			.hitCount(hitCount)
 			.commentCount(commentCount)

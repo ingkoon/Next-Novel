@@ -9,17 +9,17 @@ import lombok.Data;
 @Builder
 public class NovelCommentDto {
 
-	private int id;
+	private int commentId;
 	private String content;
 	private String createdAt;
-	private String nickName;
+	private long memberId;
 	private int novelId;
 	private String profileImg;
 
 	public NovelComment toEntity(){
 		return NovelComment.builder()
 			.content(content)
-			.nickName(nickName)
+			.memberId(memberId)
 			.novelId(novelId)
 			.build();
 	}

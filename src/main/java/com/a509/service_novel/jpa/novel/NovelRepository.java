@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NovelRepository extends JpaRepository<Novel, Integer> {
-	List<Novel> findAllByNickNameOrderByCreatedAtDesc(String nickName);
+	List<Novel> findAllByMemberIdOrderByCreatedAtDesc(long memberId);
 	List<Novel> findAllByEngGenreAndTitleContainingOrderByIdDesc(String Genre, String keyword, Pageable pageable);
 	List<Novel> findAllByTitleContainingOrderByIdDesc(String keyword, Pageable pageable);
 	@Query(value = "SELECT * FROM novel ORDER BY RAND() LIMIT 5", nativeQuery = true)

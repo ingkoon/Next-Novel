@@ -14,14 +14,14 @@ import lombok.Data;
 @RedisHash(value = "novel_content", timeToLive = 3000)
 public class NovelDetailDto {
 
-	private int id;
+	private int novelId;
 	private String title;
 	private String introduction;
 
 	private String createdAt;
 	private String engGenre;;
 	private String korGenre;
-	private String nickName;
+	private long memberId;
 	private List<NovelContentDto> contents;
 	private List<NovelCommentDto> comments;
 	private int hitCount;
@@ -46,7 +46,7 @@ public class NovelDetailDto {
 			.introduction(introduction)
 			.engGenre(engGenre)
 			.korGenre(korGenre)
-			.nickName(nickName)
+			.memberId(memberId)
 			.startImage1(startImages.get(0).getImageName())
 			.startImage2(startImages.get(1).getImageName())
 			.startImage3(startImages.get(2).getImageName())

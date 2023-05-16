@@ -45,10 +45,10 @@ public class NovelCommentController {
 		}
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> updateNovelComment(@PathVariable("id") int id){
+	@DeleteMapping("/{commentId}")
+	public ResponseEntity<?> updateNovelComment(@PathVariable("commentId") int commentId){
 		try{
-			novelCommentService.deleteNovelComment(id);
+			novelCommentService.deleteNovelComment(commentId);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch (Exception e){

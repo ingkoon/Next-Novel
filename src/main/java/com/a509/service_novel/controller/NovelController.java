@@ -13,8 +13,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -22,8 +20,6 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.a509.service_novel.component.MemberClientComponent;
-import com.a509.service_novel.dto.MemberMyPageResponseDto;
-import com.a509.service_novel.dto.MyPageDto;
 import com.a509.service_novel.dto.NovelInsertResponseDto;
 import com.a509.service_novel.dto.NovelListDto;
 import com.a509.service_novel.redis.DialogHistory;
@@ -34,7 +30,6 @@ import com.a509.service_novel.dto.NovelDetailDto;
 import com.a509.service_novel.service.NovelLikeService;
 import com.a509.service_novel.service.NovelService;
 
-import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -94,7 +89,7 @@ public class NovelController {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
 			String UID = now.format(formatter);
 			int novelId = novelService.insertNovel(novelDetailDto,startImages,contentImages,coverImages,UID);
-			novelService.insertNovelImages(novelDetailDto.getNickName(),startImages,contentImages,UID);
+			novelService.insertNovelImages(novelDetailDto.getMemberId(),startImages,contentImages,UID);
 			System.out.println("endendendend");
 			NovelInsertResponseDto novelInsertResponseDto = new NovelInsertResponseDto();
 			novelInsertResponseDto.setNovelId(novelId);
@@ -107,13 +102,13 @@ public class NovelController {
 		}
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<?> selectNovel(@PathVariable("id") int id
-										,@RequestParam("nickName") String nickName){
+	@GetMapping("/{novelId}")
+	public ResponseEntity<?> selectNovel(@PathVariable("novelId") int novelId
+										,@RequestParam("memberId") long memberId){
 
 		try{
-
-			NovelDetailDto novelDetailDto = novelService.selectNovelDetail(id, nickName);
+			System.out.println(novelId +" " + memberId);
+			NovelDetailDto novelDetailDto = novelService.selectNovelDetail(novelId, memberId);
 			// System.out.println();
 
 
@@ -150,28 +145,26 @@ public class NovelController {
 		}
 	}
 
-	@GetMapping("/my/{id}")
-	public ResponseEntity<?> selectNovelByAuthorId(@PathVariable("id") String nickName){
+	@GetMapping("/my/{memberId}")
+	public ResponseEntity<?> selectNovelByAuthorId(@PathVariable("memberId") long memberId){
 		try{
-			// List<NovelListDto> novelLikes= novelLikeService.selectLikedNovelList(nickName);
-			// List<NovelListDto> novelWritten = novelService.selectNovelsByAuthorId(nickName);
 			//
 			// MyPageDto myPageDto = new MyPageDto();
 			// myPageDto.setNovelLikes(novelLikes);
 			// myPageDto.setNovelWritten(novelWritten);
 			// myPageDto.setProfile(memberMyPageResponseDto);
-			return ResponseEntity.ok(novelService.selectNovelsByAuthorId(nickName));
+			return ResponseEntity.ok(novelService.selectNovelsByAuthorId(memberId));
 		}
 		catch(Exception e){
 			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@GetMapping("/image/{id}")
-	public ResponseEntity<?> selectAllNovelImage(@PathVariable("id") String nickName){
+	@GetMapping("/image/{memberId}")
+	public ResponseEntity<?> selectAllNovelImage(@PathVariable("memberId") long memberId){
 
 		try{
-			List<String> images = novelService.selectAllNovelImage(nickName);
+			List<String> images = novelService.selectAllNovelImage(memberId);
 			return new ResponseEntity<>(images,HttpStatus.OK);
 		}
 		catch (Exception e){
@@ -179,10 +172,10 @@ public class NovelController {
 		}
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteNovel(@PathVariable("id") int id){
+	@DeleteMapping("/{novelId}")
+	public ResponseEntity<?> deleteNovel(@PathVariable("novelId") int novelId){
 		try{
-			novelService.deleteNovel(id);
+			novelService.deleteNovel(novelId);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch (Exception e){

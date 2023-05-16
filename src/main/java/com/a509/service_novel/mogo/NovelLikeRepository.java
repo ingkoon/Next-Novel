@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NovelLikeRepository extends MongoRepository<NovelLike, Integer> {
 
-	Optional<NovelLike> findByNovelIdAndNickName(Integer novelId, String nickName);
-	List<NovelLike> findAllByNickName(String nickName);
-	void deleteByNovelIdAndNickName(Integer novelId, String nickName);
+	Optional<NovelLike> findByNovelIdAndMemberId(Integer novelId, Long memberId);
+	List<NovelLike> findAllByMemberId(long memberId);
+	void deleteByNovelIdAndMemberId(Integer novelId, long memberId);
 }

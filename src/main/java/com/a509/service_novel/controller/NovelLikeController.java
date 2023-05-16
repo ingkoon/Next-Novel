@@ -23,11 +23,11 @@ public class NovelLikeController {
 	private final NovelLikeService novelLikeService;
 
 
-	@GetMapping("/like/{nickName}")
-	public ResponseEntity<?> selectLikedNovels(@PathVariable("nickName") String nickName){
+	@GetMapping("/like/{memberId}")
+	public ResponseEntity<?> selectLikedNovels(@PathVariable("memberId") long memberId){
 		try{
-			System.out.println(nickName);
-			return ResponseEntity.ok(novelLikeService.selectLikedNovelList(nickName));
+			System.out.println(memberId);
+			return ResponseEntity.ok(novelLikeService.selectLikedNovelList(memberId));
 		}
 		catch (Exception e){
 			return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);

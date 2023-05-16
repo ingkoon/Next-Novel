@@ -9,13 +9,13 @@ import lombok.Data;
 public class NovelLikeDto {
 
 	private int novelId;
-	private String nickName;
+	private long memberId;
 
 	public NovelLike toEntity(NovelSequenceGenerator novelSequenceGenerator){
 		return NovelLike.builder()
 			.id(novelSequenceGenerator.generateSequence(0))
 			.novelId(novelId)
-			.nickName(nickName)
+			.memberId(memberId)
 			.build();
 	}
 }

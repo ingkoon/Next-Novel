@@ -23,7 +23,7 @@ public class NovelImage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String imageName;
-	private String nickName;
+	private long memberId;
 
 
 	public ImageDto toDto(){

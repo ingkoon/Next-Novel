@@ -13,7 +13,7 @@ import lombok.Data;
 public class DialogHistory implements Serializable{
 
 	@Id
-	private String nickName;
+	private long memberId;
 
 	private List<Dialog> dialog;
 

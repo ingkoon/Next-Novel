@@ -3,7 +3,6 @@ package com.a509.service_novel.jpa.novelComment;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,14 +31,14 @@ public class NovelComment {
 
 	@Builder.Default
 	private String createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss"));
-	private String nickName;
+	private long memberId;
 	private int novelId;
 
 	public NovelCommentDto toDto(){
 		return NovelCommentDto.builder()
-			.id(id)
+			.commentId(id)
 			.content(content)
-			.nickName(nickName)
+			.memberId(memberId)
 			.createdAt(createdAt)
 			.novelId(novelId)
 			.build();

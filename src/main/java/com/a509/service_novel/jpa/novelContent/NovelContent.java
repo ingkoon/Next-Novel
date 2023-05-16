@@ -25,7 +25,7 @@ public class NovelContent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String nickName;
+	private long memberId;
 	private int novelId;
 	private String content;
 	private String query;

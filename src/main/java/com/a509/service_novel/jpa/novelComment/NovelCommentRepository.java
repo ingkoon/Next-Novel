@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NovelCommentRepository extends JpaRepository<NovelComment,Integer> {
 
-	List<NovelComment> findAllByNovelId(Integer id);
 
-	Optional<List<NovelComment>> findByNovelId(Integer id);
+	Optional<List<NovelComment>> findByNovelId(Integer novelId);
 }

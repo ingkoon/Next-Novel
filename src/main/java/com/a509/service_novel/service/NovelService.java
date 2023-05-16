@@ -32,7 +32,6 @@ import com.a509.service_novel.jpa.novelImage.NovelImageRepository;
 import com.a509.service_novel.mogo.NovelLike;
 import com.a509.service_novel.mogo.NovelLikeRepository;
 
-import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -103,20 +102,20 @@ public class NovelService {
 	}
 
 	@Transactional
-	public NovelDetailDto selectNovelDetail(int id, String nickName) throws Exception{
+	public NovelDetailDto selectNovelDetail(int novelId, long memberId) throws Exception{
 
 		///소설 찾기
-		Novel novel = novelRepository.getById(id);
+		Novel novel = novelRepository.getById(novelId);
 		System.out.println("found novel");
 		System.out.println(novel);
 		//소설의 내용 찾기
-		List<NovelContent> contents = novelContentRepository.findByNovelId(id);
+		List<NovelContent> contents = novelContentRepository.findByNovelId(novelId);
 		System.out.println("found contents");
 		System.out.println(contents);
 		List<NovelContentDto> novelContentDtos = new ArrayList<>();
 
 		///소설 댓글 찾기
-		Optional<List<NovelComment>> optionalComments = novelCommentRepository.findByNovelId(id);
+		Optional<List<NovelComment>> optionalComments = novelCommentRepository.findByNovelId(novelId);
 		List<NovelComment> comments = new ArrayList<>();
 		List<NovelCommentDto> commentDtos = new ArrayList<>();
 
@@ -138,7 +137,7 @@ public class NovelService {
 		for(NovelComment comment: comments){
 			NovelCommentDto novelCommentDto = comment.toDto();
 			commentDtos.add(novelCommentDto);
-			novelCommentDto.setProfileImg(memberClientComponent.findMyPageImage(novelCommentDto.getNickName()));
+			novelCommentDto.setProfileImg(memberClientComponent.findMyPageImage(novelCommentDto.getMemberId()));
 		}
 
 		//찾은 소설 dto전환
@@ -149,7 +148,7 @@ public class NovelService {
 		//찾은 코멘트 dto 저장
 		novelDetailDto.setComments(commentDtos);
 
-		Optional<NovelLike> novelLike = novelLikeRepository.findByNovelIdAndNickName(id,nickName);
+		Optional<NovelLike> novelLike = novelLikeRepository.findByNovelIdAndMemberId(novelId,memberId);
 		if(novelLike.isPresent())
 			novelDetailDto.setIsLiked(true);
 		else
@@ -186,11 +185,11 @@ public class NovelService {
 
 
 	@Transactional
-	public List<NovelListDto> selectNovelsByAuthorId(String nickName) throws Exception{
+	public List<NovelListDto> selectNovelsByAuthorId(long memberId) throws Exception{
 
 		Sort sortByCreatedAt = Sort.by("createdAt").ascending();
 
-		List<Novel> novels = novelRepository.findAllByNickNameOrderByCreatedAtDesc(nickName);
+		List<Novel> novels = novelRepository.findAllByMemberIdOrderByCreatedAtDesc(memberId);
 		List<NovelListDto> novelDtos = new ArrayList<>();
 
 		for (Novel novel : novels) {
@@ -211,13 +210,13 @@ public class NovelService {
 	}
 
 	@Transactional
-	public void insertNovelImages(String nickName, MultipartFile[] startImages, MultipartFile[] contentImages,String UID) throws Exception{
+	public void insertNovelImages(long memberId, MultipartFile[] startImages, MultipartFile[] contentImages,String UID) throws Exception{
 
 		for(MultipartFile image : startImages){
 
 			NovelImage novelImage = new NovelImage();
 			novelImage.setImageName(UID+"_"+image.getOriginalFilename());
-			novelImage.setNickName(nickName);
+			novelImage.setMemberId(memberId);
 			novelImageRepository.save(novelImage);
 		}
 
@@ -225,15 +224,15 @@ public class NovelService {
 
 			NovelImage novelImage = new NovelImage();
 			novelImage.setImageName(UID+"_"+image.getOriginalFilename());
-			novelImage.setNickName(nickName);
+			novelImage.setMemberId(memberId);
 			novelImageRepository.save(novelImage);
 		}
 		System.out.println("insert image end");
 	}
 
 	@Transactional
-	public List<String> selectAllNovelImage(String nickName) throws Exception{
-		List<NovelImage> novelImageList = novelImageRepository.findByNickName(nickName);
+	public List<String> selectAllNovelImage(long memberId) throws Exception{
+		List<NovelImage> novelImageList = novelImageRepository.findByMemberId(memberId);
 		List<String> images = new ArrayList<>();
 		for(NovelImage novelImage : novelImageList){
 			String novelPath = path+"/"+novelImage.getImageName();

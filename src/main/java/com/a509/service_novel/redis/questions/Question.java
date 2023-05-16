@@ -14,7 +14,7 @@ import lombok.Data;
 public class Question {
 
 	@Id
-	private String nickName;
+	private long memberId;
 	private List<String> questions;
 
 }

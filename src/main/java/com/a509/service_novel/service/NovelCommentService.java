@@ -23,13 +23,13 @@ public class NovelCommentService {
 	}
 	@Transactional
 	public void updateNovelComment(NovelCommentDto novelCommentDto) throws Exception{
-		NovelComment novelComment = novelCommentRepository.getById(novelCommentDto.getId());
+		NovelComment novelComment = novelCommentRepository.getById(novelCommentDto.getCommentId());
 		novelComment.setContent(novelCommentDto.getContent());
 		novelCommentRepository.save(novelComment);
 	}
 	@Transactional
-	public void deleteNovelComment(int id) throws Exception{
-		novelCommentRepository.deleteById(id);
+	public void deleteNovelComment(int commentId) throws Exception{
+		novelCommentRepository.deleteById(commentId);
 	}
 
 }

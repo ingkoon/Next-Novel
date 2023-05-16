@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NovelImageRepository extends JpaRepository<NovelImage, Integer> {
-	List<NovelImage> findByNickName(String nickName);
+	List<NovelImage> findByMemberId(long memberId);
 }
 

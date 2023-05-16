@@ -7,10 +7,10 @@ import lombok.Data;
 @Builder
 public class NovelListDto {
 
-	private int id;
+	private int novelId;
 	private String title;
 	private String introduction;
-	private String nickName;
+	private long memberId;
 	private String coverImg;
 	private int hitCount;
 	private int commentCount;

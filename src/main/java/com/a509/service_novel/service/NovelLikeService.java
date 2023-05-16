@@ -27,9 +27,9 @@ public class NovelLikeService {
 	private final NovelSequenceGenerator novelSequenceGenerator;
 
 	@Transactional
-	public List<NovelListDto> selectLikedNovelList(String nickName) throws Exception{
+	public List<NovelListDto> selectLikedNovelList(long memberId) throws Exception{
 
-		List<NovelLike> novelLikes= novelLikeRepository.findAllByNickName(nickName);
+		List<NovelLike> novelLikes= novelLikeRepository.findAllByMemberId(memberId);
 		List<NovelListDto> novelListDtos = new ArrayList<>();
 
 		for(NovelLike novelLike : novelLikes){
@@ -49,7 +49,7 @@ public class NovelLikeService {
 	public void insertNovelLike(NovelLikeDto novelLikeDto) throws Exception{
 
 		System.out.println(novelSequenceGenerator.generateSequence(0));
-		Optional<NovelLike> optional = novelLikeRepository.findByNovelIdAndNickName(novelLikeDto.getNovelId(),novelLikeDto.getNickName());
+		Optional<NovelLike> optional = novelLikeRepository.findByNovelIdAndMemberId(novelLikeDto.getNovelId(),novelLikeDto.getMemberId());
 		if(optional.isPresent())
 			return;
 
@@ -67,7 +67,7 @@ public class NovelLikeService {
 
 	@Transactional
 	public void deleteNovelLike(NovelLikeDto novelLikeDto) throws Exception{
-		novelLikeRepository.deleteByNovelIdAndNickName(novelLikeDto.getNovelId(),novelLikeDto.getNickName());
+		novelLikeRepository.deleteByNovelIdAndMemberId(novelLikeDto.getNovelId(),novelLikeDto.getMemberId());
 		Optional<Novel> optionalNovel = novelRepository.findById(novelLikeDto.getNovelId());
 		if(optionalNovel.isPresent()){
 			Novel novel = optionalNovel.get();
