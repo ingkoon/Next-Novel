@@ -24,11 +24,12 @@ export default function Landing() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-    const accesstoken = queryParams.get("accesstoekn"); //오타 수정
+    const access_token = queryParams.get("accesstoken");
+    const nickName = queryParams.get("nickname");
 
-    if (accesstoken) {
-      console.log("accesstoken : " + accesstoken);
-      localStorage.setItem("access_token", accesstoken);
+    if (access_token && nickName) {
+      localStorage.setItem("access_token", access_token);
+      localStorage.setItem("nickName", nickName);
       navigate("/");
     }
   }, []);
