@@ -13,7 +13,7 @@ from typing import List
 from pydantic import BaseModel
 
 class Item(BaseModel):
-    queries: List[str]
+    query: str
 
 app = FastAPI()
 
@@ -42,7 +42,7 @@ def read_item(item:Item):
 
     # content열만 따로 뽑아서 chatgpt의 내용 추가
     data_content = data['content']
-    data_content.loc[len(data_content)] = " ".join(item.queries)
+    data_content.loc[len(data_content)] = item.query
 
     # 단어 단위로 벡터라이징
     tfidf = TfidfVectorizer(stop_words='english')
