@@ -286,6 +286,11 @@ public class MemberService {
                     .providerId(subValue)
                     .build();
             memberRepository.save(member);
+
+            // point 생성
+            PointCreateRequestDto pointCreateRequestDto = new PointCreateRequestDto();
+            pointCreateRequestDto.setMemberId(member.getId());
+            pointClientComponent.createPoint(pointCreateRequestDto);
         } else {
             member = optionalMember.get();
         }
