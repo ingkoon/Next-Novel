@@ -149,3 +149,6 @@
   column-gap: 12px;
   margin: 15px auto;
 }
+.socialButton > img:hover {
+  cursor: pointer;
+}
