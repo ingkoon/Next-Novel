@@ -84,18 +84,26 @@ spring:
           uri: http://***REMOVED***:8014/
           predicates:
             - Path=/point/**
+          filters:
+            - AuthenticationHeaderFilter
         - id: order
           uri: http://***REMOVED***:8015/
           predicates:
             - Path=/orders/**
+          filters:
+            - AuthenticationHeaderFilter
         - id: item
           uri: http://***REMOVED***:8016/
           predicates:
             - Path=/items/**
+          filters:
+            - AuthenticationHeaderFilter
         - id: orderItem
           uri: http://***REMOVED***:8017/
           predicates:
             - Path=/orderItem/**
+          filters:
+            - AuthenticationHeaderFilter
         - id: search
           uri: http://***REMOVED***:8018/
           predicates:
