@@ -1,6 +1,7 @@
 package com.a509.service_member.service;
 
 import com.a509.service_member.component.MemberImageComponent;
+import com.a509.service_member.component.PointClientComponent;
 import com.a509.service_member.dto.request.*;
 import com.a509.service_member.dto.response.MemberTokenResponseDto;
 import com.a509.service_member.dto.response.MemberMyPageResponseDto;
@@ -52,6 +53,7 @@ public class MemberService {
     private final JwtTokenProvider jwtTokenProvider;
     private final StringRedisTemplate stringRedisTemplate;
     private final MemberImageComponent memberImageComponent;
+    private final PointClientComponent pointClientComponent;
     private final WebClient webClient = WebClient.create();
     @Value("${spring.security.oauth2.client.registration.google.client-id}")
     String googleClientId;
@@ -101,6 +103,10 @@ public class MemberService {
             throw new RuntimeException(e);
         }
 
+        // point 생성
+        PointCreateRequestDto pointCreateRequestDto = new PointCreateRequestDto();
+        pointCreateRequestDto.setMemberId(member.getId());
+        pointClientComponent.createPoint(pointCreateRequestDto);
     }
 
     public MessageResponseDto checkEmail(MemberSignupCheckRequestDto memberSignupCheckRequestDto) {

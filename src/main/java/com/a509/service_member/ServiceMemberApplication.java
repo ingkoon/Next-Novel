@@ -11,8 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableFeignClients
 @Import(WebConfiguration.class)
+@EnableFeignClients
 public class ServiceMemberApplication {
 	@Bean
 	public BCryptPasswordEncoder encodePwd() {
