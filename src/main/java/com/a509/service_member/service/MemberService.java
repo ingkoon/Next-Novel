@@ -34,7 +34,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.transaction.Transactional;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -67,7 +73,6 @@ public class MemberService {
     String kakaoRedirectUrl;
     @Value("${spring.security.oauth2.client.registration.kakao.authorization-grant-type}")
     String grantType;
-
 
     public Member findMember(String key, String value) {
         if(key.equals("id")) {
@@ -167,6 +172,7 @@ public class MemberService {
         return tokenInfo;
     }
 
+    @Transactional
     public String getTokenOauth2Google(String code) {
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("code", code);
@@ -189,6 +195,7 @@ public class MemberService {
         return (String) responseBody.get("id_token");
     }
 
+    @Transactional
     public String getTokenOauth2Kakao(String code) {
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("grant_type", grantType);
@@ -211,7 +218,8 @@ public class MemberService {
         return (String) responseBody.get("access_token");
     }
 
-    public MemberTokenResponseDto loginOauth2Google(String token) {
+    @Transactional
+    public MemberTokenResponseDto loginOauth2Google(String token) throws IOException {
         // JWT token 의 payload 값 decode
         String[] jwtParts = token.split("\\.");
         byte[] bytes = Base64.getDecoder().decode((jwtParts[1]));
@@ -237,7 +245,8 @@ public class MemberService {
         return oauth2Login("google", subValue, emailValue, nameValue, pictureValue);
     }
 
-    public MemberTokenResponseDto loginOauth2Kakao(String token) {
+    @Transactional
+    public MemberTokenResponseDto loginOauth2Kakao(String token) throws IOException {
         Map<String, Object> responseBody = webClient.post()
                 .uri(uriBuilder -> uriBuilder
                         .scheme("https")
@@ -261,7 +270,8 @@ public class MemberService {
         return oauth2Login("kakao", subValue, emailValue, nameValue, pictureValue);
     }
 
-    public MemberTokenResponseDto oauth2Login(String provider, String subValue, String emailValue, String nameValue, String pictureValue) {
+    @Transactional
+    public MemberTokenResponseDto oauth2Login(String provider, String subValue, String emailValue, String nameValue, String pictureValue) throws IOException {
         // 다음 형태의 이메일로 이미 가입 되어있는지 확인
         String email = provider+"@"+emailValue;   // ex)google@ejk9658@gmail.com
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
@@ -281,7 +291,7 @@ public class MemberService {
                     .email(email)
                     .password(bCryptPasswordEncoder.encode("딘추"))
                     .nickName(name)
-                    .profileImage(pictureValue)
+                    .profileImage(getProfileImgUrl(pictureValue))
                     .provider(provider)
                     .providerId(subValue)
                     .build();
@@ -300,6 +310,33 @@ public class MemberService {
         loginDto.setPassword("딘추");
 
         return login(loginDto);
+    }
+
+    @Transactional
+    public String getProfileImgUrl(String imageUrl) throws IOException {
+        URL url = new URL(imageUrl);
+
+        // 이미지 다운로드
+        try (InputStream in = url.openStream()) {
+            // 임시 파일 생성
+            String UID = makeUID();
+            File tempFile = File.createTempFile(UID, ".png");
+
+            // imgUrl: member 변수에 들어갈 profile img 경로
+            String imgUrl = UID + ".png";
+
+            File renamedFile = new File(tempFile.getParent(), imgUrl);
+            tempFile.renameTo(renamedFile);
+            tempFile.deleteOnExit();
+
+            // 임시 파일로 이미지 데이터 복사
+            Files.copy(in, renamedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            return imgUrl;
+        } catch (IOException e) {
+            log.info(e.toString());
+            return "defaultProfileImg.png";
+        }
     }
 
     public void logout(String token) {
@@ -335,9 +372,7 @@ public class MemberService {
         member.setNickName(nickName);
 
         if(!multipartFile.isEmpty()) {
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
-            String UID = now.format(formatter);
+            String UID = makeUID();
             try{
                 memberImageComponent.save(multipartFile,UID);
                 member.setProfileImage(UID+"_"+multipartFile.getOriginalFilename());
@@ -346,6 +381,13 @@ public class MemberService {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @Transactional
+    public String makeUID() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
+        return now.format(formatter);
     }
 
     @Transactional

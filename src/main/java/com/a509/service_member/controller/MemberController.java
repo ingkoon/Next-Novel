@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
+import java.io.IOException;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -53,7 +55,7 @@ public class MemberController {
     }
 
     @GetMapping("/oauth2/code/google")
-    public ResponseEntity<MemberTokenResponseDto> loginOauth2Google(@RequestParam("code") String code) {
+    public ResponseEntity<MemberTokenResponseDto> loginOauth2Google(@RequestParam("code") String code) throws IOException {
         // google 에서 설정한 redirect uri 로 요청이 들어오면 쿼리 스트링으로 들어온 code 값을 이용
         // http 통신 타서 google 회원 정보 가져오기
         String token = memberService.getTokenOauth2Google(code);
@@ -70,7 +72,7 @@ public class MemberController {
     }
 
     @GetMapping("/oauth2/code/kakao")
-    public ResponseEntity<MemberTokenResponseDto> loginOauth2Kakao(@RequestParam("code") String code) {
+    public ResponseEntity<MemberTokenResponseDto> loginOauth2Kakao(@RequestParam("code") String code) throws IOException {
         // kakao 에서 설정한 redirect uri 로 요청이 들어오면 쿼리 스트링으로 들어온 code 값을 이용
         // http 통신 타서 kakao 회원 정보 가져오기
         String token = memberService.getTokenOauth2Kakao(code);
