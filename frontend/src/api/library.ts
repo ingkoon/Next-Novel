@@ -32,3 +32,13 @@ export async function getsearch(keyword: string, page: number) {
   });
   return res;
 }
+
+// 검색 결과
+export async function getsimilarity(keyword: string) {
+  const res = await instance.get("novel/similarity", {
+    params: {
+      keyword: keyword,
+    },
+  });
+  return res;
+}

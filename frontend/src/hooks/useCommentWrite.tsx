@@ -8,13 +8,15 @@ export default function useCommentWrite() {
     async ({
       content,
       nickName,
+      memberId,
       novelId,
     }: {
       content: string;
       nickName: string;
+      memberId: number;
       novelId: number;
     }) => {
-      const res = await writecomment({ content, nickName, novelId });
+      const res = await writecomment({ content, nickName, memberId, novelId });
       return res.data;
     }
   );

@@ -93,11 +93,14 @@
 }
 
 @media (max-width: 800px) {
+  .bookCircle {
+    margin-left: 1%;
+  }
   .quote {
     max-width: 90%;
     height: 100px;
     position: absolute;
-    top: 60%;
+    top: 63%;
     left: 3%;
   }
   .newcard_quote1 {
@@ -117,6 +120,7 @@
 
 @media (max-width: 400px) {
   .bookCircle {
-    margin-left: -17%;
+    margin-left: -16.6%;
+    background: #ff660050;
   }
 }

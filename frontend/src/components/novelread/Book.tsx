@@ -23,7 +23,7 @@ type NMat = MatInfo[];
 
 type Ninfo = {
   coverImg: string;
-  id: number;
+  novelId: number;
   introduction: string;
   originCoverImg: string;
   title: string;
@@ -58,8 +58,10 @@ export default function Book() {
   const [rerender, setRerender] = useState("");
   const page_ref = useRef<HTMLDivElement>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false); //loginmodal
-  //로컬 닉네임
-  const localNickname: string = localStorage.getItem('nickName') ?? '';
+
+  //로컬 멤버아이디
+  const localValue: string | null = localStorage.getItem('memberId');
+  const localMemberId: number = localValue !== null ? parseInt(localValue) : 0;
 
   const [input, setInput] = useState<InputProps>({});
   const { submitComment } = useCommentWrite();
@@ -67,11 +69,11 @@ export default function Book() {
   async function nvinfo() {
     console.log("노벨아이디" + novelid);
     try {
-      const data = await novelall(novelid, localNickname);
+      const data = await novelall(novelid, localMemberId);
       console.log(data);
       setNovelinfo({
         coverImg: data.data.coverImg,
-        id: data.data.id,
+        novelId: data.data.novelId,
         introduction: data.data.introduction,
         originCoverImg: data.data.originCoverImg,
         title: data.data.title,
@@ -130,8 +132,8 @@ export default function Book() {
 
   const navigate = useNavigate();
 
-  const navigateToIntro = (id:number) => {
-    navigate(`/library/${id}/intro`, { state: { id: id } });
+  const navigateToIntro = (novelId:number) => {
+    navigate(`/library/${novelId}/intro`, { state: { novelId: novelId } });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,12 +154,13 @@ export default function Book() {
 
     submitComment.mutate({
     content: input.comm.trim(),
-    nickName: localNickname,
+    nickName: localStorage.getItem('nickName')!,
+    memberId: localMemberId,
     novelId: novelid
   }, {
       onSuccess: (res) => {
         console.log(res);
-        navigate(`/library/${novelid}/intro`, { state: { id: novelid } });
+        navigate(`/library/${novelid}/intro`, { state: { novelId: novelid } });
       },
     });
   };
@@ -242,7 +245,7 @@ export default function Book() {
                 />
                 <div
                   className={style.link}
-                  onClick={() => navigateToIntro(novelinfo.id)}
+                  onClick={() => navigateToIntro(novelid)}
                 >
                   <h2>돌아가기</h2>
                 </div>

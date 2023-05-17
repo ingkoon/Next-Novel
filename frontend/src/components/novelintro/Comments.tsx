@@ -10,14 +10,14 @@ export default function Comments() {
   const id = location.state.id;
   const [novelid, setNovelid] = useState(id);
   const [commentlist, setCommentlist] = useState([]);
-  
-  //로컬 닉네임
-  const localNickname: string = localStorage.getItem('nickName') ?? '';
 
+  //로컬 멤버아이디
+  const localValue: string | null = localStorage.getItem("memberId");
+  const localMemberId: number = localValue !== null ? parseInt(localValue) : 0;
 
   async function comment() {
     try {
-      const data = await getcomment(novelid, localNickname);
+      const data = await getcomment(novelid, localMemberId);
       console.log(data);
       setCommentlist(data.data.comments);
     } catch (e) {

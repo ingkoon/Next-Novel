@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import { getnovels } from "../../api/library";
 
 type carddata = {
-  id: number;
+  novelId: number;
   title: string;
   introduction: string;
   nickName: string;
@@ -15,6 +15,7 @@ type carddata = {
   hitCount: number;
   commentCount: number;
   likeCount: number;
+  score: number;
 };
 
 type cardinfo = carddata[];
@@ -102,28 +103,6 @@ export default function Booklist() {
     };
   }, [isLoading]);
 
-  //투명div감지 무한스크롤
-  // useEffect(() => {
-  // const observer = new IntersectionObserver((entries) => {
-  //   entries.forEach((entry) => {
-  //     if (entry.isIntersecting) {
-  //       console.log("감지&한무발동")
-  //       fetchData();
-  //       setPage((prevPage) => prevPage + 1); // 페이지 업데이트
-  //     }
-  //   });
-  // });
-
-  //   if (triggerRef.current) {
-  //     observer.observe(triggerRef.current);
-  //   }
-
-  //   return () => {
-  //     if (triggerRef.current) {
-  //       observer.unobserve(triggerRef.current);
-  //     }
-  //   };
-  // }, [isLoading]);
 
   //카드 삭제 시 리스트 다시 불러오기
   const goTop = () => {

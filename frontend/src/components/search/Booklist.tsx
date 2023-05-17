@@ -5,7 +5,7 @@ import Card from "../common/Card";
 import { useEffect, useState } from "react";
 
 type Book = {
-  id: number;
+  novelId: number;
   title: string;
   introduction: string;
   nickName: string;
@@ -13,6 +13,7 @@ type Book = {
   hitCount: number;
   commentCount: number;
   likeCount: number;
+  score: number;
 };
 
 type BookListProps = {
