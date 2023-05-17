@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.a509.service_novel.component.MemberClientComponent;
 import com.a509.service_novel.dto.NovelCommentDto;
-
+import com.a509.service_novel.jpa.novel.Novel;
 import com.a509.service_novel.jpa.novel.NovelRepository;
 import com.a509.service_novel.jpa.novelComment.NovelComment;
 import com.a509.service_novel.jpa.novelComment.NovelCommentRepository;
