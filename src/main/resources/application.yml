@@ -18,10 +18,10 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
+              - 'http://localhost:3000'
               - 'https://***REMOVED***'
               - 'http://***REMOVED***:443'
               - 'https://localhost:3000'
-              - 'http://localhost:3000'
             allow-credentials: true
             # allowedHeaders: '*'
             # exposed-headers: '*'
