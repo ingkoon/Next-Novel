@@ -67,7 +67,7 @@ public class NovelService {
 
 		
 
-		if(!novelContentDtos == null){
+		if(!(novelContentDtos == null)){
 		//content 저장
 			for(int i = 0; i < novelContentDtos.size(); i++){
 
