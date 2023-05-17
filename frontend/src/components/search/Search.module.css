@@ -26,11 +26,16 @@
 }
 
 .search {
-  background: pink;
-  font-size: clamp(24px, 3vw, 36px);
-  margin-left: 20%;
+  /* background: pink; */
+  font-size: clamp(24px, 2.5vw, 36px);
+  margin-left: 25%;
 }
 
+.btnwrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .searchbtn {
   font-family: "gothic";
   width: 140px;
@@ -55,7 +60,7 @@
   height: 50px;
   border: 0;
   background-color: transparent;
-  border-bottom: 7px solid black;
+  border-bottom: 5px solid #a9a9a9;
   margin-left: 15px;
   font-size: 25px;
   font-family: "gothic";
@@ -85,22 +90,21 @@
   .searchicon {
     display: none;
   }
+  .form {
+  }
   .searchbtn {
-    position: relative;
     font-family: "gothic";
-    width: 100px;
+    width: 80px;
     height: 30px;
     color: #fffefc;
-    background-color: black;
     border-radius: 10px;
     font-size: 14px;
-    cursor: pointer;
-    left: 10px;
+    margin: 0 10px 0 10px;
   }
   .divbar {
     width: 2px;
     height: 30px;
-    margin: 0 10px 0 30px;
+    margin: 0 10px 0 10px;
     background: #a9a9a9;
   }
   /* .searchpart {

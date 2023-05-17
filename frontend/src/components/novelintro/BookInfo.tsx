@@ -78,6 +78,7 @@ export default function BookInfo() {
     goTop(); // 페이지 로드시 맨위로
     setNovelid(novelId);
     intro();
+    console.log("!!!!인트로노벨아이디:"+novelid);
   }, []);
 
   const navigate = useNavigate();
