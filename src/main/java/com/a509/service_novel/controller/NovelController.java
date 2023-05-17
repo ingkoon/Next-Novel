@@ -83,12 +83,13 @@ public class NovelController {
 	public ResponseEntity<?> insertNovel(@RequestPart("start_images") MultipartFile[] startImages
 		,@RequestPart(name="content_images", required = false) MultipartFile[] contentImages
 		,@RequestPart("cover_images") MultipartFile[] coverImages
-		,@RequestPart("novel") NovelDetailDto novelDetailDto){
+		,@RequestPart("novel") NovelDetailDto novelDetailDto
+		,@RequestHeader("Authorization") final String token){
 		try{
 			LocalDateTime now = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
 			String UID = now.format(formatter);
-			int novelId = novelService.insertNovel(novelDetailDto,startImages,contentImages,coverImages,UID);
+			int novelId = novelService.insertNovel(novelDetailDto,startImages,contentImages,coverImages,UID,token);
 			novelService.insertNovelImages(novelDetailDto.getMemberId(),startImages,contentImages,UID);
 			System.out.println("endendendend");
 			NovelInsertResponseDto novelInsertResponseDto = new NovelInsertResponseDto();
@@ -115,6 +116,7 @@ public class NovelController {
 			return ResponseEntity.ok().body(novelDetailDto);
 		}
 		catch (Exception e){
+			System.out.println(e.toString());
 			return new ResponseEntity<>("SQL 예외 발생", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

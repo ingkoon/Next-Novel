@@ -54,12 +54,15 @@ public class NovelService {
 		,MultipartFile[] startImages
 		,MultipartFile[] contentImages
 		,MultipartFile[] coverImages
-		,String UID) throws Exception{
+		,String UID
+		,String token) throws Exception{
 
 		List<NovelContentDto> novelContentDtos = novelDetailDto.getContents();
 		System.out.println("start save content");
 
 		Novel novel = novelDetailDto.toEntityNovel();
+		String nickName = memberClientComponent.findMyPage(token).getBody().getNickName();
+		novel.setNickName(nickName);
 		novelRepository.save(novel);
 
 
@@ -137,7 +140,7 @@ public class NovelService {
 		for(NovelComment comment: comments){
 			NovelCommentDto novelCommentDto = comment.toDto();
 			commentDtos.add(novelCommentDto);
-			novelCommentDto.setProfileImg(memberClientComponent.findMyPageImage(novelCommentDto.getNickName()));
+			novelCommentDto.setProfileImg(memberClientComponent.findMyPageImage(novelCommentDto.getMemberId()));
 		}
 
 		//찾은 소설 dto전환

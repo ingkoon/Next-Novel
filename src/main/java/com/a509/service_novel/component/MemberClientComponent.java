@@ -10,8 +10,8 @@ import com.a509.service_novel.dto.MemberMyPageResponseDto;
 
 @FeignClient(name = "SERVICE-MEMBER", url = "***REMOVED***:8000/member")
 public interface MemberClientComponent {
-	@GetMapping("/myPage/image/{nick_name}")
-	String findMyPageImage(@PathVariable("nick_name") String nickName);
+	@GetMapping("/myPage/image/{memberId}")
+	String findMyPageImage(@PathVariable("memberId") long memberId);
 
 	@GetMapping("/myPage")
 	ResponseEntity<MemberMyPageResponseDto> findMyPage(@RequestHeader("Authorization") final String token);
