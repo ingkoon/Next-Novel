@@ -63,13 +63,15 @@ export default function Footer() {
         <br />
         <br />
         <span>AI 소설 웹서비스&nbsp;&nbsp;</span>
-        <span className={style.gray}>[인공지능 : 영상]</span>
+        <span className={style.gray}>[ver_2.0]</span>
         <br />
-        Team
-        6G&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BE:&nbsp;
-        <span className={style.gray}>이정범 이명규 강은진</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FE:&nbsp;
-        <span className={style.gray}>김수빈 소지현 서철원</span>
+        Team 명규당&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+        <div className={style.credit}>
+          BE:&nbsp;
+          <span className={style.gray}>장지웅 이명규 이인재 강은진</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FE:&nbsp;
+          <span className={style.gray}>소지현 서철원</span>
+        </div>
       </div>
     </div>
   );

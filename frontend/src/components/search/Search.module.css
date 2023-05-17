@@ -26,8 +26,9 @@
 }
 
 .search {
-  font-size: 48px;
-  margin-right: 10%;
+  background: pink;
+  font-size: clamp(24px, 3vw, 36px);
+  margin-left: 20%;
 }
 
 .searchbtn {
@@ -39,12 +40,21 @@
   border-radius: 20px;
   font-size: 24px;
   cursor: pointer;
+  margin: 0 10px 0 10px;
+}
+
+.divbar {
+  width: 3px;
+  height: 50px;
+  margin: 0 10px 0 10px;
+  background: #a9a9a9;
 }
 
 .searchinput {
   width: 450px;
   height: 50px;
   border: 0;
+  background-color: transparent;
   border-bottom: 7px solid black;
   margin-left: 15px;
   font-size: 25px;
@@ -61,6 +71,8 @@
 
 .searchicon {
   width: 20%;
+  opacity: 50%;
+  margin-right: 20%;
 }
 
 @media (max-width: 1024px) {
@@ -76,7 +88,7 @@
   .searchbtn {
     position: relative;
     font-family: "gothic";
-    width: 70px;
+    width: 100px;
     height: 30px;
     color: #fffefc;
     background-color: black;
@@ -84,6 +96,12 @@
     font-size: 14px;
     cursor: pointer;
     left: 10px;
+  }
+  .divbar {
+    width: 2px;
+    height: 30px;
+    margin: 0 10px 0 30px;
+    background: #a9a9a9;
   }
   /* .searchpart {
     position: relative;

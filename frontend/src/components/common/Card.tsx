@@ -7,7 +7,7 @@ import Modal from "react-modal";
 import Delete from "../mypage/modal/Delete";
 
 type cardinfo = {
-  id: number;
+  novelId: number;
   title: string;
   introduction: string;
   nickName: string;
@@ -15,15 +15,17 @@ type cardinfo = {
   hitCount: number;
   commentCount: number;
   likeCount: number;
+  score: number | null;
 };
 
-interface CardProps {
+type CardProps = {
   props: cardinfo;
   refreshList: () => void;
-}
+};
 
 function Card({ props, refreshList }: CardProps) {
   const [isHovering, setIsHovering] = useState(false);
+  const { score } = props;
   const { user } = useContext(AuthContext);
 
   const handleMouseOver = () => {
@@ -35,8 +37,8 @@ function Card({ props, refreshList }: CardProps) {
   };
   const navigate = useNavigate();
 
-  const navigateToPurchase = (id: number) => {
-    navigate(`/library/${id}/intro`, { state: { id: id } });
+  const navigateToIntro = (novelId: number) => {
+    navigate(`/library/${novelId}/intro`, { state: { novelId: novelId } });
   };
 
   const [modal, setModal] = useState(false);
@@ -51,7 +53,10 @@ function Card({ props, refreshList }: CardProps) {
   };
   return (
     <>
-      <div className={style.card} onClick={(e) => navigateToPurchase(props.id)}>
+      <div
+        className={style.card}
+        onClick={(e) => navigateToIntro(props.novelId)}
+      >
         <div
           className={isHovering ? style.none : style.intro}
           style={{
@@ -124,6 +129,11 @@ function Card({ props, refreshList }: CardProps) {
         <div className={style.info}>
           <div className={style.title}>{props && props.title}</div>
           <div className={style.writer}>{props && props.nickName}</div>
+          {score !== null && (
+            <div>
+              유사도: <span>{props && props.score}</span>
+            </div>
+          )}
         </div>
         <img
           src={props && process.env.REACT_APP_IMAGE_API + props.coverImg}
@@ -151,9 +161,9 @@ function Card({ props, refreshList }: CardProps) {
       >
         <Delete
           type="novel"
-          id={props && props.id}
+          id={props && props.novelId}
           closemodal={closemodal}
-          comid={props.id}
+          comid={props.novelId}
           refreshList={refreshList}
         />
       </Modal>

@@ -1,29 +1,28 @@
 import { instance, tokeninstance } from "./Interceptors";
-import axios from "axios";
 
-// intro 가져오기 (nickName ver.)
-export async function getintro(id: number, nickName: string) {
-  if (nickName === null) {
-    nickName = ""; // nickName이 null인 경우 빈 문자열로 할당
+// intro 가져오기 (memberId ver.)
+export async function getintro(novelid: number, memberId: number) {
+  if (memberId === null) {
+    memberId = 0; // nickName이 null인 경우 빈 문자열로 할당
   }
-  console.log(nickName + "들어왔스빈다");
-  const res = await instance.get(`novel/${id}`, {
+  console.log(memberId + "들어왔스빈다");
+  const res = await instance.get(`novel/${novelid}`, {
     params: {
-      nickName: nickName,
+      memberId: memberId,
     },
   });
   return res;
 }
 
 //comment가져오기
-export async function getcomment(id: number, nickName: string) {
-  console.log(nickName + "코멘트로들어왔스빈다");
-  if (nickName === null) {
-    nickName = ""; // nickName이 null인 경우 빈 문자열로 할당
+export async function getcomment(id: number, memberId: number) {
+  console.log(memberId + "코멘트로들어왔스빈다");
+  if (memberId === null) {
+    memberId = 0; // nickName이 null인 경우 빈 문자열로 할당
   }
   const res = await instance.get(`novel/${id}`, {
     params: {
-      nickName: nickName,
+      memberId: memberId,
     },
   });
   return res;
@@ -42,12 +41,12 @@ export async function deletenovel(id: number) {
 }
 
 // 좋아요 하기
-export async function postliked(novelId: number, nickName: string) {
+export async function postliked(novelId: number, memberId: number) {
   const res = await tokeninstance.post(
     "novel/like",
     {
       novelId: novelId,
-      nickName: nickName,
+      memberId: memberId,
     },
     {
       headers: {
@@ -59,11 +58,11 @@ export async function postliked(novelId: number, nickName: string) {
 }
 
 // 좋아요 삭제하기
-export async function deleteliked(novelId: number, nickName: string) {
+export async function deleteliked(novelId: number, memberId: number) {
   const res = await tokeninstance.delete("novel/like", {
     data: JSON.stringify({
       novelId: novelId,
-      nickName: nickName,
+      memberId: memberId,
     }),
     headers: {
       "Content-Type": "application/json",
