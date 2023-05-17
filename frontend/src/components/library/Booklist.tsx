@@ -11,6 +11,7 @@ type carddata = {
   title: string;
   introduction: string;
   nickName: string;
+  memberId: number;
   coverImg: string;
   hitCount: number;
   commentCount: number;

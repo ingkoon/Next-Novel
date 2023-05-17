@@ -100,6 +100,10 @@ export default function Search() {
           alt="circles_right"
         />
       </div>
+      <div className={style.explain}>
+        유사도 검색:&nbsp;&nbsp;키워드를 띄워쓰기로 구분해 입력하면, 유사한
+        소설을 검색합니다.(최대 4단어)
+      </div>
       <div className={style.search_result}>"{result}"에 대한 검색결과 :</div>
       <Booklist novels={novels} props={keyword} getsearchlist={getsearchlist} />
     </div>
