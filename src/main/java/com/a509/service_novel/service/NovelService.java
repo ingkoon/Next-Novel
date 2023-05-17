@@ -109,6 +109,7 @@ public class NovelService {
 
 		///소설 찾기
 		Novel novel = novelRepository.getById(novelId);
+		novel.setHitCount(novel.getHitCount()+1);
 		System.out.println("found novel");
 		System.out.println(novel);
 		//소설의 내용 찾기
