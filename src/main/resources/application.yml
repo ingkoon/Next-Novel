@@ -38,13 +38,13 @@ spring:
         - id: profile_image_member
           uri: http://***REMOVED***:8011/
           predicates:
-            - Path=/member/myPage/image/**, /member/logout
+            - Path=/member/myPage/image/**
             - Method=GET,PUT,DELETE
 
         - id: auth_member
           uri: http://***REMOVED***:8011/
           predicates:
-            - Path=/member/myPage, /member/logout
+            - Path=/member/myPage/**, /member/logout
             - Method=GET,POST,PUT,DELETE
           filters:
             - AuthenticationHeaderFilter
@@ -52,7 +52,7 @@ spring:
         - id: auth_novel
           uri: http://***REMOVED***:8012/
           predicates:
-            - Path=/comment/**, /write/**, /novel
+            - Path=/comment/**, /write/**, /novel/**
             - Method=POST,PUT,DELETE
           filters:
             - AuthenticationHeaderFilter
