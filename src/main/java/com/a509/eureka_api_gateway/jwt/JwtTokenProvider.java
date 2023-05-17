@@ -88,7 +88,8 @@ public class JwtTokenProvider {
 	}
 
 	// 토큰 정보를 검증하는 메서드
-	public boolean validateToken(String token) {
+	public boolean validateToken(String token,String tokenType) {
+		System.out.println(tokenType +" "+token);
 		try {
 			Jws<Claims> claims = Jwts.parser().setSigningKey(uniqueKey).parseClaimsJws(token);
 			return !claims.getBody().getExpiration().before(new Date());
