@@ -161,9 +161,9 @@ function Card({ props, refreshList }: CardProps) {
       >
         <Delete
           type="novel"
-          id={props && props.novelId}
+          novelId={props && props.novelId}
           closemodal={closemodal}
-          comid={props.novelId}
+          commentId={0} //Card니까 그냥 commentId 0으로주기
           refreshList={refreshList}
         />
       </Modal>

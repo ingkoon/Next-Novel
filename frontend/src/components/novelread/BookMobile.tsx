@@ -109,8 +109,8 @@ export default function Book() {
 
   const navigate = useNavigate();
 
-  const navigateToIntro = (id:number) => {
-    navigate(`/library/${id}/intro`, { state: { id: id } });
+  const navigateToIntro = (novelId:number) => {
+    navigate(`/library/${novelId}/intro`, { state: { novelId: novelid } });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,12 +133,11 @@ export default function Book() {
     submitComment.mutate({
     content: input.comm.trim(),
     memberId:  localMemberId,
-    nickName: localStorage.getItem('nickName')!,
     novelId: novelid
   }, {
       onSuccess: (res) => {
         console.log(res);
-        navigate(`/library/${novelid}/intro`, { state: { id: novelid } });
+        navigate(`/library/${novelid}/intro`, { state: { novelId: novelid } });
       },
     });
   };

@@ -3,21 +3,21 @@ import { deletenovel, deletecomment } from "../../../api/novel";
 
 type DeleteProps = {
   type: string;
-  id: number;
+  novelId: number;
+  commentId: number;
   closemodal: () => void;
-  comid: number;
   refreshList: () => void;
 };
 export default function Delete({
   type,
-  id,
+  novelId,
+  commentId,
   closemodal,
-  comid,
   refreshList,
 }: DeleteProps) {
   async function delnovel() {
     try {
-      const data = await deletenovel(id);
+      const data = await deletenovel(novelId);
       console.log(data);
       console.log("삭제되었음");
       refreshList();
@@ -29,7 +29,7 @@ export default function Delete({
 
   async function delcomment() {
     try {
-      const data = await deletecomment(comid);
+      const data = await deletecomment(commentId);
       console.log(data);
       closemodal();
     } catch (e) {

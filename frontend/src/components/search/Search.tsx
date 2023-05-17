@@ -66,6 +66,7 @@ export default function Search() {
 
         <div className={style.search}>
           <div className={style.question}>Q. 찾는 소설이 있으신가요?</div>
+          <br />
           <div className={style.form}>
             A.
             <input
@@ -75,15 +76,17 @@ export default function Search() {
               onKeyPress={handleOnKeyPress}
               value={keyword}
             />
-            <button className={style.searchbtn} onClick={search}>
-              {" "}
-              제출{" "}
-            </button>
-            <div className={style.divbar} />
-            <button className={style.searchbtn} onClick={similaritysearch}>
-              {" "}
-              유사도검색{" "}
-            </button>
+            <div className={style.btnwrapper}>
+              <button className={style.searchbtn} onClick={search}>
+                {" "}
+                제출{" "}
+              </button>
+              <div className={style.divbar} />
+              <button className={style.searchbtn} onClick={similaritysearch}>
+                {" "}
+                유사도검색{" "}
+              </button>
+            </div>
           </div>
         </div>
         <img
@@ -98,8 +101,6 @@ export default function Search() {
         />
       </div>
       <div className={style.search_result}>"{result}"에 대한 검색결과 :</div>
-
-      {/* <Booklist novels={novels} /> */}
       <Booklist novels={novels} props={keyword} getsearchlist={getsearchlist} />
     </div>
   );

@@ -8,7 +8,7 @@
 .line {
   width: 80%;
   height: 5px;
-  background-color: #a9a9a9;
+  background-color: #ff6600;
   margin-bottom: 20px;
 }
 
@@ -21,9 +21,8 @@
   }
 
   .line {
-    width: 940px;
+    width: 80%;
     height: 5px;
-    background-color: black;
   }
 }
 @media (max-width: 960px) {
@@ -35,9 +34,8 @@
   }
 
   .line {
-    width: 300px;
+    width: 80%;
     height: 2px;
-    background-color: #a9a9a9;
   }
 }
 
@@ -50,8 +48,6 @@
   }
 
   .line {
-    min-width: 300px;
     height: 2px;
-    background-color: #a9a9a9;
   }
 }
