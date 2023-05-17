@@ -131,7 +131,8 @@
     background: linear-gradient(#f66f00, #ff9243);
     /* background-color: aqua; */
     width: 100%;
-    z-index: 1;
+    z-index: 20;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   }
   .menu.on {
     display: flex;
