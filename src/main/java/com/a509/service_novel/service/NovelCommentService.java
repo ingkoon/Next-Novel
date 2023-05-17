@@ -1,5 +1,7 @@
 package com.a509.service_novel.service;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -28,8 +30,12 @@ public class NovelCommentService {
 		novelComment.setNickName(nickName);
 		novelCommentRepository.save(novelComment);
 
-		Novel novel = novelRepository.findById(novelCommentDto.getNovelId());
-		novel.setCommentCount(novel.getCommentCount()+1);
+		Optional<Novel> optional = novelRepository.findById(novelCommentDto.getNovelId());
+		if(optional.isPresent()){
+			Novel novel = optional.get();
+			novel.setCommentCount(novel.getCommentCount()+1);
+
+		}
 	}
 	@Transactional
 	public void updateNovelComment(NovelCommentDto novelCommentDto) throws Exception{
@@ -39,10 +45,17 @@ public class NovelCommentService {
 	}
 	@Transactional
 	public void deleteNovelComment(int commentId) throws Exception{
+
+
+		NovelComment novelComment = novelCommentRepository.getById(commentId);
+		Optional<Novel> optional = novelRepository.findById(novelComment.getNovelId());
+		if(optional.isPresent()){
+			Novel novel = optional.get();
+			novel.setCommentCount(novel.getCommentCount()-1);
+
+		}
 		novelCommentRepository.deleteById(commentId);
 
-		Novel novel = novelRepository.findById(novelCommentDto.getNovelId());
-		novel.setCommentCount(novel.getCommentCount()-1);
 	}
 
 }
