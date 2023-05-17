@@ -1,6 +1,7 @@
 # NextNovel 결제 시스템
-
 ---
+
+![kafka_screenshot](./img/kafka.png)
 ```
 PaymentsService
 ├─core
