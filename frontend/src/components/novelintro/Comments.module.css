@@ -28,6 +28,18 @@
     align-items: center;
 }
 
+.bub_container{
+  width: 90%;
+}
+
+/* .bub{
+  background: red;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+} */
+
 .icons{
     animation: up-down 1.4s infinite ease-in-out alternate;
   }

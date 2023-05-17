@@ -1,18 +1,37 @@
+@media(max-width: 1000px){
+    .profilepic{
+        display: none;
+        }
+    .date{
+        display: none;
+        }
+
+    .profilename{
+        position: absolute;
+        font-size: 24px;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+        color:#090909;
+        left: 16%;
+    }   
+}
+
 .bubble {
     position: relative;
     background: #fffefc;
     color: #090909;
     font-size: 20px;
-    box-shadow: 0px 4px 4px 0px rgba(163, 163, 163, 0.5);
-    text-align: center;
-    width: 1000px;
+    box-shadow: 0px 4px 4px 4px rgba(163, 163, 163, 0.5);
+    text-align: left;
+    width: 90%;
     height: 100px;
     border-radius: 0px;
     padding: 0px;
     border: #090909 solid 3px;
-    margin: 40px;
+    /* margin: 40px 0px 40px 0px; */
+    margin-left: 4.5%;
     display: flex;
     align-items: center;
+
 }
 .bubble:after {
     content: '';
@@ -68,7 +87,8 @@
     color: #090909;
     font-size: 20px;
     left: 31%;
-    width: 400px;
+    
+    /* width: px; */
     /* background-color: blue; */
     padding: 0 20px;
     
