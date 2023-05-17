@@ -124,7 +124,7 @@ spring:
           predicates:
             - Path=/search/**
         - id: tempTest
-          uri: lb://TEMPTEST
+          uri: lb://TempTest
           predicates:
             - Path=/tempTest/**
 
