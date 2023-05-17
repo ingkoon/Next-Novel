@@ -91,8 +91,6 @@ public class JwtTokenProvider {
 	public boolean validateToken(String token) {
 		try {
 			Jws<Claims> claims = Jwts.parser().setSigningKey(uniqueKey).parseClaimsJws(token);
-			log.info(claims.toString());
-			System.out.println(claim);
 			return !claims.getBody().getExpiration().before(new Date());
 		} catch (SecurityException | MalformedJwtException e) {
 			log.info("유효하지 않은 Token !! -> " + token);
