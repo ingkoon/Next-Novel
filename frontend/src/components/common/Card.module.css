@@ -79,6 +79,10 @@
   font-size: 16px;
   float: left;
 }
+.score {
+  font-size: 16px;
+  color: #ff6600;
+}
 
 .quote1 {
   position: absolute;
@@ -106,6 +110,15 @@
 }
 
 @media (max-width: 400px) {
+  .card {
+    min-width: 87%;
+  }
+  .info {
+    /* margin-left: 20%; */
+  }
+  .score {
+    float: right;
+  }
   .introment {
     background-color: #ababab30;
     backdrop-filter: blur(10px);

@@ -3,7 +3,21 @@
   margin-left: 10%;
 }
 
+.explain {
+  font-size: clamp(14px, 3vw, 16px);
+  position: relative;
+  margin-left: 10%;
+  margin-top: -100px;
+  margin-bottom: 110px;
+  width: 80%;
+  height: 50px;
+  opacity: 70%;
+  display: flex;
+  align-items: center;
+}
+
 .searchpart {
+  /* background: green; */
   position: relative;
   display: flex;
   margin: 50px auto;
@@ -26,9 +40,9 @@
 }
 
 .search {
-  /* background: pink; */
   font-size: clamp(24px, 2.5vw, 36px);
-  margin-left: 25%;
+  margin-left: 20%;
+  width: 50%;
 }
 
 .btnwrapper {
@@ -77,10 +91,14 @@
 .searchicon {
   width: 20%;
   opacity: 50%;
+  margin-left: 10%;
   margin-right: 20%;
 }
 
 @media (max-width: 1024px) {
+  .explain {
+    margin-top: -20px;
+  }
   .circle_left {
     display: none;
   }
@@ -89,8 +107,6 @@
   }
   .searchicon {
     display: none;
-  }
-  .form {
   }
   .searchbtn {
     font-family: "gothic";
@@ -104,20 +120,13 @@
   .divbar {
     width: 2px;
     height: 30px;
-    margin: 0 10px 0 10px;
+    margin: 0 2px 0 2px;
     background: #a9a9a9;
   }
-  /* .searchpart {
-    position: relative;
-    display: flex;
-    margin: 100px auto;
-    justify-content: center;
-    align-items: center;
-  } */
 
   .search {
     font-size: 24px;
-    margin-left: 8%;
+    margin-left: -32%;
   }
 
   .form {
@@ -139,9 +148,25 @@
     max-width: 80%;
     font-size: 16px;
     position: relative;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    /* left: 5%; */
+  }
+}
+
+@media (max-width: 400px) {
+  .explain {
+    margin-bottom: 50px;
+  }
+  .search {
+    /* background: red; */
+    width: 100%;
+    margin-left: 15%;
+  }
+  .form {
+    margin-top: -1%;
+    margin-bottom: 40%;
+  }
+  .btnwrapper {
+    position: absolute;
+    top: 70%;
+    right: 22%;
   }
 }
