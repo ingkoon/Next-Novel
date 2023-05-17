@@ -320,7 +320,7 @@ public class MemberService {
         try (InputStream in = url.openStream()) {
             // 임시 파일 생성
             String UID = makeUID();
-            File tempFile = File.createTempFile(UID, ".png");
+            File tempFile = File.createTempFile(UID, ".png", new File("/home/data/"));
 
             // imgUrl: member 변수에 들어갈 profile img 경로
             String imgUrl = UID + ".png";
