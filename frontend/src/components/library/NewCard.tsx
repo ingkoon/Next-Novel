@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Book3d from "../common/Book3d";
 
 type newcardInfo = {
-  id: number;
+  novelId: number;
   coverImg: string;
   title: string;
   nickName: string;
@@ -19,12 +19,15 @@ interface newcardProps {
 export default function NewCard({ props }: newcardProps) {
   const navigate = useNavigate();
 
-  const navigateToPurchase = (id: number) => {
-    navigate(`/library/${id}/intro`, { state: { id: id } });
+  const navigateToIntro = (novelId: number) => {
+    navigate(`/library/${novelId}/intro`, { state: { novelId: novelId } });
   };
 
   return (
-    <div className={style.newcard} onClick={() => navigateToPurchase(props.id)}>
+    <div
+      className={style.newcard}
+      onClick={() => navigateToIntro(props.novelId)}
+    >
       <div className={style.img}>
         <Book3d type="" img={props.coverImg} />
         {/* <img src={props.cover_img} alt='cover_img'></img> */}

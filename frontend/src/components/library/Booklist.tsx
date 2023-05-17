@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import { getnovels } from "../../api/library";
 
 type carddata = {
-  id: number;
+  novelId: number;
   title: string;
   introduction: string;
   nickName: string;

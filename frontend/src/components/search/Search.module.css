@@ -26,8 +26,9 @@
 }
 
 .search {
-  font-size: clamp(24px, 20vw, 48px);
-  margin-right: 10%;
+  background: pink;
+  font-size: clamp(24px, 3vw, 36px);
+  margin-left: 20%;
 }
 
 .searchbtn {
@@ -70,6 +71,8 @@
 
 .searchicon {
   width: 20%;
+  opacity: 50%;
+  margin-right: 20%;
 }
 
 @media (max-width: 1024px) {

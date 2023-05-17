@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getintro, postliked, deleteliked } from "../../api/novel";
-import { ElevatorSharp } from "@mui/icons-material";
 
 type NInfo = {
-  id: number;
+  novelId: number;
   title: string;
   createdAt: string;
   // introduction: string;
@@ -20,10 +19,11 @@ type NInfo = {
   liked: boolean;
 };
 
+
 export default function BookInfo() {
   const location = useLocation();
-  const id = location.state.id;
-  const [novelid, setNovelid] = useState(id);
+  const novelId = location.state.novelId;
+  const [novelid, setNovelid] = useState(novelId);
   const [novelinfo, setNovelinfo] = useState<NInfo>();
   const [create, setCreate] = useState("");
 
@@ -40,7 +40,7 @@ export default function BookInfo() {
       
       const data = await getintro(novelid, localMemberId);
       console.log(data);
-      console.log("닉네임불러오기:"+localStorage.getItem('localMemberId'));
+      console.log("닉네임불러오기:"+localMemberId);
       setNovelinfo(data.data);
 
       const year = data.data.createdAt.substring(0, 4);
@@ -76,14 +76,14 @@ export default function BookInfo() {
 
   useEffect(() => {
     goTop(); // 페이지 로드시 맨위로
-    setNovelid(id);
+    setNovelid(novelId);
     intro();
   }, []);
 
   const navigate = useNavigate();
 
-  const navigateToRead = (id: number) => {
-    navigate(`/library/${id}/read`, { state: { id: id } });
+  const navigateToRead = (novelId: number) => {
+    navigate(`/library/${novelId}/read`, { state: { novelId: novelId } });
   };
 
   return (

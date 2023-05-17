@@ -23,7 +23,7 @@ type NMat = MatInfo[];
 
 type Ninfo = {
   coverImg: string;
-  id: number;
+  novelId: number;
   introduction: string;
   originCoverImg: string;
   title: string;
@@ -73,7 +73,7 @@ export default function Book() {
       console.log(data);
       setNovelinfo({
         coverImg: data.data.coverImg,
-        id: data.data.id,
+        novelId: data.data.novelId,
         introduction: data.data.introduction,
         originCoverImg: data.data.originCoverImg,
         title: data.data.title,
@@ -132,8 +132,8 @@ export default function Book() {
 
   const navigate = useNavigate();
 
-  const navigateToIntro = (id:number) => {
-    navigate(`/library/${id}/intro`, { state: { id: id } });
+  const navigateToIntro = (novelId:number) => {
+    navigate(`/library/${novelId}/intro`, { state: { novelId: novelId } });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -160,7 +160,7 @@ export default function Book() {
   }, {
       onSuccess: (res) => {
         console.log(res);
-        navigate(`/library/${novelid}/intro`, { state: { id: novelid } });
+        navigate(`/library/${novelid}/intro`, { state: { novelId: novelid } });
       },
     });
   };
@@ -245,7 +245,7 @@ export default function Book() {
                 />
                 <div
                   className={style.link}
-                  onClick={() => navigateToIntro(novelinfo.id)}
+                  onClick={() => navigateToIntro(novelid)}
                 >
                   <h2>돌아가기</h2>
                 </div>

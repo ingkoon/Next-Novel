@@ -89,7 +89,7 @@ export default function Search() {
         <img
           src={process.env.PUBLIC_URL + "/img/searchpage.svg"}
           className={style.searchicon}
-          alt="searchpage"
+          alt="searchicon"
         />
         <img
           src={process.env.PUBLIC_URL + "/img/circles_right.svg"}

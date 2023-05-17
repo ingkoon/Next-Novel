@@ -12,7 +12,7 @@ type NInfo = {
 
 export default function Thumbnail() {
   const location = useLocation();
-  const id = location.state.id;
+  const id = location.state.novelId;
   const [novelid, setNovelid] = useState(id);
   const [novelinfo, setNovelinfo] = useState<NInfo>();
   //로컬 멤버아이디

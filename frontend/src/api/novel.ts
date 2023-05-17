@@ -1,12 +1,12 @@
 import { instance, tokeninstance } from "./Interceptors";
 
 // intro 가져오기 (memberId ver.)
-export async function getintro(id: number, memberId: number) {
+export async function getintro(novelid: number, memberId: number) {
   if (memberId === null) {
     memberId = 0; // nickName이 null인 경우 빈 문자열로 할당
   }
   console.log(memberId + "들어왔스빈다");
-  const res = await instance.get(`novel/${id}`, {
+  const res = await instance.get(`novel/${novelid}`, {
     params: {
       memberId: memberId,
     },
