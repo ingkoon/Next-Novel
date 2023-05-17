@@ -90,6 +90,7 @@ public class NovelController {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
 			String UID = now.format(formatter);
 			int novelId = novelService.insertNovel(novelDetailDto,startImages,contentImages,coverImages,UID,token);
+			System.out.println(novelId);
 			novelService.insertNovelImages(novelDetailDto.getMemberId(),startImages,contentImages,UID);
 			System.out.println("endendendend");
 			NovelInsertResponseDto novelInsertResponseDto = new NovelInsertResponseDto();

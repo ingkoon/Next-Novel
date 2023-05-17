@@ -65,20 +65,23 @@ public class NovelService {
 		novel.setNickName(nickName);
 		novelRepository.save(novel);
 
+		
 
+		if(!novelContentDtos == null){
 		//content 저장
-		for(int i = 0; i < novelContentDtos.size(); i++){
+			for(int i = 0; i < novelContentDtos.size(); i++){
 
-			NovelContentDto novelContentDto = novelContentDtos.get(i);
+				NovelContentDto novelContentDto = novelContentDtos.get(i);
 
-			String imageName = UID+"_"+contentImages[i].getOriginalFilename();
-			NovelContent novelContent = novelContentDto.toEntity();
-			novelContent.setImage(imageName);
-			novelContent.setNovelId(novel.getId());
+				String imageName = UID+"_"+contentImages[i].getOriginalFilename();
+				NovelContent novelContent = novelContentDto.toEntity();
+				novelContent.setImage(imageName);
+				novelContent.setNovelId(novel.getId());
 
-			System.out.println(novelContent);
-			novelImageComponent.save(contentImages[i],UID);
-			novelContentRepository.save(novelContent);
+				System.out.println(novelContent);
+				novelImageComponent.save(contentImages[i],UID);
+				novelContentRepository.save(novelContent);
+			}
 		}
 		System.out.println("end save content");
 

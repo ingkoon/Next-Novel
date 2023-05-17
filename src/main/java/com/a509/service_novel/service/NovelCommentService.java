@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class NovelCommentService {
 
 	private final NovelCommentRepository novelCommentRepository;
+	private final NovelRepository novelRepository;
 	private final MemberClientComponent memberClientComponent;
 
 	@Transactional
@@ -24,6 +25,9 @@ public class NovelCommentService {
 		String nickName = memberClientComponent.findMyPage(token).getBody().getNickName();
 		novelComment.setNickName(nickName);
 		novelCommentRepository.save(novelComment);
+
+		Novel novel = novelRepository.findById(novelCommentDto.getNovelId());
+		novel.setCommentCount(novel.getCommentCount()+1);
 	}
 	@Transactional
 	public void updateNovelComment(NovelCommentDto novelCommentDto) throws Exception{
@@ -34,6 +38,9 @@ public class NovelCommentService {
 	@Transactional
 	public void deleteNovelComment(int commentId) throws Exception{
 		novelCommentRepository.deleteById(commentId);
+
+		Novel novel = novelRepository.findById(novelCommentDto.getNovelId());
+		novel.setCommentCount(novel.getCommentCount()-1);
 	}
 
 }
