@@ -68,7 +68,7 @@ public class AuthenticationHeaderFilter extends AbstractGatewayFilterFactory<Aut
 
 				String refreshToken = stringRedisTemplate.opsForValue().get("RT:"+accessToken);
 
-				if (!ObjectUtils.isEmpty(accessToken) && jwtTokenProvider.validateToken(refreshToken)) { // 만약 refreshToken의 유효시간이 아직 남았다면
+				if (!ObjectUtils.isEmpty(refreshToken) && jwtTokenProvider.validateToken(refreshToken)) { // 만약 refreshToken의 유효시간이 아직 남았다면
 					if (!jwtTokenProvider.validateToken(accessToken)) { // 만약 AccessToken의 유효시간이 만료되었다면
 						log.info("유효한 로그인 세션이나, AccessToken이 만료되었습니다. AccessToken을 재발급합니다.");
 						// 재발급 후, 컨텍스트에 다시 넣기
