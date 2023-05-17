@@ -37,11 +37,7 @@ export default function Login({ move, closemodal }: LoginProps) {
     });
   };
   const kakaoLogin = () => {
-    // const { Kakao } = window;
-    // Kakao.Auth.authorize({
-    //   redirectUri: process.env.REACT_APP_KAKAO_API,
-    //   // prompts : "login" //항상 로그인을 하게 만드는거임.
-    // });
+    window.location.href = process.env.REACT_APP_KAKAO_API!;
   };
   const googleLogin = () => {
     window.location.href = process.env.REACT_APP_GOOGLE_API!;
@@ -97,6 +93,7 @@ export default function Login({ move, closemodal }: LoginProps) {
               <img
                 src={process.env.PUBLIC_URL + "/icon/kakao.svg"}
                 alt="login"
+                onClick={kakaoLogin}
               />
               <img
                 src={process.env.PUBLIC_URL + "/icon/google.svg"}
