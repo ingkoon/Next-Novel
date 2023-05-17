@@ -48,6 +48,7 @@ public class NovelDetailDto {
 			.engGenre(engGenre)
 			.korGenre(korGenre)
 			.memberId(memberId)
+			.nickName(nickName)
 			.startImage1(startImages.get(0).getImageName())
 			.startImage2(startImages.get(1).getImageName())
 			.startImage3(startImages.get(2).getImageName())
