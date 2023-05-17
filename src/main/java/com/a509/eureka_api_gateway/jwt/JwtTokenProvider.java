@@ -33,8 +33,8 @@ public class JwtTokenProvider {
 	@Value("${jwt.secret}")
 	private String uniqueKey;
 
-	// private int accessTokenValidTime = 1000 * 60 * 90; // AccessToken 유효시간. (단위: ms) DEFAULT: 90분, QA 및 디버깅: 30초
-	private int accessTokenValidTime = 1000 * 30;
+	private int accessTokenValidTime = 1000 * 60 * 90; // AccessToken 유효시간. (단위: ms) DEFAULT: 90분, QA 및 디버깅: 30초
+	// private int accessTokenValidTime = 1000 * 30;
 	private int refreshTokenValidTime = 1000 * 60 * 60 * 12; // RefreshToken 유효시간. (단위: ms) DEFAULT: 12시간, QA 및 디버깅: 5분
 
 
@@ -43,8 +43,8 @@ public class JwtTokenProvider {
 	private static final String NAME_KEY = "name";
 	private static final String AUTHORITIES_KEY = "auth";
 	private static final String BEARER_TYPE = "Bearer";
-	private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 1000L;  
-	// private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;            // 30분
+	// private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 1000L;  
+	private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;            // 30분
 	//    private static final long ACCESS_TOKEN_EXPIRE_TIME = 3 * 1000L;              // 3초
 	private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일
 	//    private static final long REFRESH_TOKEN_EXPIRE_TIME = 60 * 1000L;    // 1분
