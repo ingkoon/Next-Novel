@@ -11,6 +11,7 @@ type cardinfo = {
   title: string;
   introduction: string;
   nickName: string;
+  memberId: number;
   coverImg: string;
   hitCount: number;
   commentCount: number;
@@ -27,6 +28,10 @@ function Card({ props, refreshList }: CardProps) {
   const [isHovering, setIsHovering] = useState(false);
   const { score } = props;
   const { user } = useContext(AuthContext);
+
+  //로컬 멤버아이디
+  const localValue: string | null = localStorage.getItem('memberId');
+  const localMemberId: number = localValue !== null ? parseInt(localValue) : 0;
 
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -114,7 +119,7 @@ function Card({ props, refreshList }: CardProps) {
                 {props && props.commentCount}
               </span>
             </div>
-            {localStorage.getItem("nickName") === props.nickName ? (
+            {localMemberId === props.memberId ? (
               <img
                 onClick={delnovel}
                 src={process.env.PUBLIC_URL + "/icon/trash.svg"}
@@ -130,8 +135,9 @@ function Card({ props, refreshList }: CardProps) {
           <div className={style.title}>{props && props.title}</div>
           <div className={style.writer}>{props && props.nickName}</div>
           {score !== null && (
-            <div>
-              유사도: <span>{props && props.score}</span>
+            <div className={style.score}>
+              <br />
+              유사도: <span>{props && props.score?.toFixed(3)}</span>
             </div>
           )}
         </div>
