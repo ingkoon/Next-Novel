@@ -154,13 +154,13 @@ export default function Book() {
 
     submitComment.mutate({
     content: input.comm.trim(),
-    nickName: localStorage.getItem('nickName')!,
     memberId: localMemberId,
     novelId: novelid
   }, {
       onSuccess: (res) => {
         console.log(res);
-        navigate(`/library/${novelid}/intro`, { state: { novelId: novelid } });
+        let novelId = novelid;
+        navigate(`/library/${novelId}/intro`, { state: { novelId: novelId } });
       },
     });
   };

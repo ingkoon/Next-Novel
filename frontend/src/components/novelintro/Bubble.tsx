@@ -5,9 +5,10 @@ import Modal from "react-modal";
 import Delete from "../mypage/modal/Delete";
 
 type BubbleContent = {
-  id: number;
+  commentId: number;
   content: string;
   createdAt: string;
+  memberId: number;
   nickName: string;
   novelId: number;
   profileImg: string;
@@ -15,14 +16,18 @@ type BubbleContent = {
 
 interface BubbleProps {
   props: BubbleContent;
-  id: number;
+  novelId: number;
   updatelist: () => void;
 }
 
-export default function Bubble({ props, id, updatelist }: BubbleProps) {
+export default function Bubble({ props, novelId, updatelist }: BubbleProps) {
   const [create, setCreate] = useState("");
   const { user } = useContext(AuthContext);
   const [modal, setModal] = useState(false);
+
+  // 로컬 멤버아이디
+  const localValue: string | null = localStorage.getItem("memberId");
+  const localMemberId: number = localValue !== null ? parseInt(localValue) : 0;
 
   useEffect(() => {
     const year = props.createdAt.substring(0, 4);
@@ -64,7 +69,7 @@ export default function Bubble({ props, id, updatelist }: BubbleProps) {
           <span>{props && create}</span>
         </div>
 
-        {localStorage.getItem("nickName") === props.nickName ? (
+        {localMemberId === props.memberId ? (
           <div className={style.del} onClick={deletecomment}>
             <img
               src={process.env.PUBLIC_URL + "/icon/trash_black.svg"}
@@ -94,9 +99,9 @@ export default function Bubble({ props, id, updatelist }: BubbleProps) {
       >
         <Delete
           type="comment"
-          id={id}
+          novelId={props.novelId}
           closemodal={closemodal}
-          comid={props.id}
+          commentId={props.commentId}
           refreshList={refreshList}
         />
       </Modal>

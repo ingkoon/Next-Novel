@@ -18,7 +18,6 @@ export async function novelall(id: number, memberId: number) {
 // 소감평작성
 type commentData = {
   content: string;
-  nickName: string;
   memberId: number;
   novelId: number;
 };
@@ -33,7 +32,6 @@ export async function writecomment(commentData: commentData) {
     "comment",
     {
       content: commentData.content,
-      nickName: commentData.nickName,
       memberId: commentData.memberId,
       novelId: commentData.novelId,
     },

@@ -7,8 +7,8 @@ import { getcomment } from "../../api/novel";
 
 export default function Comments() {
   const location = useLocation();
-  const id = location.state.id;
-  const [novelid, setNovelid] = useState(id);
+  const novelId = location.state.novelId;
+  const [novelid, setNovelid] = useState(novelId);
   const [commentlist, setCommentlist] = useState([]);
 
   //로컬 멤버아이디
@@ -26,7 +26,8 @@ export default function Comments() {
   }
 
   useEffect(() => {
-    setNovelid(id);
+    setNovelid(novelId);
+    console.log("!!!!코멘트노벨아이디:" + novelId);
     // comment(novelid); before code
     comment();
   }, [novelid]);
@@ -58,7 +59,7 @@ export default function Comments() {
                 updatelist={updatelist}
                 key={index}
                 props={comment}
-                id={novelid}
+                novelId={novelid}
               />
             ))}
           </div>
