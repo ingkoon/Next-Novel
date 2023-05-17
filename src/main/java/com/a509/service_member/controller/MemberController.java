@@ -98,9 +98,9 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/myPage/image/{nick_name}")
-    public String findMyPageImage(@PathVariable(value = "nick_name") final String nickName) {
-        return memberService.findMyPageImage(nickName);
+    @GetMapping("/myPage/image/{memberId}")
+    public String findMyPageImage(@PathVariable(value = "memberId") final String memberId) {
+        return memberService.findMyPageImage(memberId);
     }
 
     @PutMapping("/myPage")

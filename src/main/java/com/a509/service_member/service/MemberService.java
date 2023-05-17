@@ -311,8 +311,8 @@ public class MemberService {
         return new MemberMyPageResponseDto().fromMeEntity(member);
     }
 
-    public String findMyPageImage(String nickName) {
-        Optional<Member> member = memberRepository.findByNickName(nickName);
+    public String findMyPageImage(String memberId) {
+        Optional<Member> member = memberRepository.findById(Long.valueOf(memberId));
         if(member.isPresent()) {
             return member.get().getProfileImage();
         } else {
