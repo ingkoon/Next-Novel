@@ -25,7 +25,7 @@ spring:
             allow-credentials: true
             # allowedHeaders: '*'
             # exposed-headers: '*'
-            allowedHeaders: "Authorization, Content-Type"  # 허용할 요청 헤더를 설정합니다.
+            allowedHeaders: "Authorization, X-PINGOTHER, Content-Type"  # 허용할 요청 헤더를 설정합니다.
             exposedHeaders: "Authorization, X-PINGOTHER, Content-Type"
             allowedMethods:
               - PUT
