@@ -114,7 +114,8 @@
     min-width: 87%;
   }
   .info {
-    /* margin-left: 20%; */
+    margin-left: 30%;
+    /* background: pink; */
   }
   .score {
     float: right;
