@@ -5,12 +5,17 @@ import { useNavigate } from "react-router-dom";
 
 import { getintro, postliked, deleteliked } from "../../api/novel";
 
-type NInfo = {
+type BookInfoProps = {
+  novelInfo: NovelInfoType;
+  novelId: number;
+  getIntroAsync: () => void;
+};
+type NovelInfoType = {
+  coverImg: string;
+  introduction: string;
   novelId: number;
   title: string;
   createdAt: string;
-  // introduction: string;
-  // engGenre: string;
   korGenre: string;
   nickName: string;
   hitCount: number;
@@ -19,55 +24,31 @@ type NInfo = {
   liked: boolean;
 };
 
-
-export default function BookInfo() {
-  const location = useLocation();
-  const novelId = location.state.novelId;
-  const [novelid, setNovelid] = useState(novelId);
-  const [novelinfo, setNovelinfo] = useState<NInfo>();
+export default function BookInfo({novelInfo, novelId, getIntroAsync}:BookInfoProps) {
+  
   const [create, setCreate] = useState("");
-
-  //로컬 멤버아이디
-  const localValue: string | null = localStorage.getItem('memberId');
-  const localMemberId: number = localValue !== null ? parseInt(localValue) : 0;
+  const memberId = localStorage.getItem("memberId")
+    ? Number(localStorage.getItem("memberId"))
+    : 0;
 
   const goTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  async function intro() {
-    try {
-      
-      const data = await getintro(novelid, localMemberId);
-      console.log(data);
-      console.log("닉네임불러오기:"+localMemberId);
-      setNovelinfo(data.data);
-
-      const year = data.data.createdAt.substring(0, 4);
-      const month = data.data.createdAt.substring(5, 7);
-      const date = data.data.createdAt.substring(8, 10);
-      setCreate(year + "." + month + "." + date);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   async function liked() {
-    intro();
-    console.log(novelinfo?.liked);
-    if (novelinfo?.liked) {
+    if (novelInfo?.liked) {
       try {
-        const data = await deleteliked(novelid, localMemberId);
+        const data = await deleteliked(novelId, memberId);
         console.log(data);
-        intro();
+        getIntroAsync();
       } catch (e) {
         console.log(e);
       }
     }else{
       try {
-        const data = await postliked(novelid, localMemberId);
+        const data = await postliked(novelId, memberId);
         console.log(data);
-        intro();
+        getIntroAsync();
       } catch (e) {
         console.log(e);
       }
@@ -75,10 +56,11 @@ export default function BookInfo() {
   }
 
   useEffect(() => {
-    goTop(); // 페이지 로드시 맨위로
-    setNovelid(novelId);
-    intro();
-    console.log("!!!!인트로노벨아이디:"+novelid);
+    goTop();
+    const year = novelInfo.createdAt.substring(0, 4);
+    const month = novelInfo.createdAt.substring(5, 7);
+    const date = novelInfo.createdAt.substring(8, 10);
+    setCreate(year + "." + month + "." + date);
   }, []);
 
   const navigate = useNavigate();
@@ -89,7 +71,7 @@ export default function BookInfo() {
 
   return (
     <div>
-      <div className={style.link} onClick={() => navigateToRead(novelid)}>
+      <div className={style.link} onClick={() => navigateToRead(novelId)}>
         <span className={style.front}>
           <img
             src={process.env.PUBLIC_URL + "/icon/glasses.svg"}
@@ -102,12 +84,12 @@ export default function BookInfo() {
       </div>
       <div className={style.blur} />
       <div className={style.undertext}>
-        <span>{novelinfo && novelinfo.title}</span>
+        <span>{novelInfo && novelInfo.title}</span>
       </div>
       <div className={style.info}>
         <div className={style.wrap}>
           <div className={style.title}>
-            <span>「{novelinfo && novelinfo.title}」</span>
+            <span>「{novelInfo && novelInfo.title}」</span>
           </div>
           <div className={style.subtitle}>
             <div className={style.line} />
@@ -118,10 +100,10 @@ export default function BookInfo() {
             </div>
             <div className={style.etc2box}>
               <div className={style.etc2}>
-                {novelinfo && novelinfo.nickName}
+                {novelInfo && novelInfo.nickName}
               </div>
-              <div className={style.etc2}>{novelinfo && create}</div>
-              <div className={style.etc2}>{novelinfo && novelinfo.korGenre}</div>
+              <div className={style.etc2}>{novelInfo && create}</div>
+              <div className={style.etc2}>{novelInfo && novelInfo.korGenre}</div>
             </div>
           </div>
         </div>
@@ -132,11 +114,11 @@ export default function BookInfo() {
               className={style.icons}
               alt="glasses_black"
             />
-            <div className={style.nums}>{novelinfo && novelinfo.hitCount}</div>
+            <div className={style.nums}>{novelInfo && novelInfo.hitCount}</div>
           </div>
           <div className={style.etc3}>
             <div className={style.likebtn} onClick={liked}>
-              {novelinfo?.liked ? (
+              {novelInfo?.liked ? (
                 <img
                   src={process.env.PUBLIC_URL + "/icon/black_heart.svg"}
                   className={style.like}
@@ -151,7 +133,7 @@ export default function BookInfo() {
               )}
             </div>
             <div className={style.likenums}>
-              {novelinfo && novelinfo.likeCount}
+              {novelInfo && novelInfo.likeCount}
             </div>
           </div>
           <div className={style.etc3}>
@@ -161,7 +143,7 @@ export default function BookInfo() {
               alt="comment_outline"
             />
             <div className={style.nums}>
-              {novelinfo && novelinfo.commentCount}
+              {novelInfo && novelInfo.commentCount}
             </div>
           </div>
         </div>

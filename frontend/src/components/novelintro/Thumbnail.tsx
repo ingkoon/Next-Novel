@@ -1,45 +1,30 @@
 import style from "./Thumbnail.module.css";
 import Book3d from "../common/Book3d";
 
-import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { getintro } from "../../api/novel";
-
-type NInfo = {
+type ThumbnailProps = {
+  novelInfo: NovelInfoType;
+};
+type NovelInfoType = {
   coverImg: string;
   introduction: string;
+  novelId: number;
+  title: string;
+  createdAt: string;
+  korGenre: string;
+  nickName: string;
+  hitCount: number;
+  commentCount: number;
+  likeCount: number;
+  liked: boolean;
 };
 
-export default function Thumbnail() {
-  const location = useLocation();
-  const id = location.state.novelId;
-  const [novelid, setNovelid] = useState(id);
-  const [novelinfo, setNovelinfo] = useState<NInfo>();
-  //로컬 멤버아이디
-  const localValue: string | null = localStorage.getItem("memberId");
-  const localMemberId: number = localValue !== null ? parseInt(localValue) : 0;
-
-  useEffect(() => {
-    setNovelid(id);
-    async function intro() {
-      try {
-        const data = await getintro(novelid, localMemberId);
-        console.log(data);
-        setNovelinfo(data.data);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    // intro(novelid); before code
-    intro();
-  }, [novelid]);
-
+export default function Thumbnail({ novelInfo }: ThumbnailProps) {
   return (
     <div>
       <div className={style.introBanner}>
-        {novelinfo && (
+        {novelInfo && (
           <div className={style.bookCircle}>
-            <Book3d type="thumbnail" img={novelinfo.coverImg} />
+            <Book3d type="thumbnail" img={novelInfo.coverImg} />
           </div>
         )}
         <div className={style.bannerGrad} />
@@ -50,7 +35,7 @@ export default function Thumbnail() {
             alt="quote1_black"
           />
           <div className={style.quotetext}>
-            {novelinfo && novelinfo.introduction}
+            {novelInfo && novelInfo.introduction}
           </div>
           <img
             src={process.env.PUBLIC_URL + "/icon/quote2_black.svg"}
