@@ -20,7 +20,9 @@ export default function AppBar() {
       <div className={style.status}>
         <div className={style.full}>
           <span>&gt;_NextNovel &#183; &nbsp;</span>
-          <span>{user.access_token === "" ? "visitor" : "member"}</span>
+          <span>
+            {localStorage.getItem("access_token") ? "member" : "visitor"}
+          </span>
         </div>
         <div className={style.short}>
           <span>&gt;_N &#183; N</span>
