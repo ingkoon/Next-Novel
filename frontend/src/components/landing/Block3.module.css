@@ -59,7 +59,7 @@
   animation: fade-in 2s cubic-bezier(0.39, 0.575, 0.565, 1) 3s both;
 }
 .bar {
-  width: 180px;
+  width: 205px;
   height: 3px;
   background: #090909;
 }
@@ -145,7 +145,7 @@
   background-color: #000;
   box-sizing: border-box;
   overflow: hidden;
-  height: 770px;
+  height: auto;
 }
 
 .svg1 path {
@@ -194,7 +194,8 @@
 
 .content1 {
   background-color: #f1f1f1;
-  height: 2550px;
+  /* height: 2550px; */
+  height: auto;
 }
 
 .content2 {
@@ -210,7 +211,7 @@
     transparent 7px
   );
   background-size: 2px;
-  height: 850px;
+  height: auto;
 }
 
 .content3 {
@@ -236,22 +237,13 @@
 
 @keyframes bounce {
   from {
-    transform: translatey(25px);
+    transform: translatey(5px);
   }
   to {
     transform: translatey(-5px);
   }
 }
 
-.guide {
-  position: absolute;
-  bottom: 1800px;
-  left: 69%;
-  color: yellow;
-  font-family: "handjet";
-  font-size: 30px;
-  z-index: 3;
-}
 .next {
   position: absolute;
   top: 4400px;
@@ -290,8 +282,13 @@
 /*////////// 반응형 media 쿼리 //////////*/
 /*////////// 반응형 media 쿼리 //////////*/
 /*////////// 반응형 media 쿼리 //////////*/
+/*////////// 반응형 media 쿼리 //////////*/
+/*////////// 반응형 media 쿼리 //////////*/
 
 @media (max-width: 1024px) {
+  .svg1 {
+    margin-left: -1%;
+  }
   .presents {
     display: none;
   }
@@ -302,4 +299,11 @@
   .parbox {
     margin-top: -15%;
   }
+
+  .next {
+    display: none;
+  }
+  /* .content1 {
+    display: none;
+  } */
 }
