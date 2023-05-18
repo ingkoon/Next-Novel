@@ -51,35 +51,37 @@ export default function Bubble({ props, novelId, updatelist }: BubbleProps) {
   return (
     <>
       <div className={style.bubble}>
-        <img
-          src={
-            props && process.env.REACT_APP_MEMBER_IMAGE_API + props.profileImg
-          }
-          className={style.profilepic}
-          alt="profileimage"
-        />
-        <div className={style.profilename}>
-          <span>{props && props.nickName}</span>
+        <div className={style.bubbleLeft}>
+          <img
+            src={
+              props && process.env.REACT_APP_MEMBER_IMAGE_API + props.profileImg
+            }
+            className={style.profilepic}
+            alt="profileimage"
+          />
+          <div className={style.profilename}>
+            <span>{props && props.nickName}</span>
+          </div>
         </div>
         <div className={style.bar} />
-        <div className={style.ment}>
-          <span>{props && props.content}</span>
-        </div>
-        <div className={style.date}>
-          <span>{props && create}</span>
-        </div>
-
-        {localMemberId === props.memberId ? (
-          <div className={style.del} onClick={deletecomment}>
-            <img
-              src={process.env.PUBLIC_URL + "/icon/trash_black.svg"}
-              className={style.trash}
-              alt="trash"
-            />
+        <div className={style.bubbleRight}>
+          <div className={style.ment}>
+            <span>{props && props.content}</span>
           </div>
-        ) : (
-          <></>
-        )}
+          <div className={style.date}>
+            <span>{props && create}</span>
+          </div>
+
+          {localMemberId === props.memberId && (
+            <div className={style.del} onClick={deletecomment}>
+              <img
+                src={process.env.PUBLIC_URL + "/icon/trash_black.svg"}
+                className={style.trash}
+                alt="trash"
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       <Modal
@@ -91,7 +93,7 @@ export default function Bubble({ props, novelId, updatelist }: BubbleProps) {
           },
           content: {
             width: "792px",
-            height: "360px",
+            height: "380px",
             backgroundColor: "#fffefc",
             margin: "auto",
           },

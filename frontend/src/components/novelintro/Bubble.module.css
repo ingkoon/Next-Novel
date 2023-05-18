@@ -1,20 +1,3 @@
-@media (max-width: 1000px) {
-  .profilepic {
-    display: none;
-  }
-  .date {
-    display: none;
-  }
-
-  .profilename {
-    position: absolute;
-    font-size: 24px;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    color: #090909;
-    left: 16%;
-  }
-}
-
 .bubble {
   position: relative;
   background: #fffefc;
@@ -31,6 +14,7 @@
   margin-left: 4.5%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .bubble:after {
   content: "";
@@ -58,60 +42,59 @@
   margin-left: -24px;
   display: block;
 }
+.bubbleLeft {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  justify-content: center;
+}
 .profilepic {
-  position: absolute;
-  left: 7%;
   width: 60px;
   height: 60px;
   border-radius: 100%;
-  /* background: #F66F00; */
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 .profilename {
-  position: absolute;
   font-size: 16px;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   color: #090909;
-  left: 16%;
 }
 .bar {
-  position: absolute;
   width: 3px;
   height: 50px;
-  left: 30%;
   background: #090909;
 }
-.ment {
-  position: absolute;
-  color: #090909;
-  font-size: 20px;
-  left: 31%;
-
-  /* width: px; */
-  /* background-color: blue; */
+.bubbleRight {
+  width: 73%;
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
   padding: 0 20px;
 }
+.ment {
+  color: #090909;
+  font-size: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 75%;
+}
 .date {
-  position: absolute;
   color: #ababab;
   font-size: 16px;
-  left: 75%;
-  width: 110px;
-  /* background-color: green; */
 }
 .del {
-  position: absolute;
   color: #090909;
   font-size: 16px;
-  left: 88%;
-  width: 5%;
-  height: 50px;
+  height: 35px;
   border-radius: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-
   transition: background-color 0.3s ease;
 }
 .del:hover {
@@ -119,4 +102,12 @@
 }
 .trash {
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+@media (max-width: 1024px) {
+  .profilepic {
+    display: none;
+  }
+  .date {
+    display: none;
+  }
 }

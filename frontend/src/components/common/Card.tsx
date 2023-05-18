@@ -158,7 +158,7 @@ function Card({ props, refreshList }: CardProps) {
           content: {
             width: "75%",
             maxWidth: "792px",
-            height: "360px",
+            height: "380px",
             backgroundColor: "#fffefc",
             margin: "auto",
             inset: 0,
