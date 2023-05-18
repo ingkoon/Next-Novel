@@ -1,14 +1,22 @@
-.wrapper{
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    top: 3700px;
-    left: 60%;
-    width: 500px;
+.wrapper {
+  display: flex;
+  justify-content: center;
+  /* position: absolute;
+  top: 3700px;
+  left: 60%; */
+  width: auto;
 }
-.bbb{
-    width: 100%;
-    font-family: 'LINESeedKR-Bd';
-    font-size: 30px;
-    color: #576265;
+.bbb {
+  margin-top: -75%;
+  margin-left: 60%;
+  width: 100%;
+  font-family: "LINESeedKR-Bd";
+  font-size: clamp(10px, 2vw, 30px);
+  color: #576265;
+}
+
+@media (max-width: 1024px) {
+  .wrapper {
+    /* display: none; */
+  }
 }
