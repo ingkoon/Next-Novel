@@ -38,7 +38,7 @@ export default function OrderList() {
 
   async function cancelOrderAsync(order: OrderType) {
     const point = await getPointAsync();
-    if (1 < order.point) {
+    if (point < order.point) {
       alert("보유한 포인트가 주문 취소할 포인트의보다 적어 환불 불가능합니다");
       return;
     }
