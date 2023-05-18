@@ -31,6 +31,9 @@
   padding: 0 5%;
   position: relative;
 }
+.swiper-slide {
+  margin: 1000px;
+}
 
 @media (max-width: 1024px) {
   .circle_left {
@@ -38,5 +41,10 @@
   }
   .circle_right {
     display: none;
+  }
+}
+@media (max-width: 480px) {
+  .swiper {
+    padding: 0;
   }
 }
