@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./ProductList.module.css";
 import usePayment from "../../hooks/usePayment";
-import { CreateOrder } from "../../types";
+import { CreateOrder } from "../../types/payment";
 import BootPay from "bootpay-js";
 
 type ProductType = {

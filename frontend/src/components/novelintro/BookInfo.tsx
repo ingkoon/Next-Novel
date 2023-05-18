@@ -2,29 +2,15 @@ import style from "./BookInfo.module.css";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { getintro, postliked, deleteliked } from "../../api/novel";
+import { NovelInfoType } from "../../types/novel";
 
 type BookInfoProps = {
   novelInfo: NovelInfoType;
-  novelId: number;
   getIntroAsync: () => void;
 };
-type NovelInfoType = {
-  coverImg: string;
-  introduction: string;
-  novelId: number;
-  title: string;
-  createdAt: string;
-  korGenre: string;
-  nickName: string;
-  hitCount: number;
-  commentCount: number;
-  likeCount: number;
-  liked: boolean;
-};
 
-export default function BookInfo({novelInfo, novelId, getIntroAsync}:BookInfoProps) {
+export default function BookInfo({novelInfo, getIntroAsync}:BookInfoProps) {
   
   const [create, setCreate] = useState("");
   const memberId = localStorage.getItem("memberId")
@@ -38,7 +24,7 @@ export default function BookInfo({novelInfo, novelId, getIntroAsync}:BookInfoPro
   async function liked() {
     if (novelInfo?.liked) {
       try {
-        const data = await deleteliked(novelId, memberId);
+        const data = await deleteliked(novelInfo.novelId, memberId);
         console.log(data);
         getIntroAsync();
       } catch (e) {
@@ -46,7 +32,7 @@ export default function BookInfo({novelInfo, novelId, getIntroAsync}:BookInfoPro
       }
     }else{
       try {
-        const data = await postliked(novelId, memberId);
+        const data = await postliked(novelInfo.novelId, memberId);
         console.log(data);
         getIntroAsync();
       } catch (e) {
@@ -71,7 +57,7 @@ export default function BookInfo({novelInfo, novelId, getIntroAsync}:BookInfoPro
 
   return (
     <div>
-      <div className={style.link} onClick={() => navigateToRead(novelId)}>
+      <div className={style.link} onClick={() => navigateToRead(novelInfo.novelId)}>
         <span className={style.front}>
           <img
             src={process.env.PUBLIC_URL + "/icon/glasses.svg"}

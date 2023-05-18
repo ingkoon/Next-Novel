@@ -4,20 +4,7 @@ import BookInfo from "./BookInfo";
 import Comments from "./Comments";
 import { getintro } from "../../api/novel";
 import { useLocation } from "react-router-dom";
-
-type NovelInfoType = {
-  coverImg: string;
-  introduction: string;
-  novelId: number;
-  title: string;
-  createdAt: string;
-  korGenre: string;
-  nickName: string;
-  hitCount: number;
-  commentCount: number;
-  likeCount: number;
-  liked: boolean;
-};
+import { NovelInfoType } from "../../types/novel";
 
 export default function IntroInfo() {
   const location = useLocation();
@@ -43,15 +30,13 @@ export default function IntroInfo() {
 
   return (
     <>
-      {novelInfo && <Thumbnail novelInfo={novelInfo} />}
       {novelInfo && (
-        <BookInfo
-          novelInfo={novelInfo}
-          novelId={novelId}
-          getIntroAsync={getIntroAsync}
-        />
+        <>
+          <Thumbnail novelInfo={novelInfo} />
+          <BookInfo novelInfo={novelInfo} getIntroAsync={getIntroAsync} />
+          <Comments novelInfo={novelInfo} getIntroAsync={getIntroAsync} />
+        </>
       )}
-      <Comments />
     </>
   );
 }

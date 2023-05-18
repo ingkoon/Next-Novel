@@ -1,5 +1,5 @@
 import { tokeninstance } from "./Interceptors";
-import { CreateOrder, MemberId, UpdatePoint } from "../types";
+import { CreateOrder, MemberId, UpdatePoint } from "../types/payment";
 
 const config = {
   headers: { "Content-Type": "application/json" },

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import useCheckReady from "../../hooks/useCheckReady";
 import useDataurlToFile from "../../hooks/useDataurlToFile";
 import usePayment from "../../hooks/usePayment";
-import { UpdatePoint } from "../../types";
+import { UpdatePoint } from "../../types/payment";
 
 type Input = {
   title: string;

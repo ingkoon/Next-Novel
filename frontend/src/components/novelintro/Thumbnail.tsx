@@ -1,21 +1,9 @@
 import style from "./Thumbnail.module.css";
 import Book3d from "../common/Book3d";
+import { NovelInfoType } from "../../types/novel";
 
 type ThumbnailProps = {
   novelInfo: NovelInfoType;
-};
-type NovelInfoType = {
-  coverImg: string;
-  introduction: string;
-  novelId: number;
-  title: string;
-  createdAt: string;
-  korGenre: string;
-  nickName: string;
-  hitCount: number;
-  commentCount: number;
-  likeCount: number;
-  liked: boolean;
 };
 
 export default function Thumbnail({ novelInfo }: ThumbnailProps) {

@@ -10,7 +10,7 @@ import {
   getProductListApi,
   getProductDetailApi,
 } from "../api/payment";
-import { CreateOrder, UpdatePoint } from "../types";
+import { CreateOrder, UpdatePoint } from "../types/payment";
 
 export default function useNovelWrite() {
   const getPoint = () => {
