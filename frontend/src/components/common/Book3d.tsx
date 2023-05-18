@@ -15,7 +15,11 @@ export default function Book3d({ type, img }: book3dProps) {
           : { transform: "scale(1.5) translate(40%, 35%)" }
       }
     >
-      <div className={style.book}>
+      <div
+        className={`${style.book} ${
+          type === "thumbnail" ? style.thumbnail : ""
+        }`}
+      >
         <div className={style.page1}>
           <img
             src={process.env.REACT_APP_IMAGE_API + img}
