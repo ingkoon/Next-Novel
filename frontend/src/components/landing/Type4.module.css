@@ -1,14 +1,19 @@
-.wrapper{
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    top: 2200px;
-    left: 10%;
-    width: 700px;
+.wrapper {
+  display: flex;
+  justify-content: center;
 }
-.bbb{
-    font-family: 'LINESeedKR-Bd';
-    font-size: 30px;
-    width: 100%;
-    color: #576265;
+.bbb {
+  margin-top: -170%;
+  margin-left: -40%;
+  width: auto;
+  font-family: "LINESeedKR-Bd";
+  font-size: clamp(10px, 2vw, 30px);
+  width: auto;
+  color: #576265;
+}
+
+@media (max-width: 1024px) {
+  .bbb {
+    /* display: none; */
+  }
 }

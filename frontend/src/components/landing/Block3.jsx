@@ -136,7 +136,7 @@ export default function Block3() {
     <>
       <div className={style.block}>
         <div className={style.presents}>
-          6G PRESENTS...
+          MGD PRESENTS...
           <div className={style.bar} />
         </div>
         <div className={style.logobox}>
@@ -158,9 +158,9 @@ export default function Block3() {
             ARTIFICIAL INTELLIGENCE
           </p>
         </div>
-        <div className={style.gonext} onClick={goNext}>
+        {/* <div className={style.gonext} onClick={goNext}>
           <div className={style.slidenext} />
-        </div>
+        </div> */}
       </div>
 
       <div>
@@ -176,9 +176,9 @@ export default function Block3() {
         {/* <div className={style.guide}>
                 guide
             </div> */}
-        <div className={style.next} onClick={goNext2}>
+        {/* <div className={style.next} onClick={goNext2}>
           <div className={style.slide} />
-        </div>
+        </div> */}
         <div className={style.bottom} ref={guideBlock} />
       </div>
     </>

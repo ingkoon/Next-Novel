@@ -1,18 +1,32 @@
-.wrapper1{
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    top: 3500px;
-    left: 60%;
-    width: 550px;
+.wrapper1 {
+  display: flex;
+  justify-content: center;
+  /* position: absolute;
+  top: 3500px;
+  left: 60%; */
+  width: auto;
 }
-.bbb{
-    font-family: 'LINESeedKR-Bd';
-    font-size: 60px;
-    width: 100%;
-    background: linear-gradient(94.67deg, #6D03C0 0%, #1DE13D 19.41%, #1DE1A6 42.68%, #6D03C0 57.92%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
+.bbb {
+  margin-top: -90%;
+  margin-left: 60%;
+  font-family: "LINESeedKR-Bd";
+  font-size: clamp(14px, 4vw, 60px);
+  width: 100%;
+  background: linear-gradient(
+    94.67deg,
+    #6d03c0 0%,
+    #1de13d 19.41%,
+    #1de1a6 42.68%,
+    #6d03c0 57.92%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+@media (max-width: 1024px) {
+  .wrapper1 {
+    /* display: none; */
+  }
 }
