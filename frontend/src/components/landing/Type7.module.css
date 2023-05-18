@@ -8,10 +8,10 @@
 }
 .bbb {
   margin-top: -90%;
-  margin-left: 60%;
+  margin-left: 50%;
   font-family: "LINESeedKR-Bd";
   font-size: clamp(14px, 4vw, 60px);
-  width: 100%;
+  width: auto;
   background: linear-gradient(
     94.67deg,
     #6d03c0 0%,
