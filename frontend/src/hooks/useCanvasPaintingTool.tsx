@@ -49,8 +49,13 @@ export default function useCanvasPaintingTool({
     setOpenSetWidthState((prev) => !prev);
     setOpenSetColorState(false);
   };
-  const setWidth = (event: React.MouseEvent<HTMLInputElement>) => {
+  const setWidth = (
+    event:
+      | React.MouseEvent<HTMLInputElement>
+      | React.TouchEvent<HTMLInputElement>
+  ) => {
     //펜 굵기 설정하기
+    console.log(event);
     setWidthState(parseInt(event.currentTarget.value));
     getCtx.lineWidth = parseInt(event.currentTarget.value);
   };

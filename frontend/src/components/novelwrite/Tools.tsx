@@ -120,6 +120,10 @@ export default function Tools({ getCtx, goBack, initCanvas }: ToolsProps) {
                 setWidth(event);
                 openSetWidth();
               }}
+              onTouchEnd={(event) => {
+                setWidth(event);
+                openSetWidth();
+              }}
             />
           </div>
         )}

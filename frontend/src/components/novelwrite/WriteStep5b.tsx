@@ -53,8 +53,8 @@ export default function WriteStep5b() {
         console.log(res);
         updatePointAsync();
         //원래는 포인트 차감 성공시 finNovel을 하고, 실패 시 포인트 되돌려받기를 하고 싶으나...
-        const id = res.data.novelId;
-        navigate(`/library/${id}/intro`, { state: { id: id } });
+        const novelId = res.data.novelId;
+        navigate(`/library/${novelId}/intro`, { state: { novelId: novelId } });
       },
     });
   };
