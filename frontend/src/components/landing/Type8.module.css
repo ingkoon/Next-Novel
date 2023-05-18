@@ -8,8 +8,8 @@
 }
 .bbb {
   margin-top: -75%;
-  margin-left: 60%;
-  width: 100%;
+  margin-left: 43%;
+  width: auto;
   font-family: "LINESeedKR-Bd";
   font-size: clamp(10px, 2vw, 30px);
   color: #576265;

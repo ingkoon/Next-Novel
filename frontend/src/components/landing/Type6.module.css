@@ -8,16 +8,16 @@
 }
 .bbb {
   margin-top: -125%;
-  margin-left: 30%;
+  margin-left: 0%;
   font-family: "LINESeedKR-Bd";
   font-size: clamp(10px, 2vw, 30px);
-  width: 100%;
+  width: auto;
   color: #576265;
 }
 
 @media (max-width: 1024px) {
   .bbb {
     /* display: none; */
-    margin-left: 35%;
+    margin-left: 10%;
   }
 }
