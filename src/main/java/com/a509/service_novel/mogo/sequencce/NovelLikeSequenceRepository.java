@@ -4,6 +4,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface NovelLikeSequenceRepository extends MongoRepository<NovelLikeSequence, Integer> {
+public interface NovelLikeSequenceRepository extends MongoRepository<NovelLikeSequence, Long> {
 	NovelLikeSequence findSequenceById(Integer id);
 }

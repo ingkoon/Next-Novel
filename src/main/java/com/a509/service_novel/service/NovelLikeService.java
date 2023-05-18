@@ -34,8 +34,10 @@ public class NovelLikeService {
 
 		for(NovelLike novelLike : novelLikes){
 			int likeNovelId = novelLike.getNovelId();
+			System.out.println(likeNovelId);
 			Optional<Novel> optional = novelRepository.findById(likeNovelId);
 			if(optional.isPresent()){
+				System.out.println(optional.get());
 				NovelListDto novelListDto = optional.get().toListDto();
 				novelListDtos.add(novelListDto);
 			}
@@ -47,11 +49,6 @@ public class NovelLikeService {
 
 	@Transactional
 	public void insertNovelLike(NovelLikeDto novelLikeDto) throws Exception{
-
-		System.out.println(novelSequenceGenerator.generateSequence(0));
-		Optional<NovelLike> optional = novelLikeRepository.findByNovelIdAndMemberId(novelLikeDto.getNovelId(),novelLikeDto.getMemberId());
-		if(optional.isPresent())
-			return;
 
 		NovelLike novelLike = novelLikeDto.toEntity(novelSequenceGenerator);
 		System.out.println(novelLike);

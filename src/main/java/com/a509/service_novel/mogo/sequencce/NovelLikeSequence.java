@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class NovelLikeSequence {
 
 	@Id
-	private int id;
+	private long id;
 	private int novelLikeId;
 }

@@ -13,7 +13,7 @@ public class NovelLikeDto {
 
 	public NovelLike toEntity(NovelSequenceGenerator novelSequenceGenerator){
 		return NovelLike.builder()
-			.id(novelSequenceGenerator.generateSequence(0))
+			.id(novelSequenceGenerator.generateSequence(1))
 			.novelId(novelId)
 			.memberId(memberId)
 			.build();
