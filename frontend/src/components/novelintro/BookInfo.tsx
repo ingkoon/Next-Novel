@@ -111,12 +111,12 @@ export default function BookInfo() {
           </div>
           <div className={style.subtitle}>
             <div className={style.line} />
-            <div>
+            <div className={style.etc1box}>
               <div className={style.etc1}>제작자</div>
               <div className={style.etc1}>출간일</div>
               <div className={style.etc1}>장르</div>
             </div>
-            <div>
+            <div className={style.etc2box}>
               <div className={style.etc2}>
                 {novelinfo && novelinfo.nickName}
               </div>

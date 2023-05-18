@@ -3,8 +3,6 @@
   width: 100%;
   height: 375px;
   z-index: -1;
-  /* background: rgba(255, 254, 252, 0.3); */
-  background: yellow;
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
 }
@@ -80,7 +78,7 @@
 }
 .hlc {
   position: absolute;
-  right: 200px;
+  right: 13%;
   /* z-index: 2; */
 }
 .icons {
@@ -195,17 +193,20 @@
   .undertext {
     display: none;
   }
+  .hlc {
+    right: 10%;
+  }
 }
 
 @media (max-width: 800px) {
   .wrap {
-    background: yellow;
+    /* background: yellow; */
   }
 
   .title {
     width: 1005;
     font-size: 32px;
-    background: pink;
+    /* background: pink; */
   }
   .link {
     position: absolute;
@@ -220,7 +221,46 @@
   .etc1 {
     margin-left: 10%;
   }
+  .info {
+    margin-bottom: 100px;
+  }
+  .hlc {
+    right: 0%;
+    top: 350px;
+    display: flex;
+    width: 93%;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 400px) {
+  .title {
+    margin-top: 15%;
+    margin-left: 10%;
+    width: 90%;
+    /* background: yellow; */
+  }
+  .etc2box {
+    /* position: absolute; */
+    /* background: yellow; */
+  }
+  .etc2 {
+    width: 250px;
+  }
+  .hlc {
+    right: 0%;
+    top: 450px;
+    display: flex;
+    width: 93%;
+    align-items: center;
+    justify-content: center;
+  }
+  .etc3 {
+    width: 33%;
+  }
+
+  .info {
+    margin-bottom: 250px;
+  }
 }
