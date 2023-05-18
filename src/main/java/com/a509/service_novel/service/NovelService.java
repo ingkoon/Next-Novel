@@ -227,12 +227,15 @@ public class NovelService {
 			novelImageRepository.save(novelImage);
 		}
 
-		for(MultipartFile image : contentImages){
 
-			NovelImage novelImage = new NovelImage();
-			novelImage.setImageName(UID+"_"+image.getOriginalFilename());
-			novelImage.setMemberId(memberId);
-			novelImageRepository.save(novelImage);
+		if(contentImages != null){
+			for(MultipartFile image : contentImages){
+
+				NovelImage novelImage = new NovelImage();
+				novelImage.setImageName(UID+"_"+image.getOriginalFilename());
+				novelImage.setMemberId(memberId);
+				novelImageRepository.save(novelImage);
+			}
 		}
 		System.out.println("insert image end");
 	}
