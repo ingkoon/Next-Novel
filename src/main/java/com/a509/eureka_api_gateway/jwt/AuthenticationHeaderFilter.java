@@ -53,14 +53,14 @@ public class AuthenticationHeaderFilter extends AbstractGatewayFilterFactory<Aut
 			// Step 1. RequestHeader에서 jwt 토큰 추출
 			String accessToken = jwtTokenProvider.resolveToken(request);
 
-			String status = stringRedisTemplate.opsForValue().get(accessToken);
-			log.info(accessToken);
-			log.info("토큰검증!");
+			// String status = stringRedisTemplate.opsForValue().get(accessToken);
+			// log.info(accessToken);
+			// log.info("토큰검증!");
 
-			if(!ObjectUtils.isEmpty(status)){
-				log.info("로그아웃/회원 탈퇴 된 토큰입니다.");
-				return handleUnAuthorized(exchange);
-			}
+			// if(!ObjectUtils.isEmpty(status)){
+			// 	log.info("로그아웃/회원 탈퇴 된 토큰입니다.");
+			// 	return handleUnAuthorized(exchange);
+			// }
 
 
 			// Step 2. 토큰의 유효성 검사
