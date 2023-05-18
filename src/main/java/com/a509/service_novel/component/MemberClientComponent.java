@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.a509.service_novel.dto.MemberMyPageResponseDto;
 
-@FeignClient(name = "SERVICE-MEMBER", url = "***REMOVED***:8000/member")
+@FeignClient(name = "SERVICE-MEMBER", url = "***REMOVED***:8011/member")
 public interface MemberClientComponent {
 	@GetMapping("/myPage/image/{memberId}")
 	String findMyPageImage(@PathVariable("memberId") long memberId);
