@@ -92,6 +92,6 @@
 @media (max-width: 800px) {
   .book {
     transform: scale(0.8);
-    margin-bottom: 50%;
+    /* margin-bottom: 50%; */
   }
 }
