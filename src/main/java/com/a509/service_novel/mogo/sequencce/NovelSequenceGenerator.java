@@ -22,6 +22,7 @@ public class NovelSequenceGenerator {
 			novelLikeSequenceRepository.save(sequence);
 		} else {
 			sequence.setNovelLikeId(sequence.getNovelLikeId() + 1);
+			novelLikeSequenceRepository.save(sequence);
 		}
 		return sequence.getNovelLikeId();
 	}
