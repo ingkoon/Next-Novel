@@ -79,6 +79,11 @@ public class AuthenticationHeaderFilter extends AbstractGatewayFilterFactory<Aut
 						Map<String, Object> refreshTokenPayload = decodeRefreshToken(refreshToken);
 
 						String newAccessToken = jwtTokenProvider.generateToken(refreshTokenPayload);
+						if(newAccessToken == null){							
+							log.info("로그인 세션 유효시간이 만료되었습니다. 백엔드 접근 요청을 거부합니다.");
+							return handleUnAuthorized(exchange);
+						}
+
 
 						response.getHeaders().add("Authorization", "bearer " + newAccessToken);
 
