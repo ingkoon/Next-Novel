@@ -61,24 +61,24 @@ spring:
           predicates:
             - Path=/member/myPage/**, /member/logout
             - Method=GET,POST,PUT,DELETE
-          filters:
-            - AuthenticationHeaderFilter
+          # filters:
+            # - AuthenticationHeaderFilter
 
         - id: auth_novel
           uri: http://***REMOVED***:8012/
           predicates:
             - Path=/comment/**, /write/**, /novel/**
             - Method=POST,PUT,DELETE
-          filters:
-            - AuthenticationHeaderFilter
+          # filters:
+            # - AuthenticationHeaderFilter
 
         - id: auth_novel_mypage
           uri: http://***REMOVED***:8012/
           predicates:
             - Path=/novel/like/**, /novel/my/**
             - Method=GET
-          filters:
-            - AuthenticationHeaderFilter
+          # filters:
+            # - AuthenticationHeaderFilter
 
 
         - id: member
@@ -99,26 +99,26 @@ spring:
           uri: http://***REMOVED***:8014/
           predicates:
             - Path=/point/**
-          filters:
-            - AuthenticationHeaderFilter
+          # filters:
+            # - AuthenticationHeaderFilter
         - id: order
           uri: http://***REMOVED***:8015/
           predicates:
             - Path=/orders/**
-          filters:
-            - AuthenticationHeaderFilter
+          # filters:
+            # - AuthenticationHeaderFilter
         - id: item
           uri: http://***REMOVED***:8016/
           predicates:
             - Path=/items/**
-          filters:
-            - AuthenticationHeaderFilter
+          # filters:
+            # - AuthenticationHeaderFilter
         - id: orderItem
           uri: http://***REMOVED***:8017/
           predicates:
             - Path=/orderItem/**
-          filters:
-            - AuthenticationHeaderFilter
+          # filters:
+            # - AuthenticationHeaderFilter
         - id: search
           uri: http://***REMOVED***:8018/
           predicates:
