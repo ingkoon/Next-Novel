@@ -2,13 +2,12 @@
 
 ![logo](docs/img/logo.png)
 ## ⌛️ 프로젝트 진행 기간
-2023.02.27(월) ~ 2023.04.07(금) (40일간 진행)<br>
-SSAFY 8기 2학기 특화 프로젝트
+2023.04.10(월) ~ 2023.05.19(금)<br>
+SSAFY 8기 2학기 자율 프로젝트
 
 ## ✨ Next Novel 서비스 개요
 ### 기획 배경
 - AI 생성 모델 중 GPT 를 활용한 서비스 개발
-- 인공지능 영상 도메인으로써 그림을 활용
 
 ## 🏃 Next Novel 의 이용 목적
 - 그림만으로 간단하게 소설을 작성할 수 있습니다.
@@ -16,15 +15,15 @@ SSAFY 8기 2학기 특화 프로젝트
 - 친구들과 그림 실력을 뽐내며 서비스를 즐길 수 있습니다.
 
 ## 🌞 팀원 소개
-### Six God
-프론트, 백엔드, AI 신 여섯이 모인 서울 5반 2조
+### 명규당
+명규를 기준으로 프론트, 백엔드 신들이 모인 서울 5반 9조
 
-- 이정범 - 팀장, BackEnd, 배포
-- 김수빈 - FrontEnd
+- 강은진 - 팀장, BackEnd
+- 이명규 - BackEnd, 인프라
+- 이인재 - BackEnd
+- 장지웅 - BackEnd
 - 소지현 - FrontEnd
 - 서철원 - FrontEnd
-- 이명규 - AI, 서버, 배포
-- 강은진 - AI, 배포
 
 ## ✔️ 아키텍처 구성도
 ![architecture](docs/img/architecture.png)
@@ -52,10 +51,13 @@ SSAFY 8기 2학기 특화 프로젝트
 - 소설의 제목 혹은 소설 작성자를 기반으로 keyword 검색 가능
 - 장르별 정렬로 자신이 관심있는 분야의 소설 확인 가능
 
-### 5) MZ스러운 디자인과 친절한 이용 가이드
-- GSAP 애니메이션 효과와 주황빛 컬러
-- 사용자를 위한 이용가이드 페이지 제공
-  ![sample_guideline.png](/docs/img/sample_guideline.png)
+### 5) 유사도 검색 기능
+- 소설 내용을 검색하기 위한 기능
+- 단순한 문자 검색이 아닌, 단어간의 유사도를 바탕으로 소설을 검색
+
+### 6) 결제 시스템
+- 소설 작성에 필요한 포인트를 결제하는 시스템
+- 실 운영시 발생하는 트래픽 문제를 해결하기 위해 도입
 
 ## ✔️ 주요 기술
 ### 1) ChatGPT API
@@ -81,140 +83,6 @@ SSAFY 8기 2학기 특화 프로젝트
 - 마우스 클릭 이벤트와 터치 이벤트로 페인팅할 수 있으며, 웹 및 태블릿 환경에서 즐길 수 있습니다.
 - 제출한 그림들은 저장하였고 이를 재사용할 수 있습니다.
 
-## ✔️ 프로젝트 파일 구조
-```
-Repository
- │
- ├── AI-Server
- │     │
- │     ├── diffusion
- │     │     ├── diffusion_ControlNet.py
- │     │
- │     ├── README.md
- │     ├── app.py
- │     ├── caption.py
- │     ├── gpt.py
- │     ├── output.txt
- │     ├── requirements.txt
- │     ├── tmp.py
- │     ├── www.py
- │
- │ 
- ├── Next-Novel
- │     │
- │     ├── public
- │     │      ├── fonts
- │     │      │    ├── ...
- │     │      │
- │     │      ├── game
- │     │      │    ├── ...
- │     │      │
- │     │      ├── icon
- │     │      │    ├── ...
- │     │      │
- │     │      ├── img
- │     │      │    ├── ...
- │     │      │
- │     │      ├── ...
- │     │
- │     ├── src
- │     │       ├── api
- │     │       │       ├── ...
- │     │       │
- │     │       ├── components
- │     │       │       ├── common
- │     │       │       │      ├── ...
- │     │       │       │
- │     │       │       ├── game
- │     │       │       │      ├── ...
- │     │       │       │
- │     │       │       ├── landing
- │     │       │       │      ├── ...
- │     │       │       │
- │     │       │       ├── library
- │     │       │       │      ├── ...
- │     │       │       │
- │     │       │       ├── login
- │     │       │       │      ├── ...
- │     │       │       │
- │     │       │       ├── mypage
- │     │       │       │      ├── ...
- │     │       │       │
- │     │       │       ├── novelintro
- │     │       │       │      ├── ...
- │     │       │       │
- │     │       │       ├── novelread
- │     │       │       │      ├── ...
- │     │       │       │
- │     │       │       ├── novelwrite
- │     │       │       │      ├── ...
- │     │       │       │
- │     │       │       ├── search
- │     │       │       │      ├── ...
- │     │       │
- │     │       ├── context
- │     │       │       ├── ...
- │     │       │
- │     │       ├── hooks
- │     │       │       ├── ...
- │     │       │
- │     │       ├── module
- │     │       │       ├── ...
- │     │       │
- │     │       ├── pages
- │     │       │       ├── ...
- │     │       │
- │     │       ├── App.css
- │     │       ├── App.js
- │     │       ├── App.test.js
- │     │       ├── index.css
- │     │       ├── index.js
- │     │       ├── mobile.module.css
- │     │       ├── reportWebVitals.js
- │     │       ├── setupTests.js
- │     │
- │     ├── README.md
- │     ├── ...
- │
- │
- ├── backend
- │     │
- │     ├── app
- │     │    ├── ...
- │     │
- │     ├── nextnovel
- │     │    ├── ...
- │     │
- │     ├── nginx
- │     │    ├── ...
- │     │
- │     ├── novels
- │     │    ├── ...
- │     │
- │     ├── redis
- │     │    ├── ...
- │     │
- │     ├── users
- │     │    ├── ...
- │
- │
- ├── docs
- │     │
- │     ├── img
- │     │    ├── ...
- │     │
- │     ├── ...
- │
- │
- ├── exec
- │     │
- │     ├── 포팅매뉴얼.md
- │
- ├── README.md
- ├── ...
-``` 
-
-
 ## ✔️ 협업 툴
 - GitLab
 - Notion
@@ -235,7 +103,7 @@ Repository
     - Jira 일정 계획 수립
     - Git Commit 컨벤션 정리
     - 참고자료 정리
-    - Back-end, Front-end, AI 별 개발 이슈 정리
+    - Back-end, Front-end 별 개발 이슈 정리
     - API 상태 코드 정리
 - Figma
     - UI/UX에 초점을 둔 실시간 협업
@@ -244,20 +112,20 @@ Repository
     - 목업과 와이어프레임 정리
 - Jira
     - 일주일 단위로 프로젝트 일정 관리
-    - 23.02.27 ~ 23.04.07 기간의 일정 관리
+    - 2023.04.10(월) ~ 2023.05.19(금) 기간의 일정 관리
     - 기획, 설계, 개발, 정기 회의, 내부 행사, 개인 공부, 발표
 
 ## ✔️ 프로젝트 산출물
 - [기능 명세서](https://chipped-cart-851.notion.site/a96e0e004e4c4f39bab65fa821f4825f?v=f77e4329cc5e4b4fbb3a73894ba13c8c)
-- [API 명세서](https://chipped-cart-851.notion.site/838d5959ec264671ac3dc8410c0983fa?v=56e9cb334ec14ee4a3634693dba9cced)
-- [와이어 프레임](docs/img/wireframe.png)
+- [API 명세서 - 회원, 결제](https://www.notion.so/9e2bd3e4fbb744d1ad5bf18dc1e6df6a?v=17131d147e2840b885d3c6dbe2ee21ee&pvs=4)
+- [API 명세서 - 소설](https://www.notion.so/2314602a137247208b770252cffebc24?v=bfbcd7265e444ce888f5b116e24bda92&pvs=4)
 - [ER-Diagram](docs/img/erd.png)
 
 ## ✔️ 프로젝트 결과물
-- [포팅 메뉴얼](https://lab.ssafy.com/s08-ai-image-sub2/S08P22A502/-/blob/main/exec/%ED%8F%AC%ED%8C%85%EB%A7%A4%EB%89%B4%EC%96%BC.md)
-- [중간 발표 자료](docs/서울_5반_A502_중간발표자료.pptx)
-- [최종 발표 자료](docs/서울_5반_A502_최종발표자료.pptx)
-- [UCC 영상](docs/특화PJT_서울_5반_A502_UCC경진대회.mp4)
+- [포팅 메뉴얼](https://irradiated-apology-665.notion.site/b16c15405eb5480c9d5e4e3176b51fa1)
+- [중간 발표 자료](docs/서울_5반_A509_중간발표자료.pptx)
+- [최종 발표 자료](docs/서울_5반_A509_발표자료.pdf)
+- [UCC 영상](docs/자율PJT_서울_5반_A509_UCC경진대회.mp4)
 
 ## 🎲 Next Novel 서비스 화면
 ### 랜딩
