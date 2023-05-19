@@ -1,0 +1,20 @@
+.btn {
+  margin: 30px 0;
+  display: flex;
+}
+.memberbtn {
+  padding-top: 5px;
+  width: 200px;
+  height: 50px;
+  background-color: #d9d9d9;
+  color: white;
+  border: 0;
+  font-size: 28px;
+  font-family: "LINESeedKR-Bd";
+  cursor: pointer;
+  margin: 5px;
+}
+
+.memberbtn:hover {
+  background-color: black;
+}

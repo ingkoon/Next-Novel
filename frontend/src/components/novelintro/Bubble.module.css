@@ -1,0 +1,113 @@
+.bubble {
+  position: relative;
+  background: #fffefc;
+  color: #090909;
+  font-size: 20px;
+  box-shadow: 0px 4px 4px 4px rgba(163, 163, 163, 0.5);
+  text-align: left;
+  width: 90%;
+  height: 100px;
+  border-radius: 0px;
+  padding: 0px;
+  border: #090909 solid 3px;
+  margin: 40px 0px 40px 0px;
+  margin-left: 4.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.bubble:after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 0;
+  z-index: 1;
+  border-style: solid;
+  border-color: #fffefc transparent;
+  border-width: 20px 20px 0;
+  bottom: -20px;
+  left: 10%;
+  margin-left: -20px;
+}
+.bubble:before {
+  content: "";
+  position: absolute;
+  width: 0;
+  z-index: 0;
+  border-style: solid;
+  border-color: #090909 transparent;
+  border-width: 24px 24px 0px;
+  bottom: -24px;
+  left: 10%;
+  margin-left: -24px;
+  display: block;
+}
+.bubbleLeft {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  justify-content: center;
+}
+.profilepic {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+.profilename {
+  font-size: 16px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  color: #090909;
+}
+.bar {
+  width: 3px;
+  height: 50px;
+  background: #090909;
+}
+.bubbleRight {
+  width: 73%;
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  padding: 0 20px;
+}
+.ment {
+  color: #090909;
+  font-size: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 75%;
+}
+.date {
+  color: #ababab;
+  font-size: 16px;
+}
+.del {
+  color: #090909;
+  font-size: 16px;
+  height: 35px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+.del:hover {
+  background-color: #d9d9d9;
+}
+.trash {
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+@media (max-width: 1024px) {
+  .profilepic {
+    display: none;
+  }
+  .date {
+    display: none;
+  }
+}

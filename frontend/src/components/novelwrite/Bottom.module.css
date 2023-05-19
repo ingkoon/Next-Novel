@@ -1,0 +1,57 @@
+.bottom {
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex-basis: 15%;
+  /* background-color: greenyellow; */
+  flex-shrink: 0;
+}
+.guide {
+  position: absolute;
+  margin: 10px 0;
+}
+.middle {
+  position: relative;
+  margin: 0 auto;
+  /* border: 1px solid red; */
+  text-align: center;
+}
+.middle > img {
+  width: 100%;
+  height: 46px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(0, -50%);
+  z-index: -1;
+}
+.button {
+  margin: 15px 0;
+  width: 126px;
+  height: 46px;
+  background-color: #090909;
+  color: white;
+  font-family: "LINESeedKR-Bd";
+  font-size: 18px;
+  box-shadow: 3px 3px 0px 0px rgba(242, 205, 60, 1);
+  padding-top: 5px;
+  border: none;
+  transition: all 0.3s ease;
+}
+.button:hover {
+  cursor: pointer;
+  background-color: #f66f00;
+  box-shadow: 3px 3px 0px 0px black;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 1024px) {
+  .bottom {
+    display: block;
+  }
+  .guide {
+    position: static;
+    display: flex;
+    justify-content: center;
+  }
+}

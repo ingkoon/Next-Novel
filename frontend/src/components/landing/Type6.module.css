@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  /* position: absolute;
+  top: 2900px;
+  left: 30%; */
+  width: auto;
+}
+.bbb {
+  margin-top: -125%;
+  margin-left: 0%;
+  font-family: "LINESeedKR-Bd";
+  font-size: clamp(10px, 2vw, 30px);
+  width: auto;
+  color: #576265;
+}
+
+@media (max-width: 1024px) {
+  .bbb {
+    /* display: none; */
+    margin-left: 10%;
+  }
+}

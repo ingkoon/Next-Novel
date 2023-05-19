@@ -1,0 +1,20 @@
+.container {
+  /* background-color: burlywood; */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.component {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-basis: 85%;
+  /* background-color: coral; */
+  align-items: center;
+  gap: 50px;
+}
+@media (max-width: 1024px) {
+  .component {
+    gap: 0;
+  }
+}

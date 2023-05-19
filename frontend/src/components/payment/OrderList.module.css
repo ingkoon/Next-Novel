@@ -1,0 +1,49 @@
+.container {
+  padding: 0 25%;
+}
+.container * {
+  font-family: "LINESeedKR-Bd";
+}
+.list {
+  margin-bottom: 80px;
+}
+.listTitle {
+  font-size: 20px;
+  margin: 50px 0 20px 0;
+}
+.item {
+  display: flex;
+  border-top: 1px solid rgb(167, 167, 167);
+  height: 80px;
+  padding: 4px 0 0 0;
+  align-items: center;
+  justify-content: space-between;
+}
+.itemLeft {
+  font-size: 12px;
+}
+.itemRight > div:last-child {
+  color: #a9a9a9;
+  font-size: 11px;
+  text-align: right;
+}
+.itemRight > div:last-child:hover {
+  color: #666666;
+  cursor: pointer;
+  text-decoration: underline;
+}
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 16%;
+  }
+}
+@media (max-width: 768px) {
+  .container {
+    padding: 0 12%;
+  }
+}
+@media (max-width: 480px) {
+  .container {
+    padding: 0 4%;
+  }
+}

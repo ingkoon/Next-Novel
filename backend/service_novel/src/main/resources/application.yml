@@ -1,0 +1,51 @@
+
+server:
+  port: 8012
+
+spring:
+  application:
+    name: novel_service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://***REMOVED***:3306/novel?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: ***REMOVED***
+  #    url: jdbc:mysql://i8a703.p.ssafy.io:3306/project1db?serverTimezone=UTC&characterEncoding=UTF-8
+  data:
+    mongodb:
+      host: ***REMOVED***
+      port: 27017
+      authentication-database: admin
+      database: novel
+      username: root
+      password: ***REMOVED***
+    web:
+      pageable:
+        one-indexed-parameters: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 30MB
+      max-file-size: 10MB
+      location : uploads/
+  redis:
+    host: ***REMOVED***
+    port: 6379
+    sentinel:
+      master: redis-master
+      nodes: ***REMOVED***:26379,***REMOVED***:26380, ***REMOVED***:26381
+#  redis:
+#    host: ***REMOVED***
+#    port: 6379
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://***REMOVED***:8761/eureka
+

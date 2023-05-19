@@ -1,0 +1,25 @@
+.page {
+  position: relative;
+  height: auto;
+}
+.cleft {
+  position: absolute;
+  top: 720px;
+  left: 50px;
+  z-index: -1;
+}
+.cright {
+  position: absolute;
+  right: 50px;
+  bottom: 0;
+  z-index: -1;
+}
+
+@media (max-width: 1024px) {
+  .cleft {
+    display: none;
+  }
+  .cright {
+    display: none;
+  }
+}

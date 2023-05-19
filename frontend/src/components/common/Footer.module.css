@@ -1,0 +1,196 @@
+.block {
+  height: 250px;
+  background: #090909;
+  width: 100%;
+}
+
+.toppart {
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+  top: 60px;
+  /* background: green; */
+}
+.botpart {
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+  top: 80px;
+  /* background: red; */
+}
+
+.twrap {
+  display: flex;
+  max-width: 100%;
+  min-height: 50px;
+  position: relative;
+  float: right;
+}
+
+.bwrap {
+  display: flex;
+  max-width: 100%;
+  position: relative;
+  float: right;
+  min-height: 50px;
+}
+
+.topN {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: 0s;
+}
+.topE {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -0.4s;
+}
+.topX {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -0.8s;
+}
+
+.topT {
+  opacity: 50%;
+  height: 50px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -0.4s;
+  position: relative;
+  right: 0;
+  top: 0;
+}
+
+.botN {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -0.8s;
+}
+.botO {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -1.2s;
+}
+.botV {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -0.8s;
+}
+.botE {
+  opacity: 50%;
+  height: 50px;
+  margin-right: 10px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -1.2s;
+}
+.botL {
+  opacity: 50%;
+  height: 50px;
+  animation: lds-grid 1.2s linear infinite;
+  animation-delay: -1.6s;
+}
+
+.text1 {
+  color: #fffefc;
+  font-family: "LINESeedKR-Bd";
+  position: relative;
+  top: -25px;
+  left: 50px;
+  width: 90%;
+  height: 150px;
+  /* background: yellow; */
+}
+
+.credit {
+  display: flex;
+  /* align-items: center;
+  justify-content: center; */
+  position: relative;
+  top: -20px;
+  left: 130px;
+  width: 50%;
+  height: 20px;
+}
+.gray {
+  color: #acacac;
+}
+
+@keyframes lds-grid {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 1024px) {
+  .block {
+    height: 250px;
+  }
+  .toppart {
+    display: flex;
+    /* position: relative;
+    top: 70px; */
+    margin-top: 10px;
+    width: 90%;
+    float: right;
+    opacity: 25%;
+    /* display: none; */
+  }
+  .twrap {
+    margin-left: auto;
+  }
+  .botpart {
+    /* position: relative;
+    top: 90px; */
+    display: flex;
+    width: 100%;
+    float: right;
+    opacity: 25%;
+    /* display: none; */
+  }
+  .bwrap {
+    margin-left: auto;
+  }
+
+  .text1 {
+    font-size: 14px;
+    position: relative;
+    top: -25px;
+    left: 20px;
+    width: 80%;
+  }
+
+  .credit {
+    display: flex;
+    align-items: center;
+    width: 350px;
+    height: 20px;
+    margin-left: -10px;
+    margin-right: 0px;
+  }
+}
+
+@media (max-width: 400px) {
+  .credit {
+    /* width: 160%;
+    height: 20px;
+    margin-top: 7%;
+    margin-left: -45%; */
+    display: none;
+  }
+}

@@ -1,0 +1,64 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+.aaa {
+  position: absolute;
+  top: 140%;
+  left: 45%;
+  font-family: "LINESeedKR-Bd";
+  font-size: clamp(10px, 3vw, 30px);
+  width: auto;
+  /* height: 200px; */
+  color: #acacac;
+}
+
+.next {
+  position: absolute;
+  top: 180%;
+  left: 60%;
+  color: #acacac;
+  width: 200px;
+  height: 100px;
+  font-family: "handjet";
+  font-size: 30px;
+  /* animation: up-down 1s infinite ease-in-out alternate; */
+  text-align: center;
+
+  -webkit-animation: fade-in 2s cubic-bezier(0.39, 0.575, 0.565, 1) 10s both;
+  animation: fade-in 2s cubic-bezier(0.39, 0.575, 0.565, 1) 10s both;
+}
+
+@keyframes up-down {
+  from {
+    transform: translatey(5px);
+  }
+  to {
+    transform: translatey(-5px);
+  }
+}
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .aaa {
+    top: 120%;
+    left: 35%;
+  }
+}

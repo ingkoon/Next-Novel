@@ -1,0 +1,32 @@
+[
+  {
+    "name": "로맨스",
+    "engName": "romance",
+    "desc": ["꼭 해피엔딩으로", "끝나는 것은 아닙니다."],
+    "value": 0
+  },
+  {
+    "name": "판타지",
+    "engName": "fantasy",
+    "desc": ["충분히 발달한 과학기술은", "마법과 구별할 수 없다죠."],
+    "value": 1
+  },
+  {
+    "name": "추리",
+    "engName": "mystery",
+    "desc": ["베이커가 221B 번지로", "지원 요청합니다."],
+    "value": 2
+  },
+  {
+    "name": "SF",
+    "engName": "sf",
+    "desc": ["인간M&x시대의u9", "끝bQ이Ai도래했다7v6"],
+    "value": 3
+  },
+  {
+    "name": "자유",
+    "engName": "free",
+    "desc": ["- 오마카세 -", "저희에게 맡겨주세요."],
+    "value": 4
+  }
+]

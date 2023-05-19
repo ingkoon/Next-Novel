@@ -1,0 +1,31 @@
+.wrapper1 {
+  display: flex;
+  justify-content: center;
+  margin-top: -35%;
+  margin-left: 8%;
+  margin-bottom: 35%;
+  width: auto;
+}
+.bbb {
+  font-family: "LINESeedKR-Bd";
+  font-size: clamp(14px, 4vw, 60px);
+  width: 100%;
+  background: linear-gradient(
+    93.55deg,
+    #fae6ff 0%,
+    #b91ad3 24.62%,
+    #4c2aab 49.69%,
+    #5359e7 71.08%,
+    #fffcff 96.59%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+@media (max-width: 1024px) {
+  .wrapper1 {
+    margin-top: -40%;
+  }
+}

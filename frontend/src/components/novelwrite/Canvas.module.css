@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  align-items: center;
+  width: 60%;
+  justify-content: space-around;
+  /* border: 1px solid blue; */
+}
+.container.small {
+  width: 100%;
+}
+.canvasContainer {
+  width: 80%;
+  position: relative;
+}
+.canvasBox {
+  /* background-color: aquamarine; */
+  overflow-x: scroll;
+  text-align: center;
+}
+.canvasBox::-webkit-scrollbar {
+  height: 8px;
+}
+.canvasBox::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 8px;
+}
+.canvas {
+  touch-action: none;
+}
+.canvas.big {
+  border: 3px solid black;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  /* width: 80%;
+  aspect-ratio: 600 / 380; */
+}
+.canvas.small {
+  border: 3px solid black;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: white;
+}
+.loadPaintingsBox {
+  width: 100%;
+  /* border: 1px solid black; */
+  position: absolute;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    width: 100%;
+    flex-direction: column;
+  }
+  .canvasContainer {
+    width: 100%;
+  }
+  .canvasContainer.big {
+    margin-bottom: 50px;
+  }
+  .loadPaintingsBox {
+    max-width: 600px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+}

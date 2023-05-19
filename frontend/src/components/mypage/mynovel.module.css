@@ -1,0 +1,66 @@
+.container {
+  /* background-color: aquamarine; */
+  padding: 0 8%;
+}
+.line {
+  height: 5px;
+  background-color: black;
+  margin-bottom: 20px;
+}
+.mynoveltitle {
+  position: relative;
+  text-align: center;
+}
+
+.logo {
+  max-width: 48px;
+  width: 95%;
+  height: 95%;
+}
+.step {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -35%);
+  font-size: 20px;
+  color: white;
+}
+
+.titlebar {
+  font-family: "LINESeedKR-Bd";
+  display: grid;
+  grid-template-columns: 1fr 7fr 1fr 1fr;
+  height: 50px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.titlebar button {
+  width: 80%;
+  height: 40px;
+  background-color: #f66f00;
+  color: white;
+  border: 0;
+  font-size: 20px;
+}
+
+.title {
+  font-size: 28px;
+  padding: 5px;
+}
+
+.booklist {
+  height: 0;
+  width: 90%;
+  overflow: hidden;
+  transition: height 0.35s ease;
+  margin-bottom: 20px;
+}
+@media (max-width: 480px) {
+  .step {
+    font-size: 16px;
+  }
+  .title {
+    font-size: 24px;
+  }
+}

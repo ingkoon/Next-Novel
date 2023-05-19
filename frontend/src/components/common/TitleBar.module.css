@@ -1,0 +1,52 @@
+.titlebar {
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(#f66f00, #ff9243);
+  color: white;
+  font-family: "gothic";
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.titleBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.title {
+  display: flex;
+}
+
+.maintitle {
+  font-size: 70px;
+}
+.minititle {
+  margin-left: 10%;
+}
+
+.subtitle {
+  font-size: 24px;
+  vertical-align: bottom;
+}
+.titlebar > img {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  bottom: 50%;
+  right: 5%;
+}
+
+@media (max-width: 1024px) {
+  .maintitle {
+    font-size: 42px;
+  }
+  .subtitle {
+    font-size: 20px;
+  }
+  .titlebar > img {
+    display: none;
+  }
+}

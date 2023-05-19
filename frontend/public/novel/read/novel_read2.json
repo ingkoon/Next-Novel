@@ -1,0 +1,60 @@
+{
+  "id": 1,
+  "title": "제목이거든요",
+  "introduction": "소개글이랍니다",
+  "createdAt": "2023-05-10",
+  "engGenre": "fantasy",
+  "korGenre": "판타지",
+  "nickName": "꼬리곰탕먹는라이",
+  "contents": [
+    {
+      "novelId": 0,
+      "content": "첫페이지는 아무것도 없어요",
+      "query": "빈 도화지 맛좀 볼래?",
+      "image": "2023_05_09_02_06_47_image5.png",
+      "caption": "토끼그림이"
+    },
+    {
+      "novelId": 0,
+      "content": "두번째 페이지도 없어요",
+      "query": "정신을 못차렸구나?",
+      "image": "2023_05_09_02_06_47_하트.png",
+      "caption": "무슨 그림이였더"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "content": "폼미쳤다",
+      "createdAt": "2023-05-10",
+      "nickName": "니꾸네무",
+      "novelId": 1,
+      "profileImg": "2023_05_09_02_06_47_하트.png"
+    }
+  ],
+  "hitCount": 10,
+  "commentCount": 1,
+  "likeCount": 20,
+  "originCoverImg": "2023_05_09_02_06_47_하트.png",
+  "coverImg": "2023_05_09_02_06_47_image1.png",
+  "startImages": [
+    {
+      "imageName": "2023_05_09_02_06_47_image5.png",
+      "caption": "캡션1"
+    },
+    {
+      "imageName": "2023_05_09_02_06_47_image2.png",
+      "caption": "캡션2"
+    },
+    {
+      "imageName": "2023_05_09_02_06_47_image3.png",
+      "caption": "캡션3"
+    },
+    {
+      "imageName": "2023_05_09_02_06_47_image4.png",
+      "caption": "캡션4"
+    }
+  ],
+  "startContent": "소설 시작은 시작이 반이야",
+  "endContent": "엔딩이 개판이여야 명작이"
+}

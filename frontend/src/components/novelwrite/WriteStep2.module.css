@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.component {
+  display: flex;
+  justify-content: space-evenly;
+  flex-basis: 85%;
+  /* background-color: coral; */
+  align-items: center;
+  /* gap: 50px; */
+}
+@media (max-width: 1024px) {
+  .component {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
