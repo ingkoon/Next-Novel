@@ -36,6 +36,11 @@ def read_item(item:Item):
 
     data = pd.DataFrame(queryset)
 
+    
+    grouped_df = data.groupby('novel_id')['content'].apply(" ".join)
+    
+    data = pd.DataFrame({'novel_id': grouped_df.index, 'content': grouped_df.values})
+                                   
     # content 속성이 null이면 공백으로 만들어주기
     if data['content'].isnull().sum() > 0:
         data['content'] = data['content'].fillna('')
