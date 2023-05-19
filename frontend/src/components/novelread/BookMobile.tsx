@@ -52,6 +52,7 @@ export default function Book() {
   const [novelid, setNovelid] = useState(Nid);
   const [novelinfo, setNovelinfo] = useState<Ninfo>();
   const [novelMat, setNovelMat] = useState<NMat>([]);
+  const [novelStart, setStart] = useState("");
   const [novelContent, setNovelContent] = useState<Ncontent>();
   const [lastPage, setLastPage] = useState("");
   const [rerender, setRerender] = useState("");
@@ -78,6 +79,7 @@ export default function Book() {
         title: data.data.title,
       });
       setNovelMat(data.data.startImages);
+      setStart(data.data.startContent);
       setNovelContent(
         data.data.contents
       );
@@ -177,12 +179,18 @@ export default function Book() {
                 <div className={style.fbar} />
               </div>
             </div>
+            <div className={style.page} ref={page_ref}>
+              <Materials mat={novelMat} />
+            </div>
+            <div className={style.page} ref={page_ref}>
+              <div className={style.text}>{novelStart}</div>
+            </div>
             {novelContent?.map((item, index) => {
               return (
                 <>
                   <div className={style.page} ref={page_ref}>
-                    {index === 0 && <Materials mat={novelMat} />}
-                    {index > 0 && <Qna qna={item} index={index} />}
+                    {/* {index === 0 && <Materials mat={novelMat} />} */}
+                    {<Qna qna={item} index={index} />}
                   </div>
                   <div className={style.page} ref={page_ref}>
                     <span className={style.text}>{item.content}</span>
@@ -225,7 +233,7 @@ export default function Book() {
                 />
                 <div
                   className={style.link}
-                  onClick={() => navigateToIntro(novelinfo.id)}
+                  onClick={() => navigateToIntro(novelid)}
                 >
                   <h2>돌아가기</h2>
                 </div>

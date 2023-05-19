@@ -1,7 +1,6 @@
 .book {
   transition: opacity 0.4s 0.2s;
 }
-
 .page {
   width: 40vw;
   height: 38vw;
