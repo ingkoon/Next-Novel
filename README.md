@@ -1,5 +1,7 @@
 # 🎲 그림이 소설이 되는, Next Novel
 
+제 작업 내역에 대해 보시려면 `be/payment` branch를 참고해주세요! 
+
 ![logo](docs/img/logo.png)
 ## ⌛️ 프로젝트 진행 기간
 2023.04.10(월) ~ 2023.05.19(금)<br>
