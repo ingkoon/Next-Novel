@@ -1,4 +1,4 @@
-# 🎲 [고도화 프로젝트] [그림이 소설이 되는, Next Novel](https://github.com/ingkoon/NextNovel)
+# 🎲 [고도화 프로젝트] [그림이 소설이 되는, Next Novel](https://github.com/ingkoon/Next-Novel)
 
 <br>
 
@@ -38,7 +38,7 @@ SSAFY 8기 2학기 자율 프로젝트
 
 ## 🏃 Next Novel 의 추가된 기능
 
-### 1) [결제 시스템](https://github.com/ingkoon/NextNovel/tree/main/backend/service_payment#readme)
+### 1) [결제 시스템](https://github.com/ingkoon/Next-Novel/tree/main/backend/service_payment#readme)
 
 - 소설 작성에 필요한 포인트를 결제하는 시스템
 - 실 운영시 발생하는 트래픽 문제를 해결하기 위해 도입
