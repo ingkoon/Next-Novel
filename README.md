@@ -15,12 +15,12 @@ SSAFY 8기 2학기 자율 프로젝트
 
 명규를 기준으로 프론트, 백엔드 신들이 모인 서울 5반 9조입니다.
 
-- 강은진 - 팀장, BackEnd
-- 이명규 - BackEnd, 인프라
-- 이인재 - BackEnd
-- 장지웅 - BackEnd
-- 소지현 - FrontEnd
-- 서철원 - FrontEnd
+- 강은진 - 팀장, BackEnd(회원 서비스)
+- 이명규 - BackEnd(소설 서비스), 인프라
+- 이인재 - BackEnd(결제 서비스)
+- 장지웅 - BackEnd(검색 서비스)
+- 소지현 - FrontEnd(반응형 웹 및 기능 구현)
+- 서철원 - FrontEnd(반응형 웹 및 )
 
 <br>
 
